@@ -1,3 +1,10 @@
 *.o
 *~
+ressources/Makefile
+Makefile
+config.log
+config.status
+src/.deps/
+src/.deps/*
+src/Makefile
 
