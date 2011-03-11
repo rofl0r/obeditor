@@ -1,0 +1,66 @@
+How to make remaps for OpenBor
+First, a strong suggestion is to read about it.
+
+- Screen modes in OpenBOR is tighly related to palettes:
+	http://www.caskeys.com/arc/games/openbor/wiki/index.php?title=Screen_Modes
+
+- And about 8bit mode palette :
+	http://www.caskeys.com/arc/games/openbor/wiki/index.php?title=Creating_a_Character
+
+
+#################################################################################
+How to create a palette in 8bit mode :
+
+A - Click "New" and give a name, if you want.
+
+B - Specifify the base image and the Result image
+OpenBOR will deduce the remapping by comparing these two images.
+ 
+C - Do the remapping
+You have to manually reassign each color from the original image to a new off THE SAME PALETTE.
+To make a reassignement you must :
+1 - select a color in the palette
+	For this 2 way:
+		a - With the mouse just click on a color in the palette.
+		b - On the image view on the right panel, pick a color with your mouse.
+2 - reassign the palette color :
+	Two ways also :
+		a - With the mouse, click on a color in the palette with ALT or SHIFT pressed 
+		a - With the mouse, pick a color in the imatge on the right panel with ALT or SHIFT pressed
+
+You can see reassignement : the originated palette color is surrounded with blue, and the reassignement with green.
+ 
+Once you've done you have to click SAVE. The obeditor will create/overwrite the resulted image with your remap.
+
+
+#################################################################################
+How to create a palette in 16bit mode :
+A - Click "New", give a name if you want.
+
+B - Specify the source palette.
+The source palette is just an image in gif or png. But only the palette defined in the image is important.
+This image will be the same image for all the 16bit remaps of this entity.
+
+C - Specify the Alterpal (Alternate Palette)
+Here too, the Alterpal is a simple gif or png image.
+
+D - Do the remap :
+In 16 Bit mode you can change all the color of the palette.
+Several possibilities for this :
+1 - Double click on a palette element to directly choose his new color.
+2 - Make use of the HSL / RGB  buttons.
+For this you must
+	a - Select one or more palette elements
+		Click on the palette or on the image on the right, keep SHIFT or CTRL press to do multiple selection. 
+	
+	b - Use the HSL /RGB buttons to modify the colors of the selected palette elements. 
+  
+E - Save the remap.
+As in 8 bit mode : the obeditor will create/overwrite the resulted image with your remap.
+
+Extra buttons :
+- Guess Cols : the colors used by the image on the right will be added to the selection.
+- Set Selects / Unset them : try these twin buttons to keep a selection of palette elements to work with.
+
+
+ 

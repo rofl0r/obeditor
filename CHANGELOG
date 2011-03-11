@@ -1,0 +1,38 @@
+obeditor v1.5
+# Fixed : Bugs again and again
+# Added : Stage Edition
+# Added : Undo/Redo capability
+# Added : In "Animation Edition", Frame navigation with "ALT+{LEFT|RIGHT}" when focus is to a animation property control.
+# Added : In "Animation Edition", UP (DOWN) key -when focus is to a property's control  which is a number- increase # # Added : In "Entity Edition Window", entity's animation name are now display lexicographicaly sorted.
+
+obeditor v0.1
+# Fixed : Bugs, more bugs, and more more more
+# Added : Platform page
+# Added : Jump Animation capability
+# Added : Remap Page
+
+obeditor v0.0
+# Fixed : some scrollbar problems
+# Fixed : disabling Buttons when no frame is active
+# Fixed : Repair paths bugs
+# Fixed : NoFrame or NoAnims cases problems
+# Fixed : Some dragging frames problem
+# Fixed : Replace label "attack power" -> "knockdown"
+# Fixed : wrong attacks machinerie
+
+# Added : Add some standard path in repairing path operation // Need an exhaustive list
+# Added : moveZ taken in account
+# Added : Ground lines to see Z-axis shifts
+# Added : External txt editor launch
+# Added : flipframe property
+# Added : the drawmethod hell engine
+# Added : Some funny colours  ... but doesn't work very well under windows:(
+# Added : The edition properties windows remember there positions
+# Added : some smart TAB navigations
+# Added : "->mX:mA" button, to assign the cursor coords to moveX and moveA values
+# Added : The current frame number in big above the animation zone
+# Added : "Zero Bbox" and "Zero AttackBox" Button
+# Added : Clone Buttons : clone from previous frame for BBox AttBox and DrawMethod
+# Added : Switch the background color when a property is cloned from a previous frame
+
+# Removed : the four useless assign box controls

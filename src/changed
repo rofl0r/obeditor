@@ -1,0 +1,361 @@
+
+------------------------------------------------
+Correspondances trouvés dans <./common__object_file.cpp>
+Ligne numéro 416 :
+	if( entity->changed == 0 )
+
+Ligne numéro 417 :
+		entity->changed = 1;
+
+Nombre d'occurences : 2
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__MainFrame.cpp>
+Ligne numéro 344 :
+			wxString __path = entity->filename.GetFullPath();
+
+Ligne numéro 359 :
+				if( ent_name != entity->Name() )
+
+Ligne numéro 477 :
+		EntityAnimsHistory__Append( entity->Name() );
+
+Ligne numéro 504 :
+				if( ! entity->Write() )
+
+Ligne numéro 510 :
+				entity->changed = 2;
+
+Ligne numéro 582 :
+	arr_anims = entity->GetAnims(_t_nb_anims);
+
+Nombre d'occurences : 6
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__panel_anims.cpp>
+Ligne numéro 1684 :
+				if( entity->changed == 0 )
+
+Ligne numéro 1685 :
+					entity->changed = 1;
+
+Ligne numéro 1802 :
+					if( entity->changed == 0 )
+
+Ligne numéro 1803 :
+						entity->changed = 1;
+
+Ligne numéro 1822 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1823 :
+				entity->changed = 1;
+
+Ligne numéro 1832 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1833 :
+				entity->changed = 1;
+
+Ligne numéro 1839 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1840 :
+				entity->changed = 1;
+
+Ligne numéro 1848 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1849 :
+				entity->changed = 1;
+
+Ligne numéro 1853 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1854 :
+				entity->changed = 1;
+
+Ligne numéro 1862 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1863 :
+				entity->changed = 1;
+
+Ligne numéro 1867 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1868 :
+				entity->changed = 1;
+
+Ligne numéro 1909 :
+	if( entity->changed == 0 )
+
+Ligne numéro 1910 :
+		entity->changed = temp->Changed();
+
+Ligne numéro 1934 :
+	if( entity->changed == 0 )
+
+Ligne numéro 1935 :
+		entity->changed = temp->Changed();
+
+Ligne numéro 2798 :
+		if( entity->changed == 0 )
+
+Ligne numéro 2799 :
+			entity->changed = 1;
+
+Ligne numéro 2825 :
+	if( entity != NULL && entity->changed == 0 )
+
+Ligne numéro 2826 :
+		entity->changed = 1;
+
+Nombre d'occurences : 26
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__panel_overview.cpp>
+Ligne numéro 117 :
+		sizer_PropEntity->Add( list_ent_Props, 1, wxEXPAND, 5 );
+
+Ligne numéro 152 :
+		if( entity->changed == 0 )
+
+Ligne numéro 153 :
+			entity->changed = 1;
+
+Ligne numéro 155 :
+	return entity->changed;
+
+Ligne numéro 178 :
+		int res = wxMessageBox( "Change have been made to the entity <"+ entity->Name() +">\nWrite the changes now ??", "Question !"
+
+Ligne numéro 183 :
+			entity->changed = 2;
+
+Ligne numéro 188 :
+		if( ! entity->Write() )
+
+Ligne numéro 192 :
+			entity->changed = 1;
+
+Ligne numéro 196 :
+			entity->changed = 0;
+
+Ligne numéro 245 :
+	entity->Reload();
+
+Ligne numéro 504 :
+		entity->PurgeImages();
+
+Ligne numéro 515 :
+		panel_EntOverview->avatarImg = entity->Load_AvatarImg();
+
+Ligne numéro 530 :
+		_name = entity->Name();
+
+Nombre d'occurences : 13
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__panel_platform.cpp>
+Ligne numéro 356 :
+			if( entity->changed == 0 )
+
+Ligne numéro 357 :
+				entity->changed = 1;
+
+Ligne numéro 438 :
+		if( entity->changed == 0)
+
+Ligne numéro 439 :
+			entity->changed = 1;
+
+Ligne numéro 514 :
+					if( entity->changed == 0 )
+
+Ligne numéro 515 :
+						entity->changed = 1;
+
+Ligne numéro 535 :
+				if( entity->changed == 0 )
+
+Ligne numéro 536 :
+					entity->changed = 1;
+
+Nombre d'occurences : 8
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__panel_remaps.cpp>
+Ligne numéro 474 :
+	ob_object* _thePalette = entity->obj_container->GetSubObject( "palette" );
+
+Ligne numéro 475 :
+	if( _thePalette != NULL && entity->GetProperty( "alternatepal" ) != NULL )
+
+Ligne numéro 490 :
+		ob_object* _thePalette = entity->GetProperty( "palette" );
+
+Ligne numéro 495 :
+			_alterpals  = entity->GetSubObjectS("alternatepal",nb_alterpal);
+
+Ligne numéro 520 :
+		ob_object** _remaps = entity->GetSubObjectS( "remap", nb_remaps );
+
+Ligne numéro 690 :
+		_remaps = entity->GetSubObjectS( "remap", nb_remap );
+
+Ligne numéro 692 :
+		_remaps = entity->GetSubObjectS( "alternatepal", nb_remap );
+
+Ligne numéro 723 :
+		_basePath = entity->obj_container->GetSubObject_Token( "palette" );
+
+Ligne numéro 894 :
+	return entity->changed;
+
+Ligne numéro 1064 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1065 :
+				entity->changed = 1;
+
+Ligne numéro 1077 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1078 :
+				entity->changed = 1;
+
+Ligne numéro 1145 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1146 :
+				entity->changed = 1;
+
+Ligne numéro 1152 :
+		ob_object *pal_obobj = entity->GetProperty( "palette" );
+
+Ligne numéro 1163 :
+			ob_object** _t = entity->GetSubObjectS( "alternatepal",nb_remap );
+
+Ligne numéro 1172 :
+				entity->AddProperty( pal_obobj );
+
+Ligne numéro 1185 :
+			if( entity->changed == 0 )
+
+Ligne numéro 1186 :
+				entity->changed = 1;
+
+Ligne numéro 1248 :
+			curr_remaps = entity->GetSubObjectS( "alternatepal", nb_remaps );
+
+Ligne numéro 1250 :
+			curr_remaps = entity->GetSubObjectS( "remap", nb_remaps );
+
+Ligne numéro 1272 :
+			entity->AddProperty( new_remap );
+
+Ligne numéro 1302 :
+		if( entity->changed == 0 )
+
+Ligne numéro 1303 :
+			entity->changed = 1;
+
+Ligne numéro 1333 :
+		if( entity->changed == 0 )
+
+Ligne numéro 1334 :
+			entity->changed = 1;
+
+Ligne numéro 1366 :
+	if( entity->changed == 0 )
+
+Ligne numéro 1367 :
+		entity->changed = 1;
+
+Nombre d'occurences : 29
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__PanelWithAnims.cpp>
+Ligne numéro 115 :
+	entityFrame->map_ent_animHistory[entity->Name()] = 
+
+Ligne numéro 158 :
+		if( 	   entityFrame->map_ent_animHistory.find( entity->Name() ) 
+
+Ligne numéro 163 :
+			wxString select_anim = entityFrame->map_ent_animHistory[entity->Name()];
+
+Ligne numéro 235 :
+	return entity->changed;
+
+Nombre d'occurences : 4
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__wListAnims.cpp>
+Ligne numéro 361 :
+			if( entity->changed == 0 )
+
+Ligne numéro 362 :
+				entity->changed = 1;
+
+Ligne numéro 388 :
+			entity->obj_container->Add_SubObj( newanim );
+
+Ligne numéro 403 :
+			if( entity->changed == 0 )
+
+Ligne numéro 404 :
+				entity->changed = 1;
+
+Ligne numéro 432 :
+			entity->obj_container->Add_SubObj( newanim );
+
+Ligne numéro 447 :
+			if( entity->changed == 0 )
+
+Ligne numéro 448 :
+				entity->changed = 1;
+
+Ligne numéro 490 :
+		if( entity->changed == 0 )
+
+Ligne numéro 491 :
+			entity->changed = 1;
+
+Nombre d'occurences : 10
+
+------------------------------------------------
+Correspondances trouvés dans <./entity__wListFrames.cpp>
+Ligne numéro 1237 :
+	if( entity->changed == 0 )
+
+Ligne numéro 1238 :
+		entity->changed = 1;
+
+Ligne numéro 1273 :
+	if( entity->changed == 0 )
+
+Ligne numéro 1274 :
+		entity->changed = 1;
+
+Ligne numéro 1318 :
+		if( entity->changed == 0 )
+
+Ligne numéro 1319 :
+			entity->changed = 1;
+
+Ligne numéro 1519 :
+	if( entity->changed == 0 )
+
+Ligne numéro 1520 :
+		entity->changed = 1;
+
+Nombre d'occurences : 8
+
+------------------------------------------------
+Correspondances trouvés dans <./ob_editor.cpp>
+Ligne numéro 480 :
+	btn_edit_entity->SetSize( 150, wxDefaultCoord);
+
+Nombre d'occurences : 1

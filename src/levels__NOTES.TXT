@@ -1,0 +1,198 @@
+openbor.c
+  spawnentry
+	wait			// AT
+	nojoin		// AT
+	canjoin		// AT
+	shadowcolor		// AT
+	shadowalpha		// AT
+	light			// AT
+	scroll[zx]		// AT
+	blockade		// AT
+	setpalette		// AT
+	group			// AT
+	spawn
+	
+  spawnentry PROPS
+	2pspawn 
+	3pspawn
+	4pspawn
+	flip
+	alias
+	map
+	spawnscript
+	coords
+
+	mp		// Only for items
+
+	boss
+	health
+	2phealth
+	3phealth
+	4phealth
+	score
+	nolife
+	dying
+	
+	weapon
+	aggression
+	credit
+	
+	item
+	2pitem
+	3pitem
+	4pitem
+	itemmap
+	itemhealth
+	itemalias
+	itemtrans || itemalpha
+
+/***************************************/
+/***************************************/
+//-------------------------------------------
+Window Level setting
+
+	Miscelanious :
+		Equal Air Pause (FIXME)
+
+/***************************************/
+/***************************************/
+Tool Bar
+	Zoom In
+	Zoom Out
+	SEPARATOR
+	<FILTERS>
+		Toggles Buttons
+			All Players Object
+			2 players Objects
+			3 players Objects
+			4 players Objects
+		Boss
+		<TEXT AREA>
+	SEPARATOR
+	Cut  Object
+	Copy Object
+	Paste Object
+	Delete Object
+	Edit Object Properties
+
+	
+/***************************************/
+/***************************************/
+Objects
+		
+	|health|
+		health
+		2phealth
+		3phealth
+		4phealth
+		
+	|dropped-stuff|
+		name
+		NUM-pitem
+		itemhealth
+		itemmap
+		itemalias
+		itemtrans
+		itemalpha
+
+	|Coords|
+		x
+		z
+		alt
+
+	//--------------------------------
+	Holes
+		x
+		z
+		ul
+		ll
+		ur
+		lr
+		d
+	//--------------------------------
+	Walls
+		<Holes>
+		alt
+
+	//--------------------------------
+	Players Spawns
+		x
+		z
+		alt
+
+	//--------------------------------
+	panel
+		#at
+		#flip
+		#map
+		#spawnscript
+		#|Coords|
+		#|Num Player Need|
+
+	//--------------------------------
+	text
+		<panel>
+		|dropped-stuff|
+		#score
+
+	//--------------------------------
+	trap
+		<text>
+		#Alias
+
+	//--------------------------------
+	obstacle
+	Items
+		<trap>
+		#|health|
+		#mp		// Item only
+		nolife
+
+	//--------------------------------
+	decoration
+		<obstacle>
+
+	//--------------------------------
+	Ennemies
+	npc
+		<obstacle>
+		#Agression
+		Boss ?
+
+	
+	//--------------------------------
+	Wait
+		At
+
+	//--------------------------------
+	Blockade
+		At
+		Pos
+
+	//--------------------------------
+	ScrollZ
+		At
+		Min
+		Max
+
+	//--------------------------------
+	Group
+		At
+		Min
+		Max
+
+	//--------------------------------
+	Light 
+		At
+		x
+		z
+
+	//--------------------------------
+	#Shadow Color
+	#Shadow Alpha
+
+	//--------------------------------
+	LOAD
+		FIXME
+		Ask the user about removes...
+		Automaticely add Adds

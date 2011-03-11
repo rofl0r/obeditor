@@ -1,0 +1,55 @@
+First excuse my bad english.
+As OpenBor was lacking for a editor for entity, i contribute by making this one.
+
+The purpose of the first window, is to manage multiple OB projects.
+You can add a project by choosing a data dir which contain a valid models.txt. Be carefull that the directory must be named data.
+The Button Repair paths will launch a scan of all (not yet all) broken path in your models.txt and in all entity referenced in it. (I did this cause windows users don't care very much about sensitivity of their filenames)
+
+The main window is the one that appear when you click on "Edit entities"
+There is currently three page.
+
+//************************************************
+The first one list the entities referenced in the models.txt of the data dir of the project.
+You can navigate the list with keyboard cursors or by pressing a letter.
+On the right panel, a grid present the properties of the entities.
+You can add/edit properties, or delete by selecting a line and press enter.
+
+//************************************************
+The second panel is the animation editor.
+
+The list on the left present animation known for the current entity.
+You can navigate in it with the up and down cursors.
+You can add/delete/copy/rename anims with the mouse contextual menu.
+
+The bottom of the page show the frame of the selected animation.
+You can navigate in it with the mouse or the left and right cursors.
+You can select multiple frame with the SHIFT + Mouse click, or SHIFT + (left or right cursors).
+You can move the selected frames by dragging it with the mouse.
+You can copy the selected frames by dragging it with the mouse + CTRL.
+You can delete the selected frames by pressing DEL.
+You can also add/delete/coppy a single frame with the mouse contextual menu.
+
+The center part of the panel present the signicant properties of the current frame.
+You can modified each by hand.
+The Button "Animation Data", give access to the properties of the current animation, although the button "Extended frame data" give access to the remainings properties of the current frame.
+Important, with the list of attacks, you can select the attack box drawed on the animation box on the right, or all attacks if you select the item "ALL attacks".
+
+The right part of the panel provide a way to see the animation in real. The first 4 buttons on the top are for zoom in, zoom-out, make the animation looping, and play/stop the animation.
+The 4 remaining button provide the possibility to define bbox, offset and attack box from the draw you have made with the mouse on the animation box (not clear isn't it ?).
+So, you can draw a rectangle on the animation box with the mouse, after that you can assign the rectangle drawned to the bbox by clicking on "-> bbox", or the currently selected attack by clicking on "-> Att".
+If you dont draw a rectangle on the anim box, but just do a single click, the a circle appears, and after that you can assign the coordonates of this circle the offset of the current frame. (excuse me again for my bad english)
+
+//************************************************
+The third panel is for error reporting.
+
+The editor provide some simple checking for the files loaded. The errors panel report them as clear as i can do.
+
+//************************************************
+The Menu
+At last but not least, the menu provide the possibility to save your change, or to reload things.
+I made the saving process as smart as i can. In other word, saving try to preserve everything unchanged when possible.
+
+That's all, good luck.
+
+Reports bug or everything to the lavalit forum <http://www.lavalit.com/>
+

@@ -1,0 +1,93 @@
+		Welcome in the stage editor.
+
+
+--------------------------------------
+	WARNINGS
+	
+First keep in mind that :
+ 1 - Although the best efforts are made to offer you a view that match the one made by OpenBOR, there could be some differences.
+ 2 - This is only a tool for moding, and there is no garantee that there will be no errors when launching OpenBOR (example : the panels must have the same width, if not, although the editor will not prompt you, OpenBOR will crash).
+ 
+ So, you have to read the doc (http://lavalit.com)
+ 
+ 
+--------------------------------------
+	THE MENUS
+	
+LOAD/SAVE
+<RELOAD ALL> : will reload the Sets, and the Stage of the Set. NOT the entities.
+
+
+SETS
+Before editing you have to choose/add a new set for your mod.
+- <Change Current Set> show you all avalaible sets.
+- <SET Properties> permit edit common set properties of the current set.
+
+
+STAGES
+Before editing you also have to choose/add a new stage in the current set.
+- <STAGE Declaration Properties> permit edit properties of the stage that appears in the SET file.
+- <STAGE Properties> permit editing commom properties of the stage.
+- <Change Current STAGE> show you all avalaible stages of the current set.
+
+SCENE
+- <BACKGROUND> permit add/edit the main background image.
+- <BG LAYERS> Show you a view of the background 
+	(NOTE : you must have a valid background image to access here)
+	You can add/delete/reorder/edit the background layers of your stage
+- <PANELS> SubMenu show you the current panels of your stage
+	The <ReOrder> item permit editing the panels order.
+- <FRONT PANELS> SubMenu show you the current front panels of your stage.
+	The <Edit> item offer a view and permit add/delete/reorder/edit the frontpanels.
+- <Test Scene> Is for checking purpose only. It offers a view with all Scene elements : Backgrounds / Panels / Front Panels.
+
+OBJECTS
+- <Duplicate>/<Delete>/<Properties> applies on the object(s) currently selected in the main view.
+- <Sort Objects with At> is a tool for reorder all objects with a "AT" attribute of the stage. The editor will keep a stage withe well-ordered AT-objects, well ordered.
+
+
+--------------------------------------
+	THE STAGE VIEW
+	
+Composed with 2 elements, the upper is a zoomable view (call it the VIEW), the lower is the map view.
+In the VIEW you can
+- Select objects :
+   By clicking them, or use a rectangle selection. You can Add/Rm object to selection with the CTRL or SHIFT logic.
+   Objects with At property will show ther AT position when selected.
+   When Selected, objects appears in VIEW and MAP with red borders.
+- Move selected objects:
+  By dragging them with the mouse or by using Arrows (with CTRL or SHIFT arrows will make bigger or smaller moves).
+  For Entities element depending if you drag the Shadow the AT or the image, the moving will apply on certain Coords or on AT properties (try it...).
+- Delete Objects or duplicate objects :
+  The shortcuts for this operation are in the OBJECTS menu. There is also 2 button above the view for it.
+- Walls,Holes,ScrollZ have special feature when single selected.
+  You can change there shape by dragging there parts (points for Wall/Hole, upper or lower limits for ScrollZ) try it...
+- Miscelanious : You can zoom+-, Show/Hide Background, etc...  with buttons above the VIEW.
+
+
+------------------------------------------
+	THE ENTITIES LIST (At the Right)
+	
+Here is presented the kwown entities for this mod.
+The text entry filters names of entities list.
+The Combo box filter type of entities.
+The bottom image show the current selected entity.
+You can Add a spawn for an entity by selecting it and click-right "Add". The entity added will appear in the center of the VIEW.
+
+
+------------------------------------------
+	THE OBJECTS LIST (Bottom-Left)
+Objects are organized in SuperTypes/Types.
+When Clicking a SuperType or Type element, Objects of this superType/type will appears in the VIEW with Blue borders.
+When Double Clicking a SuperType/Type element, Objects of the superType/type will be hided/showed in the VIEW and the SuperType/Type element will have a # appears/disappears at his front.
+The exception is the NONE element, this one hide/show ALL when double clicking it.
+(Just try it....)
+You can add some elements in the view by right-clicking a Type, and select "Add" in the popup menu. The element will appears in the center of the view.
+
+
+------------------------------------------
+	THE OBJECT PROPERTY (Bottom-Right)
+When a single elements is selected, the properties of the element appears here.
+You can then edit them.
+Note : for certain elements some controls are disabled.
+

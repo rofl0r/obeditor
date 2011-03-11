@@ -1,0 +1,31 @@
+--------------------------------------
+Installation:
+There's no real installatin, put the executable somewhere in your filesystem.
+The other requirements depend of your OS :
+      # LINUX
+	    You need to have installed 
+		  libSDL version >= 1.2
+		  libSDL_mixer >= 1.2
+
+      # WINDOWS
+	    These Dlls have to be in the .exe directory (they should have been distributed with it) :
+	    libgif-4.dll, mingwm10.dll, SDL.dll, SDL_mixer.dll
+
+--------------------------------------
+COMPILATION
+      # Linux 
+	    You will need the following libraries :
+		  - wxwidgets version >= 2.8.9 installed
+		  - libSDL version >= 1.2
+		  - libSDL_mixer >= 1.2
+      # Cross Compilation From Linux to windows
+	    You will need (approximatively, i don't remember everything)
+		  - All the above linux required library but compiled for windows
+		  - mingw32
+		  NOTE : You will have to specify your cross compilation directory in argument to ../configure script. Sell my cross-compilation configure script in the directory <build-win>.
+		  Good luck
+
+      # WINDOWS
+	    You'll have to use cygwin.
+	    Library requirement are the same as linux's one.
+	    Compilation should be possible cause i've done it at the beginning of the developpement. But with the time, there can be problems, please contact me if you can pass -or cannot pass- through them.
