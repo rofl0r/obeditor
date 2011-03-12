@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+sources = [
+	"CHistory.cpp",
+	"common__ob_object.cpp",
+	"entity__wListFrames.cpp",
+	"entity__panel_anims.cpp",
+	"entity__MyAnimationZone.cpp",
+	"entity__PanelWithAnims.cpp",
+	"entity__MainFrame.cpp",
+	"entity__panel_errors.cpp",
+	"entity__panel_overview.cpp",
+	"entity__panel_platform.cpp",
+	"entity__panel_remaps.cpp",
+	"entity__sdlSound.cpp",
+	"entity__wListAnims.cpp",
+	"common__object_levels.cpp",
+	"common__object_stage.cpp",
+	"common__object_file.cpp",
+	"common__parsing.cpp",
+	"common__prListBox.cpp",
+	"common__tools.cpp",
+	"common__wxFrameImage.cpp",
+	"common__validators.cpp",
+	"common__ob_controls.cpp",
+	"common__mod.cpp",
+	"common__modalsFrames.cpp",
+	"myControls.cpp",
+	"levels__Ob_GObjects.cpp",
+	"levels__ObImgs_Manager.cpp",
+	"levels__CtrlStageView.cpp",
+	"levels__Panel_StageView.cpp",
+	"levels__GUI_Objects.cpp",
+	"levels__main.cpp",
+	"levels__sidesWindows.cpp",
+	"levels__Ctrl_SceneView.cpp",
+	"levels__wndEditPanelOrder.cpp",
+	"levels__wndEditBackground.cpp",
+	"levels__wndEditFrontPanels.cpp",
+	"ob_editor.cpp",
+	"images__gifFile.cpp",
+	"images__MyPalette.cpp",
+	"images__pngFile.cpp"
+]
+
+Import('env')
+
+target = 'obeditor'
+if env['PLATFORM'] == 'win32':
+	target += '.exe'
+
+# build
+env.Program(target, sources)
+
