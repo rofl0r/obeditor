@@ -365,9 +365,9 @@ Img_Collection::Get_Remap( size_t img_state_ID )
 	// Get the remaps objects
 	size_t nb_remaps_8b,nb_remaps_16b;
 	ob_object** _remaps_8b = 
-		entity_ref->obj_container->GetSubObjectS("remap", nb_remaps_8b );
+	entity_ref->obj_container->GetSubObjectS(wxT("remap"), nb_remaps_8b );
 	ob_object** _remaps_16b = 
-		entity_ref->obj_container->GetSubObjectS("alternatepal",nb_remaps_16b );
+	entity_ref->obj_container->GetSubObjectS(wxT("alternatepal"),nb_remaps_16b );
 
 	//------------------------------------------------------
 	// Get the wanted remap
@@ -944,15 +944,15 @@ ObImgs_Manager::Reset()
 	}
 	
 	// Add Some mandatory images
-	wxImage* ent_shadow = new wxImage( GetRessourceFile_String("ent_shadow.png") );
-	AbsorbeImage( "ent_shadow", NULL, ent_shadow, MASK_IN_IMAGE );
+	wxImage* ent_shadow = new wxImage( GetRessourceFile_String(wxT("ent_shadow.png")) );
+	AbsorbeImage( wxT("ent_shadow"), NULL, ent_shadow, MASK_IN_IMAGE );
 //	wxImage* ent_AT = new wxImage( GetRessourceFile_String("ent_AT.png") );
 //	AbsorbeImage( "ent_AT", NULL, ent_AT, false );
-	AbsorbeImage( "noImg", NULL, new wxImage(*noImg), MASK_NONE );
+	AbsorbeImage( wxT("noImg"), NULL, new wxImage(*noImg), MASK_NONE );
 
 	for( int i = 1; i <= 4; i++ )
 	{
-		wxString imgName = "pSpawn_"+IntToStr(i)+".png";
+		wxString imgName = wxT("pSpawn_")+IntToStr(i)+wxT(".png");
 		wxImage* sImg = new wxImage( GetRessourceFile_String(imgName) );
 		AbsorbeImage( imgName, NULL, sImg, MASK_IN_IMAGE );
 	}
@@ -977,11 +977,11 @@ ObImgs_Manager::Invalidate_ImagesStates()
 ObImgs_Manager::~ObImgs_Manager()
 {
 	Reset();
-	ReleaseImage( "ent_shadow" );
+	ReleaseImage( wxT("ent_shadow") );
 //	ReleaseImage( "ent_AT" );
-	ReleaseImage( "noImg" );
+	ReleaseImage( wxT("noImg") );
 	for( int i = 1; i <= 4; i++ )
-		ReleaseImage( "pSpawn_"+IntToStr(i)+".png" );
+		ReleaseImage( wxT("pSpawn_")+IntToStr(i)+wxT(".png") );
 }
 
 //-------------------------------------------------------
@@ -996,7 +996,7 @@ ObImgs_Manager::AbsorbeImage( const wxString& _key, ob_object* obj
 		return false;
 	}
 	
-	string key(_key.c_str());
+	string key = string((char*)_key.c_str());
 	map<string,Img_Collection*>::iterator it(theImgsMap.find(key));
 
 	// Collection exists in DB
@@ -1017,7 +1017,7 @@ ObImgs_Manager::AbsorbeImage( const wxString& _key, ob_object* obj
 void
 ObImgs_Manager::ReleaseImage( const wxString& _key )
 {
-	string key(_key.c_str());
+	string key((char*)_key.c_str());
 	map<string,Img_Collection*>::iterator it(theImgsMap.find(key));
 
 	// Collection exists in DB
@@ -1034,7 +1034,7 @@ ObImgs_Manager::ReleaseImage( const wxString& _key )
 Img_Collection*
 ObImgs_Manager::GetCollection(ob_object* obj, const wxString& imgPath, bool b_quiet )
 {
-	string key(imgPath.c_str());
+	string key((char*)imgPath.c_str());
 	map<string,Img_Collection*>::iterator it(theImgsMap.find(key));
 	
 	// Collection exists in DB
@@ -1129,7 +1129,7 @@ ObImgs_Manager::GetImageSrc( ob_object* obj, const wxString& imgPath, bool b_qui
 bool     
 ObImgs_Manager::IsImageExists( const wxString& key )
 {
-	return ( theImgsMap.find(string(key.c_str())) != theImgsMap.end() );
+	return ( theImgsMap.find(string((char*)key.c_str())) != theImgsMap.end() );
 }
 
 
@@ -1165,7 +1165,7 @@ Get_Image_StageCursor(	const wxSize& view_size ,
 				const  wxString& label
 				)
 {
-	wxString img_key = "Cursor_" + label;
+	wxString img_key = wxT("Cursor_") + label;
 	wxSize clientSize(view_size.x*zoom_factor, view_size.y*zoom_factor );
 	
 	// Try the potentially already builded one
@@ -1295,7 +1295,7 @@ Get_Image_Rect(		wxString& img_key,
 				const wxColour& color
 				)
 {
-	img_key = "Rect_" + IntToStr( ID_Rect );
+	img_key = wxT("Rect_") + IntToStr( ID_Rect );
 	int spaces = (4/MAP_ZF);
 	wxSize btmp_size( ob_width*zoom_factor + spaces*2, ob_height*zoom_factor + spaces*2 );
 

@@ -67,7 +67,7 @@ void frameEdit_request::Set(
 	enums = _enums;
 	labelw = _labelw;
 	fieldw = _fieldw;
-	defVal = "";
+	defVal = wxString();
 	missing_tokens = NULL;
 	nb_missing_tokens = 0;
 	b_optional = false;
@@ -164,7 +164,7 @@ FrameEditProperties::FrameEditProperties(wxWindow *_parent,
 	sizerMain = NULL;
 	sizerTop = NULL;
 
-	wndSavingName ="FrameEditProperties";
+	wndSavingName =wxT("FrameEditProperties");
 	theHistoryManager.Set_State(false);
 }
 
@@ -251,7 +251,7 @@ void FrameEditProperties::InitControls()
 		{
 			wxValidator* _validator;
 			if( reqs[i].GetPropType() == PROPTYPE_NUMBER )
-				_validator = new wxValidator_Restrict( "0123456789");
+				_validator = new wxValidator_Restrict( wxT("0123456789"));
 			else if( reqs[i].GetPropType() == PROPTYPE_NEGATIVENUMBER )
 				_validator = new wxValidatorIntegerNegative();
 			else if( reqs[i].GetPropType() == PROPTYPE_RELATIVENUMBER )
@@ -284,7 +284,7 @@ void FrameEditProperties::InitControls()
 
 		case PROPTYPE_ENUMS:
 		{
-			wxComboBox* cbCtrl_temp = new wxComboBox(this, wxID_ANY, ""
+			wxComboBox* cbCtrl_temp = new wxComboBox(this, wxID_ANY, wxString()
 					, wxDefaultPosition, wxDefaultSize
 					, reqs[i].enums,
 					wxCB_DROPDOWN | wxCB_READONLY );
@@ -298,7 +298,7 @@ void FrameEditProperties::InitControls()
 
 		case PROPTYPE_RANGE:
 		{
-			wxComboBox* cbCtrl_temp = new wxComboBox(this, wxID_ANY, ""
+			wxComboBox* cbCtrl_temp = new wxComboBox(this, wxID_ANY, wxString()
 					, wxDefaultPosition, wxDefaultSize
 					, reqs[i].enums,
 					wxCB_DROPDOWN | wxCB_READONLY );
@@ -312,7 +312,7 @@ void FrameEditProperties::InitControls()
 
 		case PROPTYPE_OBFILE:
 		{
-			prObFileChooserCtrl *fileChooser_temp = new prObFileChooserCtrl( this, wxID_ANY, "", true, reqs[i].fieldw );
+			prObFileChooserCtrl *fileChooser_temp = new prObFileChooserCtrl( this, wxID_ANY, wxString(), true, reqs[i].fieldw );
 			fileChooser_temp->SetObPath( GetObjValue( i ) );
 			sizer_temp->Add( fileChooser_temp );
 			sizerTop->Add(sizer_temp, 0, wxEXPAND );
@@ -325,11 +325,11 @@ void FrameEditProperties::InitControls()
 	sizerMain->AddSpacer( 20 );
 
 	int btn_style = 0;
-	wxButton *btn_OK = new wxButton( this, wxID_ANY, "OK" );
+	wxButton *btn_OK = new wxButton( this, wxID_ANY, wxT("OK") );
 	sizerBottom->Add(btn_OK, 0, btn_style );
 	btn_OK->Connect( wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED,
 					wxCommandEventHandler(FrameEditProperties::EvtClickOK), NULL, this );
-	wxButton* btn_CANCEL = new wxButton( this, wxID_ANY, "CANCEL" );
+					wxButton* btn_CANCEL = new wxButton( this, wxID_ANY, wxT("CANCEL") );
 	btn_CANCEL->Connect( wxID_ANY, wxEVT_COMMAND_BUTTON_CLICKED,
 					wxCommandEventHandler(FrameEditProperties::EvtClickCancel), NULL, this );
 	sizerBottom->Add(btn_CANCEL, 0, btn_style );
@@ -459,36 +459,36 @@ void FrameEditProperties::InitObj()
 wxString FrameEditProperties::GetObjValue( int i )
 {
 	if( i < 0 || i >= nb_props )
-		return "";
+		return wxString();
 
 
 	wxString res;
 	// Object name
-	if( reqs[i].name ==  "_NAME_" )
+	if( reqs[i].name ==  wxT("_NAME_") )
 	{
 		res = theObj->name;
 	}
 
 	// Token request
-	else if( reqs[i].name.Mid( 0, wxString("_TOKEN_").Len() ) == "_TOKEN_" )
+	else if( reqs[i].name.Mid( 0, wxString::FromAscii("_TOKEN_").Len() ) == wxT("_TOKEN_") )
 	{
-		int t = wxString("_TOKEN_").Len();
+		int t = wxString::FromAscii("_TOKEN_").Len();
 		int num_tok = StrToInt( reqs[i].name.Mid( t ,reqs[i].name.Len() - t ) );
 		res = theObj->GetToken( num_tok );
 	}
 
 	// All Tokens request
-	else if( reqs[i].name.Mid( 0, wxString("_ALLTOKENS_").Len() ) == "_ALLTOKENS_" )
+	else if( reqs[i].name.Mid( 0, wxString::FromAscii("_ALLTOKENS_").Len() ) == wxT("_ALLTOKENS_") )
 	{
 		res = theObj->GetAllTokenToStr();
 	}
 
 	// Deep search in subobject
-	else if( reqs[i].name.Mid( 0, wxString("_SUBOBJ_").Len() ) == "_SUBOBJ_" )
+	else if( reqs[i].name.Mid( 0, wxString::FromAscii("_SUBOBJ_").Len() ) == wxT("_SUBOBJ_") )
 	{
-		int t = wxString("_SUBOBJ_").Len();
+		int t = wxString::FromAscii("_SUBOBJ_").Len();
 		wxString sub_request = reqs[i].name.Mid( t ,reqs[i].name.Len() - t );
-		wxArrayString request = StrSplit( sub_request, "%" );
+		wxArrayString request = StrSplit( sub_request, wxT("%") );
 
 		if( request.Count() >= 3 )
 		{
@@ -500,21 +500,21 @@ wxString FrameEditProperties::GetObjValue( int i )
 		if(		(request.Count() != 3 && request.Count() != 4 && request.Count() != 6 )
 				||
 				(request.Count() == 6 &&
-						( request[0] != "NAME" && request[0] != "TYPE"
-							&& request[2] != "NUM" && request[4] != "PROP" && request[4] != "TOKEN"))
+				( request[0] != wxT("NAME") && request[0] != wxT("TYPE")
+				&& request[2] != wxT("NUM") && request[4] != wxT("PROP") && request[4] != wxT("TOKEN")))
 				||
 				(request.Count() == 4 &&
-						(	request[0] != "NUM" && request[0] != "NAME" &&
-							request[2] != "PROP" && request[0] != "TOKEN" ))
+				(	request[0] != wxT("NUM") && request[0] != wxT("NAME") &&
+				request[2] != wxT("PROP") && request[0] != wxT("TOKEN") ))
 				||
 				(request.Count() == 3 &&
-						(	request[0] != "NUM" && request[0] != "NAME" &&
-							request[2] != "ALLTOKENS" ))
+				(	request[0] != wxT("NUM") && request[0] != wxT("NAME") &&
+				request[2] != wxT("ALLTOKENS") ))
 		  )
 		{
-		    wxMessageBox( "FrameEditProperties::GetObjValue : Invalid resquest\n" + reqs[i].name,
-		                  "BUG", wxOK | wxICON_INFORMATION, this );
-			return "";
+			wxMessageBox( wxT("FrameEditProperties::GetObjValue : Invalid resquest\n") + reqs[i].name,
+				      wxT("BUG"), wxOK | wxICON_INFORMATION, this );
+				      return wxString();
 		}
 
 		// GET THE SUBOBJECT
@@ -522,11 +522,11 @@ wxString FrameEditProperties::GetObjValue( int i )
 		int ind_req = 0;
 
 
-		if( request[0] == "NAME" )
+		if( request[0] == wxT("NAME") )
 		{
 			wxString subName = request[1];
 
-			if( request[2] == "NUM" )
+			if( request[2] == wxT("NUM") )
 			{
 				int subobj_num = StrToInt(request[3]);
 				size_t subobj_count;
@@ -551,14 +551,14 @@ wxString FrameEditProperties::GetObjValue( int i )
 			}
 		}
 
-		else if( request[0] == "TYPE" )
+		else if( request[0] == wxT("TYPE") )
 		{
 			int subType = StrToInt( request[1] );
 			size_t subobj_count;
 			ob_object** subobjs = 
 				theObj->GetSubObjectS_ofType(subType , subobj_count );
 
-			if( request[2] == "NUM" )
+			if( request[2] == wxT("NUM") )
 			{
 				size_t subobj_num = StrToInt(request[3]);
 				if( subobj_num >= subobj_count)
@@ -608,25 +608,25 @@ wxString FrameEditProperties::GetObjValue( int i )
 
 		// Ok, we've got the subobj, so , get the thing
 		wxString req_atom = request[ind_req];
-		if( req_atom != "PROP" && req_atom != "TOKEN" && req_atom != "ALLTOKENS" )
+		if( req_atom != wxT("PROP") && req_atom != wxT("TOKEN") && req_atom != wxT("ALLTOKENS") )
 		{
-		    wxMessageBox( "FrameEditProperties::GetObjValue : Invalid resquest\n" + reqs[i].name,
-		                  "BUG", wxOK | wxICON_INFORMATION, this );
-			return "";
+			wxMessageBox( wxT("FrameEditProperties::GetObjValue : Invalid resquest\n") + reqs[i].name,
+				      wxT("BUG"), wxOK | wxICON_INFORMATION, this );
+				      return wxString();
 		}
 
-		if( req_atom == "TOKEN" )
+		if( req_atom == wxT("TOKEN") )
 		{
 			int num_token = StrToInt( request[ind_req+1] );
 			res = subobj->GetToken( num_token );
 		}
-		else if( req_atom == "ALLTOKENS" )
+		else if( req_atom == wxT("ALLTOKENS") )
 			res = subobj->GetAllTokenToStr();
 
-		else if( req_atom == "PROP" )
+		else if( req_atom == wxT("PROP") )
 		{
 			if( reqs[i].GetPropType() == PROPTYPE_BOOL_EXSISTENCE )
-				res = "1";
+				res = wxT("1");
 			else
 				res = subobj->GetSubObject_Token( request[ind_req+1] );
 		}
@@ -644,12 +644,12 @@ wxString FrameEditProperties::GetObjValue( int i )
 		}
 
 		if( reqs[i].GetPropType() == PROPTYPE_BOOL_EXSISTENCE )
-			res = (theObj->GetSubObject(reqs[i].name ) != NULL ) ? "1" : "" ;
+			res = (theObj->GetSubObject(reqs[i].name ) != NULL ) ? wxT("1") : wxString() ;
 		else
 			res = theObj->GetSubObject_Token( reqs[i].name );
 	}
 
-	if( res == "" )
+	if( res == wxString() )
 		return reqs[i].defVal;
 	else
 		return res;
@@ -734,7 +734,7 @@ bool FrameEditProperties::IsChanged()
 		
 		default:
 		{
-			wxMessageBox( "ERROR\nFrameEditProperties::IsChanged()\nUnhandled PROPTYPE : " + IntToStr(reqs[i].GetPropType()), "BUGG!" );
+			wxMessageBox( wxT("ERROR\nFrameEditProperties::IsChanged()\nUnhandled PROPTYPE : ") + IntToStr(reqs[i].GetPropType()), wxT("BUGG!") );
 			break;
 		}
 		}
@@ -803,14 +803,14 @@ int FrameEditProperties::WriteChangesToObject()
 			if( 	   reqs[i].b_optional == false 
 				|| reqs[i].defVal != bool_val
 				)
-				if( ! SetObjValue(i, bool_val, "__FALSE__" ) )
+				if( ! SetObjValue(i, bool_val, wxT("__FALSE__") ) )
 					err++;
 			break;
 		}
 		case PROPTYPE_BOOL_EXSISTENCE:
 		{
 			bool _bsetit = ((wxCheckBox*)reqs[i].ctrl)->GetValue();
-			if( ! SetObjValue(i, "", _bsetit ? "SETIT" : "" ) )
+			if( ! SetObjValue(i, wxString(), _bsetit ? wxT("SETIT") : wxString() ) )
 				err++;
 			break;
 		}
@@ -868,49 +868,49 @@ bool FrameEditProperties::SetObjValue( int i, const wxString& val, const wxStrin
 		return false;
 
 	bool b_delete = false;
-	if( origin_val == "" && reqs[i].b_del_ifempty )
+	if( origin_val == wxString() && reqs[i].b_del_ifempty )
 		b_delete = true;
 
 	// Object name
-	if( reqs[i].name ==  "_NAME_" )
+	if( reqs[i].name ==  wxT("_NAME_") )
 	{
 		theObj->SetName( val );
 	}
 
 	// Token request
-	else if( reqs[i].name.Mid( 0, wxString("_TOKEN_").Len() ) == "_TOKEN_" )
+	else if( reqs[i].name.Mid( 0, wxString::FromAscii("_TOKEN_").Len() ) == wxT("_TOKEN_") )
 	{
-		int t = wxString("_TOKEN_").Len();
+		int t = wxString::FromAscii("_TOKEN_").Len();
 		int num_tok = StrToInt( reqs[i].name.Mid( t ,reqs[i].name.Len() - t ) );
 		return theObj->SetToken( num_tok, val, reqs[i].missing_tokens, reqs[i].nb_missing_tokens );
 	}
 
 	// All Tokens request
-	else if( reqs[i].name.Mid( 0, wxString("_ALLTOKENS_").Len() ) == "_ALLTOKENS_" )
+	else if( reqs[i].name.Mid( 0, wxString::FromAscii("_ALLTOKENS_").Len() ) == wxT("_ALLTOKENS_") )
 	{
 		return theObj->SetAllTokenFromStr( val );
 	}
 
 	// Deep search in subobject
-	else if( reqs[i].name.Mid( 0, wxString("_SUBOBJ_").Len() ) == "_SUBOBJ_" )
+	else if( reqs[i].name.Mid( 0, wxString::FromAscii("_SUBOBJ_").Len() ) == wxT("_SUBOBJ_") )
 	{
-		int t = wxString("_SUBOBJ_").Len();
+		int t = wxString::FromAscii("_SUBOBJ_").Len();
 		wxString sub_request = reqs[i].name.Mid( t ,reqs[i].name.Len() - t );
-		wxArrayString request = StrSplit( sub_request, "%" );
+		wxArrayString request = StrSplit( sub_request, wxT("%") );
 
 		if(		(request.Count() != 3 && request.Count() != 4 && request.Count() != 6 )
 				||
 				(request.Count() == 6 &&
-						( request[0] != "NAME" && request[0] != "TYPE"
-							&& request[2] != "NUM" && request[4] != "PROP" && request[4] != "TOKEN"))
+				( request[0] != wxT("NAME") && request[0] != wxT("TYPE")
+				&& request[2] != wxT("NUM") && request[4] != wxT("PROP") && request[4] != wxT("TOKEN")))
 				||
 				(request.Count() == 4 &&
-						(	request[0] != "NUM" && request[0] != "NAME" &&
-							request[2] != "PROP" && request[0] != "TOKEN" ))
+				(	request[0] != wxT("NUM") && request[0] != wxT("NAME") &&
+				request[2] != wxT("PROP") && request[0] != wxT("TOKEN") ))
 				||
 				(request.Count() == 3 &&
-						(	request[0] != "NUM" && request[0] != "NAME" &&
-							request[2] != "ALLTOKENS" ))
+				(	request[0] != wxT("NUM") && request[0] != wxT("NAME") &&
+				request[2] != wxT("ALLTOKENS") ))
 		  )
 		{
 			return false;
@@ -921,11 +921,11 @@ bool FrameEditProperties::SetObjValue( int i, const wxString& val, const wxStrin
 		int ind_req = 0;
 
 
-		if( request[0] == "NAME" )
+		if( request[0] == wxT("NAME") )
 		{
 			wxString subName = request[1];
 
-			if( request[2] == "NUM" )
+			if( request[2] == wxT("NUM") )
 			{
 				int subobj_num = StrToInt(request[3]);
 				size_t subobj_count;
@@ -957,14 +957,14 @@ bool FrameEditProperties::SetObjValue( int i, const wxString& val, const wxStrin
 			}
 		}
 
-		else if( request[0] == "TYPE" )
+		else if( request[0] ==wxT("TYPE") )
 		{
 			int subType = StrToInt( request[1] );
 			size_t subobj_count;
 			ob_object** subobjs = 
 				theObj->GetSubObjectS_ofType(subType , subobj_count );
 
-			if( request[2] == "NUM" )
+			if( request[2] == wxT("NUM") )
 			{
 				size_t subobj_num = StrToInt(request[3]);
 				if( subobj_num >= subobj_count )
@@ -1009,12 +1009,12 @@ bool FrameEditProperties::SetObjValue( int i, const wxString& val, const wxStrin
 
 		// Ok, we've got the subobj, so , get the thing
 		wxString req_atom = request[ind_req];
-		if( req_atom != "PROP" && req_atom != "TOKEN" && req_atom != "ALLTOKENS" )
+		if( req_atom != wxT("PROP") && req_atom != wxT("TOKEN") && req_atom != wxT("ALLTOKENS") )
 			return false;
 
-		if( req_atom == "TOKEN" )
+		if( req_atom == wxT("TOKEN") )
 		{
-			wxString _t = ":" + val;
+			wxString _t = wxT(":") + val;
 			if( ! b_delete )
 			{
 				int num_token = StrToInt( request[ind_req+1] );
@@ -1026,7 +1026,7 @@ bool FrameEditProperties::SetObjValue( int i, const wxString& val, const wxStrin
 				return true;
 			}
 		}
-		else if( req_atom == "ALLTOKENS" )
+		else if( req_atom == wxT("ALLTOKENS") )
 		{
 			if( ! b_delete )
 				return subobj->SetAllTokenFromStr(val);
@@ -1037,7 +1037,7 @@ bool FrameEditProperties::SetObjValue( int i, const wxString& val, const wxStrin
 			}
 		}
 
-		else if( req_atom == "PROP" )
+		else if( req_atom == wxT("PROP") )
 		{
 			if( ! b_delete )
 			{
@@ -1236,8 +1236,8 @@ GridOb_ObjectProperties::GridOb_ObjectProperties( wxWindow* _parent, bool _b_sor
 	CreateGrid( 5, 2 );
 	SetRowLabelSize(30);
 	AutoSizeColumn(0 );
-	SetColLabelValue(0, "Tag" );
-	SetColLabelValue(1, "Value" );
+	SetColLabelValue(0, wxT("Tag") );
+	SetColLabelValue(1, wxT("Value") );
 	DisableDragColMove();
 	RefreshProperties();
 }
@@ -1363,7 +1363,7 @@ void GridOb_ObjectProperties::RefreshProperties()
 void GridOb_ObjectProperties::_AppendProp( ob_object* theProp, int& curr_row )
 {
 	wxString tag = theProp->name;
-	if( theProp->name == "" )
+	if( theProp->name == wxString() )
 	{
 //		MyLog( MYLOG_ERROR, "GridOb_ObjectProperties::_AppendProp", "A prop with empty name can't be appended" );
 		return;
@@ -1475,14 +1475,14 @@ void GridOb_ObjectProperties::EvtPropertyChange( wxGridEvent& event )
     	//CHeck there is no space in the data
     	if( newData.Find( ' ' ) != wxNOT_FOUND || newData.Find( '\t' ) != wxNOT_FOUND )
     	{
-		    wxMessageBox( "Tags must not contains blank spaces",
-		                  "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Tags must not contains blank spaces"),
+			      wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		     b_abort = true;
     	}
 
     	if( IsToExclude( newData ) )
     	{
-		    wxMessageBox( "Tag " + newData + " is filtered !!", "Error", wxOK | wxICON_EXCLAMATION, GetParent() );
+		wxMessageBox( wxT("Tag ") + newData + wxT(" is filtered !!"), wxT("Error"), wxOK | wxICON_EXCLAMATION, GetParent() );
     		b_abort = true;
     	}
 
@@ -1492,7 +1492,7 @@ void GridOb_ObjectProperties::EvtPropertyChange( wxGridEvent& event )
 		    if( _row > 0 )
 		    	SetCellValue(_row, _col, GetPrevPropertyName( _row ));
 		    else
-		    	SetCellValue(_row, _col, "");
+		    	SetCellValue(_row, _col, wxString());
 		    b_changing_prop = false;
 		    return;
     	}
@@ -1576,18 +1576,18 @@ bool GridOb_ObjectProperties::ProcessEvent( wxEvent& event )
 wxString GridOb_ObjectProperties::GetPrevPropertyName( int _row )
 {
 	if( _row == 0 )
-		return "";
+		return wxString();
 
 	// Out of bound parameter
 	if( _row <= 0 || _row > (int) nb_Props )
 	{
-	    wxMessageBox( "GetPrevPropertyName() : out of bound param !", "Error", wxOK | wxICON_EXCLAMATION, GetParent() );
-		return "";
+		wxMessageBox( wxT("GetPrevPropertyName() : out of bound param !"), wxT("Error"), wxOK | wxICON_EXCLAMATION, GetParent() );
+		return wxString();
 	}
 
 	ob_object* obj = arr_Props[_row -1];
 	if( obj == NULL )
-		return "";
+		return wxString();
 	return obj->name;
 }
 
@@ -1615,23 +1615,23 @@ bool GridOb_ObjectProperties::SetObjProperty_fromRow( int _row )
 {
 	if( theObj == NULL )
 	{
-		wxMessageBox( "BUG\nGridOb_ObjectProperties::SetObjProperty_fromRow()\n\nNo Object associate...\n");
+		wxMessageBox( wxT("BUG\nGridOb_ObjectProperties::SetObjProperty_fromRow()\n\nNo Object associate...\n"));
 		return false;
 	}
 
 	// Out of bound parameter
 	if( _row < 0 || _row > (int) nb_Props )
 	{
-	    wxMessageBox( "SetObjProperty_fromRow() : out of bound param !", "Error", wxOK | wxICON_EXCLAMATION, GetParent() );
+		wxMessageBox( wxT("SetObjProperty_fromRow() : out of bound param !"), wxT("Error"), wxOK | wxICON_EXCLAMATION, GetParent() );
 		return false;
 	}
 
 	wxString _name = GetCellValue( _row, 0 );
 
 	// No unamed properties
-	if( _name == "" )
+	if( _name == wxString() )
 	{
-	    wxMessageBox( "Can't set to empty property !", "Error", wxOK | wxICON_EXCLAMATION, GetParent() );
+		wxMessageBox( wxT("Can't set to empty property !"), wxT("Error"), wxOK | wxICON_EXCLAMATION, GetParent() );
 	    SetCellValue(_row, 0, GetPrevPropertyName( _row ));
 		return false;
 	}
@@ -1655,7 +1655,7 @@ bool GridOb_ObjectProperties::SetObjProperty_fromRow( int _row )
 		// Check if the property doesn't already exists
 		if( theObj->GetSubObject( _name ) != NULL )
 		{
-		    wxMessageBox( "This property allready exists !", "Error", wxOK | wxICON_EXCLAMATION, GetParent() );
+			wxMessageBox( wxT("This property allready exists !"), wxT("Error"), wxOK | wxICON_EXCLAMATION, GetParent() );
 			return false;
 		}
 
@@ -1706,7 +1706,7 @@ bool GridOb_ObjectProperties::IsToExclude( const wxString& _name, ob_object* t )
 			i = filter.Count();
 		}
 
-		if( _name.Upper().Find("UNSPECIFIED") != wxNOT_FOUND )
+	if( _name.Upper().Find(wxT("UNSPECIFIED")) != wxNOT_FOUND )
 		{
 			res = true;
 			i = filter.Count();
@@ -1754,7 +1754,7 @@ WndFromText::WndFromText( wxWindow* _parent, const wxString& _title, const wxStr
 			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER )
 {
 	wxBoxSizer *sizer_main = new wxBoxSizer( wxVERTICAL );
-	wxTextCtrl *theTextCtrl = new wxTextCtrl( this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize,
+	wxTextCtrl *theTextCtrl = new wxTextCtrl( this, wxID_ANY, wxString(), wxDefaultPosition, wxDefaultSize,
 				wxTE_READONLY | wxTE_BESTWRAP | wxTE_MULTILINE );
 	theTextCtrl->LoadFile( path );
 
@@ -1788,7 +1788,7 @@ WndImgShow::WndImgShow( wxWindow* _parent, const wxString& _title
 	imgCtrl->SetMaxSize( wxSize( 500, 500));
 	sizer_main->Add( imgCtrl, 1, wxEXPAND );
 	
-	if( some_text != "" )
+	if( some_text != wxString() )
 	{
 		wxStaticText* txtCtrl = new wxStaticText( this , wxID_ANY, some_text );
 		sizer_main->Add( txtCtrl, 0, wxALL, 3 );

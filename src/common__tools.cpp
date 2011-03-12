@@ -35,10 +35,10 @@ bool Frame_RestorePrevCoord( wxWindow* it, const wxString& _name )
 {
   	int last_x, last_y, last_width, last_height;
   	bool b_ok = true;
-  	b_ok = config->Read( "/" + _name + wxString("/last_x"), &last_x, 20) && b_ok;
-  	b_ok = config->Read( "/" + _name + wxString("/last_y"), &last_y, 20) && b_ok;
-  	b_ok = config->Read( "/" + _name + wxString("/last_width"), &last_width, 400) && b_ok;
-  	b_ok = config->Read( "/" + _name + wxString("/last_height"), &last_height, 200) && b_ok;
+  	b_ok = config->Read(wxT("/")+ _name + wxT("/last_x"), &last_x, 20) && b_ok;
+  	b_ok = config->Read(wxT("/")+ _name + wxT("/last_y"), &last_y, 20) && b_ok;
+  	b_ok = config->Read(wxT("/")+ _name + wxT("/last_width"), &last_width, 400) && b_ok;
+  	b_ok = config->Read(wxT("/")+ _name + wxT("/last_height"), &last_height, 200) && b_ok;
 
   	it->SetSize(last_width,last_height);
   	it->Move( last_x,last_y );
@@ -53,23 +53,23 @@ void Frame_SaveCoord( wxWindow* it, const wxString& name )
   	wxPoint _position = it->GetScreenPosition();
 
   	bool b_ok = true;
-  	b_ok = config->Write( "/" + name + wxString("/last_x"), _position.x ) && b_ok;
-  	b_ok = config->Write( "/" + name + wxString("/last_y"), _position.y ) && b_ok;
-  	b_ok = config->Write( "/" + name + wxString("/last_width"), _width ) && b_ok;
-  	b_ok = config->Write( "/" + name + wxString("/last_height"), _height ) && b_ok;
+  	b_ok = config->Write(wxT("/")+ name + wxT("/last_x"), _position.x ) && b_ok;
+  	b_ok = config->Write(wxT("/")+ name + wxT("/last_y"), _position.y ) && b_ok;
+  	b_ok = config->Write(wxT("/")+ name + wxT("/last_width"), _width ) && b_ok;
+  	b_ok = config->Write(wxT("/")+ name + wxT("/last_height"), _height ) && b_ok;
 
   	if( ! b_ok )
-	    wxMessageBox( "Cannot save Coords for window " + name,
-	                  "ProPlem", wxOK | wxICON_INFORMATION, it );
+	    wxMessageBox(wxT("Cannot save Coords for window ") + name,
+	                 wxT("ProPlem"), wxOK | wxICON_INFORMATION, it );
 }
 
 
 void Frame_DestroySavedCoord( const wxString& _name )
 {
-  	config->DeleteEntry( "/" + _name + wxString("/last_x"));
-  	config->DeleteEntry( "/" + _name + wxString("/last_y"));
-  	config->DeleteEntry( "/" + _name + wxString("/last_width"));
-  	config->DeleteEntry( "/" + _name + wxString("/last_height"));
+  	config->DeleteEntry(wxT("/")+ _name + wxT("/last_x"));
+  	config->DeleteEntry(wxT("/")+ _name + wxT("/last_y"));
+  	config->DeleteEntry(wxT("/")+ _name + wxT("/last_width"));
+  	config->DeleteEntry(wxT("/")+ _name + wxT("/last_height"));
 
   	return;
 }
@@ -99,27 +99,27 @@ void OpenInExternalEditor( wxWindow* parent, const wxString& filePath )
 	wxString editor_path;
 	if( ! config->Read( wxT("/startFrame/editor_program"), &editor_path ) )
 	{
-		wxMessageBox( "Did you correctly set the editor in the start window ??",
-						  "ProPlem", wxOK | wxICON_EXCLAMATION, parent );
+		wxMessageBox(wxT("Did you correctly set the editor in the start window ??"),
+						 wxT("ProPlem"), wxOK | wxICON_EXCLAMATION, parent );
 		return;
 	}
 
 	if( ! wxFileName(editor_path).FileExists() )
 	{
-		wxMessageBox( "Unable to find " + editor_path + " ??",
-						  "ProPlem", wxOK | wxICON_EXCLAMATION, parent );
+		wxMessageBox(wxT("Unable to find ")+ editor_path +wxT(" ??"),
+						 wxT("ProPlem"), wxOK | wxICON_EXCLAMATION, parent );
 		return;
 	}
 
 	if( ! wxFileName(filePath).FileExists() )
 	{
-		wxMessageBox( "Unable to open the file \n\n" + filePath,
-						  "ProPlem", wxOK | wxICON_EXCLAMATION, parent );
+		wxMessageBox(wxT("Unable to open the file \n\n")+ filePath,
+						 wxT("ProPlem"), wxOK | wxICON_EXCLAMATION, parent );
 		return;
 	}
 
 	// Launch the editor
-	wxExecute( wxString("\"") + editor_path + "\" \"" + filePath + "\"" );
+	wxExecute( wxT("\"") + editor_path + wxT("\" \"") + filePath + wxT("\"") );	
 }
 
 
@@ -240,7 +240,7 @@ imgFile* Image_Holder::Get_GIF_or_PNG()
 
 	wxFileName fn = GetFileName();
 	wxString str_path = fn.GetFullPath();
-	if( str_path == "" )
+	if( str_path ==wxString() )
 		return NULL;
 
 	if( ! fn.FileExists() )
@@ -250,10 +250,10 @@ imgFile* Image_Holder::Get_GIF_or_PNG()
 	if( IsFileEmpty( str_path))
 		return NULL;
 
-	if( fn.GetExt().Upper() == "PNG" )
+	if( fn.GetExt().Upper() ==wxT("PNG"))
 		png_or_gif = new wxIndexedPNG( str_path );
 
-	else if( fn.GetExt().Upper() == "GIF" )
+	else if( fn.GetExt().Upper() ==wxT("GIF"))
 		png_or_gif = new wxIndexedGIF( str_path );
 
 	else
@@ -274,8 +274,8 @@ wxString
 wxColour_ToStr( const wxColour& c )
 {
 	return 	        IntToStr(c.Red())
-			+ "," + IntToStr(c.Green())
-			+ "," + IntToStr(c.Blue())
+			+wxT(",")+ IntToStr(c.Green())
+			+wxT(",")+ IntToStr(c.Blue())
 			;
 }
 
@@ -283,7 +283,7 @@ wxColour_ToStr( const wxColour& c )
 wxColour
 wxColour_FromStr( const wxString& s )
 {
-	wxArrayString as = StrSplit( s, "," );
+	wxArrayString as = StrSplit( s,wxT(","));
 	return wxColour(    StrToInt(as[0])
 				, StrToInt(as[1])
 				, StrToInt(as[2])
@@ -381,18 +381,18 @@ wxString* Reverse_Null_StrArray( wxString* tokens, size_t tokens_size )
 wxString UnTokenize( ob_object* _obj )
 {
 	if( _obj == NULL)
-		return "";
+		return wxString();
 
 	wxString res;
 	int j = 0;
 	while(j>=0)
 	{
 		wxString _t = _obj->GetToken(j);
-		if( _t == "" )
+		if( _t == wxString() )
 			j = -1;
 		else
 		{
-			res += _t + " ";
+			res += _t + wxT(" ");
 			j++;
 		}
 	}
@@ -415,7 +415,7 @@ wxArrayString ArrayString_PrependAll( const wxArrayString& arrStr, const wxStrin
 wxString ArrayString_Join( const wxArrayString& arrStr, const wxString& _jointure )
 {
 	if( arrStr.Count() <= 0 )
-		return "";
+		return wxString();
 
 	wxString res = arrStr[0];
 	for( size_t i = 1; i < arrStr.Count(); i++)
@@ -489,7 +489,7 @@ float StrToFloat(const wxString& str, bool& ok )
 {
 	double res = 0;
 	wxString t(str);
-	t.Replace( ".", "," );
+	t.Replace( wxT("."), wxT(",") );
 	ok = t.ToDouble(&res);
 	return (float)res;
 }
@@ -504,10 +504,10 @@ wxString FloatToStr( const float f)
 {
 	wxString t;
 	t.Printf( wxT("%f"), f);
-	t.Replace( ",", "." );
-	if( t.Find( '.' ) )
+	t.Replace( wxT(","), wxT(".") );
+	if( t.Find( wxT('.') ) )
 	{
-		while( t[t.Len()-1] == '0' )
+		while( t[t.Len()-1] == wxT('0') )
 			t.Truncate(t.Len() -1 );
 		if( t[t.Len()-1] == '.' )
 			t.Truncate(t.Len() -1 );
@@ -539,7 +539,7 @@ bool StrIsObBool( const wxString& str )
 {
 	if( str.Len() != 1 )
 		return false;
-	if( str[0] != '0' && str[0] != '1' )
+	if( str[0] != wxT('0') && str[0] != wxT('1') )
 		return false;
 	return true;
 }
@@ -568,7 +568,7 @@ bool StrIsFloat( const wxString& str )
 wxString ArrStrConcat( const wxArrayString& arrStr, const wxString& separator  )
 {
 	if( arrStr.Count() == 0 )
-		return "";
+		return wxString();
 
 	wxString res;
 	for( size_t i=0; i < arrStr.Count()-1; i++)
@@ -582,7 +582,7 @@ wxArrayString StrSplit( const wxString& str, const wxString& delim, bool b_remov
 	wxArrayString res;
 	if( str.Len() == 0 )
 	{
-		res.Add("");
+		res.Add(wxString());
 		return res;
 	}
 	if( delim.Len() == 0 )
@@ -628,7 +628,7 @@ inline wxArrayString __Tokenize(  wxArrayString& arr_str, const wxString& delim 
 	// removing empty elts
 	wxArrayString res2;
 	for( size_t i = 0; i < res.Count(); i++ )
-		if( res[i] != "" )
+		if( res[i] != wxString() )
 			res2.Add( res[i]);
 	return res2;
 }
@@ -640,8 +640,8 @@ wxArrayString Tokenize( const wxString& str )
 		return res;
 
 	res.Add( str );
-	res =  __Tokenize(  res, " " );
-	res =  __Tokenize(  res, "\t" );
+	res =  __Tokenize(  res, wxT(" ") );
+	res =  __Tokenize(  res, wxT("\t") );
 	return res;
 }
 
@@ -653,7 +653,7 @@ wxArraystring__Add( wxArrayString& arr_str, size_t nb_str, ... )
 	va_list ap;
 	va_start (ap, nb_str);
 	for( size_t i= 0; i < nb_str; i++ )
-		arr_str.Add( va_arg(ap, const char* ));
+		arr_str.Add( wxString::FromAscii(va_arg(ap, const char* )));
 	va_end (ap);
 }
 
@@ -665,7 +665,7 @@ wxArrayString_Build( size_t nb_str, ... )
 	va_list ap;
 	va_start (ap, nb_str);
 	for( size_t i= 0; i < nb_str; i++ )
-		res.Add( va_arg(ap, const char* ));
+		res.Add( wxString::FromAscii(va_arg(ap, const char* )));
 	va_end (ap);
 	
 	return res;
@@ -680,7 +680,7 @@ wxArrayString_Build( size_t nb_str, ... )
 wxFileName MyDirAppend( const wxFileName dataDirPath, const wxString& subDir )
 {
 	wxFileName res = dataDirPath;
-	wxArrayString arr_dirs = StrSplit( subDir, '/' );
+	wxArrayString arr_dirs = StrSplit( subDir, wxT('/') );
 	for( size_t i = 1; i < arr_dirs.Count(); i++)
 		 res.AppendDir( arr_dirs[i] );
 	return res;
@@ -689,7 +689,7 @@ wxFileName MyDirAppend( const wxFileName dataDirPath, const wxString& subDir )
 wxFileName MyPathAppend( const wxFileName _dataDirPath, const wxString& subPath )
 {
 	wxFileName res = _dataDirPath;
-	wxArrayString arr_dirs = StrSplit( subPath, '/' );
+	wxArrayString arr_dirs = StrSplit( subPath, wxT('/') );
 	if( arr_dirs.Count() == 1 )
 	{
 		return wxFileName(res.GetPath(), arr_dirs[0] );
@@ -719,9 +719,10 @@ wxString Convert_To_Ob_Path( const wxString& s_path )
 	wxString __t = dataDirPath.GetPath();
 
 	wxString _path(s_path);
-	if( _path.Replace( __t , _T(""), false ) == 0 )
+	//if( _path.Replace( __t , _T(""), false ) == 0 ) // FIXME: figure what _T did !
+	if( _path.Replace( __t , wxString(), false ) == 0 )		
 		// No replacement made => not a valid dataDir relative path
-		return "";
+		return wxString();
 
 	wxFileName temp( _path );
 	wxArrayString t_arr = temp.GetDirs();
@@ -733,11 +734,11 @@ wxString Convert_To_Ob_Path( const wxString& s_path )
             return _path;
 	}
 
-	wxString res = ArrStrConcat( t_arr, "/" );
-	if( res[0] == '/' )
+	wxString res = ArrStrConcat( t_arr, wxT("/") );
+	if( res[0] == wxT('/') )
 		res = res.Mid( 1, res.Len() -1 );
-    if( res.Len() > 0 )
-        res += '/' + temp.GetFullName();
+	if( res.Len() > 0 )
+	    res += wxT('/') + temp.GetFullName();
 
 	return res;
 }
@@ -835,7 +836,7 @@ wxString TryRepairObPath( const wxFileName& _fn )
 
 	wxString _fp = _fn.GetFullPath();
 #ifdef OSLINUX
-	_fp.Replace( "\\", "/" );
+	_fp.Replace( wxT("\\"), wxT("/") );
 #endif
 	// Try to find the first existing dir
 	wxArrayString sub_dirs = StrSplit( _fp, wxFileName::GetPathSeparator() );
@@ -845,7 +846,7 @@ wxString TryRepairObPath( const wxFileName& _fn )
 
 	// Nothing in the path exists !!
 	if( ! res )
-		return "";
+		return wxString();
 
 	// Try to rebuild the path dir after dir
 	for( size_t i = ind_sub_dirs; i < sub_dirs.Count(); i++)
@@ -855,7 +856,7 @@ wxString TryRepairObPath( const wxFileName& _fn )
 
 		// If the curr_subdir name is too big => abandon repair
 		if( curr_subdir.Len() > 32 )
-			 return "";
+			 return wxString();
 
 		// Build the starting path of construction
 		long camino = 0;
@@ -884,7 +885,7 @@ wxString TryRepairObPath( const wxFileName& _fn )
 
 		// Not found
 		if( cont != 2 )
-			return "";
+			return wxString();
 
 		// Found !!
 		_curr_path = curr_Try;
@@ -897,7 +898,7 @@ wxString TryRepairObPath( const wxFileName& _fn )
 
 bool SimpleBackUpFile( const wxString& filePath )
 {
-	wxString backup_path = filePath +".bak";
+	wxString backup_path = filePath +wxT(".bak");
 	return wxCopyFile( filePath, backup_path, true );
 }
 
@@ -990,7 +991,7 @@ Repair_Set::RECURS_Repair(ob_object* o)
 				if( wxFileExists(st_file) == false && wxDirExists(st_file) == false )
 				{
 					wxString repaired_path =TryRepairObPath( st_file );
-					if( repaired_path != "" )
+					if( repaired_path != wxString() )
 					{
 						o->SetToken( (*it).num_token, Convert_To_Ob_Path( repaired_path ));
 						res++;
@@ -1036,7 +1037,7 @@ void MyLog( int level, const wxString& source, const wxString& message )
 		return;
 	}
 	
-	if( startFrame->frame_launched == "EDIT_ENTITIES" )
+	if( startFrame->frame_launched == wxT("EDIT_ENTITIES") )
 	{
 		// Keep message when the panel errors is not OK
 		if( panel_Errors == NULL )
@@ -1065,7 +1066,7 @@ void MyLog( int level, const wxString& source, const wxString& message )
 	// START FRAME LOG
 	else
 	{
-		wxString log_mess = source + " : " + message;
+		wxString log_mess = source + wxT(" : ") + message;
 		time_t timestamp;
 		switch(level)
 		{
@@ -1091,11 +1092,11 @@ void MyLog( int level, const wxString& source, const wxString& message )
 void ObjectsLog( int level, int num_line, const wxString& message )
 {
 	wxString source = curr_entity_filename;
-	if( source == "" )
-		source = "models.txt";
+	if( source == wxString() )
+		source = wxT("models.txt");
 
 	if( num_line >= 0 )
-		source += " : line " + IntToStr( num_line );
+		source += wxT(" : line ") + IntToStr( num_line );
 
 	MyLog( level, source, message );
 }
@@ -1173,7 +1174,7 @@ void __logstderr( wxLogLevel level, const wxChar *msg, time_t timestamp)
 void __loggui( wxLogLevel level, const wxChar *msg, time_t timestamp)
 {
 	if( guiLog == NULL )
-		guiLog = new wxLogWindow(startFrame, "Infos", false, false);
+		guiLog = new wxLogWindow(startFrame, wxT("Infos"), false, false);
 	guiLog->Show();
 	wxLog::SetActiveTarget( guiLog );
 	__DispatchMsgLog( level, msg, timestamp);

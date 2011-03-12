@@ -29,9 +29,9 @@ imgFile::LoadImage( const wxString& img_path )
 {
 	wxString ext = img_path.Right(3).Upper();
 	imgFile* res = NULL;
-	if( ext == "GIF" )
+	if( ext == wxT("GIF") )
 		res = new wxIndexedGIF( img_path );
-	else if( ext == "PNG" )
+	else if( ext == wxT("PNG") )
 		res = new wxIndexedPNG( img_path );
 	
 	if( res == NULL )
@@ -62,7 +62,7 @@ void wxIndexedGIF::Init()
     SWidth = SHeight = SColorResolution = SBackGroundColor = 0;
 	RasterBits = NULL;
 	SavedImage = NULL;
-	str_fn ="";
+	str_fn =wxString();
 	type = pIMG_GIF;
 }
 
@@ -92,7 +92,7 @@ void wxIndexedGIF::Reset()
 		SavedImage = NULL;
 	}
     SWidth = SHeight = SColorResolution = SBackGroundColor = 0;
-	str_fn = "";
+	str_fn = wxString();
 }
 
 
@@ -339,7 +339,7 @@ int wxIndexedGIF::ReadGIF( const wxString& _str_fn)
 
 
 	// Try to open source file
-	GifFileType *GifFileIn = DGifOpenFileName( _str_fn );
+	GifFileType *GifFileIn = DGifOpenFileName( (char*)_str_fn.c_str() );
 
 	// Load the gif
 	bool b_err = true;
@@ -400,7 +400,7 @@ int wxIndexedGIF::WriteGIF( const wxString& str_dest )
 		return 1;
 
 	// Try to open dest file
-	GifFileType *GifFileOut = EGifOpenFileName( str_dest, false );
+	GifFileType *GifFileOut = EGifOpenFileName((char*) str_dest.c_str(), false );
 	if( GifFileOut == NULL )
 		return 1;
 

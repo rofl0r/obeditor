@@ -34,7 +34,7 @@ Panel_Errors::Panel_Errors( wxNotebook *onglets, const wxString& _intitul_panel 
 	sizer_main->Add(sizer_down, 0, wxALL | wxEXPAND );
 
 	sizer_down->AddStretchSpacer();
-	wxButton *btn_clear = new wxButton( this, ID_CLEAR, "Clear" );
+	wxButton *btn_clear = new wxButton( this, ID_CLEAR, wxT("Clear") );
 	sizer_down->Add( btn_clear, 0, wxALL | wxALIGN_RIGHT, 8);
 
   	SetSizer( sizer_main );
@@ -43,13 +43,13 @@ Panel_Errors::Panel_Errors( wxNotebook *onglets, const wxString& _intitul_panel 
 
 void Panel_Errors::Init_LstError()
 {
-	lst_errors->InsertColumn(0, "", wxLIST_FORMAT_CENTER, ERR_COL_ICONS_WIDTH);
-	lst_errors->InsertColumn(1, "Source",wxLIST_FORMAT_CENTER , ERR_COL_FILE_WIDTH);
-	lst_errors->InsertColumn(2, "Message", wxLIST_FORMAT_LEFT , 60);
+	lst_errors->InsertColumn(0, wxT(""), wxLIST_FORMAT_CENTER, ERR_COL_ICONS_WIDTH);
+	lst_errors->InsertColumn(1, wxT("Source"),wxLIST_FORMAT_CENTER , ERR_COL_FILE_WIDTH);
+	lst_errors->InsertColumn(2, wxT("Message"), wxLIST_FORMAT_LEFT , 60);
 
     wxImageList *m_imageList = new wxImageList(16, 16, true);
-    m_imageList->Add( wxIcon(GetRessourceFile_String("error_small.png")) );
-    m_imageList->Add( wxIcon(GetRessourceFile_String("warning_small.png")) );
+    m_imageList->Add( wxIcon(GetRessourceFile_String(wxT("error_small.png"))) );
+    m_imageList->Add( wxIcon(GetRessourceFile_String(wxT("warning_small.png"))) );
 //    int img_ind = m_imageList->Add( wxIcon(GetRessourceFile_String("info_small.png")) );
 //	wxMessageBox( "Dummy :" + IntToStr(IMG_ERROR), "Debug", wxOK | wxICON_INFORMATION );
 
@@ -109,7 +109,7 @@ void Panel_Errors::Update_NbErrors()
 {
 	wxString new_intitule = intitule_panel;
 	if( nb_errors != 0 )
-		new_intitule += " (" + IntToStr(nb_errors) + ")";
+		new_intitule += wxT(" (") + IntToStr(nb_errors) + wxT(")");
 
 	entityFrame->SetPanelErrorsIntitule( new_intitule );
 }
@@ -121,8 +121,8 @@ void Panel_Errors::Item_DblClick( wxListEvent& event )
 	temp.SetColumn( 2 );
 	temp.SetId( row );
 	lst_errors->GetItem( temp );
-	wxMessageBox( "<" + temp.GetText() + ">"
-	                  ,"Info", wxOK | wxICON_INFORMATION, this );
+	wxMessageBox( wxT("<") + temp.GetText() + wxT(">")
+	,wxT("Info"), wxOK | wxICON_INFORMATION, this );
 }
 
 void Panel_Errors::EvtKeyDown( wxListEvent& event )

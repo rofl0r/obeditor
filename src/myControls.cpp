@@ -153,7 +153,7 @@ END_EVENT_TABLE()
 //--------------------------------------------------------------------
 
 pComboCtrl_AutoComplete::pComboCtrl_AutoComplete( wxWindow* _parent, bool _b_insensitive, int more_style )
-:wxTextCtrl( _parent, wxID_ANY, "",wxDefaultPosition,wxDefaultSize, 
+:wxTextCtrl( _parent, wxID_ANY, wxString(),wxDefaultPosition,wxDefaultSize, 
 		 wxTE_PROCESS_ENTER| more_style )
 {
 	b_insensitive = _b_insensitive;
@@ -221,7 +221,7 @@ pComboCtrl_AutoComplete::Set_Value( const wxString& that )
 void 
 pComboCtrl_AutoComplete::Add(const wxString& _choice, void* _data, bool b_update_popup_size )
 {
-	if( _choice == "" )
+	if( _choice == wxString() )
 		return;
 	
 	// Don't care if it's already here
@@ -317,7 +317,7 @@ bool
 pComboCtrl_AutoComplete::IsFilteredOut(const wxString& s )
 {
 	wxString _curr = Get_Value();
-	if( _curr == "" )
+	if( _curr == wxString() )
 		return false;
 	
 	if( s.Len() < _curr.Len() )
@@ -355,11 +355,11 @@ void
 pComboCtrl_AutoComplete::Update_choices(bool b_update_popup_size )
 {
 	// Some optimisation in the emtpy case
-	if( Get_Value() == "" )
+	if( Get_Value() == wxString() )
 	{
 		// Clear choice list
 		popup->Clear(false);
-		popup->InsertColumn(0,"");
+		popup->InsertColumn(0,wxString());
 		popup->curr_selection = wxNOT_FOUND;
 		
 		if( b_update_popup_size )
@@ -465,7 +465,7 @@ void
 pComboCtrl_AutoComplete::Update_States()
 {
 	// Back to initial state
-	if( Get_Value() == "" )
+	if( Get_Value() == wxString() )
 	{
 		Set_BackgroundState(false);
 		pSetPopup( false );
@@ -692,7 +692,7 @@ pListViewPopup::pListViewPopup( wxWindow* parent, bool b_insensitive, int more_s
 			, wxLC_SINGLE_SEL|wxLC_REPORT|wxLC_HRULES|wxLC_NO_HEADER
 			  |wxHSCROLL|wxVSCROLL | wxBORDER_SUNKEN|more_style)
 {
-	InsertColumn(0,"");
+	InsertColumn(0,wxString());
 	curr_selection = wxNOT_FOUND;
 	b_insensitive = b_insensitive;
 	x = y = wxDefaultCoord;
@@ -1050,7 +1050,7 @@ void
 pListViewPopup::ShowPopup()
 {
 	if( 	   theCbCtrl->m_state == CAC_STANDALONE 
-		&& theCbCtrl->GetValue() != ""
+		&& theCbCtrl->GetValue() != wxString()
 		&& (theCbCtrl->m_flags & MB_SETTINGPOPUP) == 0
 	  )
 	{
@@ -1069,7 +1069,7 @@ void
 pListViewPopup::HidePopup()
 {
 	if( 	   theCbCtrl->m_state == CAC_AUTOCOMPLETE
-		&& theCbCtrl->GetValue() != ""
+		&& theCbCtrl->GetValue() != wxString()
 		&& (theCbCtrl->m_flags & MB_SETTINGPOPUP) == 0
 	  )
 	{

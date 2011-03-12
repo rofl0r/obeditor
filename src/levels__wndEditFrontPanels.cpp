@@ -33,7 +33,7 @@ wnd_EditFrontPanels::wnd_EditFrontPanels(
 			, ob_StageDeclaration* _stage_declaration
 			, ob_StagesSet* _stage_set
 			)
-:wxDialog( _parent, wxID_ANY, "Edit FrontPanels", wxDefaultPosition, wxDefaultSize
+			:wxDialog( _parent, wxID_ANY, wxT("Edit FrontPanels"), wxDefaultPosition, wxDefaultSize
 		,wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxDEFAULT_DIALOG_STYLE )
 {
 	stage = _stage;
@@ -67,7 +67,7 @@ wnd_EditFrontPanels::wnd_EditFrontPanels(
 	// Control with current layer values
 		// PATH
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "Path" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("Path") )
 					,0,wxALL, BORDERS_SIZES );
 		
 		ctrl_path = new prObFileChooserCtrl( this );
@@ -96,13 +96,13 @@ wnd_EditFrontPanels::wnd_EditFrontPanels(
 	t_sizer2 = new wxBoxSizer( wxHORIZONTAL );
 	t_sizer->Add( t_sizer2, 0, 0 );
 	
-	t_btn = new wxButton( this, wxID_ANY, "Move Up" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Move Up") );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(wnd_EditFrontPanels::Evt_MoveUp)
 		, NULL, this);
 	t_sizer2->Add( t_btn, 0, wxALL, 3 );
 	
-	t_btn = new wxButton( this, wxID_ANY, "Move Down" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Move Down") );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(wnd_EditFrontPanels::Evt_MoveDown)
 		, NULL, this);
@@ -111,13 +111,13 @@ wnd_EditFrontPanels::wnd_EditFrontPanels(
 	t_sizer2 = new wxBoxSizer( wxHORIZONTAL );
 	t_sizer->Add( t_sizer2, 0, 0 );
 	
-	t_btn = new wxButton( this, wxID_ANY, "New" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("New" ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(wnd_EditFrontPanels::Evt_New)
 		, NULL, this);
 	t_sizer2->Add( t_btn, 0, wxALL, 3 );
 
-	t_btn = new wxButton( this, wxID_ANY, "Delete" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Delete" ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(wnd_EditFrontPanels::Evt_Delete)
 		, NULL, this);
@@ -153,7 +153,7 @@ wnd_EditFrontPanels::wnd_EditFrontPanels(
 	t_sizer->AddStretchSpacer(3);
 	
 	// Btns OK CANCEL
-	t_btn = new wxButton( this, wxID_ANY, "OK" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("OK") );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(wnd_EditFrontPanels::Evt_OK)
 		, NULL, this);
@@ -161,7 +161,7 @@ wnd_EditFrontPanels::wnd_EditFrontPanels(
 
 	t_sizer->AddStretchSpacer();
 	
-	t_btn = new wxButton( this, wxID_ANY, "Cancel" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Cancel" ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(wnd_EditFrontPanels::Evt_Cancel)
 		, NULL, this);
@@ -270,7 +270,7 @@ wnd_EditFrontPanels::~wnd_EditFrontPanels()
 void 
 wnd_EditFrontPanels::Zero_Panel_Vals()
 {
-	ctrl_path->SetObPath("data");
+	ctrl_path->SetObPath(wxT("data"));
 }
 
 
@@ -441,7 +441,7 @@ wnd_EditFrontPanels::Evt_OK( wxCommandEvent& evt_menu )
 				{
 					if( prev->InsertObject_After( new_panel ) == false )
 					{
-						wxMessageBox( "Unable to insert frontpanel !", "ERROR !!"
+						wxMessageBox( wxT("Unable to insert frontpanel !"), wxT("ERROR !!")
 								, wxICON_EXCLAMATION | wxOK );
 						delete new_panel;
 					}
@@ -449,7 +449,7 @@ wnd_EditFrontPanels::Evt_OK( wxCommandEvent& evt_menu )
 				else if( stage->Add_SubObj_FrontLayer( new_panel, false )
 					   == false )
 				{
-					wxMessageBox( "Unable to insert frontpanel !", "ERROR !!"
+					wxMessageBox( wxT("Unable to insert frontpanel !"), wxT("ERROR !!")
 							, wxICON_EXCLAMATION | wxOK );
 					delete new_panel;
 				}
@@ -558,7 +558,7 @@ wnd_EditFrontPanels::Evt_New( wxCommandEvent& evt_menu )
 	{
 		delete t.theObj;
 		t.theObj = NULL;
-		wxMessageBox( "TOO MUCH PANELS !" );
+		wxMessageBox( wxT("TOO MUCH PANELS !") );
 		return;
 	}
 	
@@ -586,7 +586,7 @@ wnd_EditFrontPanels::Evt_Delete( wxCommandEvent& evt_menu )
 	if( num == wxNOT_FOUND || num >= (int) nb_panels )
 		return;
 	
-	int res = wxMessageBox( "Sure to delete this panel ?", "Warning !"
+	int res = wxMessageBox( wxT("Sure to delete this panel ?"), wxT("Warning !")
 					, wxICON_EXCLAMATION | wxYES_NO, this );
 	if( res != wxYES )
 		return;

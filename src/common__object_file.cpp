@@ -27,10 +27,10 @@ MyToken::MyToken()
 MyToken::MyToken( const wxString& _prefix, const wxString& _data)
 {
 	prefix = NULL;
-	if( _prefix != "" )
+	if( _prefix != wxString() )
 		prefix = new wxString( _prefix );
 	data = NULL;
-	if( _data != "" )
+	if( _data != wxString() )
 		data = new wxString( _data );
 }
 
@@ -80,7 +80,7 @@ MyToken::~MyToken()
 wxString MyToken::Prefix()const
 {
 	if( prefix == NULL )
-		return "";
+		return wxString();
 	return *prefix;
 }
 
@@ -159,7 +159,7 @@ wxString* MyLine::GetDatas()const
 	for( size_t i =0; i< nb_tokens; i++)
 	{
 		if( arr_tokens[i].data ==NULL )
-			res[i] = "";
+			res[i] = wxString();
 		else
 			res[i] = *(arr_tokens[i].data);
 	}
@@ -194,7 +194,7 @@ size_t MyLine::GetTokensCount()const
 wxString MyLine::Comment()const
 {
 	if( comment == NULL )
-		return "";
+		return wxString();
 	return *comment;
 }
 
@@ -216,7 +216,7 @@ wxString MyLine::Tag()const
 {
 	if( nb_tokens > 0 )
 		return *arr_tokens[0].data;
-	return "";
+	return wxString();
 }
 
 
@@ -278,7 +278,7 @@ void MyLine::Tokenize( const wxString& raw_MyLine, MyToken*& arr_tokens, size_t&
 		{
 			data = raw_MyLine.Mid(start, i-start);
 			AppendToken( prefix, data );
-			prefix = "";
+			prefix = wxString();
 			start = i;
 			bascule = 0;
 		}
@@ -288,7 +288,7 @@ void MyLine::Tokenize( const wxString& raw_MyLine, MyToken*& arr_tokens, size_t&
 			{
 				data = raw_MyLine.Mid(start, i-start);
 				AppendToken( prefix, data );
-				prefix="";
+				prefix=wxString();
 			}
 			else
 				prefix = raw_MyLine.Mid(start, i-start);
@@ -380,7 +380,7 @@ void obFile::ZeroInit()
 	nb_lines = 0;
 	alloced_lines = 0;
 	lines = NULL;
-	filename.Assign("");
+	filename.Assign(wxString());
 	textFile = NULL;
 	obj_container = NULL;
 	changed = 0;
@@ -396,7 +396,7 @@ void obFile::Reset()
 	if( lines != NULL )
 		delete[] lines;
 	lines = NULL;
-	filename.Assign("");
+	filename.Assign(wxString());
 	if( textFile != NULL )
 	{
 		textFile->Close();
@@ -471,7 +471,7 @@ bool obFile::Write()
 {
 	if( obj_container == NULL )
 	{
-		MyLog( MYLOG_ERROR, filename.GetFullName(), "This file has not been loaded !!" );
+		MyLog( MYLOG_ERROR, filename.GetFullName(), wxT("This file has not been loaded !!") );
 		return false;
 	}
 
@@ -480,11 +480,11 @@ bool obFile::Write()
 	textFile->Clear();
 
 	// Open a temp file
-	wxString tmp_name = wxFileName::CreateTempFileName( "ob_edit_");
+	wxString tmp_name = wxFileName::CreateTempFileName( wxT("ob_edit_"));
 	wxTextFile tt( tmp_name );
 	tt.Create();
 
-	wxArrayString __lines = StrSplit( obj_container->ToStr(), "\n", false );
+	wxArrayString __lines = StrSplit( obj_container->ToStr(), wxT("\n"), false );
 	for( size_t i = 0; i < __lines.Count(); i ++ )
 	{
 		textFile->AddLine( __lines[i] );
@@ -498,7 +498,7 @@ bool obFile::Write()
 			tt.Close();
 			return wxCopyFile( tmp_name, filename.GetFullName(), true );
 		}
-		MyLog( MYLOG_ERROR, filename.GetFullName(), "Unable to write the file !!" );
+		MyLog( MYLOG_ERROR, filename.GetFullName(), wxT("Unable to write the file !!") );
 		return false;
 	}
 
@@ -732,7 +732,7 @@ void obFileEntity::obFileEntity::Reset()
 	if( avatarImg != NULL)
 		delete avatarImg;
 	avatarImg = NULL;
-	avatar_img_path = "";
+	avatar_img_path = wxString();
 	avatar_img_path_offset = wxSize(0,0);
 }
 
@@ -773,7 +773,7 @@ ob_anim* obFileEntity::GetFirstAnim()
 ob_anim** 
 obFileEntity::GetAnims(size_t& nb_anims )
 {
-	return (ob_anim**)  GetSubObjectS( "anim", nb_anims );
+	return (ob_anim**)  GetSubObjectS( wxT("anim"), nb_anims );
 }
 
 
@@ -781,9 +781,9 @@ obFileEntity::GetAnims(size_t& nb_anims )
 
 wxString obFileEntity::Name()
 {
-	ob_object *_name = GetProperty("name");
+	ob_object *_name = GetProperty(wxT("name"));
 	if( _name == NULL )
-		return "";
+		return wxString();
 
 	return _name->GetToken(0);
 }
@@ -803,18 +803,18 @@ void obFileEntity::Validation(MyLine* line, const int i, ob_object*& last_obj )
 {
 	// Construction errors
 	if( last_obj == NULL )
-		MyLog( MYLOG_ERROR, filename.GetFullName() + " line " +  IntToStr(i+ 1),
-				last_obj->name + " : obFileEntity::BuildObject : ob_entity build is NULL" );
+		MyLog( MYLOG_ERROR, filename.GetFullName() + wxT(" line ") +  IntToStr(i+ 1),
+		       last_obj->name + wxT(" : obFileEntity::BuildObject : ob_entity build is NULL") );
 
 	// FrameTag outside of a tag (ie: have to be eat and had not)
 	else if( ob_frame::IsFrameTag( last_obj->name ))
 	{
-		MyLog( MYLOG_WARNING, filename.GetFullName() + " line " +  IntToStr(i+ 1),
-				last_obj->name + " : Frame related Tag outside of an anim zone !!" );
+		MyLog( MYLOG_WARNING, filename.GetFullName() + wxT(" line ") +  IntToStr(i+ 1),
+		       last_obj->name + wxT(" : Frame related Tag outside of an anim zone !!") );
 		//Create a dummy anim  object in case of an error
 		ob_anim *t2 = new ob_anim();
 		t2->dummy = true;
-		t2->SetName( "ANIM_DUMMY" );
+		t2->SetName( wxT("ANIM_DUMMY") );
 		t2->num_line = i;
 		t2->Eat( &lines[i],i );
 
@@ -825,14 +825,14 @@ void obFileEntity::Validation(MyLine* line, const int i, ob_object*& last_obj )
 
 	// AnimTag outside of a tag (ie: have to be eat and had not)
 	else if( ob_anim::IsAnimTag( last_obj->name ) &&
-		last_obj->name.Upper() != "ANIM" && last_obj->name.Upper() != "ANIMATION")
+		last_obj->name.Upper() != wxT("ANIM") && last_obj->name.Upper() !=wxT("ANIMATION"))
 	{
-		MyLog( MYLOG_WARNING, filename.GetFullName() + " line " +  IntToStr(i+ 1),
-				last_obj->name + " : Anim related Tag outside of an anim zone !!");
+		MyLog( MYLOG_WARNING, filename.GetFullName() + wxT(" line ") +  IntToStr(i+ 1),
+		       last_obj->name + wxT(" : Anim related Tag outside of an anim zone !!"));
 
 		//Create a dummy anim object in case of an error
 		ob_anim *temp = new ob_anim();
-		temp->SetName( "ANIM_DUMMY" );
+		temp->SetName( wxT("ANIM_DUMMY") );
 		temp->Add_SubObj(last_obj);
 		temp->num_line = i;
 		temp->dummy = true;
@@ -913,9 +913,9 @@ void obFileEntity::Cleaning()
 		{
 			if( anims[j]->animID().Upper() == anims[i]->animID().Upper() )
 			{
-				MyLog( MYLOG_WARNING, filename.GetFullName() + " line " +  anims[j]->GetLineRef_S(),
-						"Redefinition of anim " + anims[j]->animID() +
-			    			" previously defined at line " + anims[i]->GetLineRef_S());
+				MyLog( MYLOG_WARNING, filename.GetFullName() + wxT(" line ") +  anims[j]->GetLineRef_S(),
+				       wxT("Redefinition of anim ") + anims[j]->animID() +
+				       wxT(" previously defined at line ") + anims[i]->GetLineRef_S());
 			    break;
 			}
 		}
@@ -924,9 +924,9 @@ void obFileEntity::Cleaning()
 	//Anim must contains frames
 	for( size_t i=0; i < nb_anims; i++)
 	{
-		if( anims[i]->GetSubObject("frame") == NULL )
-			MyLog( MYLOG_WARNING, filename.GetFullName() + " line " +  anims[i]->GetLineRef_S(),
-					anims[i]->name + " : Anim contain no frames !!");
+		if( anims[i]->GetSubObject(wxT("frame")) == NULL )
+			MyLog( MYLOG_WARNING, filename.GetFullName() + wxT(" line ") +  anims[i]->GetLineRef_S(),
+			       anims[i]->name + wxT(" : Anim contain no frames !!"));
 	}
 
 	// Inevitable anims
@@ -958,34 +958,34 @@ void obFileEntity::Cleaning()
 wxString
 obFileEntity::Get_AvatarImg_Path()
 {
-	if( avatar_img_path != "" )
+	if( avatar_img_path != wxString() )
 	{
-		if( avatar_img_path == "UNFOUND" )
-			return "";
+		if( avatar_img_path == wxT("UNFOUND") )
+			return wxString();
 		return avatar_img_path;
 	}
 	
-	avatar_img_path = "UNFOUND";
+	avatar_img_path = wxT("UNFOUND");
 
 	//Try to get the anim IDLE
 	size_t nb_anims;
 	ob_anim** arr_anims = 
 		(ob_anim**) obj_container->GetSubObjectS_ofType( OB_TYPE_ANIM, nb_anims );
 	if( arr_anims == NULL )
-		return "";
+		return wxString();
 	
 	list<ob_anim*> to_try;
 	for( size_t i = 0; i < nb_anims; i++ )
 	{
 		// IDLE Always at the start of the preference list
-		if( arr_anims[i]->GetToken(0).Upper() == "IDLE" )
+		if( arr_anims[i]->GetToken(0).Upper() == wxT("IDLE") )
 			to_try.push_front( arr_anims[i] );
 		
 		// Must place WALK after IDLE in preference list
-		else if( arr_anims[i]->GetToken(0).Upper() == "WALK" )
+		else if( arr_anims[i]->GetToken(0).Upper() == wxT("WALK") )
 		{
 			if( 	   to_try.empty() == true 
-				|| to_try.front()->GetToken(0).Upper() != "IDLE"
+				|| to_try.front()->GetToken(0).Upper() != wxT("IDLE")
 				)
 				to_try.push_front( arr_anims[i] );
 			else
@@ -1029,10 +1029,10 @@ obFileEntity::Get_AvatarImg_Path()
 	}
 	
 	if( theFrame == NULL )
-		return "";
+		return wxString();
 	
 	avatar_img_path = theFrame->GifPath().GetFullPath();
-	ob_object* _off = theFrame->GetSubObject( "offset" );
+	ob_object* _off = theFrame->GetSubObject( wxT("offset") );
 	if( _off != NULL )
 		avatar_img_path_offset = wxSize( StrToInt(_off->GetToken(0))
 							, StrToInt(_off->GetToken(1)) );
@@ -1045,7 +1045,7 @@ obFileEntity::Load_AvatarImg()
 {
 	if( avatarImg != NULL )
 		return avatarImg;
-	if( Get_AvatarImg_Path() == "")
+	if( Get_AvatarImg_Path() == wxString())
 		return NULL;
 	
 	avatarImg = new wxImage( Get_AvatarImg_Path() );
@@ -1128,8 +1128,8 @@ obFileModels::~obFileModels()
 ob_models** obFileModels::GetModels(int& count)
 {
 	size_t nb_load, nb_know;
-	ob_models** arr_loads = (ob_models**) GetSubObjectS("Load", nb_load );
-	ob_models** arr_knows = (ob_models**) GetSubObjectS("Know", nb_know );
+	ob_models** arr_loads = (ob_models**) GetSubObjectS(wxT("Load"), nb_load );
+	ob_models** arr_knows = (ob_models**) GetSubObjectS(wxT("Know"), nb_know );
 	
 	count = nb_load + nb_know;
 	if( count == 0 )
@@ -1338,7 +1338,7 @@ obFileStage::GetEntity( const wxString& ent_name )
 
 	if( ! _ent_path.FileExists() )
 	{
-		wxLogInfo( "Entity File doesn't exist <" + entity_filename + ">" );
+		wxLogInfo( wxT("Entity File doesn't exist <") + entity_filename + wxT(">") );
 		return NULL;
 	}
 
@@ -1349,7 +1349,7 @@ obFileStage::GetEntity( const wxString& ent_name )
 		{
 			delete _ent_file;
 			_ent_file = NULL;
-			wxLogInfo( "File is empty or something <" + entity_filename + ">" );
+			wxLogInfo( wxT("File is empty or something <") + entity_filename +wxT( ">") );
 			return NULL;
 		}
 	}
@@ -1375,12 +1375,12 @@ obFileStage::GetEntity_ALL(wxWindow* busy_parent )
 	
 	wxProgressDialog *wProg = NULL;
 	if(busy_parent!= NULL)
-		wProg = new wxProgressDialog("Just a moment...", "Loading Entities...", l_models__count, busy_parent);
+		wProg = new wxProgressDialog(wxT("Just a moment..."), wxT("Loading Entities..."), l_models__count, busy_parent);
 	for( int i = 0; i < l_models__count; i++ )
 	{
 		if( l_models[i] == NULL )
 			continue;
-		if( l_models[i]->GetToken(0) == "" )
+		if( l_models[i]->GetToken(0) == wxString() )
 			continue;
 		
 		obFileEntity* _ent = obFileStage::GetEntity( l_models[i]->GetToken(0) );
@@ -1388,8 +1388,8 @@ obFileStage::GetEntity_ALL(wxWindow* busy_parent )
 			continue;
 		
 		if( wProg != NULL )
-			wProg->Update(i+1, "Loading Entities...\n"
-				+IntToStr(i+1)+ " over " + IntToStr(l_models__count)
+			wProg->Update(i+1, wxT("Loading Entities...\n")
+			+IntToStr(i+1)+ wxT(" over ") + IntToStr(l_models__count)
 				);
 		res->push_back( _ent );
 	}

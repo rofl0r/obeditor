@@ -16,7 +16,7 @@
 class myListBox : public wxListBox
 {
 public:
-	myListBox(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = "listBox");
+	myListBox(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = wxT("listBox"));
 	void OnCharPress(wxKeyEvent& event);
 	virtual void OnSelectionChange( wxCommandEvent& event );
 	virtual void EvtGetFocus(wxFocusEvent&);
@@ -31,7 +31,7 @@ private:
 class wListAnims : public myListBox
 {
 public:
-	wListAnims(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = "listBox");
+	wListAnims(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = wxT("listBox"));
 	void AssociateToListFrame( wxWindow* _wList_frames);
 	virtual ~wListAnims();
 
@@ -63,7 +63,7 @@ private:
 class wListAnims_Editable : public wListAnims
 {
 public:
-	wListAnims_Editable(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = "listBox");
+	wListAnims_Editable(wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = wxT("listBox"));
 	virtual ~wListAnims_Editable();
 
 	virtual void EvtCharPress(wxKeyEvent& event);

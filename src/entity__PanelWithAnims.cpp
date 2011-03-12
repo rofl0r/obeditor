@@ -45,7 +45,7 @@ bool Is_AAirAnim()
 		return false;
 
 	wxString anim_name = curr_anim->GetToken(0);
-	if( anim_name.Left(4).Upper() == "FALL" || anim_name.Left(4).Upper() == "JUMP" )
+	if( anim_name.Left(4).Upper() == wxT("FALL") || anim_name.Left(4).Upper() == wxT("JUMP") )
 	{
 		if(		anim_name.Len() == 4
 			||	StrIsInt( anim_name.Right( anim_name.Len() - 4 )
@@ -72,7 +72,7 @@ void Panel_withAnims::Frame_CascadeChanges()
 	
 	//-----------------------------------------------------------
 	// Update the jumpStates of frames
-	ob_object* ob_state = curr_anim->GetSubObject("jumpframe");
+	ob_object* ob_state = curr_anim->GetSubObject(wxT("jumpframe"));
 	if( 	   Is_AAirAnim()
 		&& curr_frames_count > 0
 		&& ob_state == NULL
@@ -89,7 +89,7 @@ void Panel_withAnims::Frame_CascadeChanges()
 
 	//-----------------------------------------------------------
 	// Update the dropStates
-	ob_state = curr_anim->GetSubObject("dropframe");
+	ob_state = curr_anim->GetSubObject(wxT("dropframe"));
 	if( ob_state != NULL )
 		wList_frames->SetDropFrame( StrToInt( ob_state->GetToken( 0 )));
 	else
@@ -97,7 +97,7 @@ void Panel_withAnims::Frame_CascadeChanges()
 	
 	//-----------------------------------------------------------
 	// Update the landState
-	ob_state = curr_anim->GetSubObject("landframe");
+	ob_state = curr_anim->GetSubObject(wxT("landframe"));
 	if( ob_state != NULL )
 		wList_frames->SetLandFrame( StrToInt( ob_state->GetToken( 0 )));
 	else
@@ -105,7 +105,7 @@ void Panel_withAnims::Frame_CascadeChanges()
 	
 	//-----------------------------------------------------------
 	// Update the flipState
-	ob_state = curr_anim->GetSubObject("flipframe");
+	ob_state = curr_anim->GetSubObject(wxT("flipframe"));
 	if( ob_state != NULL )
 		wList_frames->SetFlipFrame( StrToInt( ob_state->GetToken( 0 )));
 	else

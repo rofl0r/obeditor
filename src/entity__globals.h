@@ -81,7 +81,7 @@ private:
 class wListEntities : public myListBox
 {
 public:
-	wListEntities(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = "listBox");
+	wListEntities(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int n = 0, const wxString choices[] = NULL, long style = 0, const wxValidator& validator = wxDefaultValidator, const wxString& name = wxT("listBox"));
 	~wListEntities();
 	void Refresh_ListEntities();
 	virtual void OnSelectionChange( wxCommandEvent& event );

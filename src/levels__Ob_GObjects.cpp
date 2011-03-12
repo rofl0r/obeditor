@@ -29,7 +29,7 @@ size_t pt_radius = 4;
 //*****************************************************************
 //-------------------------------------------------------
 Ob_GAtom::Ob_GAtom(int atom_id)
-: referer(NULL),id_atom(atom_id),key("")
+: referer(NULL),id_atom(atom_id),key(wxString())
  ,coords(0,0),size(0,0),view_coords(0,0)
  ,b_on_screen(false),theBitmap(NULL),lastImg(NULL),Z(0),A(0)
 {
@@ -44,23 +44,23 @@ Ob_GAtom::ToStr()
 {
 	wxString res;
 	if( referer == NULL )
-		res = "referer == NULL\n";
+		res = wxT("referer == NULL\n");
 	else if( referer->obj == NULL )
-		res = "referer->obj == NULL\n";
+		res = wxT("referer->obj == NULL\n");
 	else
 		res = referer->obj->ToStr();
-	res += "---------------\n";
-	res += "id_atom = " + IntToStr(id_atom) + "\n";
+	res += wxT("---------------\n");
+	res += wxT("id_atom = ") + IntToStr(id_atom) + wxT("\n");
 	wxString s_key = Convert_To_Ob_Path(key);
-	if( s_key == "" )
+	if( s_key == wxString() )
 		s_key = key;
-	res += "key = " + s_key + "\n";
-	res += "coords = " + IntToStr(coords.x) + "," + IntToStr(coords.y) + "\n";
-	res += "Z = " + IntToStr(Z) + "\n";
-	res += "A = " + IntToStr(A) + "\n";
-	res += "size   = " + IntToStr(size.x) + "," + IntToStr(size.y) + "\n";
-	res += "Bitmap   = " + IntToStr((int)theBitmap) + "\n";
-	res += "lastImg  = " + IntToStr((int)lastImg) + "\n";
+	res += wxT("key = ") + s_key + wxT("\n");
+	res += wxT("coords = ") + IntToStr(coords.x) + wxT(",") + IntToStr(coords.y) + wxT("\n");
+	res += wxT("Z = ") + IntToStr(Z) + wxT("\n");
+	res += wxT("A = ") + IntToStr(A) + wxT("\n");
+	res += wxT("size   = ") + IntToStr(size.x) + wxT(",") + IntToStr(size.y) + wxT("\n");
+	res += wxT("Bitmap   = ") + IntToStr((size_t)theBitmap) + wxT("\n");
+	res += wxT("lastImg  = ") + IntToStr((size_t)lastImg) + wxT("\n");
 	
 	return res;
 }
@@ -138,10 +138,10 @@ Ob_GObject::GetBitmaps(
 		{
 			b_flip = true;//(direction==STAGE_RIGHT);
 			related_obj = obj;
-			if( obj->GetSubObject_Token("flip") == "1" )
+			if( obj->GetSubObject_Token(wxT("flip")) == wxT("1"))
 				b_flip = !b_flip;
 
-			ob_object* map_obj = obj->GetSubObject("map");
+			ob_object* map_obj = obj->GetSubObject(wxT("map"));
 			if( map_obj != NULL )
 				remap = StrToInt(map_obj->GetToken(0));
 		}
@@ -184,7 +184,7 @@ Ob_GObject::GetBitmaps(
 
 			if( theBitmap == NULL )
 			{
-				t->key = "noImg";
+				t->key = wxT("noImg");
 				b_flip = false;
 				remap = 0;
 				theBitmap = obImgs_Mgr->GetBitmap(
@@ -236,7 +236,7 @@ Ob_GObject::GetBitmaps(
 
 		if( theBitmap == NULL )
 		{
-			t->key = "noImg";
+			t->key = wxT("noImg");
 			b_flip = false;
 			remap = 0;
 			theBitmap = obImgs_Mgr->GetBitmap(
@@ -374,8 +374,8 @@ Ob_GObject__Spawn::Get_GAtoms(
 	list<Ob_GAtom*>* res = new list<Ob_GAtom*>;
 
 	ob_spawn* ent = (ob_spawn*) obj;
-	ob_object* o_coords = obj->GetSubObject( "coords" );
-	ob_object* o_AT = obj->GetSubObject( "at" );
+	ob_object* o_coords = obj->GetSubObject( wxT("coords") );
+	ob_object* o_AT = obj->GetSubObject( wxT("at") );
 
 	wxSize _coords = wxSize(0,0);
 	int _a = 0;
@@ -402,11 +402,11 @@ Ob_GObject__Spawn::Get_GAtoms(
 	if( ent->entity_ref == NULL )
 		b_noImg = true;
 	
-	wxString body_img_path = "";
+	wxString body_img_path = wxString();
 	if( b_noImg == false )
 	{
 		body_img_path = ent->entity_ref->Get_AvatarImg_Path();
-		if( body_img_path == "" )
+		if( body_img_path == wxString() )
 			b_noImg = true;
 	}
 	
@@ -421,7 +421,7 @@ Ob_GObject__Spawn::Get_GAtoms(
 	if( b_noImg == true )
 	{
 		bodyImg = noImg;
-		atom_body->key = "noImg";
+		atom_body->key = wxT("noImg");
 	}
 	else
 		atom_body->key = body_img_path;
@@ -433,7 +433,7 @@ Ob_GObject__Spawn::Get_GAtoms(
 	bool b_flip = true;//(direction==STAGE_RIGHT);
 	if(  obj != NULL )
 	{
-		if( obj->GetSubObject_Token("flip") == "1" )
+		if( obj->GetSubObject_Token(wxT("flip")) == wxT("1") )
 			b_flip = !b_flip;
 	}
 
@@ -471,14 +471,14 @@ Ob_GObject__Spawn::Get_GAtoms(
 
 	//------------------------------------------
 	// The Shadow
-	wxImage* shadowImg = obImgs_Mgr->GetImageSrc( NULL, "ent_shadow" );
+	wxImage* shadowImg = obImgs_Mgr->GetImageSrc( NULL, wxT("ent_shadow") );
 	if( shadowImg != NULL )
 	{
 		Ob_GAtom* atom_shadow = new Ob_GAtom(GATOM_SHADOW);
 		atom_shadow->referer = this;
 		res->push_back( atom_shadow );
 
-		atom_shadow->key = "ent_shadow";
+		atom_shadow->key = wxT("ent_shadow");
 		
 		// The Size
 		atom_shadow->size = wxSize( shadowImg->GetWidth(), shadowImg->GetHeight());
@@ -507,7 +507,7 @@ Ob_GObject__Spawn::Get_GAtoms(
 						0,
 						40,
 						wxColour( 0,0,255),
-						"AT"
+						wxT("AT")
 						);
 
 	if( atImg != NULL && select_state == SEL_ON && o_AT != NULL  )
@@ -516,7 +516,7 @@ Ob_GObject__Spawn::Get_GAtoms(
 		atom_AT->referer = this;
 		res->push_back( atom_AT );
 		
-		atom_AT->key = "Cursor_AT";
+		atom_AT->key = wxT("Cursor_AT");
 		atom_AT->size = wxSize(   floor((float)atImg->GetWidth() / zoom_factor)
 						, view_size.y );
 		
@@ -544,25 +544,25 @@ Ob_GObject__Spawn::ApplyMove( wxSize& diffs, bool multi_selection )
 		return false;
 
 	// Some variables
-	ob_object* soCoords = obj->GetSubObject( "coords" );
+	ob_object* soCoords = obj->GetSubObject( wxT("coords") );
 	if( soCoords == NULL )
 	{
-		soCoords = new ob_object( "coords" );
-		soCoords->SetToken( 0, "0" );
-		soCoords->SetToken( 1, "0" );
+		soCoords = new ob_object( wxT("coords") );
+		soCoords->SetToken( 0, wxT("0") );
+		soCoords->SetToken( 1, wxT("0") );
 		obj->Add_SubObj( soCoords );
 	}
 	else
 	{
-		if( soCoords->GetToken( 1 ) == "" )
-			soCoords->SetToken( 1, "0" );
+		if( soCoords->GetToken( 1 ) == wxString() )
+			soCoords->SetToken( 1, wxT("0") );
 	}
 
-	ob_object* soAt = obj->GetSubObject( "at" );
+	ob_object* soAt = obj->GetSubObject( wxT("at") );
 	if( soAt == NULL )
 	{
-		soAt = new ob_object( "at" );
-		soAt->SetToken( 0, "0" );
+		soAt = new ob_object( wxT("at") );
+		soAt->SetToken( 0, wxT("0") );
 		obj->Add_SubObj( soAt );
 	}
 
@@ -629,12 +629,12 @@ Ob_GObject__AT::Ob_GObject__AT( ob_stage_object* _src )
 			if( _src->object_type == SOBJ_WAIT )
 			{
 				horiz_width_down = 60;
-				barLabel = "WAIT";
+				barLabel = wxT("WAIT");
 			}
 			else
 			{
 				horiz_width_down = 110;
-				barLabel = "BLOCKADE";
+				barLabel = wxT("BLOCKADE");
 			}
 			break;
 		case SOBJ_CANJOIN:
@@ -643,9 +643,9 @@ Ob_GObject__AT::Ob_GObject__AT( ob_stage_object* _src )
 			vert_truncate_down = 50;
 			horiz_width_down = 80;
 			if( _src->object_type == SOBJ_CANJOIN )
-				barLabel = "Can-Join";
+				barLabel = wxT("Can-Join");
 			else
-				barLabel = "No-Join";
+				barLabel = wxT("No-Join");
 			break;
 		case SOBJ_SHADOWCOLOR:
 		case SOBJ_SHADOWALPHA:
@@ -653,25 +653,25 @@ Ob_GObject__AT::Ob_GObject__AT( ob_stage_object* _src )
 			vert_truncate_down = 70;
 			horiz_width_down = 80;
 			if( _src->object_type == SOBJ_SHADOWCOLOR )
-				barLabel = "Sh-Color";
+				barLabel = wxT("Sh-Color");
 			else
-				barLabel = "Sh-Alpha";
+				barLabel = wxT("Sh-Alpha");
 			break;
 		case SOBJ_LIGHT:
 			barColour = wxColour(255,255,255);
-			barLabel = "LIGHT";
+			barLabel = wxT("LIGHT");
 			vert_truncate_down = 55;
 			horiz_width_down = 60;
 			break;
 		case SOBJ_SETPALETTE:
 			barColour = wxColour(50,80,255);
-			barLabel = "Palette";
+			barLabel = wxT("Palette");
 			vert_truncate_down = 45;
 			horiz_width_down = 70;
 			break;
 		case SOBJ_GROUP:
 			barColour = wxColour(0,160,255);
-			barLabel = "GROUP";
+			barLabel = wxT("GROUP");
 			vert_truncate_down = 45;
 			horiz_width_down = 80;
 			break;
@@ -713,13 +713,13 @@ Ob_GObject__AT::Get_GAtoms(
 		theAtom->referer = this;
 		res->push_back( theAtom );
 
-		ob_object* o_AT = obj->GetSubObject( "at" );
+		ob_object* o_AT = obj->GetSubObject( wxT("at") );
 		int _at = 0;
 		if( o_AT != NULL )
 			_at = StrToInt( o_AT->GetToken(0) );
 		int direction = ((ob_stage*)curr_stageFile->obj_container)->direction;
 		
-		theAtom->key = "Cursor_" + barLabel;
+		theAtom->key = wxT("Cursor_") + barLabel;
 		theAtom->size = wxSize(   floor((float)theImg->GetWidth() / zoom_factor)
 						, view_size.y );
 		
@@ -745,11 +745,11 @@ Ob_GObject__AT::ApplyMove( wxSize& diffs, bool multi_selection )
 	if( diffs.x == 0 )
 		return false;
 	
-	ob_object* soAt = obj->GetSubObject( "at" );
+	ob_object* soAt = obj->GetSubObject( wxT("at") );
 	if( soAt == NULL )
 	{
-		soAt = new ob_object( "at" );
-		soAt->SetToken( 0, "0" );
+		soAt = new ob_object( wxT("at") );
+		soAt->SetToken( 0, wxT("0") );
 		obj->Add_SubObj( soAt );
 	}
 
@@ -774,7 +774,7 @@ Ob_GObject__ScrollZ::Ob_GObject__ScrollZ( ob_stage_object* _src )
 //-------------------------------------------------------
 Ob_GObject__ScrollZ::~Ob_GObject__ScrollZ()
 {
-	wxString imgRectKey = "Rect_" + IntToStr( (int)this );
+	wxString imgRectKey = wxT("Rect_") + IntToStr( (size_t) this );
 	obImgs_Mgr->ReleaseImage( imgRectKey );
 }
 
@@ -792,7 +792,7 @@ Ob_GObject__ScrollZ::Get_GAtoms(
 	
 	int direction = ((ob_stage*)curr_stageFile->obj_container)->direction;
 	
-	ob_object* o_AT = obj->GetSubObject( "at" );
+	ob_object* o_AT = obj->GetSubObject( wxT("at") );
 	int _at = 0;
 	if( o_AT != NULL )
 		_at = StrToInt( o_AT->GetToken(0) );
@@ -808,7 +808,7 @@ Ob_GObject__ScrollZ::Get_GAtoms(
 						0,
 						60,
 						scroll_color,
-						"ScrollZ"
+						wxT("ScrollZ")
 						);
 
 	list<Ob_GAtom*>* res = new list<Ob_GAtom*>;
@@ -819,7 +819,7 @@ Ob_GObject__ScrollZ::Get_GAtoms(
 		atAtom->referer = this;
 		res->push_back( atAtom );
 
-		atAtom->key = "Cursor_ScrollZ";
+		atAtom->key = wxT("Cursor_ScrollZ");
 		atAtom->size = wxSize(   floor((float)theImg->GetWidth() / zoom_factor)
 						, view_size.y );
 		
@@ -843,7 +843,7 @@ Ob_GObject__ScrollZ::Get_GAtoms(
 			&& ((ob_stage_object*) sibling)->object_type == SOBJ_SCROLLZ
 		  )
 		{
-			sibling_at = sibling->GetSubObject( "AT" );
+			sibling_at = sibling->GetSubObject( wxT("AT") );
 			if( 	   sibling_at != NULL 
 				&& StrToInt( sibling_at->GetToken(0) ) > _at 
 			  )
@@ -865,7 +865,7 @@ Ob_GObject__ScrollZ::Get_GAtoms(
 	wxString key_res;
 	theImg = 
 		Get_Image_Rect(   key_res,
-					(int) this,
+					(size_t) this,
 					view_size ,
 					zoom_factor,
 					select_state,
@@ -934,11 +934,11 @@ Ob_GObject__ScrollZ::OnMouseEvent( Ob_GAtom* obAtom, wxSize _m_coords, wxMouseEv
 		return false;
 	
 	// Must guess which part of the scrollZ have been touched
-	ob_object* soAt = obj->GetSubObject( "at" );
+	ob_object* soAt = obj->GetSubObject( wxT("at") );
 	if( soAt == NULL )
 	{
-		soAt = new ob_object( "at" );
-		soAt->SetToken( 0, "0" );
+		soAt = new ob_object( wxT("at") );
+		soAt->SetToken( 0, wxT("0") );
 		obj->Add_SubObj( soAt );
 	}
 	int at    = StrToInt( soAt->GetToken(0));
@@ -972,11 +972,11 @@ Ob_GObject__ScrollZ::ApplyMove( wxSize& diffs, bool multi_selection )
 	if( diffs.x == 0 && diffs.y == 0 )
 		return false;
 	
-	ob_object* soAt = obj->GetSubObject( "at" );
+	ob_object* soAt = obj->GetSubObject( wxT("at") );
 	if( soAt == NULL )
 	{
-		soAt = new ob_object( "at" );
-		soAt->SetToken( 0, "0" );
+		soAt = new ob_object( wxT("at") );
+		soAt->SetToken( 0, wxT("0") );
 		obj->Add_SubObj( soAt );
 	}
 	
@@ -1042,7 +1042,7 @@ Ob_GObject__PlayerSpawn::Get_GAtoms(
 	
 	// Some vars...
 	int num_player = StrToInt( obj->name.Right(obj->name.Len() - 5 ) );
-	wxString imgKey = "pSpawn_"+IntToStr(num_player)+".png";
+	wxString imgKey = wxT("pSpawn_") + IntToStr(num_player) + wxT(".png");
 
 	int direction = ((ob_stage*)curr_stageFile->obj_container)->direction;
 	wxSize s_bounds( 
@@ -1078,14 +1078,14 @@ Ob_GObject__PlayerSpawn::Get_GAtoms(
 	
 	//------------------------------------------
 	// The Shadow
-	wxImage* shadowImg = obImgs_Mgr->GetImageSrc( NULL, "ent_shadow" );
+	wxImage* shadowImg = obImgs_Mgr->GetImageSrc( NULL, wxT("ent_shadow") );
 	if( shadowImg != NULL )
 	{
 		Ob_GAtom* atom_shadow = new Ob_GAtom(GATOM_SHADOW);
 		atom_shadow->referer = this;
 		res->push_back( atom_shadow );
 
-		atom_shadow->key = "ent_shadow";
+		atom_shadow->key = wxT("ent_shadow");
 		
 		// The Size
 		atom_shadow->size = wxSize( shadowImg->GetWidth(), shadowImg->GetHeight());
@@ -1162,9 +1162,9 @@ wxColour Ob_GObject__Wall::theColor( 255,200,255 );
 Ob_GObject__Wall::Ob_GObject__Wall( ob_stage_object* _src )
 :Ob_GObject( _src )
 {
-	if( _src->name.Upper() == "WALL" )
+	if( _src->name.Upper() == wxT("WALL") )
 		m_type = OBG_WALL;
-	else if( _src->name.Upper() == "HOLE" )
+	else if( _src->name.Upper() == wxT("HOLE") )
 		m_type = OBG_HOLE;
 	else
 	{
@@ -1182,7 +1182,7 @@ Ob_GObject__Wall::Ob_GObject__Wall( ob_stage_object* _src )
 
 Ob_GObject__Wall::~Ob_GObject__Wall()
 {
-	obImgs_Mgr->ReleaseImage( obj->name.Upper() + "_"+IntToStr((int)this) );
+	obImgs_Mgr->ReleaseImage( obj->name.Upper() + wxT("_") + IntToStr((size_t)this) );
 }
 
 
@@ -1200,7 +1200,7 @@ Ob_GObject__Wall::Get_GAtoms(
 	list<Ob_GAtom*>* res = new list<Ob_GAtom*>;
 	
 	// Some vars...
-	wxString imgKey = obj->name.Upper() + "_"+IntToStr((int)this);
+	wxString imgKey = obj->name.Upper() + wxT("_")+IntToStr((size_t)this);
 
 /*	int direction = ((ob_stage*)curr_stageFile->obj_container)->direction;*/
 
@@ -1247,13 +1247,12 @@ Ob_GObject__Wall::Get_GAtoms(
 	// Check if last computed img is already valid
 	wxImage* theImg = NULL;
 	wxString wall_state = IntToStr(ul)
-				+","+IntToStr(ul)
-				+","+IntToStr(ll)
-				+","+IntToStr(ur)
-				+","+IntToStr(lr)
-				+","+IntToStr(depth)
-				+","+IntToStr(alt)
-				;
+	+wxT(",")+IntToStr(ul)
+	+wxT(",")+IntToStr(ll)
+	+wxT(",")+IntToStr(ur)
+	+wxT(",")+IntToStr(lr)
+	+wxT(",")+IntToStr(depth)
+	+wxT(",")+IntToStr(alt);
 	if( last_wall_state != wall_state )
 	{
 		last_wall_state = wall_state;

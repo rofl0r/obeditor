@@ -16,7 +16,7 @@ class pComboCtrl_AutoComplete;
 class ComboBoxAutoComplete : public wxControl
 {
 public:
-	ComboBoxAutoComplete(wxWindow* _parent, wxWindowID id = wxID_ANY, bool _b_insensitive = true , const wxString& value = "", const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int more_style = 0 );
+	ComboBoxAutoComplete(wxWindow* _parent, wxWindowID id = wxID_ANY, bool _b_insensitive = true , const wxString& value = wxString(), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, int more_style = 0 );
 	~ComboBoxAutoComplete();
 	
 	virtual bool IsShownOnScreen()const;

@@ -163,21 +163,21 @@ Panel_StageView::Panel_StageView(wxWindow* _parent )
 	sizer_main->Add( sizer_tools, 0, wxEXPAND );
 	
 	t_btn = new wxBitmapButton( this, wxID_ANY
-			,wxBitmap(wxImage(GetRessourceFile_String("zoom-out.png")) ));
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("zoom-out.png"))) ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_StageView::Evt_ZoomM)
 		, NULL, this);
 	sizer_tools->Add( t_btn, 0, wxALL|wxCENTER, 3 );
 	
 	t_btn = new wxBitmapButton( this, wxID_ANY
-			,wxBitmap(wxImage(GetRessourceFile_String("zoom-x1.png")) ));
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("zoom-x1.png"))) ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_StageView::Evt_ZoomReset)
 		, NULL, this);
 	sizer_tools->Add( t_btn, 0, wxALL|wxCENTER, 3 );
 	
 	t_btn = new wxBitmapButton( this, wxID_ANY
-			,wxBitmap(wxImage(GetRessourceFile_String("zoom-in.png")) ));
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("zoom-in.png"))) ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_StageView::Evt_ZoomP)
 		, NULL, this);
@@ -186,7 +186,7 @@ Panel_StageView::Panel_StageView(wxWindow* _parent )
 	
 	
 	sizer_tools->AddSpacer( 5 );
-	t_btn = new wxStaticText( this, wxID_ANY, "BG : " );
+	t_btn = new wxStaticText( this, wxID_ANY, wxT("BG : ") );
 	sizer_tools->Add( t_btn, 0, wxALL|wxCENTER, 3 );
 	
 	bgColourChooser = new MyPaletteElementCtrl( this, AUTO_ELTCOLOR );
@@ -195,7 +195,7 @@ Panel_StageView::Panel_StageView(wxWindow* _parent )
 		, NULL, this);
 	sizer_tools->Add( bgColourChooser, 0, wxALL|wxCENTER, 3 );
 	
-	t_btn = new wxCheckBox( this, wxID_ANY, "Hide" );
+	t_btn = new wxCheckBox( this, wxID_ANY, wxT("Hide") );
 	t_btn->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED
 		, wxCommandEventHandler(Panel_StageView::Evt_BG_VisibleChange)
 		, NULL, this);
@@ -206,14 +206,14 @@ Panel_StageView::Panel_StageView(wxWindow* _parent )
 	sizer_tools->AddSpacer( 5 );
 	
 	t_btn = new wxBitmapButton( this, wxID_ANY
-			,wxBitmap(wxImage(GetRessourceFile_String("delete-small.png")) ));
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("delete-small.png"))) ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_StageView::Evt_DeleteObjects)
 		, NULL, this);
 	sizer_tools->Add( t_btn, 0, wxALL|wxCENTER, 3 );
 
 	t_btn = new wxBitmapButton( this, wxID_ANY
-			,wxBitmap(wxImage(GetRessourceFile_String("copy-small.png")) ));
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("copy-small.png"))) ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_StageView::Evt_DuplicateObjects)
 		, NULL, this);
@@ -271,15 +271,14 @@ Panel_StageView::Refresh(bool eraseBackground, const wxRect* rect)
 void
 Panel_StageView::SaveState()
 {
-	ConfigEdit_Write("Panel_StageView/zoom_factor"
-				, FloatToStr(stageView->zoom_factor ));
-	ConfigEdit_Write("Panel_StageView/coords_x"
-				, IntToStr(stageView->coords.x ));
-	ConfigEdit_Write("Panel_StageView/coords_y"
-				, IntToStr(stageView->coords.y ));
+	ConfigEdit_Write(wxT("Panel_StageView/zoom_factor")
+		, FloatToStr(stageView->zoom_factor ));
+		ConfigEdit_Write(wxT("Panel_StageView/coords_x")
+		, IntToStr(stageView->coords.x ));
+		ConfigEdit_Write(wxT("Panel_StageView/coords_y")
+		, IntToStr(stageView->coords.y ));
 	
-				
-	ConfigEdit_Write("Panel_StageView/BG_color",  wxColour_ToStr( stageView->background_color) );
+	ConfigEdit_Write(wxT("Panel_StageView/BG_color"),  wxColour_ToStr( stageView->background_color) );
 }
 
 //-------------------------------------------------------
@@ -287,18 +286,18 @@ void
 Panel_StageView::LoadState()
 {
 	wxString s;
-	s = ConfigEdit_Read("Panel_StageView/zoom_factor");
-	if( s != "" )
+	s = ConfigEdit_Read(wxT("Panel_StageView/zoom_factor"));
+	if( s != wxString() )
 		stageView->zoom_factor = StrToFloat( s );
-	s = ConfigEdit_Read("Panel_StageView/coords_x" );
-	if( s != "" )
+	s = ConfigEdit_Read(wxT("Panel_StageView/coords_x") );
+	if( s != wxString() )
 		coords_to_restore.x = StrToInt( s );
-	s = ConfigEdit_Read("Panel_StageView/coords_y" );
-	if( s != "" )
+	s = ConfigEdit_Read(wxT("Panel_StageView/coords_y") );
+	if( s != wxString() )
 		coords_to_restore.y = StrToInt( s );
 	
-	s = ConfigEdit_Read("Panel_StageView/BG_color" );
-	if( s != "" )
+	s = ConfigEdit_Read(wxT("Panel_StageView/BG_color") );
+	if( s != wxString() )
 	{
 		stageView->background_color = wxColour_FromStr(s);
 		bgColourChooser->SetColor(stageView->background_color );
@@ -641,7 +640,7 @@ StageMap::EvtPaint( wxPaintEvent& _evt )
 	// If Invalid panel img objects
 	if( panelBitmap == NULL )
 	{
-		wxString img_txt = "No Valid Panels !";
+		wxString img_txt = wxT("No Valid Panels !");
 		dc.SetBackground( *wxWHITE_BRUSH);
 		dc.SetPen( *wxBLACK_PEN );
 		dc.SetFont( 

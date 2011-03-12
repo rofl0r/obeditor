@@ -83,7 +83,7 @@ MyAnimationZone::MyAnimationZone(wxWindow *parent)
 	theBitmap = NULL;
 	m_flag = 0;
 
-	SetToolTip( "" );
+	SetToolTip( wxString() );
 	theTip = GetToolTip();
 	theTip->SetDelay( 200 );
 	theTip->Enable( false );
@@ -265,14 +265,14 @@ void MyAnimationZone::_Recalculate_JumpStuffs()
 	// ****************************************************************************************
 	// Init some jump variables
 
-	ob_object *jumpframe_prop = curr_anim->GetSubObject( "jumpframe" );
+	ob_object *jumpframe_prop = curr_anim->GetSubObject( wxT("jumpframe") );
 	int jump_frame = -1;
 	int jump_speedh = 0;
 	int jump_speedx = 0;
 	int jump_speedz = 0;
 	jump_alt_step = 0;
 
-	if( jumpframe_prop != NULL && jumpframe_prop->GetToken(0) != "" )
+	if( jumpframe_prop != NULL && jumpframe_prop->GetToken(0) != wxString() )
 	{
 		jump_frame = StrToInt( jumpframe_prop->GetToken(0) );
 		jump_speedh = StrToInt( jumpframe_prop->GetToken(1) );
@@ -285,20 +285,20 @@ void MyAnimationZone::_Recalculate_JumpStuffs()
 	{
 		jump_frame = 0;
 		jump_speedh = 3;
-		if( curr_anim->GetToken(0).Left(4).Upper() == "FALL" )
+		if( curr_anim->GetToken(0).Left(4).Upper() == wxT("FALL") )
 			jump_speedx = -2;
-		else if( curr_anim->GetToken(0).Left(4).Upper() == "JUMP" )
+		else if( curr_anim->GetToken(0).Left(4).Upper() == wxT("JUMP") )
 			jump_speedx = 0;
 	}
 
-	ob_object *dropframe_prop = curr_anim->GetSubObject( "dropframe" );
+	ob_object *dropframe_prop = curr_anim->GetSubObject( wxT("dropframe") );
 	int drop_frame = -1;
-	if( dropframe_prop != NULL && dropframe_prop->GetToken(0) != "" )
+	if( dropframe_prop != NULL && dropframe_prop->GetToken(0) != wxString() )
 		drop_frame = StrToInt( dropframe_prop->GetToken(0) );
 
-	ob_object *landframe_prop = curr_anim->GetSubObject( "landframe" );
+	ob_object *landframe_prop = curr_anim->GetSubObject( wxT("landframe") );
 	int land_frame = -1;
-	if( landframe_prop != NULL && landframe_prop->GetToken(0) != "" )
+	if( landframe_prop != NULL && landframe_prop->GetToken(0) != wxString() )
 		land_frame = StrToInt( landframe_prop->GetToken(0) );
 
 
@@ -336,7 +336,7 @@ void MyAnimationZone::_Recalculate_JumpStuffs()
 		{
 			if( i == 0 )
 			{
-				wxMessageBox( "Drop frame at position ZERO !!!", "ProPlem", wxOK | wxICON_INFORMATION, this );
+				wxMessageBox( wxT("Drop frame at position ZERO !!!"), wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 				fr_delays[i] = know_delay;
 				fr_jumph[i] = 0;
 				fr_jumpx[i] = 0;
@@ -403,7 +403,7 @@ void MyAnimationZone::_Recalculate_JumpStuffs()
 			{
 				if( i == 0 )
 				{
-					wxMessageBox( "Land frame at position ZERO !!!", "ProPlem", wxOK | wxICON_INFORMATION, this );
+					wxMessageBox( wxT("Land frame at position ZERO !!!"), wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 					fr_delays[i] = know_delay;
 					fr_jumph[i] = 0;
 					fr_jumpx[i] = 0;
@@ -823,20 +823,20 @@ void MyAnimationZone::ReCalcAnimSize()
 
 	// ****************************************************************************************
 	// Init some jump datas
-	ob_object *jumpframe_prop = curr_anim->GetSubObject( "jumpframe" );
+	ob_object *jumpframe_prop = curr_anim->GetSubObject( wxT("jumpframe") );
 	int jump_speedx = 0;
 	int jump_speedz = 0;
 
-	if( jumpframe_prop != NULL && jumpframe_prop->GetToken(0) != "" )
+	if( jumpframe_prop != NULL && jumpframe_prop->GetToken(0) != wxString() )
 	{
 		jump_speedx = StrToInt( jumpframe_prop->GetToken(2) );
 		jump_speedz = StrToInt( jumpframe_prop->GetToken(3) );
 	}
 	else if( Is_AAirAnim() )
 	{
-		if( curr_anim->GetToken(0).Left(4).Upper() == "FALL" )
+		if( curr_anim->GetToken(0).Left(4).Upper() == wxT("FALL") )
 			jump_speedx = -2;
-		else if( curr_anim->GetToken(0).Left(4).Upper() == "JUMP" )
+		else if( curr_anim->GetToken(0).Left(4).Upper() == wxT("JUMP") )
 			jump_speedx = 0;
 		jump_speedz = 0;
 	}
@@ -880,8 +880,8 @@ void MyAnimationZone::ReCalcAnimSize()
 		}
 
 		// Apply drawmethod transformations
-		if( 	curr_frames[i]->GetSubObject( "nodrawmethod" ) == NULL
-			&&	curr_frames[i]->GetSubObject( "drawmethod") != NULL )
+		if( 	curr_frames[i]->GetSubObject( wxT("nodrawmethod") ) == NULL
+			&&	curr_frames[i]->GetSubObject( wxT("drawmethod")) != NULL )
 		{
 			// drawmethod datas
 			int _i = 0;
@@ -1263,7 +1263,7 @@ void MyAnimationZone::EvtMouseSomething(wxMouseEvent& event)
 		// Put the tooltip
 		wxString tip_txt=
 			  IntToStr(mx)
-			+ " , " 
+			  + wxT(" , ") 
 			+ IntToStr(my)
 			;
 		theTip->SetTip( tip_txt );
@@ -1609,8 +1609,8 @@ void MyAnimationZone::OnPaint(wxPaintEvent& event)
 
 			//*****************************************
 			// draw image transformations
-			if( 	curr_frames[ind_frPainted]->GetSubObject( "nodrawmethod" ) == NULL
-				&&	curr_frames[ind_frPainted]->GetSubObject( "drawmethod") != NULL )
+			if( 	curr_frames[ind_frPainted]->GetSubObject( wxT("nodrawmethod") ) == NULL
+				&&	curr_frames[ind_frPainted]->GetSubObject( wxT("drawmethod")) != NULL )
 			{
 #define DGET_DMVAL2(k) \
 	(curr_frames[ind_frPainted]->drawMethod[k]!=NO_CLONED_VAL?curr_frames[ind_frPainted]->drawMethod[k]:0)
@@ -1808,8 +1808,8 @@ void MyAnimationZone::ReverseFPCoord( int& _mx, int _mw )
 void MyAnimationZone::ReverseDMCoord( int& _mx, int& _my)
 {
 	int ind = ind_active_frame;
-	if( 	curr_frames[ind]->GetSubObject( "nodrawmethod" ) == NULL
-		&&	curr_frames[ind]->GetSubObject( "drawmethod") != NULL )
+	if( 	curr_frames[ind]->GetSubObject( wxT("nodrawmethod") ) == NULL
+		&&	curr_frames[ind]->GetSubObject( wxT("drawmethod")) != NULL )
 	{
 		// draw image datas
 		int _i = 0;
@@ -2023,7 +2023,7 @@ void MyAnimationCtrl::StartPlaying()
 
 	else
 	{
-		panel_Anims->butt_Play->SetBitmapLabel( wxBitmap( wxImage( GetRessourceFile_String("stop.png"))));
+		panel_Anims->butt_Play->SetBitmapLabel( wxBitmap( wxImage( GetRessourceFile_String(wxT("stop.png")))));
 		b_playing = true;
 		panel_Anims->wList_frames->GetSelectedFrames(first_to_play, last_to_play);
 		curr_played = first_to_play -1;
@@ -2045,7 +2045,7 @@ void MyAnimationCtrl::StopPlaying()
 
 	if( b_playing )
 	{
-		panel_Anims->butt_Play->SetBitmapLabel( wxBitmap( wxImage( GetRessourceFile_String("aktion.png"))));
+		panel_Anims->butt_Play->SetBitmapLabel( wxBitmap( wxImage( GetRessourceFile_String(wxT("aktion.png")))));
 
 		// restore framelist selection
 		panel_Anims->wList_frames->RestoreSelection( sv_ind_active, sv_ind_first, sv_ind_last );
@@ -2254,7 +2254,7 @@ void MyAnimationCtrl::PlayFrameSound()
 	ob_frame *frame_to_show = curr_frames[curr_played];
 	if( frame_to_show != NULL && b_sound_on)
 	{
-		wxFileName file_snd = GetObFile(frame_to_show->GetSubObject_Token("sound"));
+		wxFileName file_snd = GetObFile(frame_to_show->GetSubObject_Token(wxT("sound")));
 		if( file_snd.FileExists() )
 		{
 			PlaySound( (char*) file_snd.GetFullPath().c_str() );
@@ -2364,7 +2364,7 @@ void MyAnimationCtrl::OnPaint(wxPaintEvent& event)
 				myDrawRect(     dc_x+ bbox_x - fr_DM_decal_Xs[ind_frPainted],
 								dc_y+ bbox_y - fr_DM_decal_Ys[ind_frPainted],
 								bbox_w, bbox_h, true );
-				myDrawLabel(   "BB", dc_x+bbox_x-fr_DM_decal_Xs[ind_frPainted], dc_y+bbox_y-fr_DM_decal_Ys[ind_frPainted]);
+				myDrawLabel(   wxT("BB"), dc_x+bbox_x-fr_DM_decal_Xs[ind_frPainted], dc_y+bbox_y-fr_DM_decal_Ys[ind_frPainted]);
 			}
 
 			// Draw the attack-boxes
@@ -2389,9 +2389,8 @@ void MyAnimationCtrl::OnPaint(wxPaintEvent& event)
 								, dc_y + att_y - fr_DM_decal_Ys[ind_frPainted]
 								, att_w
 								, att_h, true );
-				if( att_name.Left(6) == "attack" )
-					att_name = "att"
-						+ att_name.Right(att_name.Len()-6);
+				if( att_name.Left(6) == wxT("attack") )
+					att_name = wxT("att") + att_name.Right(att_name.Len()-6);
 
 				myDrawLabel(  	att_name,
 								dc_x + att_x - fr_DM_decal_Xs[ind_frPainted],
@@ -2454,12 +2453,12 @@ MyRemapViewerCtrl::MyRemapViewerCtrl(wxWindow *_parent)
 :MyAnimationZone( _parent )
 {
 #ifdef OSLINUX
-	wxImage img_pip_plus( GetRessourceFile( "cursor_pipette_plus.png" ).GetFullPath() );
-	wxImage img_pip_simple( wxImage( GetRessourceFile( "cursor_pipette_simple.png" ).GetFullPath() ) );
+wxImage img_pip_plus( GetRessourceFile( wxT("cursor_pipette_plus.png") ).GetFullPath() );
+wxImage img_pip_simple( wxImage( GetRessourceFile( wxT("cursor_pipette_simple.png") ).GetFullPath() ) );
 #endif
 #ifdef OSWINDOW
-	wxImage img_pip_plus( GetRessourceFile( "cursor_pipette_plus-win.png" ).GetFullPath() );
-	wxImage img_pip_simple( wxImage( GetRessourceFile( "cursor_pipette_simple-win.png" ).GetFullPath() ) );
+wxImage img_pip_plus( GetRessourceFile( wxT("cursor_pipette_plus-win.png") ).GetFullPath() );
+wxImage img_pip_simple( wxImage( GetRessourceFile( wxT("cursor_pipette_simple-win.png") ).GetFullPath() ) );
 #endif
 	img_pip_plus.SetMask();
 	img_pip_simple.SetMask();
@@ -2644,10 +2643,10 @@ MyPlatformViewerCtrl::MyPlatformViewerCtrl(wxWindow *_parent)
 :MyAnimationZone( _parent )
 {
 #ifdef OSLINUX
-	wxImage img_move( GetRessourceFile( "cursor_move.png" ).GetFullPath() );
+wxImage img_move( GetRessourceFile( wxT("cursor_move.png") ).GetFullPath() );
 #endif
 #ifdef OSWINDOW
-	wxImage img_move( GetRessourceFile( "cursor_move-win.png" ).GetFullPath() );
+wxImage img_move( GetRessourceFile( wxT("cursor_move-win.png") ).GetFullPath() );
 #endif
 
 	img_move.SetMaskColour( 130, 130, 130);

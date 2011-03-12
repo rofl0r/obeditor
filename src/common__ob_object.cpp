@@ -171,7 +171,7 @@ void ob_object::ZeroInit()
 //------------------------------------------------------------
 void ob_object::SetToDefault()
 {
-	SetName( "UNNAMED" );
+	SetName(wxT("UNNAMED"));
 }
 
 //------------------------------------------------------------
@@ -186,14 +186,14 @@ void ob_object::SetType( int _id )
 {
 	if( _id == OB_TYPE_EMPTY_LINE  )
 	{
-		SetName( "" );
+		SetName( wxString() );
 		type = OB_TYPE_STD;
 		return;
 	}
 
 	if( _id == OB_TYPE_COMMENT )
 	{
-		SetName( "" );
+		SetName( wxString() );
 		type = OB_TYPE_STD;
 		return;
 	}
@@ -229,7 +229,7 @@ ob_object::SetEdited( bool _b_edited )
 wxString ob_object::_nameID( const wxString& _name )const
 {
 	ob_object::id_unspecified++;
-	return _name + "_" + IntToStr(ob_object::id_unspecified);
+	return _name + wxT("_") + IntToStr(ob_object::id_unspecified);
 }
 
 
@@ -346,9 +346,9 @@ int ob_object::SetData( MyLine* line, const int _num_line, bool b_update )
 	else if( line->GetToken(0)->data == NULL )
 	{
 		ObjectsLog( MYLOG_ERROR, _num_line + 1,
-				"ob_object::tokenize(), token data is NULL although line reports nb_tokens > 0" );
+			    wxT("ob_object::tokenize(), token data is NULL although line reports nb_tokens > 0" ));
 		SetType(OB_TYPE_EMPTY_LINE);
-		SetName( _nameID("TOKENIZE_ERROR") );
+		SetName( _nameID(wxT("TOKENIZE_ERROR")) );
 		ungry =false;
 		return nb_tokens;
 	}
@@ -466,9 +466,9 @@ void ob_object::AssociateToLine( MyLine* line, size_t _num_line )
  */
 void ob_object::Validate()
 {
-	if( name != "" )
+	if( name != wxString() )
 		ObjectsLog( MYLOG_ERROR, GetLineRef(),
-				"With " + name + ", token data is NULL although line reports nb_tokens > 0" );
+			    wxT("With ") + name + wxT(", token data is NULL although line reports nb_tokens > 0") );
 	return;
 }
 
@@ -478,7 +478,7 @@ void ob_object::Validate()
 wxString ob_object::GetToken(const size_t i )
 {
 	if( i >= nb_tokens )
-		return "";
+		return wxString();
 
 	return arr_token[i];
 }
@@ -488,10 +488,10 @@ wxString
 ob_object::GetAllTokenToStr()
 {
 	if( nb_tokens == 0 )
-		return "";
+		return wxString();
 	wxString res;
 	for( int i = 0; i < (int)nb_tokens - 1;i++)
-		res += arr_token[i] + " ";
+		res += arr_token[i] + wxT(" ");
 	res += arr_token[nb_tokens - 1];
 
 	return res;
@@ -500,7 +500,7 @@ ob_object::GetAllTokenToStr()
 bool 
 ob_object::SetAllTokenFromStr( const wxString& _tokens )
 {
-	wxArrayString arrTok = StrSplit( _tokens, " " );
+	wxArrayString arrTok = StrSplit( _tokens, wxT(" ") );
 	wxString* tabstr = new wxString[arrTok.Count() + 1];
 	
 	tabstr[0] = name;
@@ -508,7 +508,7 @@ ob_object::SetAllTokenFromStr( const wxString& _tokens )
 
 	for( size_t i = 0; i < arrTok.Count(); i++ )
 	{
-		if( arrTok[i] == "" )
+		if( arrTok[i] == wxString() )
 			continue;
 		tabstr[curr_ind] = arrTok[i];
 		curr_ind++;
@@ -566,7 +566,7 @@ ob_object::SetToken( const int i, const wxString& _data, wxString* default_missi
 		return false;
 	}
 
-	if( _data == "" )
+	if( _data == wxString() )
 	{
 		cout<<"BUG !! : ob_object::SetToken() : _data is EMPTY !!"<<endl;
 		return false;
@@ -674,7 +674,7 @@ ob_object::Rm()
 ob_object::~ob_object()
 {
 #ifdef DEBUG_OB_OBJECT
-	if( name != "" )
+	if( name != wxString() )
 		cout<<"~ob_object :"<<this<<" : "<<name<<","<<GetToken(0)<<endl;
 	if( ob_deleted.find( this) != ob_deleted.end() )
 	{
@@ -740,13 +740,13 @@ ob_object::InsertObject_Before( ob_object* obj)
 {
 	if( obj == this )
 	{
-		MyLog( MYLOG_DEBUG, "ERROR : InsertObject_Before()", "obj == this" );
+		MyLog( MYLOG_DEBUG, wxT("ERROR : InsertObject_Before()"), wxT("obj == this") );
 		return false;
 	}
 	// already the previous
 	if( prev == obj )
 	{
-		MyLog( MYLOG_DEBUG, "ERROR : InsertObject_Before()", "prev == obj" );
+		MyLog( MYLOG_DEBUG, wxT("ERROR : InsertObject_Before()"), wxT("prev == obj") );
 		return true;
 	}
 	
@@ -832,14 +832,14 @@ ob_object::InsertObject_After( ob_object* obj)
 {
 	if( obj == this )
 	{
-		MyLog( MYLOG_DEBUG, "ERROR : InsertObject_After()", "obj == this" );
+		MyLog( MYLOG_DEBUG, wxT("ERROR : InsertObject_After()"), wxT("obj == this") );
 		return false;
 	}
 	
 	// already the next
 	if( next == obj )
 	{
-		MyLog( MYLOG_DEBUG, "ERROR : InsertObject_After()", "next == obj" );
+		MyLog( MYLOG_DEBUG, wxT("ERROR : InsertObject_After()"), wxT("next == obj") );
 		return true;
 	}
 
@@ -1264,7 +1264,7 @@ wxString ob_object::ToStr()const
 			res += GetPrefixFor(i+1) + arr_token[i];
 
 		res += GetComment();
-		res += "\n";
+		res += wxT("\n");
 	}
 
 	temp = first_subobj;
@@ -1304,12 +1304,12 @@ void ob_object::PrependCommentLine( const wxString& _comment, bool b_endOfPrefix
 
 wxString ob_object::GetComment()const
 {
-	if( mycomment != "" )
+	if( mycomment != wxString() )
 		return mycomment;
 	else if( referer != NULL )
-		if( referer->Comment() != "" )
+		if( referer->Comment() != wxString() )
 			return referer->Comment();
-	return "";
+	return wxString();
 }
 
 
@@ -1321,23 +1321,23 @@ ob_object::GetPrefixFor(const size_t i)const
 		return referer->GetToken(i)->Prefix();
 
 	else if( referer != NULL && referer->GetToken(i) != NULL && referer->GetToken(i)->prefix == NULL)
-		return "";
+		return wxString();
 
 	else if( i> 0)
-		return "  ";
+		return wxT("  ");
 	else
 	{
-		if( name =="")
-			return "";
+		if( name ==wxString())
+			return wxString();
 
-		wxString pref ="";
+		wxString pref = wxString();
 		ob_object *temp = parent;
 		if( temp == NULL )
-			return "";
+			return wxString();
 		temp = temp->parent;
 		while( temp != NULL )
 		{
-			pref += "\t";
+			pref += wxT("\t");
 			temp = temp->parent;
 		}
 		return pref;
@@ -1428,18 +1428,18 @@ wxString ob_object::GetLineRef_S()const
 
 bool ob_object::Is_EmptyOrComment()const
 {
-	return (nb_tokens <= 0 ) && name == ""
+	return (nb_tokens <= 0 ) && name == wxString()
 		&& type != OB_TYPE_LEVELS && type != OB_TYPE_STAGE_DECLARATION;
 }
 
 bool ob_object::Is_EmptyLine()const
 {
 	if( referer == NULL )
-		return ((nb_tokens <= 0 ) && name == ""
+		return ((nb_tokens <= 0 ) && name == wxString()
 			&& type != OB_TYPE_LEVELS && type != OB_TYPE_STAGE_DECLARATION );
 
 	wxString t = referer->Comment();
-	return ((nb_tokens <= 0 ) && name == "" && t == "" );
+	return ((nb_tokens <= 0 ) && name == wxString() && t == wxString() );
 }
 
 
@@ -1508,7 +1508,7 @@ ob_entity_container::pClone(ob_object*& res )
 bool
 ob_entity_container::Add_SubObj( ob_object* temp )
 {
-	if( temp->name.Upper() == "ANIM" || temp->name.Upper() == "ANIMATION" )
+	if( temp->name.Upper() == wxT("ANIM") || temp->name.Upper() == wxT("ANIMATION") )
 		return Append_SubObj( temp );
 	
 /*	// Property already exists
@@ -1516,12 +1516,12 @@ ob_entity_container::Add_SubObj( ob_object* temp )
 		return ob_object::SetProperty( temp );
 */
 	// Search the first anim/frame of the file
-	ob_object* t = GetSubObject( "anim" );
+	ob_object* t = GetSubObject( wxT("anim") );
 	if( t == NULL )
 	{
-		t = GetSubObject( "animation" );
+		t = GetSubObject( wxT("animation") );
 		if( t == NULL )
-			t = GetSubObject( "frame" );
+			t = GetSubObject( wxT("frame") );
 		
 		// No frame or anim subobjects
 		if( t == NULL )
@@ -1566,7 +1566,7 @@ void
 ob_models::Validate()
 {
 	// Don"t validate blank lines
-	if( name =="")
+	if( name == wxString())
 		return;
 
 	ob_validator* validator = models_constraints[name.Lower()];
@@ -1578,7 +1578,7 @@ ob_models::Validate()
 	else
 	{
 		ObjectsLog( MYLOG_WARNING, GetLineRef(),
-				"Unknown property : " + name );
+			    wxT("Unknown property : ") + name );
 	}
 }
 
@@ -1589,24 +1589,49 @@ ob_models::Validate()
 ******************************************************/
 
 wxString animation_tag[] =
-{ "anim", "animation", "loop", "fastattack", "hitfx", "hitflash", "custknife", "custstar", "custbomb",
-"custpbomb", "delay", "offset", "bbox", "frame", "range", "rangez", "rangea", "attack", "attack1",
-"attack2", "attack3", "attack4", "attack5", "attack6", "attack7", "attack8", "attack9",
-"blast", "shock", "burn", "freeze", "steal", "quakeframe", "move", "movea", "movez", "seta", "platform",
-"dive", "sound", "pshotframe", "throwframe", "tossframe", "pbombframe", "jumpframe", "custpshot",
-"mpcost", "custfireb", "shootframe", "flipframe", "followanim", "followcond", "counterframe",
-"spawnframe", "unsummonframe", "subentity", "custentity", "weaponframe", "attackone", "grabin",
-"forcedirection", "damageonlanding", "dropv", "dropframe", "landframe", "counterattack",
-"fshadow", "shadowcoords", "itembox", "stun", "seal", "forcemap", "drain", "noreflect",
-"drawmethod", "nodrawmethod", "bouncefactor", "mponly", "hponly", "energycost", "hitflash", "summonframe",
-"throwframewait", "resetable", "@SCRIPT", "@cmd" };
+{ wxT("anim"), wxT("animation"), wxT("loop"),
+wxT("fastattack"), wxT("hitfx"), wxT("hitflash"), 
+wxT("custknife"), wxT("custstar"), wxT("custbomb"),
+wxT("custpbomb"), wxT("delay"), wxT("offset"),
+wxT("bbox"), wxT("frame"), wxT("range"), 
+wxT("rangez"), wxT("rangea"), wxT("attack"), wxT("attack1"),
+wxT("attack2"), wxT("attack3"), wxT("attack4"),
+wxT("attack5"), wxT("attack6"), wxT("attack7"), 
+wxT("attack8"), wxT("attack9"),
+wxT("blast"), wxT("shock"), wxT("burn"), wxT("freeze"), 
+wxT("steal"), wxT("quakeframe"), wxT("move"),
+wxT("movea"), wxT("movez"), wxT("seta"), wxT("platform"),
+wxT("dive"), wxT("sound"), wxT("pshotframe"), 
+wxT("throwframe"), wxT("tossframe"), wxT("pbombframe"),
+wxT("jumpframe"), wxT("custpshot"),
+wxT("mpcost"), wxT("custfireb"), wxT("shootframe"), 
+wxT("flipframe"), wxT("followanim"), wxT("followcond"), wxT("counterframe"),
+wxT("spawnframe"), wxT("unsummonframe"), wxT("subentity"),
+wxT("custentity"), wxT("weaponframe"), wxT("attackone"), wxT("grabin"),
+wxT("forcedirection"), wxT("damageonlanding"), wxT("dropv"),
+wxT("dropframe"), wxT("landframe"), wxT("counterattack"),
+wxT("fshadow"), wxT("shadowcoords"), wxT("itembox"), wxT("stun"), 
+wxT("seal"), wxT("forcemap"), wxT("drain"), wxT("noreflect"),
+wxT("drawmethod"), wxT("nodrawmethod"), wxT("bouncefactor"), wxT("mponly"),
+wxT("hponly"), wxT("energycost"), wxT("hitflash"), wxT("summonframe"),
+wxT("throwframewait"), wxT("resetable"), wxT("@SCRIPT"), wxT("@cmd") };
 
 wxString frame_tag[] =
-{ "frame", "delay", "offset", "bbox", "attack", "attack1",
-"attack2", "attack3", "attack4", "attack5", "attack6", "attack7", "attack8", "attack9",
-"blast", "shock", "burn", "freeze", "steal", "throwframe", "quakeframe", "move", "movea", "movez", "seta", "platform",
-"dive", "sound", "grabin", "fshadow", "shadowcoords", "itembox", "stun", "seal", "forcemap", "drain", "noreflect",
-"drawmethod", "nodrawmethod", "@cmd", "hitfx", "hitflash", "dropv" };
+{ wxT("frame"), wxT("delay"), wxT("offset"), 
+wxT("bbox"), wxT("attack"), wxT("attack1"),
+wxT("attack2"), wxT("attack3"), wxT("attack4"),
+wxT("attack5"), wxT("attack6"), wxT("attack7"),
+wxT("attack8"), wxT("attack9"),
+wxT("blast"), wxT("shock"), wxT("burn"),
+wxT("freeze"), wxT("steal"), wxT("throwframe"), 
+wxT("quakeframe"), wxT("move"), wxT("movea"),
+wxT("movez"), wxT("seta"), wxT("platform"),
+wxT("dive"), wxT("sound"), wxT("grabin"), 
+wxT("fshadow"), wxT("shadowcoords"), wxT("itembox"),
+wxT("stun"), wxT("seal"), wxT("forcemap"), 
+wxT("drain"), wxT("noreflect"),
+wxT("drawmethod"), wxT("nodrawmethod"), wxT("@cmd"), 
+wxT("hitfx"), wxT("hitflash"), wxT("dropv") };
 
 /**
  * Build the correct object from line and return it.
@@ -1622,7 +1647,7 @@ ob_entity* ob_entity::Guess_and_ConstructNewObject(MyLine* line, const int _num_
 
 	wxString _name = *(line->GetToken(0)->data);
 	ob_entity *temp;
-	if( _name.Upper() == "ANIM" || _name.Upper() == "ANIMATION" )
+	if( _name.Upper() == wxT("ANIM") || _name.Upper() == wxT("ANIMATION") )
 		temp = new ob_anim(line,_num_line);
 	else
 		temp = new ob_entity( line, _num_line);
@@ -1665,7 +1690,7 @@ ob_entity::~ob_entity()
 void ob_entity::Validate()
 {
 	// Don"t validate blank lines
-	if( name =="")
+	if( name == wxString())
 		return;
 
 	ob_validator* validator = entity_constraints[name.Lower()];
@@ -1676,7 +1701,7 @@ void ob_entity::Validate()
 	}
 	else
 		ObjectsLog( MYLOG_WARNING, GetLineRef(),
-				"Unknown property : " + name );
+			    wxT("Unknown property : ") + name );
 }
 
 /******************************************************
@@ -1694,7 +1719,7 @@ ob_anim::ob_anim( MyLine* line, const int _num_line )
 :ob_entity( line, _num_line )
 {
 	if( arr_token_size <= 0 )
-		SetToken(0, _nameID( "UNSPECIFIED_ANIM"));
+		SetToken(0, _nameID( wxT("UNSPECIFIED_ANIM")));
 	else
 		SetToken(0, arr_token[0]);
 
@@ -1702,8 +1727,8 @@ ob_anim::ob_anim( MyLine* line, const int _num_line )
 	nb_frame = 0;
 	frame_open = false;
 	SetType( OB_TYPE_ANIM );
-	if( name == "" )
-		SetName( "anim" );
+	if( name == wxString() )
+		SetName( wxT("anim") );
 }
 
 //-----------------------------------------------------------------
@@ -1715,7 +1740,7 @@ ob_anim::pClone(ob_object*& res )
 	ob_entity::pClone( res );
 
 	if( arr_token_size <= 0 )
-		SetToken(0, _nameID( "UNSPECIFIED_ANIM"));
+		SetToken(0, _nameID( wxT("UNSPECIFIED_ANIM")));
 	else
 		SetToken(0, arr_token[0]);
 	((ob_anim*)res)->nb_frame = nb_frame;
@@ -1773,8 +1798,8 @@ bool ob_anim::Eat( MyLine* line, const int _num_line )
 
 	// If new anim
 	if( ! line->IsComment() && ! line->IsEmpty()  )
-		if( line->GetToken(0)->data->Upper() == "ANIM" ||
-			line->GetToken(0)->data->Upper() == "ANIMATION" )
+		if( line->GetToken(0)->data->Upper() == wxT("ANIM") ||
+			line->GetToken(0)->data->Upper() == wxT("ANIMATION") )
 		{
 			if( frame_open )
 			{
@@ -1800,7 +1825,7 @@ bool ob_anim::Eat( MyLine* line, const int _num_line )
 			if( line->GetToken(1) != NULL && line->GetToken(1)->data != NULL )
 				__t ==  *(line->GetToken(1)->data);
 			ObjectsLog( MYLOG_WARNING, _num_line + 1,
-				"non anim tag <" + __t + "> found in a frame zone !! Perhaps it's just an non referenced tag ??" );
+				    wxT("non anim tag <") + __t + wxT("> found in a frame zone !! Perhaps it's just an non referenced tag ??") );
 		}
 
 		// Frame closed
@@ -1823,7 +1848,7 @@ bool ob_anim::Eat( MyLine* line, const int _num_line )
 		return true;
 	}
 
-	if( last_subobj != NULL && last_subobj->name.Upper() == "@SCRIPT" )
+	if( last_subobj != NULL && last_subobj->name.Upper() == wxT("@SCRIPT") )
 		if( last_subobj->Eat( line, _num_line ) )
 			return true;
 
@@ -1840,7 +1865,7 @@ bool ob_anim::Eat( MyLine* line, const int _num_line )
 		if( is_frametag && frame_open )
 		{
 			ObjectsLog( MYLOG_ERROR, _num_line + 1,
-					"A frame open although the other not closed !" );
+				    wxT("A frame open although the other not closed !") );
 			b_buildFrame = true;
 		}
 
@@ -1858,7 +1883,7 @@ bool ob_anim::Eat( MyLine* line, const int _num_line )
 			Add_SubObj( temp );
 			frame_open = temp->ungry;
 		}
-		else if( _name.Upper() == "@SCRIPT" )
+		else if( _name.Upper() == wxT("@SCRIPT") )
 			Add_SubObj( new ob_script( line, _num_line ));
 
 		else
@@ -1868,7 +1893,7 @@ bool ob_anim::Eat( MyLine* line, const int _num_line )
 	else
 	{
 		ObjectsLog( MYLOG_WARNING, _num_line + 1,
-				"header property <" + _name + "> found after the first anim had started ! All non anim related header must be before the anims. Or may be it's a non referenced tag ?" );
+			    wxT("header property <") + _name + wxT("> found after the first anim had started ! All non anim related header must be before the anims. Or may be it's a non referenced tag ?") );
 		//Will not eat that !!
 //		Add_SubObj( new ob_object( line, _num_line ));
 		ungry = false;
@@ -1933,7 +1958,7 @@ ob_anim::Add_SubObj( ob_object* o )
 		return Append_SubObj( o );
 
 	// A new prop have been set -> move it before the first frame
-	if( o->name.Upper() != "FRAME" )
+	if( o->name.Upper() != wxT("FRAME") )
 	{
 		ob_object* _first_frame = GetFrame(0);
 		if( _first_frame != NULL )
@@ -2016,11 +2041,9 @@ ob_anim::Absorb( ob_object* tomerge, bool b_after )
 ********************/
 
 // The properties that are copied from the previous frame
-wxString _to_check_with_prevframe[] = {"delay", "offset", "bbox",
-				"move", "movez", "movea",
-				"nodrawmethod", "drawmethod", "platform"
-				, "dropv"
-				};
+wxString _to_check_with_prevframe[] = {wxT("delay"), wxT("offset"), wxT("bbox"),
+wxT("move"), wxT("movez"), wxT("movea"),
+wxT("nodrawmethod"), wxT("drawmethod"), wxT("platform"), wxT("dropv")	};
 
 bool
 ob_frame::IsFrameTag( const wxString& data )
@@ -2042,7 +2065,7 @@ ob_frame::ob_frame( MyLine* line, const int _num_line )
 {
 	if( line != NULL )
 		ObjectsLog( MYLOG_ERROR, _num_line + 1,
-			"A frame is not supposed to be build with a valid line (it's a last block line created object) !!" );
+			    wxT("A frame is not supposed to be build with a valid line (it's a last block line created object) !!") );
 
 	type = OB_TYPE_FRAME;
 	nb_line=0;
@@ -2055,8 +2078,8 @@ ob_frame::ob_frame( MyLine* line, const int _num_line )
 	img = NULL;
 	png_or_gif = NULL;
 
-	if( name == "" )
-		SetName( "frame" );
+	if( name == wxString() )
+		SetName( wxT("frame") );
 }
 
 //-----------------------------------------------------------------
@@ -2092,7 +2115,7 @@ ob_frame::GifPath()const
 	if( nb_tokens >= 1 )
 		return GetObFile( arr_token[0] );
 	else
-		return wxFileName("");
+		return wxFileName(wxString());
 }
 
 //---------------------------------------------------
@@ -2114,17 +2137,17 @@ ob_frame::Eat( MyLine* line, const int _num_line )
 
 	wxString _name = *(line->GetToken(0)->data);
 
-	if( last_subobj != NULL && last_subobj->name.Upper() == "@SCRIPT" )
+	if( last_subobj != NULL && last_subobj->name.Upper() == wxT("@SCRIPT") )
 		if( last_subobj->Eat( line, _num_line ) )
 			return true;
 
 	if( last_subobj != NULL && last_subobj->Eat( line, _num_line) == true )
 		return true;
 		
-	if( _name.Upper() == "ANIM" or _name.Upper() == "ANIMATION" )
+	if( _name.Upper() == wxT("ANIM") or _name.Upper() == wxT("ANIMATION") )
 	{
 		ObjectsLog( MYLOG_WARNING, _num_line + 1,
-    			"with <" + _name +"> a start Anim declaration found although the last frame don't close !!" );
+			    wxT("with <") + _name +wxT("> a start Anim declaration found although the last frame don't close !!") );
 	   	dummy=true;
 	   	ungry = false;
 	    return false;
@@ -2136,11 +2159,11 @@ ob_frame::Eat( MyLine* line, const int _num_line )
 		// Anim tag in a frame zone
 		if( ob_anim::IsAnimTag( _name ))
 			ObjectsLog( MYLOG_WARNING, _num_line + 1,
-	    			"<" + _name + "> is a Non-Frame Tag inside a frame zone !! Or may be an non referenced frame tag ?" );
+				    wxT("<") + _name + wxT("> is a Non-Frame Tag inside a frame zone !! Or may be an non referenced frame tag ?"));
 		// Non anim tag in the zone, let the anim parent object handle the situation
 		else
 			ObjectsLog( MYLOG_ERROR, _num_line + 1,
-	    			"<" + _name + "> is a Non-Anim Tag inside a frame zone !! Or may be an non referenced tag ??" );
+				    wxT("<") + _name + wxT("> is a Non-Anim Tag inside a frame zone !! Or may be an non referenced tag ??" ));
 	}
 
 	else if( ob_frame_attack::IsAttack_Declare_Tag( _name) == true )
@@ -2149,11 +2172,11 @@ ob_frame::Eat( MyLine* line, const int _num_line )
 		return true;
 	}
 
-	else if( _name.Upper() == "@SCRIPT" )
+	else if( _name.Upper() == wxT("@SCRIPT") )
 		Add_SubObj( new ob_script( line, _num_line ));
 
 	// It's the ending of the frame
-	else if( _name.Upper() == "FRAME" )
+	else if( _name.Upper() == wxT("FRAME") )
 	{
 		SetData( line, _num_line );
 		// Have to reset the type
@@ -2230,12 +2253,10 @@ ob_frame::ToStr()const
 			{
 				ob_frame_attack* p_att =
 					(ob_frame_attack*) prev_frame->GetSubObject( temp->name );
-				if( p_att == NULL && temp->name == "ATTACK" )
-					p_att =
-						(ob_frame_attack*) prev_frame->GetSubObject( "ATTACK1" );
-				if( p_att == NULL && temp->name == "ATTACK1" )
-					p_att =
-						(ob_frame_attack*) prev_frame->GetSubObject( "ATTACK" );
+				if( p_att == NULL && temp->name == wxT("ATTACK") )
+					p_att = (ob_frame_attack*) prev_frame->GetSubObject( wxT("ATTACK1") );
+				if( p_att == NULL && temp->name == wxT("ATTACK1") )
+					p_att = (ob_frame_attack*) prev_frame->GetSubObject( wxT("ATTACK") );
 					
 				if( p_att != NULL && p_att->IsEqual( temp )== true )
 					b_pass =true;
@@ -2249,10 +2270,10 @@ ob_frame::ToStr()const
 	if( !dummy )
 	{
 		if( nb_tokens > 0 )
-			res += GetPrefixFor(0) + name + GetPrefixFor(1) + arr_token[0] + GetComment() + "\n";
+			res += GetPrefixFor(0) + name + GetPrefixFor(1) + arr_token[0] + GetComment() + wxT("\n");
 		// Do not print empty frame
 		else
-			res += /*GetPrefixFor(0) + name + */GetComment() + "\n";
+			res += /*GetPrefixFor(0) + name + */GetComment() + wxT("\n");
 	}
 	return res;
 }
@@ -2267,7 +2288,7 @@ ob_frame::Add_SubObj( ob_object* _obj )
 	if( _obj->type == OB_TYPE_FRAME_ATTACK )
 	{
 		// Have to check that dropv is after the attack
-		ob_object* dropv = GetSubObject( "dropv" );
+		ob_object* dropv = GetSubObject( wxT("dropv") );
 		if( dropv == NULL )
 			return true;
 		
@@ -2288,31 +2309,31 @@ ob_frame::Mergeable( ob_object *tomerge, bool b_after )
 		if( temp->type == OB_TYPE_ANIM )
 		{
 			ObjectsLog( MYLOG_ERROR, temp->num_line,
-					"Can't merge the ANIM " + temp->GetToken(0) +
-			   			" to the FRAME " + GifPath().GetFullName() + " !!" );
+				    wxT("Can't merge the ANIM ") + temp->GetToken(0) +
+				    wxT(" to the FRAME ") + GifPath().GetFullName() + wxT(" !!") );
 			return false;
 		}
 		else if( temp->type == OB_TYPE_FRAME )
 		{
 			// Check non mergeable cases
-			if( GifPath() != "" && ((ob_frame*) temp)->GifPath() != "" )
+			if( GifPath() != wxString() && ((ob_frame*) temp)->GifPath() != wxString() )
 			{
 				ObjectsLog( MYLOG_ERROR, temp->num_line,
-						"Can't merge the valid Frame " + ((ob_frame*) temp)->GifPath().GetFullName() +
-			    			" to the other valid FRAME " + GifPath().GetFullName() + " !!" );
+					    wxT("Can't merge the valid Frame ") + ((ob_frame*) temp)->GifPath().GetFullName() +
+					    wxT(" to the other valid FRAME ") + GifPath().GetFullName() + wxT(" !!") );
 			    return false;
 			}
-			else if( b_after && ((ob_frame*) temp)->GifPath() == "" )
+			else if( b_after && ((ob_frame*) temp)->GifPath() == wxString() )
 			{
 				ObjectsLog( MYLOG_ERROR, temp->num_line,
-			    	"Can't merge a non valid Frame after the FRAME <" + GifPath().GetFullName() + "> !!" );
+					    wxT("Can't merge a non valid Frame after the FRAME <") + GifPath().GetFullName() + wxT("> !!") );
 			    return false;
 			}
-			else if( ! b_after && GifPath() == "" )
+			else if( ! b_after && GifPath() == wxString() )
 			{
 				ObjectsLog( MYLOG_ERROR, temp->num_line,
-			    		"Can't merge the Frame " + ((ob_frame*) temp)->GifPath().GetFullName() +
-			    			" before the a valid FRAME !!" );
+					    wxT("Can't merge the Frame ") + ((ob_frame*) temp)->GifPath().GetFullName() +
+					    wxT(" before the a valid FRAME !!") );
 			    return false;
 			}
 		}
@@ -2349,7 +2370,7 @@ ob_frame::Absorb( ob_object* tomerge, bool b_after )
 
 			if( temp->type == OB_TYPE_ANIM ||  temp->type == OB_TYPE_FRAME )
 				ObjectsLog( MYLOG_ERROR, GetLineRef(),
-			    		"Frame or Anim <" + temp->name + "> found as subobj of " + name + " !!" );
+					    wxT("Frame or Anim <") + temp->name + wxT("> found as subobj of ") + name + wxT(" !!") );
 
 			Absorb( temp, b_after );
 
@@ -2427,7 +2448,7 @@ int ob_frame::Get_ColorIndex( const int x, const int y )
 
 	wxFileName fn = GifPath();
 	wxString str_path = fn.GetFullPath();
-	if( str_path == "" )
+	if( str_path == wxString() )
 		return -1;
 
 	if( ! fn.FileExists() )
@@ -2437,10 +2458,10 @@ int ob_frame::Get_ColorIndex( const int x, const int y )
 	if( IsFileEmpty( str_path))
 		return -1;
 
-	if( fn.GetExt().Upper() == "PNG" )
+	if( fn.GetExt().Upper() == wxT("PNG") )
 		png_or_gif = new wxIndexedPNG( str_path );
 
-	else if( fn.GetExt().Upper() == "GIF" )
+	else if( fn.GetExt().Upper() == wxT("GIF") )
 		png_or_gif = new wxIndexedGIF( str_path );
 
 	else
@@ -2503,12 +2524,12 @@ ob_frame::GetFirstAvalaibleAttack_name()
 			return t->name;
 		t = t->next;
 	}
-	return "";
+	return wxString();
 }
 
 //------------------------------------------------------------
 #define FRCL_GET_TOKEN( i )				\
-	(	subobj->GetToken(i) != ""		\
+	(	subobj->GetToken(i) != wxString()		\
 		? StrToInt( subobj->GetToken(i) )	\
 		: NO_CLONED_VAL				\
 	)
@@ -2518,7 +2539,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 {
 	ob_object* subobj;
 	// Delay
-	subobj = GetSubObject("DELAY");
+	subobj = GetSubObject(wxT("DELAY"));
 	if( subobj != NULL )
 	{
 		b_delay_cloned = false;
@@ -2539,7 +2560,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}			
 
 	// Offset
-	subobj = GetSubObject("Offset");
+	subobj = GetSubObject(wxT("Offset"));
 	if( subobj != NULL )
 	{
 		b_offset_cloned = false;
@@ -2563,7 +2584,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}
 
 	// Move
-	subobj = GetSubObject("Move");
+	subobj = GetSubObject(wxT("Move"));
 	if( subobj != NULL )
 	{
 		b_move_cloned = false;
@@ -2584,7 +2605,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}			
 
 	// MoveZ
-	subobj = GetSubObject("MoveZ");
+	subobj = GetSubObject(wxT("MoveZ"));
 	if( subobj != NULL )
 	{
 		b_moveZ_cloned = false;
@@ -2605,7 +2626,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}			
 
 	// MoveA
-	subobj = GetSubObject("MoveA");
+	subobj = GetSubObject(wxT("MoveA"));
 	if( subobj != NULL )
 	{
 		b_moveA_cloned = false;
@@ -2626,7 +2647,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}			
 
 	// BBox
-	subobj = GetSubObject("BBOX");
+	subobj = GetSubObject(wxT("BBOX"));
 	if( subobj != NULL )
 	{
 		b_bBox_cloned = false;
@@ -2664,7 +2685,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 		if( prev == NULL )
 		{
 			b_attBox_cloned = false;
-			attName = "Attack1";
+			attName = wxT("Attack1");
 			for( size_t i = 0; i < ATT_TOKS_COUNT; i++)
 				attBox[i] = NO_CLONED_VAL;
 		}
@@ -2678,7 +2699,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}
 
 	// DrawMethod
-	subobj = GetSubObject("DRAWMETHOD");
+	subobj = GetSubObject(wxT("DRAWMETHOD"));
 	if( subobj != NULL )
 	{
 		b_drawMethod_cloned = false;
@@ -2702,7 +2723,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}
 
 	// noDrawMethod
-	subobj = GetSubObject("NODRAWMETHOD");
+	subobj = GetSubObject(wxT("NODRAWMETHOD"));
 	if( subobj != NULL )
 	{
 		b_noDrawMethod_cloned = false;
@@ -2723,7 +2744,7 @@ ob_frame::UpdateClonedDatas(ob_frame* prev)
 	}
 
 	// platform
-	subobj = GetSubObject("platform");
+	subobj = GetSubObject(wxT("platform"));
 	if( subobj != NULL )
 	{
 		b_platform_cloned = false;
@@ -2898,7 +2919,7 @@ ob_frame::Get_NextFrame()
 /***************************
 ******** FRAME ATTACK OBJECT
 ********************/
-wxString attacks__declare_tags[] = { "ATTACK", "BLAST", "SHOCK", "BURN", "FREEZE", "STEAL" };
+wxString attacks__declare_tags[] = { wxT("ATTACK"), wxT("BLAST"), wxT("SHOCK"), wxT("BURN"), wxT("FREEZE"), wxT("STEAL") };
 
 bool 
 ob_frame_attack::IsAttack_Declare_Tag( const wxString& _prop_name )
@@ -2912,7 +2933,7 @@ ob_frame_attack::IsAttack_Declare_Tag( const wxString& _prop_name )
 	if( _prop_name.Len() <= 6 ) // 6 == "attack".Len()
 		return false;
 	
-	if( _prop_name.Left(6).Upper() != "ATTACK" )
+	if( _prop_name.Left(6).Upper() != wxT("ATTACK") )
 		return false;
 	
 	if( StrIsUInt( _prop_name.Right( _prop_name.Len() - 6 ) ) == true )
@@ -2974,8 +2995,8 @@ void
 ob_frame_attack::SetName( const wxString& _name )
 {
 	wxString t = _name;
-	if( t.Upper() == "ATTACK" )
-		t = t + "1";
+	if( t.Upper() == wxT("ATTACK"))
+		t = t + wxT("1");
 	return ob_object::SetName(t);
 }
 
@@ -3074,7 +3095,7 @@ bool ob_script::Eat( MyLine* line, const int _num_line)
 	if( ob_anim::IsAnimTag(_name) )
 	{
 		ObjectsLog( MYLOG_WARNING, _num_line + 1,
-    			"with <" + _name + ">, a anim tag found although the last scripts didn't close !!" );
+			    wxT("with <") + _name + wxT(">, a anim tag found although the last scripts didn't close !!") );
 	   	dummy=true;
 	   	ungry = false;
 	    return false;
@@ -3085,7 +3106,7 @@ bool ob_script::Eat( MyLine* line, const int _num_line)
 	Add_SubObj( temp );
 
 	// Check if script is finish
-	if( _name.Upper() == "@END_SCRIPT" )
+	if( _name.Upper() == wxT("@END_SCRIPT") )
 		ungry = false;
 
 	return true;

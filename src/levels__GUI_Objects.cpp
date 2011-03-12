@@ -81,9 +81,9 @@ LevelEditorFrame::SuperType__Select( int _sst )
 		{
 			wxString s = Stage__Type_ToStr(arr_type[i]);
 			if( aSet_Hide_TYPE.find(arr_type[i]) == aSet_Hide_TYPE.end() )
-				s = "  " + s;
+				s = wxT("  ") + s;
 			else
-				s = "# " + s;
+				s = wxT("# ") + s;
 			
 			object_Type_list->Append( s, (void*) arr_type[i] );
 		}
@@ -309,7 +309,7 @@ LevelEditorFrame::OBJECT__Visibilities_Update()
 		// Higlighted Set  == objects of this type
 		aSet_Highlighted.clear();
 		
-		int _type = (int) object_Type_list->GetClientData(ind_sel);
+		int _type = (size_t) object_Type_list->GetClientData(ind_sel);
 		if( _type != STAGETYPE_NONE )
 		{
 			list<ob_stage_object*>*  l_objs = 
@@ -335,7 +335,7 @@ LevelEditorFrame::OBJECT__Visibilities_Update()
 		// Higlighted Set  == objects of this SuperType
 		aSet_Highlighted.clear();
 		
-		int _stype = (int) object_SuperType_list->GetClientData(ind_sel);
+		int _stype = (size_t) object_SuperType_list->GetClientData(ind_sel);
 		if( _stype != SST_NONE )
 		{
 			size_t arr_type_size;
@@ -416,32 +416,32 @@ LevelEditorFrame::OBJECT__Visibilities_SaveState()
 	set<int>::iterator it(aSet_Hide_SuperType.begin())
 			  ,it_end(aSet_Hide_SuperType.end());
 	for( ;it!=it_end;it++)
-		s += IntToStr(*it) + ",";
+		s += IntToStr(*it) + wxT(",");
 	s.Truncate(s.Len()-1);
-	ConfigEdit_Write("OBJECT__Visibilities_State_SuperType", s );
+	ConfigEdit_Write(wxT("OBJECT__Visibilities_State_SuperType"), s );
 	
-	s = "";
+	s = wxString();
 	it 	 = aSet_Hide_TYPE.begin();
 	it_end = aSet_Hide_TYPE.end();
 	for( ;it!=it_end;it++)
-		s += IntToStr(*it) + ",";
+		s += IntToStr(*it) + wxT(",");
 	s.Truncate(s.Len()-1);
-	ConfigEdit_Write("OBJECT__Visibilities_State_TYPE", s );
+	ConfigEdit_Write(wxT("OBJECT__Visibilities_State_TYPE"), s );
 }
 
 //-------------------------------------------------------
 void 
 LevelEditorFrame::OBJECT__Visibilities_LoadState()
 {
-	wxString s = ConfigEdit_Read("OBJECT__Visibilities_State_SuperType");
-	if( s == "" )
+	wxString s = ConfigEdit_Read(wxT("OBJECT__Visibilities_State_SuperType"));
+	if( s == wxString() )
 		return;
-	wxArrayString arr_s = StrSplit(s, "," );
+	wxArrayString arr_s = StrSplit(s, wxT(",") );
 	for( size_t i = 0;i < arr_s.Count();i++)
 		OBJECT__ShowStates__Add_SuperType( StrToInt( arr_s[i] ));
 	
-	s = ConfigEdit_Read("OBJECT__Visibilities_State_TYPE");
-	arr_s = StrSplit(s, "," );
+	s = ConfigEdit_Read(wxT("OBJECT__Visibilities_State_TYPE"));
+	arr_s = StrSplit(s, wxT(",") );
 	for( size_t i = 0;i < arr_s.Count();i++)
 		OBJECT__ShowStates__Add_TYPE( StrToInt( arr_s[i] ));
 	
@@ -473,7 +473,7 @@ LevelEditorFrame::OBJECT__ShowStates__Toggle_SuperType( int _st )
 {
 	for( size_t i = 0; i < object_SuperType_list->GetCount();i++)
 	{
-		int t_t = (int) object_SuperType_list->GetClientData(i);
+		int t_t = (size_t) object_SuperType_list->GetClientData(i);
 		if(t_t == _st )
 		{
 			wxString s = object_SuperType_list->GetString( i );
@@ -493,10 +493,10 @@ LevelEditorFrame::OBJECT__ShowStates__Add_SuperType(int _st )
 	size_t i;
 	for(  i = 0; i < object_SuperType_list->GetCount();i++)
 	{
-		int t_st = (int) object_SuperType_list->GetClientData(i);
+		int t_st = (size_t) object_SuperType_list->GetClientData(i);
 		if( t_st == _st )
 		{
-			object_SuperType_list->SetString( i, "# " + Stage__SuperType_ToStr(t_st) );
+			object_SuperType_list->SetString( i, wxT("# ") + Stage__SuperType_ToStr(t_st) );
 			break;
 		}
 	}
@@ -518,10 +518,10 @@ LevelEditorFrame::OBJECT__ShowStates__Remove_SuperType( int _st )
 	size_t i;
 	for(  i = 0; i < object_SuperType_list->GetCount();i++)
 	{
-		int t_st = (int) object_SuperType_list->GetClientData(i);
+		int t_st = (size_t) object_SuperType_list->GetClientData(i);
 		if( t_st == _st )
 		{
-			object_SuperType_list->SetString( i, "  " + Stage__SuperType_ToStr(t_st) );
+			object_SuperType_list->SetString( i, wxT("  ") + Stage__SuperType_ToStr(t_st) );
 			break;
 		}
 	}
@@ -539,7 +539,7 @@ LevelEditorFrame::OBJECT__ShowStates__Toggle_TYPE( int _t )
 {
 	for( size_t i = 0; i < object_Type_list->GetCount();i++)
 	{
-		int t_t = (int) object_Type_list->GetClientData(i);
+		int t_t = (size_t) object_Type_list->GetClientData(i);
 		if(t_t == _t )
 		{
 			wxString s = object_Type_list->GetString( i );
@@ -558,10 +558,10 @@ LevelEditorFrame::OBJECT__ShowStates__Add_TYPE( int _t )
 {
 	for( size_t i = 0; i < object_Type_list->GetCount();i++)
 	{
-		int t_t = (int) object_Type_list->GetClientData(i);
+		int t_t = (size_t) object_Type_list->GetClientData(i);
 		if(t_t == _t )
 		{
-			object_Type_list->SetString( i, "# " + Stage__Type_ToStr(t_t) );
+			object_Type_list->SetString( i, wxT("# ") + Stage__Type_ToStr(t_t) );
 			break;
 		}
 	}
@@ -576,10 +576,10 @@ LevelEditorFrame::OBJECT__ShowStates__Remove_TYPE( int _t )
 {
 	for( size_t i = 0; i < object_Type_list->GetCount();i++)
 	{
-		int t_t = (int) object_Type_list->GetClientData(i);
+		int t_t = (size_t) object_Type_list->GetClientData(i);
 		if(t_t == _t )
 		{
-			object_Type_list->SetString( i,"  " + Stage__Type_ToStr(t_t) );
+			object_Type_list->SetString( i, wxT("  ") + Stage__Type_ToStr(t_t) );
 			break;
 		}
 	}
@@ -691,20 +691,20 @@ LevelEditorFrame::OBJECT__ListSelected__Delete()
 		return;
 	
 	// Make the user sure
-	wxString mess = "Are you sure you want to\n";
+	wxString mess = wxT("Are you sure you want to\n");
 	if( aSet_Selected.size() == 1 )
-		mess += "this object ??";
+		mess += wxT("this object ??");
 	else
-		mess += "these objects ??";
+		mess += wxT("these objects ??");
 	
 	int _reponse = wxMessageBox( mess
-			, "ATTENTION !"
+	, wxT("ATTENTION !")
 			, wxICON_EXCLAMATION | wxYES_NO );
 
 	if( _reponse != wxYES )
 		return;
 	
-	theHistoryManager.GroupStart( "Delete Object(s)");
+	theHistoryManager.GroupStart( wxT("Delete Object(s)"));
 	
 	NOTEBOOK__Set_NoSelection();
 	curr_stageFile->changed = true;
@@ -731,7 +731,7 @@ LevelEditorFrame::OBJECT__ListSelected__Duplicate()
 	if( aSet_Selected.empty() == true  || curr_stageFile == NULL )
 		return;
 
-	theHistoryManager.GroupStart( "Duplicate Object(s)");
+	theHistoryManager.GroupStart( wxT("Duplicate Object(s)"));
 	
 	list<ob_stage_object*> t_news;
 	while( aSet_Selected.empty() == false )
@@ -816,7 +816,7 @@ ANN_newCombo(   wxWindow* parent, int max_w, const wxString& name,int more_style
 		style |= wxCB_READONLY;
 	
 	wxWindow* res =  new wxComboBox( 
-					parent, wxID_ANY, ""
+					parent, wxID_ANY, wxString()
 					, wxDefaultPosition, wxSize( max_w, -1 )
 					, 0, NULL
 					, style
@@ -831,17 +831,17 @@ static inline
 wxString
 ANN__GetItemHolded_Tag( ob_object* o )
 {
-	ob_object* so = o->GetSubObject( "item" );
+	ob_object* so = o->GetSubObject( wxT("item") );
 	if( so != NULL )
-		return "item";
+		return wxT("item");
 	for( int i = 2; i <= 4; i++ )
 	{
-		wxString tag = IntToStr(i) + "pitem";
+		wxString tag = IntToStr(i) + wxT("pitem");
 		so = o->GetSubObject( tag );
 		if( so != NULL )
 			return tag;
 	}
-	return "";
+	return wxString();
 }
 
 //-------------------------------------------------------
@@ -850,8 +850,8 @@ wxString
 ANN__GetItemHolded_Name( ob_object* o )
 {
 	wxString tag = ANN__GetItemHolded_Tag( o );
-	if( tag == "" )
-		return "";
+	if( tag == wxString() )
+		return wxString();
 	else
 		return o->GetSubObject( tag )->GetToken( 0 );
 }
@@ -866,14 +866,14 @@ ANN__GetNbRemap(obFileEntity* e )
 		return 0;
 
 	size_t res;
-	ob_object** dummy = e->obj_container->GetSubObjectS( "remap", res );
+	ob_object** dummy = e->obj_container->GetSubObjectS( wxT("remap"), res );
 	if( res > 0 )
 	{
 		delete[] dummy;
 		return res;
 	}
 	
-	dummy = e->obj_container->GetSubObjectS( "alternatepal", res );
+	dummy = e->obj_container->GetSubObjectS( wxT("alternatepal"), res );
 	if( dummy != NULL )
 		delete[] dummy;
 	
@@ -892,8 +892,8 @@ ANN__Refill_Map_ComboBox( wxComboBox* co,obFileEntity* ent )
 	wxArrayString _displayed;
 	wxArrayString _values;
 	
-	_displayed.Add( "None" );
-	_values.Add( "0" );
+	_displayed.Add( wxT("None") );
+	_values.Add( wxT("0") );
 	
 	co->Clear();
 	if( nb_remaps > 0 )
@@ -928,24 +928,24 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_TEXT] = pg;
-	map_pages_names[PG_TEXT] = new wxString("OFF");
+	map_pages_names[PG_TEXT] = new wxString(wxT("OFF"));
 	
 	sizer = new wxBoxSizer( wxVERTICAL );
 	pg->SetSizer(sizer);
 	sizer->AddStretchSpacer();
 		sizer_sub = new wxBoxSizer( wxHORIZONTAL );
 		sizer_sub->AddStretchSpacer();
-		txtStat = new wxStaticText( pg, wxID_ANY, "No Selection"
+		txtStat = new wxStaticText( pg, wxID_ANY, wxT("No Selection")
 						, wxDefaultPosition, wxDefaultSize
 						, wxALIGN_CENTRE|wxBORDER_RAISED
-						, "pg_text");
+						, wxT("pg_text"));
 		txtStat->SetFont( bigFont );
 		sizer_sub->Add( txtStat );
 		sizer_sub->AddStretchSpacer();
 		sizer->Add(sizer_sub,0,wxEXPAND);
 	sizer->AddStretchSpacer();
 	
-	map_pages_elts[PG_TEXT].push_back("pg_text");
+	map_pages_elts[PG_TEXT].push_back(wxT("pg_text"));
 	
 	//-------------------------------------------------------------
 	//-------------------------------------------------------------
@@ -954,7 +954,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_MORE] = pg;
-	map_pages_names[PG_MORE] = new wxString("More");
+	map_pages_names[PG_MORE] = new wxString(wxT("More"));
 	
 	sizer = new wxBoxSizer( wxVERTICAL );
 	pg->SetSizer(sizer);
@@ -967,7 +967,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_ENT_COORDS] = pg;
-	map_pages_names[PG_ENT_COORDS] = new wxString("Coords");
+	map_pages_names[PG_ENT_COORDS] = new wxString(wxT("Coords"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -979,8 +979,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		
 		//--------------------------------------------------
 		// AT
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:at=0", 100, "At", 60 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"), 100, wxT("At"), 60 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -989,12 +989,12 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_COORDS].push_back("TCSP:at=0");
+		map_pages_elts[PG_ENT_COORDS].push_back(wxT("TCSP:at=0"));
 
 		//--------------------------------------------------
 		// Coords
-		sizer_sub = ob_props["SP:coords=0"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:coords=0", 50, "Coords", 60 );
+		sizer_sub = ob_props[wxT("SP:coords=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:coords=0"), 50, wxT("Coords"), 60 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1003,8 +1003,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		wxSizer* sizer_t = ob_props["SP:coords=1"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:coords=1", 50 );
+		wxSizer* sizer_t = ob_props[wxT("SP:coords=1")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:coords=1"), 50 );
 		delete sizer_t;
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
@@ -1014,8 +1014,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_sub->Add(theCtrl );
 		
-		sizer_t = ob_props["SP:coords=2"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:coords=2", 50 );
+		sizer_t = ob_props[wxT("SP:coords=2")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:coords=2"), 50 );
 		delete sizer_t;
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
@@ -1025,14 +1025,14 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_sub->Add(theCtrl );
 		
-		map_pages_elts[PG_ENT_COORDS].push_back("TCSP:coords=0");
-		map_pages_elts[PG_ENT_COORDS].push_back("TCSP:coords=1");
-		map_pages_elts[PG_ENT_COORDS].push_back("TCSP:coords=2");
+		map_pages_elts[PG_ENT_COORDS].push_back(wxT("TCSP:coords=0"));
+		map_pages_elts[PG_ENT_COORDS].push_back(wxT("TCSP:coords=1"));
+		map_pages_elts[PG_ENT_COORDS].push_back(wxT("TCSP:coords=2"));
 
 		//--------------------------------------------------
 		// Flip
-		sizer_sub = ob_props["SP:flip=0"]->BuildControls( 
-						NULL, pg, theCtrl, "CHSP:flip=0",100, "Flip",80 );
+		sizer_sub = ob_props[wxT("SP:flip=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("CHSP:flip=0"),100, wxT("Flip"),80 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_CHECKBOX_CLICKED
 			, wxCommandEventHandler(
@@ -1042,7 +1042,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 		delete sizer_sub;
 		sizer_left->Add(theCtrl, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_COORDS].push_back("CHSP:flip=0");
+		map_pages_elts[PG_ENT_COORDS].push_back(wxT("CHSP:flip=0"));
 		
 		//--------------------------------------------------
 		sizer_right = new wxBoxSizer( wxVERTICAL );
@@ -1055,32 +1055,32 @@ LevelEditorFrame::NOTEBOOK__Init()
 		sizer_sub = new wxBoxSizer( wxHORIZONTAL );
 		sizer_right->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 		
-		txtStat = new wxStaticText( pg, wxID_ANY, "Entity"
+		txtStat = new wxStaticText( pg, wxID_ANY, wxT("Entity")
 						,wxDefaultPosition,wxSize(80,-1) );
 		sizer_sub->Add(txtStat, 0, wxALIGN_CENTER );
-		theCtrl = new wxTextCtrl( pg, wxID_ANY, "",
+		theCtrl = new wxTextCtrl( pg, wxID_ANY, wxString(),
 						  wxDefaultPosition,wxSize(150,-1),
 						  wxTE_READONLY,
 						  wxDefaultValidator,
-						  "entity_name"
+							wxT("entity_name")
 						  );
 		theCtrl->SetBackgroundColour( wxColour(230,230,230));
 		sizer_sub->Add( theCtrl );
 		
-		map_pages_elts[PG_ENT_COORDS].push_back("entity_name");
+		map_pages_elts[PG_ENT_COORDS].push_back(wxT("entity_name"));
 		
 		//--------------------------------------------------
 		// Alias
-		sizer_sub = ob_props["SP:alias=0"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:alias=0",150, "Alias",80 );
+		sizer_sub = ob_props[wxT("SP:alias=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:alias=0"),150, wxT("Alias"),80 );
 		sizer_right->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_COORDS].push_back("TCSP:alias=0");
+		map_pages_elts[PG_ENT_COORDS].push_back(wxT("TCSP:alias=0"));
 		
 		//--------------------------------------------------
 		// Remaps
-		sizer_sub = ob_props["SP:map=0"]->BuildControls( 
-						NULL, pg, theCtrl, "COSP:map=0",100, "Remap",80 );
+		sizer_sub = ob_props[wxT("SP:map=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("COSP:map=0"),100, wxT("Remap"),80 );
 		sizer_right->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_COMBOBOX_SELECTED
@@ -1089,7 +1089,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 						)
 			, NULL, leFrame );
 						
-		map_pages_elts[PG_ENT_COORDS].push_back("COSP:map=0");
+			map_pages_elts[PG_ENT_COORDS].push_back(wxT("COSP:map=0"));
 		
 
 	//-------------------------------------------------------------
@@ -1098,7 +1098,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_ENT_INFOS] = pg;
-	map_pages_names[PG_ENT_INFOS] = new wxString("Params");
+	map_pages_names[PG_ENT_INFOS] = new wxString(wxT("Params"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1111,35 +1111,35 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// Health
 		//--------------------------------------------------
-		txtStat = new wxStaticText( pg, wxID_ANY, "Health" );
+		txtStat = new wxStaticText( pg, wxID_ANY, wxT("Health") );
 		sizer_left->Add(txtStat, 0 );
 		
-		sizer_sub = ob_props["SP:health=0"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:health=0", 50, "1P" );
+		sizer_sub = ob_props[wxT("SP:health=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:health=0"), 50, wxT("1P") );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_INFOS].push_back("TCSP:health=0");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("TCSP:health=0"));
 
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:2phealth=0"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:2phealth=0", 50, "2P" );
+		sizer_sub = ob_props[wxT("SP:2phealth=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:2phealth=0"), 50, wxT("2P") );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_INFOS].push_back("TCSP:2phealth=0");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("TCSP:2phealth=0"));
 
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:3phealth=0"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:3phealth=0", 50, "3P" );
+		sizer_sub = ob_props[wxT("SP:3phealth=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:3phealth=0"), 50, wxT("3P") );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_INFOS].push_back("TCSP:3phealth=0");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("TCSP:3phealth=0"));
 
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:4phealth=0"]->BuildControls( 
-						NULL, pg, theCtrl, "TCSP:4phealth=0", 50, "4P" );
+		sizer_sub = ob_props[wxT("SP:4phealth=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:4phealth=0"), 50, wxT("4P") );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_INFOS].push_back("TCSP:4phealth=0");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("TCSP:4phealth=0"));
 
 
 		//--------------------------------------------------
@@ -1153,38 +1153,38 @@ LevelEditorFrame::NOTEBOOK__Init()
 		sizer_sub = new wxBoxSizer( wxHORIZONTAL );
 		sizer_center->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 		
-		txtStat = new wxStaticText( pg, wxID_ANY, "Nb Player Min" );
+		txtStat = new wxStaticText( pg, wxID_ANY, wxT("Nb Player Min") );
 		sizer_sub->Add(txtStat, 0, wxALIGN_CENTER );
 		
-		combo = ANN_newCombo( pg, 50 , "pspawn" );
-		((wxComboBox*)combo)->Append("1");
-		((wxComboBox*)combo)->Append("2");
-		((wxComboBox*)combo)->Append("3");
-		((wxComboBox*)combo)->Append("4");
+		combo = ANN_newCombo( pg, 50 , wxT("pspawn") );
+		((wxComboBox*)combo)->Append(wxT("1"));
+		((wxComboBox*)combo)->Append(wxT("2"));
+		((wxComboBox*)combo)->Append(wxT("3"));
+		((wxComboBox*)combo)->Append(wxT("4"));
 		combo->Connect( 
 			  wxEVT_COMMAND_COMBOBOX_SELECTED
 			, wxCommandEventHandler(LevelEditorFrame::NOTEBOOK__Evt_pspawn)
 			, NULL, leFrame );
 		sizer_sub->Add(combo);
-		map_pages_elts[PG_ENT_INFOS].push_back("pspawn");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("pspawn"));
 
 		//--------------------------------------------------
 		// Agression
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:aggression=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:aggression=0",60, "Aggression",100 );
+		sizer_sub = ob_props[wxT("SP:aggression=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:aggression=0"),60, wxT("Aggression"),100 );
 		sizer_center->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_INFOS].push_back("TCSP:aggression=0");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("TCSP:aggression=0"));
 
 		//--------------------------------------------------
 		// score
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:score=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:score=0",60, "Score",100 );
+		sizer_sub = ob_props[wxT("SP:score=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:score=0"),60, wxT("Score"),100 );
 		sizer_center->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 						
-		map_pages_elts[PG_ENT_INFOS].push_back("TCSP:score=0");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("TCSP:score=0"));
 
 		//--------------------------------------------------
 		// SIZER RIGHT
@@ -1194,11 +1194,11 @@ LevelEditorFrame::NOTEBOOK__Init()
 
 		//--------------------------------------------------
 		// MP
-		sizer_sub = ob_props["SP:mp=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:mp=0",50, "MP" );
+		sizer_sub = ob_props[wxT("SP:mp=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:mp=0"),50, wxT("MP") );
 		sizer_right ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_ENT_INFOS].push_back("TCSP:mp=0");
+		map_pages_elts[PG_ENT_INFOS].push_back(wxT("TCSP:mp=0"));
 
 
 	//-------------------------------------------------------------
@@ -1207,7 +1207,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_ENT_ITEMHOLD] = pg;
-	map_pages_names[PG_ENT_ITEMHOLD] = new wxString("Item Hold");
+	map_pages_names[PG_ENT_ITEMHOLD] = new wxString(wxT("Item Hold"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1223,13 +1223,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 		sizer_sub = new wxBoxSizer( wxHORIZONTAL );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 		
-		txtStat = new wxStaticText( pg, wxID_ANY, "Name"
+		txtStat = new wxStaticText( pg, wxID_ANY, wxT("Name")
 						,wxDefaultPosition,wxSize(100,-1) );
 		sizer_sub->Add(txtStat, 0, wxALIGN_CENTER );
 		
 		combo = new ComboBoxAutoComplete( pg );
 		combo->SetMinSize( wxSize(100,-1));
-		combo->SetName("item_name");
+		combo->SetName(wxT("item_name"));
 		combo->Connect( 
 			wxEVT_COMBOBOXAUTOCOMPLETE_CHANGE
 		    , wxCommandEventHandler(
@@ -1252,25 +1252,25 @@ LevelEditorFrame::NOTEBOOK__Init()
 		}
 		
 		sizer_sub->Add(combo);
-		map_pages_elts[PG_ENT_ITEMHOLD].push_back("item_name");
+		map_pages_elts[PG_ENT_ITEMHOLD].push_back(wxT("item_name"));
 		
 		//--------------------------------------------------
 		// itemalias
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:itemalias=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:itemalias=0",100, "itemalias", 100 );
+		sizer_sub = ob_props[wxT("SP:itemalias=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:itemalias=0"),100, wxT("itemalias"), 100 );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_ENT_ITEMHOLD].push_back("TCSP:itemalias=0");
+		map_pages_elts[PG_ENT_ITEMHOLD].push_back(wxT("TCSP:itemalias=0"));
 		
 		//--------------------------------------------------
 		// itemmap
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:itemmap=0"]->BuildControls(
-					NULL, pg, theCtrl, "COSP:itemmap=0",80, "itemmap", 100 );
+		sizer_sub = ob_props[wxT("SP:itemmap=0")]->BuildControls(
+		NULL, pg, theCtrl, wxT("COSP:itemmap=0"),80, wxT("itemmap"), 100 );
 		sizer_left->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_ENT_ITEMHOLD].push_back("COSP:itemmap=0");
+		map_pages_elts[PG_ENT_ITEMHOLD].push_back(wxT("COSP:itemmap=0"));
 		
 		//--------------------------------------------------
 		// SIZER RIGHT
@@ -1284,35 +1284,35 @@ LevelEditorFrame::NOTEBOOK__Init()
 		sizer_sub = new wxBoxSizer( wxHORIZONTAL );
 		sizer_right->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 		
-		txtStat = new wxStaticText( pg, wxID_ANY, "Nb Player Min " );
+		txtStat = new wxStaticText( pg, wxID_ANY, wxT("Nb Player Min ") );
 		sizer_sub->Add(txtStat, 0, wxALIGN_CENTER );
 		
-		combo = ANN_newCombo( pg, 50 , "pitem" );
-		((wxComboBox*)combo)->Append("1");
-		((wxComboBox*)combo)->Append("2");
-		((wxComboBox*)combo)->Append("3");
-		((wxComboBox*)combo)->Append("4");
+		combo = ANN_newCombo( pg, 50 , wxT("pitem") );
+		((wxComboBox*)combo)->Append(wxT("1"));
+		((wxComboBox*)combo)->Append(wxT("2"));
+		((wxComboBox*)combo)->Append(wxT("3"));
+		((wxComboBox*)combo)->Append(wxT("4"));
 		combo->Connect(
 		      wxEVT_COMMAND_COMBOBOX_SELECTED
 		    , wxCommandEventHandler(LevelEditorFrame::NOTEBOOK__Evt_Item_pitem)
 		    , NULL, leFrame );
 		sizer_sub->Add(combo);
-		map_pages_elts[PG_ENT_ITEMHOLD].push_back("pitem");
+		map_pages_elts[PG_ENT_ITEMHOLD].push_back(wxT("pitem"));
 
 		//--------------------------------------------------
 		// itemhealth
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:itemhealth=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:itemhealth=0",60, "itemhealth", 100 );
+		sizer_sub = ob_props[wxT("SP:itemhealth=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:itemhealth=0"),60, wxT("itemhealth"), 100 );
 		sizer_right ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_ENT_ITEMHOLD].push_back("TCSP:itemhealth=0");
+		map_pages_elts[PG_ENT_ITEMHOLD].push_back(wxT("TCSP:itemhealth=0"));
 		
 /*		
 		//--------------------------------------------------
 		// itemalpha
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:itemalpha=0"]->BuildControls(
+		sizer_sub = ob_props[wxT("SP:itemalpha=0")]->BuildControls(
 					NULL, pg, theCtrl, "COitemalpha",50, "itemalpha", 100 );
 		sizer_right ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
@@ -1326,7 +1326,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_GROUP] = pg;
-	map_pages_names[PG_GROUP] = new wxString("Group");
+	map_pages_names[PG_GROUP] = new wxString(wxT("Group"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1339,8 +1339,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// AT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:at=0",100, "at", 100 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"),100, wxT("at"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1349,25 +1349,25 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_GROUP].push_back("TCSP:at=0");
+		map_pages_elts[PG_GROUP].push_back(wxT("TCSP:at=0"));
 
 		//--------------------------------------------------
 		// Min
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:group=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:group=0",100, "Min", 100 );
+		sizer_sub = ob_props[wxT("SP:group=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:group=0"),100, wxT("Min"), 100 );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_LIGHT].push_back("TCSP:group=0");
+		map_pages_elts[PG_LIGHT].push_back(wxT("TCSP:group=0"));
 
 		//--------------------------------------------------
 		// Max
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:group=1"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:group=1",100, "Max", 100 );
+		sizer_sub = ob_props[wxT("SP:group=1")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:group=1"),100, wxT("Max"), 100 );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_LIGHT].push_back("TCSP:group=1");
+		map_pages_elts[PG_LIGHT].push_back(wxT("TCSP:group=1"));
 
 	//-------------------------------------------------------------
 	// WAIT page
@@ -1375,7 +1375,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_WAIT] = pg;
-	map_pages_names[PG_WAIT] = new wxString("Wait");
+	map_pages_names[PG_WAIT] = new wxString(wxT("Wait"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1388,8 +1388,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// AT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:at=0",100, "at", 100 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"),100, wxT("at"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1398,7 +1398,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WAIT].push_back("TCSP:at=0");
+		map_pages_elts[PG_WAIT].push_back(wxT("TCSP:at=0"));
 
 	//-------------------------------------------------------------
 	// JOIN page
@@ -1406,7 +1406,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_CANJOIN] = pg;
-	map_pages_names[PG_CANJOIN] = new wxString("CanJoin");
+	map_pages_names[PG_CANJOIN] = new wxString(wxT("CanJoin"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1419,8 +1419,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// AT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:at=0",100, "at", 100 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"),100, wxT("at"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1429,7 +1429,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_CANJOIN].push_back("TCSP:at=0");
+		map_pages_elts[PG_CANJOIN].push_back(wxT("TCSP:at=0"));
 
 	//-------------------------------------------------------------
 	// NOJOIN page
@@ -1437,7 +1437,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_NOJOIN] = pg;
-	map_pages_names[PG_NOJOIN] = new wxString("NoJoin");
+	map_pages_names[PG_NOJOIN] = new wxString(wxT("NoJoin"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1450,8 +1450,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// AT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:at=0",100, "at", 100 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"),100, wxT("at"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1460,7 +1460,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_NOJOIN].push_back("TCSP:at=0");
+		map_pages_elts[PG_NOJOIN].push_back(wxT("TCSP:at=0"));
 
 	//-------------------------------------------------------------
 	// BLOCKADE page
@@ -1468,7 +1468,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_BLOCKADE] = pg;
-	map_pages_names[PG_BLOCKADE] = new wxString("Blockade");
+	map_pages_names[PG_BLOCKADE] = new wxString(wxT("Blockade"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1481,8 +1481,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// AT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:at=0",100, "at", 100 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"),100, wxT("at"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1491,16 +1491,16 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_BLOCKADE].push_back("TCSP:at=0");
+		map_pages_elts[PG_BLOCKADE].push_back(wxT("TCSP:at=0"));
 
 		//--------------------------------------------------
 		// Pos
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:blockade=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:blockade=0",100, "pos", 100 );
+		sizer_sub = ob_props[wxT("SP:blockade=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:blockade=0"),100, wxT("pos"), 100 );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_BLOCKADE].push_back("TCSP:blockade=0");
+		map_pages_elts[PG_BLOCKADE].push_back(wxT("TCSP:blockade=0"));
 
 	//-------------------------------------------------------------
 	// LIGHT page
@@ -1508,7 +1508,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_LIGHT] = pg;
-	map_pages_names[PG_LIGHT] = new wxString("Light");
+	map_pages_names[PG_LIGHT] = new wxString(wxT("Light"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1521,8 +1521,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// AT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:at=0",100, "at", 100 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"),100, wxT("at"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1531,25 +1531,25 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_LIGHT].push_back("TCSP:at=0");
+		map_pages_elts[PG_LIGHT].push_back(wxT("TCSP:at=0"));
 
 		//--------------------------------------------------
 		// X
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:light=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:light=0",100, "X", 100 );
+		sizer_sub = ob_props[wxT("SP:light=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:light=0"),100, wxT("X"), 100 );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_LIGHT].push_back("TCSP:light=0");
+		map_pages_elts[PG_LIGHT].push_back(wxT("TCSP:light=0"));
 
 		//--------------------------------------------------
 		// Z
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:light=1"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:light=1",100, "Z", 100 );
+		sizer_sub = ob_props[wxT("SP:light=1")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:light=1"),100, wxT("Z"), 100 );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_LIGHT].push_back("TCSP:light=1");
+		map_pages_elts[PG_LIGHT].push_back(wxT("TCSP:light=1"));
 
 	//-------------------------------------------------------------
 	// SCROLLZ page
@@ -1557,7 +1557,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_SCROLLZ] = pg;
-	map_pages_names[PG_SCROLLZ] = new wxString("Scrollz");
+	map_pages_names[PG_SCROLLZ] = new wxString(wxT("Scrollz"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1570,8 +1570,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// AT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:at=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:at=0",100, "at", 100 );
+		sizer_sub = ob_props[wxT("SP:at=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:at=0"),100, wxT("at"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1580,13 +1580,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_SCROLLZ].push_back("TCSP:at=0");
+		map_pages_elts[PG_SCROLLZ].push_back(wxT("TCSP:at=0"));
 
 		//--------------------------------------------------
 		// X
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:scrollz=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:scrollz=0",100, "Min", 100 );
+		sizer_sub = ob_props[wxT("SP:scrollz=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:scrollz=0"),100, wxT("Min"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1595,13 +1595,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_SCROLLZ].push_back("TCSP:scrollz=0");
+		map_pages_elts[PG_SCROLLZ].push_back(wxT("TCSP:scrollz=0"));
 
 		//--------------------------------------------------
 		// Z
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP:scrollz=1"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP:scrollz=1",100, "Max", 100 );
+		sizer_sub = ob_props[wxT("SP:scrollz=1")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP:scrollz=1"),100, wxT("Max"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1610,7 +1610,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_SCROLLZ].push_back("TCSP:scrollz=1");
+		map_pages_elts[PG_SCROLLZ].push_back(wxT("TCSP:scrollz=1"));
 
 
 		
@@ -1620,7 +1620,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_PL_SPAWNS] = pg;
-	map_pages_names[PG_PL_SPAWNS] = new wxString("Player Spawn");
+	map_pages_names[PG_PL_SPAWNS] = new wxString(wxT("Player Spawn"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1633,8 +1633,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// X
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_spawnP:=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_spawnP:=0",100, "X", 100 );
+		sizer_sub = ob_props[wxT("SP_spawnP:=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_spawnP:=0"),100, wxT("X"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1643,13 +1643,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_PL_SPAWNS].push_back("TCSP_spawnP:=0");
+		map_pages_elts[PG_PL_SPAWNS].push_back(wxT("TCSP_spawnP:=0"));
 
 		//--------------------------------------------------
 		// Z
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_spawnP:=1"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_spawnP:=1",100, "Z", 100 );
+		sizer_sub = ob_props[wxT("SP_spawnP:=1")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_spawnP:=1"),100, wxT("Z"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1658,13 +1658,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_PL_SPAWNS].push_back("TCSP_spawnP:=1");
+		map_pages_elts[PG_PL_SPAWNS].push_back(wxT("TCSP_spawnP:=1"));
 
 		//--------------------------------------------------
 		// Alt
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_spawnP:=2"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_spawnP:=2",100, "Alt", 100 );
+		sizer_sub = ob_props[wxT("SP_spawnP:=2")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_spawnP:=2"),100, wxT("Alt"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1673,7 +1673,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_PL_SPAWNS].push_back("TCSP_spawnP:=2");
+		map_pages_elts[PG_PL_SPAWNS].push_back(wxT("TCSP_spawnP:=2"));
 
 	//-------------------------------------------------------------
 	// WALLS/HOLES page
@@ -1681,7 +1681,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	pg = new wxPanel( onglets, wxID_ANY );
 	pg->Hide();
 	map_pages[PG_WALLS] = pg;
-	map_pages_names[PG_WALLS] = new wxString("Wall/Hole");
+	map_pages_names[PG_WALLS] = new wxString(wxT("Wall/Hole"));
 	
 	sizer = new wxBoxSizer( wxHORIZONTAL );
 	pg->SetSizer( sizer );
@@ -1700,8 +1700,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 		//--------------------------------------------------
 		// X
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=0"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=0",100, "X", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=0")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=0"),100, wxT("X"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1710,13 +1710,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=0");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=0"));
 
 		//--------------------------------------------------
 		// Z
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=1"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=1",100, "Z", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=1")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=1"),100, wxT("Z"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1725,13 +1725,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=1");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=1"));
 
 		//--------------------------------------------------
 		// UL
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=2"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=2",100, "UpperLeft", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=2")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=2"),100, wxT("UpperLeft"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1740,13 +1740,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_right ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=2");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=2"));
 
 		//--------------------------------------------------
 		// LL
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=3"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=3",100, "LowerLeft", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=3")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=3"),100, wxT("LowerLeft"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1755,13 +1755,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_right ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=3");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=3"));
 
 		//--------------------------------------------------
 		// UR
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=4"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=4",100, "UpperRight", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=4")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=4"),100, wxT("UpperRight"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1770,13 +1770,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_right ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=4");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=4"));
 
 		//--------------------------------------------------
 		// LR
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=5"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=5",100, "LowerRight", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=5")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=5"),100, wxT("LowerRight"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1785,13 +1785,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_right ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=5");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=5"));
 
 		//--------------------------------------------------
 		// Depth
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=6"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=6",100, "Depth", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=6")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=6"),100, wxT("Depth"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1800,13 +1800,13 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=6");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=6"));
 
 		//--------------------------------------------------
 		// ALT
 		//--------------------------------------------------
-		sizer_sub = ob_props["SP_wall:=7"]->BuildControls( 
-					NULL, pg, theCtrl, "TCSP_wall:=7",100, "Alt", 100 );
+		sizer_sub = ob_props[wxT("SP_wall:=7")]->BuildControls( 
+		NULL, pg, theCtrl, wxT("TCSP_wall:=7"),100, wxT("Alt"), 100 );
 		theCtrl->Connect( 
 			  wxEVT_COMMAND_TEXT_UPDATED
 			, wxCommandEventHandler(
@@ -1815,7 +1815,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 			, NULL, leFrame );
 		sizer_left ->Add(sizer_sub, 0,wxEXPAND|wxALL,3 );
 
-		map_pages_elts[PG_WALLS].push_back("TCSP_wall:=7");
+		map_pages_elts[PG_WALLS].push_back(wxT("TCSP_wall:=7"));
 
 
 		
@@ -1823,54 +1823,54 @@ LevelEditorFrame::NOTEBOOK__Init()
 	// SET ASSOCIATIONS
 	//**************************************************
 	wxWindow* pg_ent_more = map_pages[PG_MORE];
-	map_idPg_page["PG_MORE"] = pg_ent_more;
+	map_idPg_page[wxT("PG_MORE")] = pg_ent_more;
 	wxWindow* pg_ent_infos = map_pages[PG_ENT_INFOS];
-	map_idPg_page["PG_ENT_INFOS"] = pg_ent_infos;
+	map_idPg_page[wxT("PG_ENT_INFOS")] = pg_ent_infos;
 	wxWindow* pg_ent_coords = map_pages[PG_ENT_COORDS];
-	map_idPg_page["PG_ENT_COORDS"] = pg_ent_coords;
+	map_idPg_page[wxT("PG_ENT_COORDS")] = pg_ent_coords;
 	wxWindow* pg_ent_itemhold = map_pages[PG_ENT_ITEMHOLD];
-	map_idPg_page["PG_ENT_ITEMHOLD"] = pg_ent_itemhold;
+	map_idPg_page[wxT("PG_ENT_ITEMHOLD")] = pg_ent_itemhold;
 	wxWindow* pg_wait = map_pages[PG_WAIT];
-	map_idPg_page["PG_WAIT"] = pg_wait;
+	map_idPg_page[wxT("PG_WAIT")] = pg_wait;
 	wxWindow* pg_blockade = map_pages[PG_BLOCKADE];
-	map_idPg_page["PG_BLOCKADE"] = pg_blockade;
+	map_idPg_page[wxT("PG_BLOCKADE")] = pg_blockade;
 	wxWindow* pg_scrollz = map_pages[PG_SCROLLZ];
-	map_idPg_page["PG_SCROLLZ"] = pg_scrollz;
+	map_idPg_page[wxT("PG_SCROLLZ")] = pg_scrollz;
 	wxWindow* pg_group = map_pages[PG_GROUP];
-	map_idPg_page["PG_GROUP"] = pg_group;
+	map_idPg_page[wxT("PG_GROUP")] = pg_group;
 	wxWindow* pg_light = map_pages[PG_LIGHT];
-	map_idPg_page["PG_LIGHT"] = pg_light;
+	map_idPg_page[wxT("PG_LIGHT")] = pg_light;
 	wxWindow* pg_canjoin = map_pages[PG_CANJOIN];
-	map_idPg_page["PG_CANJOIN"] = pg_canjoin;
+	map_idPg_page[wxT("PG_CANJOIN")] = pg_canjoin;
 	wxWindow* pg_nojoin = map_pages[PG_NOJOIN];
-	map_idPg_page["PG_NOJOIN"] = pg_nojoin;
+	map_idPg_page[wxT("PG_NOJOIN")] = pg_nojoin;
 
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_NONE].push_back(PG_ENT_COORDS);
 	map_type_l_pgs[SOBJ_NONE].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_NONE].push_back("TCSP:alias=0");
+	map_type_l_disable[SOBJ_NONE].push_back(wxT("TCSP:alias=0"));
 	
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_STEAMER].push_back(PG_ENT_COORDS);
 	map_type_l_pgs[SOBJ_STEAMER].push_back(PG_ENT_INFOS);
 	map_type_l_pgs[SOBJ_STEAMER].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_STEAMER].push_back("TCSP:alias=0");
-	map_type_l_disable[SOBJ_STEAMER].push_back("PG_ENT_INFOS");
+	map_type_l_disable[SOBJ_STEAMER].push_back(wxT("TCSP:alias=0"));
+	map_type_l_disable[SOBJ_STEAMER].push_back(wxT("PG_ENT_INFOS"));
 	
-	map_type_l_enable[SOBJ_STEAMER].push_back("pspawn");
-	map_type_l_enable[SOBJ_STEAMER].push_back("TCSP:score=0");
+	map_type_l_enable[SOBJ_STEAMER].push_back(wxT("pspawn"));
+	map_type_l_enable[SOBJ_STEAMER].push_back(wxT("TCSP:score=0"));
 
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_PANEL].push_back(PG_ENT_COORDS);
 	map_type_l_pgs[SOBJ_PANEL].push_back(PG_ENT_INFOS);
 	map_type_l_pgs[SOBJ_PANEL].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_PANEL].push_back("TCSP:alias=0");
-	map_type_l_disable[SOBJ_PANEL].push_back("PG_ENT_INFOS");
+	map_type_l_disable[SOBJ_PANEL].push_back(wxT("TCSP:alias=0"));
+	map_type_l_disable[SOBJ_PANEL].push_back(wxT("PG_ENT_INFOS"));
 	
-	map_type_l_enable[SOBJ_PANEL].push_back("pspawn");
+	map_type_l_enable[SOBJ_PANEL].push_back(wxT("pspawn"));
 
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_TEXT].push_back(PG_ENT_COORDS);
@@ -1878,11 +1878,11 @@ LevelEditorFrame::NOTEBOOK__Init()
 	map_type_l_pgs[SOBJ_TEXT].push_back(PG_ENT_ITEMHOLD);
 	map_type_l_pgs[SOBJ_TEXT].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_TEXT].push_back("PG_ENT_INFOS");
-	map_type_l_disable[SOBJ_TEXT].push_back("TCSP:alias=0");
+	map_type_l_disable[SOBJ_TEXT].push_back(wxT("PG_ENT_INFOS"));
+	map_type_l_disable[SOBJ_TEXT].push_back(wxT("TCSP:alias=0"));
 	
-	map_type_l_enable[SOBJ_TEXT].push_back("pspawn");
-	map_type_l_enable[SOBJ_PANEL].push_back("TCSP:score=0");
+	map_type_l_enable[SOBJ_TEXT].push_back(wxT("pspawn"));
+	map_type_l_enable[SOBJ_PANEL].push_back(wxT("TCSP:score=0"));
 	
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_TRAP].push_back(PG_ENT_COORDS);
@@ -1890,10 +1890,10 @@ LevelEditorFrame::NOTEBOOK__Init()
 	map_type_l_pgs[SOBJ_TRAP].push_back(PG_ENT_ITEMHOLD);
 	map_type_l_pgs[SOBJ_TRAP].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_TRAP].push_back("PG_ENT_INFOS");
+	map_type_l_disable[SOBJ_TRAP].push_back(wxT("PG_ENT_INFOS"));
 	
-	map_type_l_enable[SOBJ_TRAP].push_back("pspawn");
-	map_type_l_enable[SOBJ_PANEL].push_back("TCSP:score=0");
+	map_type_l_enable[SOBJ_TRAP].push_back(wxT("pspawn"));
+	map_type_l_enable[SOBJ_PANEL].push_back(wxT("TCSP:score=0"));
 	
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_SHOT].push_back(PG_ENT_COORDS);
@@ -1901,10 +1901,10 @@ LevelEditorFrame::NOTEBOOK__Init()
 	map_type_l_pgs[SOBJ_SHOT].push_back(PG_ENT_ITEMHOLD);
 	map_type_l_pgs[SOBJ_SHOT].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_SHOT].push_back("PG_ENT_INFOS");
+	map_type_l_disable[SOBJ_SHOT].push_back(wxT("PG_ENT_INFOS"));
 	
-	map_type_l_enable[SOBJ_SHOT].push_back("pspawn");
-	map_type_l_enable[SOBJ_PANEL].push_back("TCSP:score=0");
+	map_type_l_enable[SOBJ_SHOT].push_back(wxT("pspawn"));
+	map_type_l_enable[SOBJ_PANEL].push_back(wxT("TCSP:score=0"));
 	
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_OBSTACLE].push_back(PG_ENT_COORDS);
@@ -1912,8 +1912,8 @@ LevelEditorFrame::NOTEBOOK__Init()
 	map_type_l_pgs[SOBJ_OBSTACLE].push_back(PG_ENT_ITEMHOLD);
 	map_type_l_pgs[SOBJ_OBSTACLE].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_OBSTACLE].push_back("TCSP:aggression=0");
-	map_type_l_disable[SOBJ_OBSTACLE].push_back("TCSP:mp=0");
+	map_type_l_disable[SOBJ_OBSTACLE].push_back(wxT("TCSP:aggression=0"));
+	map_type_l_disable[SOBJ_OBSTACLE].push_back(wxT("TCSP:mp=0"));
 	
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_NPC].push_back(PG_ENT_COORDS);
@@ -1921,7 +1921,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	map_type_l_pgs[SOBJ_NPC].push_back(PG_ENT_ITEMHOLD);
 	map_type_l_pgs[SOBJ_NPC].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_NPC].push_back("TCSP:mp=0");
+	map_type_l_disable[SOBJ_NPC].push_back(wxT("TCSP:mp=0"));
 	
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_ENEMY].push_back(PG_ENT_COORDS);
@@ -1929,26 +1929,26 @@ LevelEditorFrame::NOTEBOOK__Init()
 	map_type_l_pgs[SOBJ_ENEMY].push_back(PG_ENT_ITEMHOLD);
 	map_type_l_pgs[SOBJ_ENEMY].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_ENEMY].push_back("TCSP:mp=0");
+	map_type_l_disable[SOBJ_ENEMY].push_back(wxT("TCSP:mp=0"));
 	
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_ITEM].push_back(PG_ENT_COORDS);
 	map_type_l_pgs[SOBJ_ITEM].push_back(PG_ENT_INFOS);
 	map_type_l_pgs[SOBJ_ITEM].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_ITEM].push_back("PG_ENT_INFOS");
+	map_type_l_disable[SOBJ_ITEM].push_back(wxT("PG_ENT_INFOS"));
 	
-	map_type_l_enable[SOBJ_ITEM].push_back("pspawn");
-	map_type_l_enable[SOBJ_ITEM].push_back("TCSP:mp=0");
+	map_type_l_enable[SOBJ_ITEM].push_back(wxT("pspawn"));
+	map_type_l_enable[SOBJ_ITEM].push_back(wxT("TCSP:mp=0"));
 
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_ENDLEVEL].push_back(PG_ENT_COORDS);
 	map_type_l_pgs[SOBJ_ENDLEVEL].push_back(PG_ENT_INFOS);
 	map_type_l_pgs[SOBJ_ENDLEVEL].push_back(PG_MORE);
 	
-	map_type_l_disable[SOBJ_ENDLEVEL].push_back("PG_ENT_INFOS");
+	map_type_l_disable[SOBJ_ENDLEVEL].push_back(wxT("PG_ENT_INFOS"));
 	
-	map_type_l_enable[SOBJ_ENDLEVEL].push_back("pspawn");
+	map_type_l_enable[SOBJ_ENDLEVEL].push_back(wxT("pspawn"));
 
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_WAIT].push_back(PG_WAIT);
@@ -1970,7 +1970,7 @@ LevelEditorFrame::NOTEBOOK__Init()
 	//--------------------------------------------------
 	map_type_l_pgs[SOBJ_HOLE].push_back(PG_WALLS);
 // 	map_type_l_disable[SOBJ_HOLE].push_back("TCSP_wall:=6");
-	map_type_l_disable[SOBJ_HOLE].push_back("TCSP_wall:=7");
+	map_type_l_disable[SOBJ_HOLE].push_back(wxT("TCSP_wall:=7"));
 	
 	//-------------------------------------------------------------
 	// FINALLY
@@ -2008,7 +2008,7 @@ LevelEditorFrame::NOTEBOOK__ClearPages()
 					,it_end(w_list.end());
 		for( ;it != it_end; it++)
 		{
-			if( (*it)->GetName() != "" )
+			if( (*it)->GetName() != wxString() )
 				(*it)->SetClientData( NULL );
 		}
 	}
@@ -2085,9 +2085,9 @@ ANN__Enable_ItemsCtrls( wxWindow* pg, bool b_enable )
 	for( ;it != it_end; it++)
 	{
 		wxString w_name = (*it)->GetName();
-		if( 	   w_name != "" 
-			&& w_name != "item_name"
-			&& w_name != "staticText" 
+		if( 	   w_name != wxString() 
+			&& w_name != wxT("item_name")
+			&& w_name != wxT("staticText") 
 			)
 			(*it)->Enable( b_enable );
 	}
@@ -2102,14 +2102,14 @@ ANN__Clear_ItemsCtrls( wxWindow* pg )
 				,it_end(w_list.end());
 	for( ;it != it_end; it++)
 	{
-		if( (*it)->GetName() != "" )
+		if( (*it)->GetName() != wxString() )
 		{
 			wxString typ_Ctrl = (*it)->GetName().Left(2);
-			if( typ_Ctrl == "TC" )
-				((wxTextCtrl*)(*it))->SetValue("");
-			else if( typ_Ctrl == "CO" )
+			if( typ_Ctrl == wxT("TC") )
+				((wxTextCtrl*)(*it))->SetValue(wxString());
+			else if( typ_Ctrl == wxT("CO") )
 				((wxComboBox*)(*it))->SetSelection(0);
-			else if( typ_Ctrl == "CH" )
+			else if( typ_Ctrl == wxT("CH") )
 				((wxCheckBox*)(*it))->SetValue(false);
 		}
 	}
@@ -2137,7 +2137,7 @@ LevelEditorFrame::NOTEBOOK__Set_NoSelection(bool b_init)
 	if(    onglets->GetPageCount() > 0
 		&& onglets->GetPage(0) == map_pages[PG_TEXT] )
 	{
-		NOTEBOOK__SetPage_StaticVal( "pg_text", "No Selection" );
+		NOTEBOOK__SetPage_StaticVal( wxT("pg_text"), wxT("No Selection") );
 		return;
 	}
 
@@ -2167,8 +2167,8 @@ LevelEditorFrame::NOTEBOOK__Set_NoSelection(bool b_init)
 	onglets->AddPage(  map_pages[curr_page]
 				,*map_pages_names[curr_page]
 				,true);
-	NOTEBOOK__SetPage_StaticVal( "pg_text", "No Selection" );
-		curr_associated_obj = NULL;
+	NOTEBOOK__SetPage_StaticVal( wxT("pg_text"), wxT("No Selection") );
+	curr_associated_obj = NULL;
 }
 
 
@@ -2182,7 +2182,7 @@ LevelEditorFrame::NOTEBOOK__Set_MultiSelection()
 	if( 	   onglets->GetPageCount() > 0
 		&& onglets->GetPage(0) == map_pages[PG_TEXT] )
 	{
-		NOTEBOOK__SetPage_StaticVal( "pg_text", "Multi Selection" );
+		NOTEBOOK__SetPage_StaticVal( wxT("pg_text"), wxT("Multi Selection") );
 		return;
 	}
 	
@@ -2193,7 +2193,7 @@ LevelEditorFrame::NOTEBOOK__Set_MultiSelection()
 	onglets->AddPage(  map_pages[curr_page]
 				,*map_pages_names[curr_page]
 				,true);
-	NOTEBOOK__SetPage_StaticVal( "pg_text", "Multi Selection" );
+				NOTEBOOK__SetPage_StaticVal( wxT("pg_text"), wxT("Multi Selection") );
 	curr_associated_obj = NULL;
 }
 
@@ -2208,13 +2208,13 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 	
 	if( map_type_l_pgs.find( obj->object_type ) == map_type_l_pgs.end() )
 	{
-		wxMessageBox( "Not Implemented for stage object type : " + IntToStr(obj->object_type));
+		wxMessageBox( wxT("Not Implemented for stage object type : ") + IntToStr(obj->object_type));
 		return;
 	}
 
 	if( map_type_l_pgs[obj->object_type].size() == 0 )
 	{
-		wxMessageBox( "No Page defined for stage object type : " + IntToStr(obj->object_type));
+		wxMessageBox( wxT("No Page defined for stage object type : ") + IntToStr(obj->object_type));
 		return;
 	}
 
@@ -2261,7 +2261,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 			for( ;it_w != it_w_end; it_w++ )
 			{
 				wxString w_name = (*it_w)->GetName();
-				if( w_name == "" )
+				if( w_name == wxString() )
 					continue;
 				(*it_w)->Enable();
 			}
@@ -2294,7 +2294,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 								, it_w_end(l_wnd.end());
 					for( ;it_w != it_w_end; it_w++ )
 					{
-						if( (*it_w)->GetName() != "" )
+						if( (*it_w)->GetName() != wxString() )
 							(*it_w)->Disable();
 					}
 					continue;
@@ -2304,7 +2304,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 				wxWindow* _wnd = onglets->FindWindowByName( w_name, onglets );
 				if( _wnd == NULL )
 				{
-					wxMessageBox( _T("BUG\nNOTEBOOK__Set_With() : Disabler \n\nNo Ctrl with name : ") + w_name );
+					wxMessageBox( wxT("BUG\nNOTEBOOK__Set_With() : Disabler \n\nNo Ctrl with name : ") + w_name );
 					continue;
 				}
 				
@@ -2329,7 +2329,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 				wxWindow* _wnd = onglets->FindWindowByName( *it, onglets );
 				if( _wnd == NULL )
 				{
-					wxMessageBox( "BUG\nNOTEBOOK__Set_With() : Enabler \n\nNo Ctrl with name : " + *it );
+					wxMessageBox( wxT("BUG\nNOTEBOOK__Set_With() : Enabler \n\nNo Ctrl with name : ") + *it );
 					continue;
 				}
 				
@@ -2350,7 +2350,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 
 	// list of stuff which have to been filter out from more_props
 	wxArrayString to_filter_out;
-	to_filter_out.Add("spawn");
+	to_filter_out.Add(wxT("spawn"));
 	
 	// For each page
 	for(;it!=it_end;it++)
@@ -2365,64 +2365,64 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 		for( ;it_w != it_w_end; it_w++ )
 		{
 			wxString w_name = (*it_w)->GetName();
-			if( w_name == "" || w_name == "staticText" )
+			if( w_name == wxString() || w_name == wxT("staticText") )
 				continue;
 			
 			// First Some fucking specials case...
-			if( w_name == "entity_name" )
+			if( w_name == wxT("entity_name" ))
 			{
-				to_filter_out.Add( "spawn" );
+				to_filter_out.Add( wxT("spawn") );
 				wxString ent_name = curr_associated_obj->GetToken(0);
 				((wxTextCtrl*)(*it_w))->SetValue( ent_name );
 				continue;
 			}
 			
-			else if( w_name == "pspawn" )
+			else if( w_name == wxT("pspawn") )
 			{
-				to_filter_out.Add( "2pspawn" );
-				to_filter_out.Add( "3pspawn" );
-				to_filter_out.Add( "4pspawn" );
+				to_filter_out.Add( wxT("2pspawn" ));
+				to_filter_out.Add( wxT("3pspawn" ));
+				to_filter_out.Add( wxT("4pspawn" ));
 				
-				if( obj->GetSubObject( "2pspawn") != NULL 
-					&& obj->GetSubObject( "2pspawn")->GetToken(0) != "0" )
+				if( obj->GetSubObject( wxT("2pspawn")) != NULL 
+					&& obj->GetSubObject(wxT("2pspawn"))->GetToken(0) != wxT("0") )
 					((wxComboBox*)*it_w)->SetSelection( 1 );
 				
-				else if( obj->GetSubObject( "3pspawn") != NULL 
-					&& obj->GetSubObject( "3pspawn")->GetToken(0) != "0" )
+				else if( obj->GetSubObject( wxT("3pspawn")) != NULL 
+					&& obj->GetSubObject( wxT("3pspawn"))->GetToken(0) != wxT("0") )
 					((wxComboBox*)*it_w)->SetSelection( 2 );
-				else if( obj->GetSubObject( "4pspawn") != NULL 
-					&& obj->GetSubObject( "4pspawn")->GetToken(0) != "0" )
+				else if( obj->GetSubObject( wxT("4pspawn")) != NULL 
+					&& obj->GetSubObject( wxT("4pspawn"))->GetToken(0) != wxT("0") )
 					((wxComboBox*)*it_w)->SetSelection( 3 );
 				else
 					((wxComboBox*)*it_w)->SetSelection( 0 );
 				continue;
 			}
 
-			else if( w_name == "item_name" )
+			else if( w_name == wxT("item_name") )
 			{
-				to_filter_out.Add( "item" );
+				to_filter_out.Add( wxT("item") );
 				wxString item_name =
 						ANN__GetItemHolded_Name(curr_associated_obj);
-				if( item_name == "" )
-					((ComboBoxAutoComplete*)*it_w)->Set_Value( "" );
+				if( item_name == wxString() )
+					((ComboBoxAutoComplete*)*it_w)->Set_Value( wxString() );
 				else
 					((ComboBoxAutoComplete*)*it_w)->Set_Value( item_name);
 				
 				// If items page appears  ==>> Enable/Disable some Ctrls
-				ANN__Enable_ItemsCtrls( map_pages[PG_ENT_ITEMHOLD] , item_name != "" );
+				ANN__Enable_ItemsCtrls( map_pages[PG_ENT_ITEMHOLD] , item_name != wxString() );
 			}
 			
-			else if( w_name == "pitem" )
+			else if( w_name == wxT("pitem") )
 			{
-				to_filter_out.Add( "2pitem" );
-				to_filter_out.Add( "3pitem" );
-				to_filter_out.Add( "4pitem" );
+				to_filter_out.Add( wxT("2pitem") );
+				to_filter_out.Add( wxT("3pitem") );
+				to_filter_out.Add( wxT("4pitem") );
 				
-				if( obj->GetSubObject( "2pitem") != NULL )
+				if( obj->GetSubObject( wxT("2pitem")) != NULL )
 					((wxComboBox*)*it_w)->SetSelection( 1 );
-				else if( obj->GetSubObject( "3pitem") != NULL )
+				else if( obj->GetSubObject( wxT("3pitem")) != NULL )
 					((wxComboBox*)*it_w)->SetSelection( 2 );
-				else if( obj->GetSubObject( "4pitem") != NULL )
+				else if( obj->GetSubObject( wxT("4pitem")) != NULL )
 					((wxComboBox*)*it_w)->SetSelection( 3 );
 				else
 					((wxComboBox*)*it_w)->SetSelection( 0 );
@@ -2436,7 +2436,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 			to_filter_out.Add( sobj_name );
 			
 			// have to refill the remap combobox
-			if( w_name == "COSP:map=0" )
+			if( w_name == wxT("COSP:map=0") )
 			{
 				wxComboBox* cb = (wxComboBox*)*it_w;
 				
@@ -2447,7 +2447,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 			}
 			
 			// have also to refill the item remap combobox
-			else if( w_name == "COSP:itemmap=0" )
+			else if( w_name == wxT("COSP:itemmap=0") )
 			{
 				wxComboBox* cb = (wxComboBox*)*it_w;
 
@@ -2466,7 +2466,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 
 			//-----------------------------------------------
 			// Get the value for the control
-			wxString val = "";
+			wxString val = wxString();
 			bool b_def_val_spe = false;
 			
 			ob_property* t_prop = NULL;
@@ -2479,7 +2479,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 			
 			// If there is a ob_props for this prop 
 			//	=> Get the default value
-			if( val == "" && t_prop != NULL )
+			if( val == wxString() && t_prop != NULL )
 			{
 				// Check if there is a special default val
 				val = t_prop->Get_Default_Val( curr_associated_obj );
@@ -2488,7 +2488,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 				
 			//-----------------------------------------------
 			// Assign values to controls
-			if( ctrlType == "TC" )
+			if( ctrlType == wxT("TC") )
 			{
 				((wxTextCtrl*)*it_w)->ChangeValue(val);
 				if( b_def_val_spe == true && (*it_w)->IsEnabled() )
@@ -2496,7 +2496,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 				else if( (*it_w)->IsEnabled() )
 					(*it_w)->SetBackgroundColour( *wxWHITE );
 			}
-			else if( ctrlType == "CO" )
+			else if( ctrlType == wxT("CO") )
 			{
 				int cb_ind = StrToInt(val);
 /*				if( sobj_name.Upper() == "MAP" 
@@ -2504,7 +2504,7 @@ LevelEditorFrame::NOTEBOOK__Set_With( ob_stage_object* obj )
 					cb_ind++;*/
 				((wxComboBox*)*it_w)->SetSelection( cb_ind );
 			}
-			else if( ctrlType == "CH" )
+			else if( ctrlType == wxT("CH") )
 				((wxCheckBox*)*it_w)->SetValue( StrToBool(val) );
 		}
 	}
@@ -2549,12 +2549,12 @@ LevelEditorFrame::NOTEBOOK__Update_Vals()
 			if( (*it)->IsEnabled() == false )
 				continue;
 			
-			if( (*it)->GetName() != "" )
+			if( (*it)->GetName() != wxString() )
 			{
 				wxString typ_Ctrl = (*it)->GetName().Left(2);
-				if( 	   typ_Ctrl != "TC"
-					&& typ_Ctrl != "CO"
-					&& typ_Ctrl != "CH"
+				if( 	   typ_Ctrl != wxT("TC")
+					&& typ_Ctrl != wxT("CO")
+					&& typ_Ctrl != wxT("CH")
 				   )
 					continue;
 					
@@ -2591,7 +2591,7 @@ LevelEditorFrame::NOTEBOOK__Evt_ObjVisualChange( wxCommandEvent& evt )
 	ob_object* obj = (ob_object*) theCtrl->GetClientData();
 	if( obj == NULL )
 	{
-		wxMessageBox( "BUG !!!\nNOTEBOOK__Evt_ObjVisualChange()\n\nobj != curr_associated_obj\n" );
+		wxMessageBox( wxT("BUG !!!\nNOTEBOOK__Evt_ObjVisualChange()\n\nobj != curr_associated_obj\n" ));
 		return;
 	}
 	
@@ -2610,7 +2610,7 @@ LevelEditorFrame::NOTEBOOK__Evt_AT_Change( wxCommandEvent& evt )
 	ob_object* obj = (ob_object*) theCtrl->GetClientData();
 	if( obj == NULL )
 	{
-		wxMessageBox( "BUG !!!\nNOTEBOOK__Evt_AT_Change()\n\nobj != curr_associated_obj\n" );
+		wxMessageBox( wxT("BUG !!!\nNOTEBOOK__Evt_AT_Change()\n\nobj != curr_associated_obj\n" ));
 		return;
 	}
 	
@@ -2647,22 +2647,22 @@ LevelEditorFrame::NOTEBOOK__Evt_ItemName_Change( wxCommandEvent& evt )
 	ob_object* obj_item = curr_associated_obj->GetSubObject( item_tag );
 	if( obj_item == NULL )
 	{
-		obj_item = new ob_object( "item" );
+		obj_item = new ob_object( wxT("item" ));
 		curr_associated_obj->Add_SubObj( obj_item );
 	}
 	obj_item->SetToken( 0, item_name );
 	
-	ANN__Enable_ItemsCtrls( map_pages[PG_ENT_ITEMHOLD] , item_name != "" );
+	ANN__Enable_ItemsCtrls( map_pages[PG_ENT_ITEMHOLD] , item_name != wxString() );
 	
 	//------------------------------------------------------------
 	// Must refresh map combobox
 	obFileEntity* ent =  Entity__Get( item_name );
 	
 	wxComboBox* cbItemMap = 
-		(wxComboBox*) wxWindow::FindWindowByName( "COSP:itemmap=0", onglets );
+	(wxComboBox*) wxWindow::FindWindowByName( wxT("COSP:itemmap=0"), onglets );
 	if( cbItemMap == NULL )
 	{
-		wxMessageBox( "BUG !!!\nNOTEBOOK__Evt_ObjVisualChange()\n\ncbItemMap == NULL\n" );
+		wxMessageBox( wxT("BUG !!!\nNOTEBOOK__Evt_ObjVisualChange()\n\ncbItemMap == NULL\n") );
 		return;
 	}
 	
@@ -2674,8 +2674,8 @@ LevelEditorFrame::NOTEBOOK__Evt_ItemName_Change( wxCommandEvent& evt )
 			cbItemMap->Clear();
 			wxArrayString _displayed;
 			wxArrayString _values;
-			_displayed.Add( "None" );
-			_values.Add( "0" );
+			_displayed.Add( wxT("None" ));
+			_values.Add( wxT("0") );
 			ob_property::SetEnums(cbItemMap,_displayed,_values);
 			cbItemMap->SetSelection( 0 );
 		}
@@ -2702,7 +2702,7 @@ LevelEditorFrame::NOTEBOOK__Evt_ItemName_Valid( wxCommandEvent& evt )
 	wxString item_name = ANN__GetItemHolded_Name( curr_associated_obj );
 
 	// Nothing to do if there's a valid name 
-	if( item_name != "" )
+	if( item_name != wxString() )
 		return;
 	
 	//------------------------------------------------------------
@@ -2719,14 +2719,14 @@ LevelEditorFrame::NOTEBOOK__Evt_ItemName_Valid( wxCommandEvent& evt )
 	for(;it != it_end; it++)
 	{
 		// SPECIAL CASE
-		if( *it == "item_name" )
+		if( *it == wxT("item_name") )
 		{
 			wxString item_tag = ANN__GetItemHolded_Tag( curr_associated_obj );
 			subobj = curr_associated_obj->GetSubObject( item_tag );
 		}
 		
 		// SPECIAL CASE
-		else if( *it == "pitem" )
+		else if( *it == wxT("pitem") )
 		{
 			wxWindow* _w = wxWindow::FindWindowByName( *it, onglets );
 			((wxComboBox*)_w)->SetSelection( 0 );
@@ -2739,7 +2739,7 @@ LevelEditorFrame::NOTEBOOK__Evt_ItemName_Valid( wxCommandEvent& evt )
 			wxWindow* _w = wxWindow::FindWindowByName( *it, onglets );
 			if( _w == NULL )
 			{
-				wxMessageBox( "BUG !!!\nNOTEBOOK__Evt_ItemName_Valid()\n\n_w == NULL\n" );
+				wxMessageBox( wxT("BUG !!!\nNOTEBOOK__Evt_ItemName_Valid()\n\n_w == NULL\n") );
 				continue;
 			}
 			
@@ -2750,11 +2750,11 @@ LevelEditorFrame::NOTEBOOK__Evt_ItemName_Valid( wxCommandEvent& evt )
 			
 			subobj = curr_associated_obj->GetSubObject( ob_prop_name );
 			
-			if( ctrlType == "TC" )
-				((wxTextCtrl*)_w)->ChangeValue("");
-			else if( ctrlType == "CO" )
+			if( ctrlType == wxT("TC"))
+				((wxTextCtrl*)_w)->ChangeValue(wxString());
+			else if( ctrlType == wxT("CO"))
 				((wxComboBox*)_w)->SetSelection(0);
-			else if( ctrlType == "CH" )
+			else if( ctrlType == wxT("CH"))
 				((wxCheckBox*)_w)->SetValue(false);
 		}
 		
@@ -2775,7 +2775,7 @@ LevelEditorFrame::NOTEBOOK__Evt_Item_pitem( wxCommandEvent& evt )
 	// Get the comboBox associated and its name
 	wxComboBox* co = (wxComboBox*) evt.GetEventObject();
 	wxString w_name = co->GetName();
-	if( w_name == "" )
+	if( w_name == wxString() )
 		return;
 	if( co->IsShownOnScreen() == false )
 		return;
@@ -2794,22 +2794,22 @@ LevelEditorFrame::NOTEBOOK__Evt_Item_pitem( wxCommandEvent& evt )
 	
 	// Try with simple "item" tag
 	wxString curr_item_tag = ANN__GetItemHolded_Tag(curr_associated_obj);
-	if( curr_item_tag == "" )
+	if( curr_item_tag == wxString() )
 	{
-		wxMessageBox( "BUG!!\nNOTEBOOK__Evt_pitem()\n\ncurr_item_tag == wxEmptyString!\n" );
+		wxMessageBox( wxT("BUG!!\nNOTEBOOK__Evt_pitem()\n\ncurr_item_tag == wxEmptyString!\n" ));
 		return;
 	}
 	ob_object* subobj = curr_associated_obj->GetSubObject(curr_item_tag);
-	if( curr_item_tag == "" )
+	if( curr_item_tag == wxString() )
 	{
-		wxMessageBox( "BUG!!\nNOTEBOOK__Evt_pitem()\nsubobj == NULL !\n" );
+		wxMessageBox( wxT("BUG!!\nNOTEBOOK__Evt_pitem()\nsubobj == NULL !\n" ));
 		return;
 	}
 	
 	// The wanted declaration name for the item
-	wxString subobjName = IntToStr( ind + 1 ) + "pitem";
+	wxString subobjName = IntToStr( ind + 1 ) + wxT("pitem");
 	if( ind == 0 )
-		subobjName = "item";
+		subobjName = wxT("item");
 
 	// Have to rename it
 	subobj->SetName( subobjName );
@@ -2825,7 +2825,7 @@ LevelEditorFrame::NOTEBOOK__Evt_pspawn( wxCommandEvent& evt )
 		return;
 	
 	wxComboBox* co = (wxComboBox*) evt.GetEventObject();
-	if(co->GetName() == "" )
+	if(co->GetName() == wxString() )
 		return;
 	if( co->IsShownOnScreen() == false )
 		return;
@@ -2847,7 +2847,7 @@ LevelEditorFrame::NOTEBOOK__Evt_pspawn( wxCommandEvent& evt )
 			if( o == NULL )
 			{
 				curr_associated_obj->Add_SubObj( 
-					new ob_object( tok_name, "1" ) );
+				new ob_object( tok_name, wxT("1") ) );
 			}
 		}
 		else	if( o != NULL )
@@ -2936,14 +2936,14 @@ LevelEditorFrame::ENTITIES__FILTER__Apply()
 	// The type filter
 	int _type = STAGETYPE_NONE;
 	wxString str_type = cbbox_entities_type->GetStringSelection();
-	if( str_type != "ALL" )
+	if( str_type != wxT("ALL") )
 		_type = Stage__Type_ToInt( str_type );
 	
 	for( size_t i = 0; i < arr_entities__size; i++ )
 	{
 		wxString ent_name = arr_entities[i]->Name();
 		// Check if it pass the text Filter
-		if( txt_filter != "" )
+		if( txt_filter != wxString() )
 			if( ent_name.Upper().Find(txt_filter.Upper()) == wxNOT_FOUND )
 				continue;
 		
@@ -2968,18 +2968,18 @@ LevelEditorFrame::OBJECT__Add_Entity(obFileEntity* ent )
 	if( curr_stageFile == NULL || b_closing == true )
 		return;
 	
-	theHistoryManager.GroupStart( "Add an Entity" );
+	theHistoryManager.GroupStart( wxT("Add an Entity") );
 	
-	ob_object* o = ob_stage::Guess_and_ConstructNewObject( "spawn", ent->Name() );
+	ob_object* o = ob_stage::Guess_and_ConstructNewObject( wxT("spawn"), ent->Name() );
 	if( o == NULL )
 	{
-		wxMessageBox( "BUG !!\nLevelEditorFrame::OBJECT__Add_Entity()\no == NULL" );
+		wxMessageBox( wxT("BUG !!\nLevelEditorFrame::OBJECT__Add_Entity()\no == NULL") );
 		theHistoryManager.GroupEnd();
 		return;
 	}
 	if( ob_stage::Is_Stage_Spawn_Type( o ) == false )
 	{
-		wxMessageBox( "BUG !!\nLevelEditorFrame::OBJECT__Add_Entity()\nIs_Stage_Spawn_Type( o ) == false " );
+		wxMessageBox( wxT("BUG !!\nLevelEditorFrame::OBJECT__Add_Entity()\nIs_Stage_Spawn_Type( o ) == false ") );
 		o->Rm();
 		theHistoryManager.GroupEnd();
 		return;
@@ -3013,7 +3013,7 @@ LevelEditorFrame::OBJECT__Add_Default_of_Type( int _TYPE )
 	if( stg == NULL )
 		return;
 	
-	theHistoryManager.GroupStart( "Add an object" );
+	theHistoryManager.GroupStart( wxT("Add an object" ));
 	
 	ob_stage_object* o = NULL;
 	wxArrayString as;
@@ -3021,48 +3021,48 @@ LevelEditorFrame::OBJECT__Add_Default_of_Type( int _TYPE )
 	switch( _TYPE )
 	{
 		case SOBJ_SETPALETTE:
-			_name = "SetPalette";
+			_name = wxT("SetPalette");
 			o = new ob_stage_at( _name, as );
 			break;
 		case SOBJ_WALL:
-			wxArraystring__Add( as,8, "0","0","0","0","0","0","0","0");
-			_name = "Wall";
+			wxArraystring__Add( as,8, wxT("0"),wxT("0"),wxT("0"),wxT("0"),wxT("0"),wxT("0"),wxT("0"),wxT("0"));
+			_name = wxT("Wall");
 			o = new ob_wall( _name, as );
 			break;
 		case SOBJ_HOLE:
-			wxArraystring__Add( as,7, "0","0","0","0","0","0","0");
-			_name = "Hole";
+			wxArraystring__Add( as,7, wxT("0"),wxT("0"),wxT("0"),wxT("0"),wxT("0"),wxT("0"),wxT("0"));
+			_name = wxT("Hole");
 			o = new ob_hole( _name, as );
 			break;
 		case SOBJ_WAIT:
-			_name = "Wait";
+			_name = wxT("Wait");
 			o = new ob_stage_at( _name, as );
 			break;
 		case SOBJ_NOJOIN:
-			_name = "NoJoin";
+			_name = wxT("NoJoin");
 			o = new ob_stage_at( _name, as );
 			break;
 		case SOBJ_CANJOIN:
-			_name = "CanJoin";
+			_name = wxT("CanJoin");
 			o = new ob_stage_at( _name, as );
 			break;
 		case SOBJ_SCROLLZ:
-			wxArraystring__Add( as,2,"30","70");
-			_name = "ScrollZ";
+			wxArraystring__Add( as,2,wxT("30"),wxT("70"));
+			_name = wxT("ScrollZ");
 			o = new ob_stage_at( _name, as );
 			break;
 		case SOBJ_BLOCKADE:
-			_name = "Blockade";
+			_name = wxT("Blockade");
 			o = new ob_stage_at( _name, as );
 			break;
 		case SOBJ_GROUP:
-			wxArraystring__Add( as,1,"0");
-			_name = "Group";
+			wxArraystring__Add( as,1,wxT("0"));
+			_name = wxT("Group");
 			o = new ob_stage_at( _name, as );
 			break;
 		case SOBJ_LIGHT:
-			wxArraystring__Add( as,1,"0");
-			_name = "Light";
+			wxArraystring__Add( as,1,wxT("0"));
+			_name = wxT("Light");
 			o = new ob_stage_at( _name, as );
 			break;
 
@@ -3071,9 +3071,9 @@ LevelEditorFrame::OBJECT__Add_Default_of_Type( int _TYPE )
 		{
 			// Have to ask the player num
 			int ind =
-				wxGetSingleChoiceIndex( "Spawn point for which player ?"
-							,"Question !"
-							, wxArrayString_Build( 4, "1","2","3","4" )
+			wxGetSingleChoiceIndex( wxT("Spawn point for which player ?")
+			,wxT("Question !")
+			, wxArrayString_Build( 4, wxT("1"),wxT("2"),wxT("3"),wxT("4") )
 							,this
 							);
 			if( ind < 0 || ind >= 4 )
@@ -3081,17 +3081,17 @@ LevelEditorFrame::OBJECT__Add_Default_of_Type( int _TYPE )
 				theHistoryManager.GroupEnd();
 				return;
 			}
-			_name = "spawn" + IntToStr( ind + 1 );
+			_name = wxT("spawn") + IntToStr( ind + 1 );
 			if( 	stg->GetSubObject( _name )
 				!=
 				NULL
 			  )
 			{
-				wxMessageBox( "There is already a spawn point for this player !"
-					  , "Impossible", wxOK | wxICON_INFORMATION, leFrame );
+				wxMessageBox( wxT("There is already a spawn point for this player !")
+				, wxT("Impossible"), wxOK | wxICON_INFORMATION, leFrame );
 				return;
 			}
-			wxArraystring__Add( as, 2, "0","0" );
+			wxArraystring__Add( as, 2, wxT("0"),wxT("0") );
 			o = new ob_player_spawn( _name, as );
 			break;
 		}

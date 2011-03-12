@@ -22,7 +22,7 @@ class ob_StagesSet;
 class myWnd_SETProperties : public FrameEditProperties
 {
 public:
-	myWnd_SETProperties(wxWindow *parent, ob_StagesSet* _set = NULL, const wxString& wnd_name = "NoName...");
+	myWnd_SETProperties(wxWindow *parent, ob_StagesSet* _set = NULL, const wxString& wnd_name = wxT("NoName..."));
 	~myWnd_SETProperties();
 
 	virtual void InitProps();
@@ -38,7 +38,7 @@ class ob_StageDeclaration;
 class myWnd_LEVELSSTAGEProperties : public FrameEditProperties
 {
 public:
-	myWnd_LEVELSSTAGEProperties(wxWindow *parent, ob_StageDeclaration* _stageDeclar, bool b_init = true, const wxString& wnd_name = "NoName..." );
+	myWnd_LEVELSSTAGEProperties(wxWindow *parent, ob_StageDeclaration* _stageDeclar, bool b_init = true, const wxString& wnd_name = wxT("NoName...") );
 	~myWnd_LEVELSSTAGEProperties();
 
 	virtual void InitProps();

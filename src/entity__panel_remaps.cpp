@@ -100,7 +100,7 @@ void Panel_Remaps::Constructor()
 		sizer_remaps_choice = new wxBoxSizer( wxHORIZONTAL );
 		sizer_topmiddle->Add( sizer_remaps_choice, 0, wxALL | wxEXPAND );
 
-		txt_remaps = new wxStaticText( scrollPanel, wxID_ANY, "Remap :" );
+		txt_remaps = new wxStaticText( scrollPanel, wxID_ANY, wxT("Remap :" ));
 		sizer_remaps_choice->Add( txt_remaps, 0, wxALIGN_CENTER  | wxALL , 4 );
 
 		wxString lst_choices[] = {};
@@ -111,14 +111,14 @@ void Panel_Remaps::Constructor()
 
 		sizer_remaps_choice->AddSpacer( 20 );
 
-		chckbx_8bit = new wxCheckBox(scrollPanel,B_8BIT, "8Bit-Mode",
+		chckbx_8bit = new wxCheckBox(scrollPanel,B_8BIT, wxT("8Bit-Mode"),
 				wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 		chckbx_8bit->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(Panel_Remaps::Evt8BitModeChange), new wxVariant((long) B_BLOK), this);
 		chckbx_8bit->MoveAfterInTabOrder( choiceBox_remaps );
 		sizer_remaps_choice->Add( chckbx_8bit, 1, wxALIGN_CENTER | wxALL );
 
 		wxBitmapButton *help_butt = new wxBitmapButton( scrollPanel, ID_HELP_REMAPS,
-				wxBitmap( wxImage( GetRessourceFile_String("help.png"))));
+								wxBitmap( wxImage( GetRessourceFile_String(wxT("help.png")))));
 		help_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this);
 		sizer_remaps_choice->Add( help_butt, 0, wxALL, 2 );
 
@@ -130,19 +130,19 @@ void Panel_Remaps::Constructor()
 
 			//---------------------
 			// New Remap
-			wxButton *btn_new_remap = new wxButton(scrollPanel, ID_NEW_REMAP, "New", wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
+			wxButton *btn_new_remap = new wxButton(scrollPanel, ID_NEW_REMAP, wxT("New"), wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
 			btn_new_remap->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_edit_btns->Add( btn_new_remap, 0, wxALL | wxEXPAND, 5 );
 
 			//---------------------
 			// Rename Remap
-			btn_rename_remap = new wxButton(scrollPanel, ID_RENAME_REMAP, "Rename", wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
+			btn_rename_remap = new wxButton(scrollPanel, ID_RENAME_REMAP, wxT("Rename"), wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
 			btn_rename_remap->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_edit_btns->Add( btn_rename_remap, 0, wxALL | wxEXPAND, 5 );
 
 			//---------------------
 			// Delete Remap
-			btn_delete_remap = new wxButton(scrollPanel, ID_DELETE_REMAP, "Delete", wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
+			btn_delete_remap = new wxButton(scrollPanel, ID_DELETE_REMAP, wxT("Delete"), wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
 			btn_delete_remap->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_edit_btns->Add( btn_delete_remap, 0, wxALL | wxEXPAND, 5 );
 
@@ -150,7 +150,7 @@ void Panel_Remaps::Constructor()
 		//**************************
 		// Paths
 		//**************************
-		wxStaticBoxSizer *sizer_PATHS = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "Paths" );
+		wxStaticBoxSizer *sizer_PATHS = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("Paths") );
 		staticBoxPath = sizer_PATHS->GetStaticBox();
 		wxColour _colour;
 		sizer_topmiddle->Add( sizer_PATHS, 0, wxRIGHT | wxEXPAND );
@@ -161,17 +161,17 @@ void Panel_Remaps::Constructor()
 			wxBoxSizer *sizer_baseimg = new wxBoxSizer( wxHORIZONTAL );
 			sizer_PATHS->Add( sizer_baseimg, 0 , wxEXPAND );
 
-			txt_base_img = new wxStaticText( scrollPanel, wxID_ANY, "Base", wxPoint(wxDefaultCoord,8), wxSize( 80, wxDefaultCoord) );
+			txt_base_img = new wxStaticText( scrollPanel, wxID_ANY, wxT("Base"), wxPoint(wxDefaultCoord,8), wxSize( 80, wxDefaultCoord) );
 			sizer_baseimg->Add( txt_base_img, 0, wxALL, 4 );
 
-			txtctrl_imgBase = new wxTextCtrl(scrollPanel, IMG_BASE, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+			txtctrl_imgBase = new wxTextCtrl(scrollPanel, IMG_BASE, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 			txtctrl_imgBase->Connect( wxEVT_COMMAND_TEXT_ENTER , wxCommandEventHandler(Panel_Remaps::EvtCommand), NULL, this);
 			txtctrl_imgBase->SetInsertionPointEnd();
 			txtctrl_imgBase->MoveAfterInTabOrder( chckbx_8bit );
 			sizer_baseimg->Add( txtctrl_imgBase, 1, wxEXPAND );
 
 			pickerBaseImg = new wxFilePickerCtrl( scrollPanel, ID_PICKER_BASE_IMG,
-								dataDirPath.GetFullPath(), "Select the image base for the remap", "*.*",
+							      dataDirPath.GetFullPath(), wxT("Select the image base for the remap"), wxT("*.*"),
 								wxDefaultPosition, wxDefaultSize, wxFLP_OPEN | wxFLP_FILE_MUST_EXIST );
 			pickerBaseImg->Connect(wxEVT_COMMAND_FILEPICKER_CHANGED , wxFileDirPickerEventHandler(Panel_Remaps::EvtPickerImgBaseChg), NULL, this);
 			pickerBaseImg->SetMaxSize( wxSize(30, wxDefaultCoord ));
@@ -191,17 +191,17 @@ void Panel_Remaps::Constructor()
 			wxBoxSizer *sizer_dest_img = new wxBoxSizer( wxHORIZONTAL );
 			sizer_PATHS->Add( sizer_dest_img, 1 , wxEXPAND );
 
-			txt_result = new wxStaticText( scrollPanel, wxID_ANY, "Result", wxPoint(wxDefaultCoord,8), wxSize( 80, wxDefaultCoord) );
+			txt_result = new wxStaticText( scrollPanel, wxID_ANY, wxT("Result"), wxPoint(wxDefaultCoord,8), wxSize( 80, wxDefaultCoord) );
 			sizer_dest_img->Add( txt_result, 0, wxALL, 4 );
 
-			txtctrl_destimg = new wxTextCtrl(scrollPanel, IMG_DEST, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+			txtctrl_destimg = new wxTextCtrl(scrollPanel, IMG_DEST, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 			txtctrl_destimg->Connect( wxEVT_COMMAND_TEXT_ENTER , wxCommandEventHandler(Panel_Remaps::EvtCommand), NULL, this);
 			txtctrl_destimg->SetInsertionPointEnd();
 			txtctrl_destimg->MoveAfterInTabOrder( txtctrl_imgBase );
 			sizer_dest_img->Add( txtctrl_destimg, 1, wxEXPAND );
 
 			pickerDestImg = new wxFilePickerCtrl( scrollPanel, ID_PICKER_DEST_IMG,
-						dataDirPath.GetFullPath(), "Select the sound for this frame", "*.*",
+							      dataDirPath.GetFullPath(), wxT("Select the sound for this frame"), wxT("*.*"),
 						wxDefaultPosition, wxDefaultSize, wxFLP_OPEN | wxFLP_FILE_MUST_EXIST );
 			pickerDestImg->Connect(wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler(Panel_Remaps::EvtPickerImgDestChg), NULL, this);
 			pickerDestImg->SetMaxSize( wxSize(30, wxDefaultCoord ));
@@ -216,27 +216,27 @@ void Panel_Remaps::Constructor()
 
 			//---------------------
 			// Guess the colours from the current frame
-			btn_guess_cols = new wxButton(scrollPanel, ID_GUESS_COLORS, "Guess Cols", wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
+			btn_guess_cols = new wxButton(scrollPanel, ID_GUESS_COLORS, wxT("Guess Cols"), wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
 			btn_guess_cols->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_tools_btns->Add( btn_guess_cols, 0, wxALL | wxEXPAND, 5 );
 
 
 			//---------------------
 			// Save the remap
-			btn_save_remap = new wxButton(scrollPanel, ID_SAVE_REMAP, "Save", wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
+			btn_save_remap = new wxButton(scrollPanel, ID_SAVE_REMAP, wxT("Save"), wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
 			btn_save_remap->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_tools_btns->Add( btn_save_remap, 0, wxALL | wxEXPAND, 5 );
 
 
 			//---------------------
 			// Set the selection to the selected colors
-			btn_set_sel = new wxButton(scrollPanel, ID_SET_SEL_COLS, "Set Selects", wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
+			btn_set_sel = new wxButton(scrollPanel, ID_SET_SEL_COLS, wxT("Set Selects"), wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
 			btn_set_sel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_tools_btns->Add( btn_set_sel, 0, wxALL | wxEXPAND, 5 );
 
 			//---------------------
 			// UnSet the selection
-			btn_unset_sel = new wxButton(scrollPanel, ID_UNSET_SEL_COLS, "UnSet them", wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
+			btn_unset_sel = new wxButton(scrollPanel, ID_UNSET_SEL_COLS, wxT("UnSet them"), wxDefaultPosition, wxSize( wxDefaultCoord, 30) );
 			btn_unset_sel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_tools_btns->Add( btn_unset_sel, 0, wxALL | wxEXPAND, 5 );
 
@@ -251,12 +251,12 @@ void Panel_Remaps::Constructor()
 		// MODIF COLORS SLIDERS
 		//**************************
 
-			sizer_HSV = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "Colours Modifications" );
+sizer_HSV = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("Colours Modifications") );
 			sizer_topmiddle->Add( sizer_HSV, 0, wxTOP | wxEXPAND, 10 );
 
 			//---------------------
 			// Label RGB
-			txt_RGB = new wxStaticText( scrollPanel, wxID_ANY, "Red / Green / Blue" );
+			txt_RGB = new wxStaticText( scrollPanel, wxID_ANY, wxT("Red / Green / Blue" ));
 			sizer_HSV->Add( txt_RGB, 0, wxALIGN_CENTER | wxTOP, 10 );
 
 			//---------------------
@@ -294,7 +294,7 @@ void Panel_Remaps::Constructor()
 
 			//---------------------
 			// Label HSV
-			txt_HSL = new wxStaticText( scrollPanel, wxID_ANY, "Hue / Saturation / Brightness" );
+			txt_HSL = new wxStaticText( scrollPanel, wxID_ANY, wxT("Hue / Saturation / Brightness") );
 			sizer_HSV->Add( txt_HSL, 0, wxALIGN_CENTER | wxTOP, 10 );
 
 			//---------------------
@@ -336,11 +336,11 @@ void Panel_Remaps::Constructor()
 		wxGridSizer *sizer_btns_AppCanc = new wxGridSizer( 1, 2, 5, 5 );
 		sizer_topmiddle->Add( sizer_btns_AppCanc, 0, wxALL |wxEXPAND);
 
-			btn_apply_cols = new wxButton(scrollPanel, ID_APPLY_COLORS, "Apply" );
+		btn_apply_cols = new wxButton(scrollPanel, ID_APPLY_COLORS, wxT("Apply") );
 			btn_apply_cols->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_btns_AppCanc->Add( btn_apply_cols, 1, wxALL | wxEXPAND, 5 );
 
-			btn_cancel_cols = new wxButton(scrollPanel, ID_CANCEL_COLORS, "Cancel" );
+			btn_cancel_cols = new wxButton(scrollPanel, ID_CANCEL_COLORS, wxT("Cancel") );
 			btn_cancel_cols->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this );
 			sizer_btns_AppCanc->Add( btn_cancel_cols, 1, wxALL | wxEXPAND, 5 );
 
@@ -353,12 +353,12 @@ void Panel_Remaps::Constructor()
 
 		sizer_btns_Zoom->AddStretchSpacer();
 		wxBitmapButton *butt_Zoom_M = new wxBitmapButton( this, ID_ZOOM_M,
-			wxBitmap( wxImage( GetRessourceFile_String("zoom-out.png"))));
+								  wxBitmap( wxImage( GetRessourceFile_String(wxT("zoom-out.png")))));
 		butt_Zoom_M->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this);
 		sizer_btns_Zoom->Add( butt_Zoom_M, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
 		wxBitmapButton *butt_Zoom_P = new wxBitmapButton( this, ID_ZOOM_P,
-			wxBitmap( wxImage( GetRessourceFile_String("zoom-in.png"))));
+								  wxBitmap( wxImage( GetRessourceFile_String(wxT("zoom-in.png")))));
 		butt_Zoom_P->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Remaps::EvtButtonClick), NULL, this);
 		sizer_btns_Zoom->Add( butt_Zoom_P, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
@@ -466,8 +466,8 @@ void Panel_Remaps::GessBitMode()
 	if( entity == NULL )
 		return;
 
-	ob_object* _thePalette = entity->obj_container->GetSubObject( "palette" );
-	if( _thePalette != NULL && entity->GetProperty( "alternatepal" ) != NULL )
+	ob_object* _thePalette = entity->obj_container->GetSubObject( wxT("palette") );
+	if( _thePalette != NULL && entity->GetProperty( wxT("alternatepal") ) != NULL )
 		SwitchTo16BitMode();
 	else
 		SwitchTo8BitMode();
@@ -482,12 +482,12 @@ void Panel_Remaps::InitRemapsChoices()
 // Check 16bit mode
 	if( !mode8bit )
 	{
-		ob_object* _thePalette = entity->GetProperty( "palette" );
+		ob_object* _thePalette = entity->GetProperty( wxT("palette") );
 
 		size_t nb_alterpal = 0;
 		ob_object** _alterpals = NULL;
 		if( _thePalette != NULL )
-			_alterpals  = entity->GetSubObjectS("alternatepal",nb_alterpal);
+			_alterpals  = entity->GetSubObjectS(wxT("alternatepal"),nb_alterpal);
 
 		// if 16 bits mod exist choose it
 		if( nb_alterpal > 0 )
@@ -496,11 +496,11 @@ void Panel_Remaps::InitRemapsChoices()
 			{
 				// Get the comment for this remap
 				wxString _name = _alterpals[i]->GetComment();
-				if( _name == "" )
-					_name = "alternatepal " + IntToStr( i );
+				if( _name == wxString() )
+					_name = wxT("alternatepal ") + IntToStr( i );
 
 				_name = _name.Trim().Trim(true);
-				if( _name.Left(1) == "#" )
+				if( _name.Left(1) == wxT("#") )
 					_name = _name.Right( _name.Len() - 1 );
 				_name = _name.Left(15);
 				choiceBox_remaps->Append( _name );
@@ -512,17 +512,17 @@ void Panel_Remaps::InitRemapsChoices()
 	{
 		// 8bit mode
 		size_t nb_remaps;
-		ob_object** _remaps = entity->GetSubObjectS( "remap", nb_remaps );
+		ob_object** _remaps = entity->GetSubObjectS( wxT("remap"), nb_remaps );
 
 		for( size_t i = 0; i < nb_remaps; i++ )
 		{
 			// Get the comment for this remap
 			wxString _name = _remaps[i]->GetComment();
-			if( _name == "" )
-				_name = "remap " + IntToStr( i );
+			if( _name == wxString() )
+				_name = wxT("remap ") + IntToStr( i );
 
 			_name = _name.Trim().Trim(true);
-			if( _name.Left(1) == "#" )
+			if( _name.Left(1) == wxT("#") )
 				_name = _name.Right( _name.Len() - 1 );
 			_name = _name.Left(15);
 			choiceBox_remaps->Append( _name );
@@ -555,9 +555,9 @@ void Panel_Remaps::SwitchTo8BitMode()
 	paletteCtrl->mode8bit = true;
 
 	// Set some statictext
-	txt_base_img->SetLabel( "Base" );
-	txt_result->SetLabel( "Result" );
-	btn_guess_cols->SetLabel( "Create Base" );
+	txt_base_img->SetLabel( wxT("Base") );
+	txt_result->SetLabel(wxT("Result") );
+	btn_guess_cols->SetLabel( wxT("Create Base") );
 
 	//Hide some buttons
 	EnableHSV( false );
@@ -583,9 +583,9 @@ void Panel_Remaps::SwitchTo16BitMode()
 	paletteCtrl->mode8bit = false;
 
 	// Set some statictext
-	txt_base_img->SetLabel( "Palette" );
-	txt_result->SetLabel( "AlterPal" );
-	btn_guess_cols->SetLabel( "Guess Cols" );
+	txt_base_img->SetLabel( wxT("Palette") );
+	txt_result->SetLabel( wxT("AlterPal") );
+	btn_guess_cols->SetLabel( wxT("Guess Cols") );
 
 	// Show all HSB controls
 	EnableHSV( true );
@@ -634,9 +634,9 @@ void Panel_Remaps::EvtRemapChange( wxCommandEvent& event )
 	if(	paletteCtrl->isChanged && curr_ind_remap >= 0 )
 	{
 		//Make the user sure to abort his modifications
-		int res = wxMessageBox( wxString("Change have been made in the current palette.\n")
-							+ "Sure to cancel them ?"
-							, "Question", wxYES_NO | wxICON_INFORMATION, this );
+		int res = wxMessageBox( wxT("Change have been made in the current palette.\n"
+		"Sure to cancel them ?")
+		, wxT("Question"), wxYES_NO | wxICON_INFORMATION, this );
 		if( res != wxYES )
 		{
 			// Reselect previous selected
@@ -655,7 +655,7 @@ void Panel_Remaps::DoRemapSelectionChange( bool b_quiet )
 {
 	if( entity == NULL )
 	{
-		wxMessageBox( "No entity selected !!!", "GROSS PROBLEM", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No entity selected !!!"), wxT("GROSS PROBLEM"), wxOK | wxICON_INFORMATION, this );
 		paletteCtrl->Reset();
 		scrollPanel->Enable( false );
 		curr_remap = NULL;
@@ -680,16 +680,16 @@ void Panel_Remaps::DoRemapSelectionChange( bool b_quiet )
 	size_t nb_remap = 0;
 	ob_object** _remaps = NULL;
 	if( mode8bit )
-		_remaps = entity->GetSubObjectS( "remap", nb_remap );
+		_remaps = entity->GetSubObjectS( wxT("remap"), nb_remap );
 	else
-		_remaps = entity->GetSubObjectS( "alternatepal", nb_remap );
+		_remaps = entity->GetSubObjectS( wxT("alternatepal"), nb_remap );
 
 
 	if( ind_remap < 0 || ind_remap >= (int) nb_remap )
 	{
 		choiceBox_remaps->SetSelection( wxNOT_FOUND );
 		curr_remap = NULL;
-		wxMessageBox( "This remap does not exist !!!", "GROSS PROBLEM", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("This remap does not exist !!!"), wxT("GROSS PROBLEM"), wxOK | wxICON_INFORMATION, this );
 		EnableEditingTheRemap(1);
 		Refresh();
 		if( _remaps != NULL )
@@ -713,17 +713,17 @@ void Panel_Remaps::DoRemapSelectionChange( bool b_quiet )
 	}
 	else
 	{
-		_basePath = entity->obj_container->GetSubObject_Token( "palette" );
+		_basePath = entity->obj_container->GetSubObject_Token( wxT("palette") );
 		_destPath = curr_remap->GetToken(0);
 	}
 
 	txtctrl_imgBase->SetValue( _basePath );
-	if( _basePath != "" )
+	if( _basePath != wxString() )
 		pickerBaseImg->SetPath( GetObFile(_basePath).GetFullPath() );
 	_basePath = GetObFile(_basePath).GetFullPath();
 
 	txtctrl_destimg->SetValue( _destPath );
-	if( _destPath != "" )
+	if( _destPath != wxString() )
 		pickerDestImg->SetPath( GetObFile(_destPath).GetFullPath() );
 	_destPath = GetObFile(_destPath).GetFullPath();
 
@@ -740,23 +740,23 @@ void Panel_Remaps::DoRemapSelectionChange( bool b_quiet )
 void Panel_Remaps::DoCreateBase()
 {
 	// Make the user sure
-	int res = wxMessageBox( wxString("This will overwrite the current base image.\n")
-						+ "It will be replaced by a copy image,\n"
-						+ "at which will be added all the missing colors of the palette"
-						+ "Sure to do this ?"
-						, "Question", wxYES_NO | wxICON_INFORMATION, this );
+	int res = wxMessageBox( wxT("This will overwrite the current base image.\n"
+						"It will be replaced by a copy image,\n"
+						"at which will be added all the missing colors of the palette"
+						"Sure to do this ?")
+						, wxT("Question"), wxYES_NO | wxICON_INFORMATION, this );
 	if( res == wxYES )
 	{
 		if( paletteCtrl->theSourceImg == NULL || !paletteCtrl->theSourceImg->IsOk() )
 		{
-			wxMessageBox( wxString("Invalide base image for the operation ")
-					, "ProPlem", wxOK | wxICON_INFORMATION, this );
+			wxMessageBox( wxT("Invalide base image for the operation ")
+			, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 			return;
 		}
 
 		// Get the base name
 		// Ask for the name
-		wxFileDialog _dialog(this, "Choose a file for the base img for remaps",dataDirPath.GetFullPath() );
+		wxFileDialog _dialog(this, wxT("Choose a file for the base img for remaps"),dataDirPath.GetFullPath() );
 		int response = _dialog.ShowModal();
 
 		if( response  != wxID_OK )
@@ -766,9 +766,9 @@ void Panel_Remaps::DoCreateBase()
 
 		// Check if it's a valid ob project pa
 		wxString str_path = Convert_To_Ob_Path( fn_base );
-		if( str_path == "" )
+		if( str_path == wxString() )
 		{
-			wxMessageBox( "Can't use this file.\nIs it really in the project data Directory ?", "Error", wxOK | wxICON_INFORMATION, this );
+			wxMessageBox( wxT("Can't use this file.\nIs it really in the project data Directory ?"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 			return;
 		}
 
@@ -791,8 +791,8 @@ void Panel_Remaps::DoCreateBase()
 		//Save the base
 		if( ! paletteCtrl->theSourceImg->SaveAs( fn_base ) )
 		{
-			wxMessageBox( wxString("Cannot save the resulted image ")
-					, "ProPlem", wxOK | wxICON_INFORMATION, this );
+			wxMessageBox( wxT("Cannot save the resulted image ")
+			, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 			return;
 		}
 
@@ -816,9 +816,8 @@ void Panel_Remaps::Evt8BitModeChange( wxCommandEvent& event )
 		if(	paletteCtrl->isChanged && curr_ind_remap >= 0 )
 		{
 			//Make the user sure to abort his modifications
-			int res = wxMessageBox( wxString("Change have been made in the current palette.\n")
-								+ "Sure to cancel them ?"
-								, "Question", wxYES_NO | wxICON_INFORMATION, this );
+			int res = wxMessageBox( wxT("Change have been made in the current palette.\nSure to cancel them ?")
+			, wxT("Question"), wxYES_NO | wxICON_INFORMATION, this );
 			if( res != wxYES )
 			{
 				// Restore the previous state
@@ -895,8 +894,8 @@ bool Panel_Remaps::Save_DoChecks()
 	// Check if there is a valid source img
 	if( ! paletteCtrl->b_init || paletteCtrl->theSourceImg == NULL || ! paletteCtrl->theSourceImg->IsOk())
 	{
-		wxMessageBox( wxString("There is no valide source Image for the remap ")
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("There is no valide source Image for the remap ")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return false;
 	}
 
@@ -905,30 +904,30 @@ bool Panel_Remaps::Save_DoChecks()
 
 	// Checks Destination not specified
 	wxString str_fn = dest_file.GetFullPath();
-	if( str_fn == "" )
+	if( str_fn == wxString() )
 	{
-		wxMessageBox( "No Destination Image specified !!"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No Destination Image specified !!")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return false;
 	}
 
 	wxString _ext = dest_file.GetExt().Upper();
-	if( _ext != "PNG" && _ext != "GIF" )
+	if( _ext != wxT("PNG") && _ext != wxT("GIF") )
 	{
-		wxMessageBox( wxString("The extension of the destination file is not GIF or PNG !!")
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("The extension of the destination file is not GIF or PNG !!")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return false;
 	}
 
 	// Checks mismatch file types
 	if(
-			(_ext == "PNG" && paletteCtrl->theSourceImg->type != pIMG_PNG )
+		(_ext == wxT("PNG") && paletteCtrl->theSourceImg->type != pIMG_PNG )
 			||
-			(_ext == "GIF" && paletteCtrl->theSourceImg->type != pIMG_GIF )
+			(_ext == wxT("GIF") && paletteCtrl->theSourceImg->type != pIMG_GIF )
 	   )
 	{
-		wxMessageBox( wxString("Source and destination Image haven't the same extension")
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Source and destination Image haven't the same extension")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return false;
 	}
 	return true;
@@ -949,8 +948,8 @@ bool Panel_Remaps::Save_16Bit_Remap()
 	MyPalette* prev_palette = srcImg->GetPalette();
 	if( prev_palette == NULL || !prev_palette->IsOk() )
 	{
-		wxMessageBox( "Problem when saving the source palette !!"
-				, "GROSS ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Problem when saving the source palette !!")
+		, wxT("GROSS ProPlem"), wxOK | wxICON_INFORMATION, this );
 		if( prev_palette != NULL )
 			delete prev_palette;
 		return false;
@@ -959,8 +958,8 @@ bool Panel_Remaps::Save_16Bit_Remap()
 	// Apply the new palette to the source
 	if( ! srcImg->SetPalette( paletteCtrl->GetNewPalette() ))
 	{
-		wxMessageBox( "Problem when setting the new palette !!"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Problem when setting the new palette !!")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		delete prev_palette;
 		return false;
 	}
@@ -975,8 +974,8 @@ bool Panel_Remaps::Save_16Bit_Remap()
 
 	if( ! res )
 	{
-		wxMessageBox( "Problem when saving the resulting image !!"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Problem when saving the resulting image !!")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return false;
 	}
 
@@ -1021,8 +1020,8 @@ bool Panel_Remaps::Save_8Bit_Remap()
 
 	if( ! res )
 	{
-		wxMessageBox( "Problem when saving the resulting image !!"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Problem when saving the resulting image !!")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return false;
 	}
 
@@ -1044,7 +1043,7 @@ bool Panel_Remaps::DoChangeImgDest( bool b_quiet, bool standalone)
 	// Get the new path
 	wxString dest_obPath = txtctrl_destimg->GetValue();
 	wxString _destPath = GetObFile( dest_obPath ).GetFullPath();
-	if( _destPath == "" )
+	if( _destPath == wxString() )
 		b_quiet = true;
 
 	//******************************
@@ -1055,8 +1054,8 @@ bool Panel_Remaps::DoChangeImgDest( bool b_quiet, bool standalone)
 		if( old_path != dest_obPath )
 		{
 			entity->SetChanged();
-			if( curr_remap->GetToken( 0 ) == "" )
-				curr_remap->SetToken( 0, "UNSETTED" );
+			if( curr_remap->GetToken( 0 ) == wxString() )
+				curr_remap->SetToken( 0, wxT("UNSETTED") );
 			curr_remap->SetToken( 1, dest_obPath );
 		}
 	}
@@ -1080,24 +1079,23 @@ bool Panel_Remaps::DoChangeImgDest( bool b_quiet, bool standalone)
 	//******************************
 	// Check if the destination file exist
 	if( ! wxFileName( _destPath ).FileExists() && !b_quiet )
-		wxMessageBox( "The Destination image for the remap doesn't exist"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("The Destination image for the remap doesn't exist")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 
 	else if( IsFileEmpty(_destPath) && !b_quiet )
-		wxMessageBox( "The Destination image for the remap is an empty file"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("The Destination image for the remap is an empty file")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 
 	else if( ! wxImage( _destPath ).IsOk() && !b_quiet)
-		wxMessageBox( "Problem with the loading destination image of the remap"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Problem with the loading destination image of the remap")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 
 	else if( paletteCtrl->b_init )
 	{
 		res = paletteCtrl->InitRemapping_With( _destPath );
 		if( ! res && !b_quiet)
-			wxMessageBox(   wxString( "Problem with apply remapping between the two images\n" )
-						  + "Are they really fit each others ?"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+			wxMessageBox(   wxT( "Problem with apply remapping between the two images\nAre they really fit each others ?")
+			, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 
 	}
 
@@ -1139,18 +1137,18 @@ bool Panel_Remaps::DoChangeImgBase( bool b_quiet, bool standalone)
 	}
 	else
 	{
-		ob_object *pal_obobj = entity->GetProperty( "palette" );
+		ob_object *pal_obobj = entity->GetProperty( wxT("palette") );
 
 		// No current palette tag in the current entity
-		wxString old_path = "";
+		wxString old_path = wxString();
 		if( pal_obobj == NULL )
 		{
 			pal_obobj = new ob_object();
-			pal_obobj->SetName( "palette" );
+			pal_obobj->SetName( wxT("palette") );
 
 			//Try to insert one before the first alternatepal
 			size_t nb_remap;
-			ob_object** _t = entity->GetSubObjectS( "alternatepal",nb_remap );
+			ob_object** _t = entity->GetSubObjectS( wxT("alternatepal"),nb_remap );
 			
 			if( _t != NULL )
 			{
@@ -1168,7 +1166,7 @@ bool Panel_Remaps::DoChangeImgBase( bool b_quiet, bool standalone)
 		if( old_path != ob_basePath )
 		{
 			// Check if the user really want to change the image base for all remaps
-			int res = wxMessageBox( "Do your really want to change the image base for all 16Bits remaps ?", "Question", wxYES_NO | wxICON_INFORMATION, this );
+			int res = wxMessageBox( wxT("Do your really want to change the image base for all 16Bits remaps ?"), wxT("Question"), wxYES_NO | wxICON_INFORMATION, this );
 			if( res != wxYES )
 				return false;
 
@@ -1182,14 +1180,14 @@ bool Panel_Remaps::DoChangeImgBase( bool b_quiet, bool standalone)
 	// Check if it's a valid path
 	if( ! wxFileName( _basePath ).FileExists() && !b_quiet )
 	{
-		wxMessageBox( "The Base image for this remap doesn't exist"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("The Base image for this remap doesn't exist")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 	}
 
 	else if( IsFileEmpty(_basePath) && !b_quiet )
 	{
-		wxMessageBox( "The Base image for this remap is an empty file !!"
-				, "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("The Base image for this remap is an empty file !!")
+		, wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 	}
 
 
@@ -1222,7 +1220,7 @@ bool Panel_Remaps::Do_NewRemap()
 		return false;
 
 	// Ask for the name
-	wxTextEntryDialog _dialog(this, "New remap", "Name for the new remap ", "",
+	wxTextEntryDialog _dialog(this, wxT("New remap"), wxT("Name for the new remap "), wxString(),
 				wxOK | wxCANCEL | wxCENTRE );
 	int response = _dialog.ShowModal();
 
@@ -1234,17 +1232,17 @@ bool Panel_Remaps::Do_NewRemap()
 		size_t nb_remaps = 0;
 		ob_object** curr_remaps = NULL;
 		if( !mode8bit )
-			curr_remaps = entity->GetSubObjectS( "alternatepal", nb_remaps );
+			curr_remaps = entity->GetSubObjectS( wxT("alternatepal"), nb_remaps );
 		else
-			curr_remaps = entity->GetSubObjectS( "remap", nb_remaps );
+			curr_remaps = entity->GetSubObjectS( wxT("remap"), nb_remaps );
 
 		// Give a default name if none is provided
-		if( remap_name == "")
+		if( remap_name == wxString())
 		{
 			if( mode8bit )
-				remap_name = "remap " + IntToStr( nb_remaps );
+				remap_name = wxT("remap ") + IntToStr( nb_remaps );
 			else
-				remap_name = "alternatepal " + IntToStr( nb_remaps );
+				remap_name = wxT("alternatepal ") + IntToStr( nb_remaps );
 		}
 
 		ob_object * new_remap;
@@ -1252,9 +1250,9 @@ bool Panel_Remaps::Do_NewRemap()
 		if( curr_remaps == NULL )
 		{
 			// No previous remap => Juste add it as a property
-			wxString _tag = "remap";
+			wxString _tag = wxT("remap");
 			if( !mode8bit )
-				_tag = "alternatepal" ;
+				_tag = wxT("alternatepal");
 
 			new_remap = new ob_object();
 			new_remap->SetName( _tag );
@@ -1268,20 +1266,20 @@ bool Panel_Remaps::Do_NewRemap()
 			{
 				wxString prev_baseImg = curr_remaps[nb_remaps-1]->GetToken( 0);
 				new_remap = new ob_object();
-				new_remap->SetName( "remap" );
+				new_remap->SetName( wxT("remap") );
 				new_remap->SetToken( 0, prev_baseImg );
 			}
 			else
 			{
 				new_remap = new ob_object();
-				new_remap->SetName( "alternatepal" );
+				new_remap->SetName( wxT("alternatepal") );
 			}
 
 			curr_remaps[nb_remaps-1]->InsertObject_After( new_remap );
 			delete[] curr_remaps;
 		}
 
-		wxString _comment = "#" + remap_name;
+		wxString _comment = wxT("#") + remap_name;
 		new_remap->SetComment( _comment );
 
 		// Append and select the new remap object in the remap control choices
@@ -1304,17 +1302,17 @@ bool Panel_Remaps::Do_RenameRemap()
 		return false;
 
 	// Ask for the name
-	wxTextEntryDialog _dialog(this, "Rename remap", "New name for this remap ", "",
+	wxTextEntryDialog _dialog(this, wxT("Rename remap"), wxT("New name for this remap "), wxString(),
 				wxOK | wxCANCEL | wxCENTRE );
 	int response = _dialog.ShowModal();
 
 	if( response  == wxID_OK )
 	{
 		wxString remap_name = _dialog.GetValue().Trim().Trim(false);
-		if( remap_name == "" )
+		if( remap_name == wxString() )
 			return false;
 
-		wxString _comment = "\t#" + remap_name;
+		wxString _comment = wxT("\t#") + remap_name;
 		curr_remap->SetComment( _comment );
 		choiceBox_remaps->SetString( choiceBox_remaps->GetSelection(), remap_name.Left( 15 ) );
 		sizer_remaps_choice->Layout();
@@ -1333,7 +1331,7 @@ bool Panel_Remaps::Do_DeleteRemap()
 		return false;
 
 	// Ask the user to be sure
-	int res = wxMessageBox( "Sure to delete it ?", "Question", wxYES_NO | wxICON_INFORMATION, this );
+	int res = wxMessageBox( wxT("Sure to delete it ?"), wxT("Question"), wxYES_NO | wxICON_INFORMATION, this );
 	if( res != wxYES )
 		return false;
 
@@ -1470,7 +1468,7 @@ void Panel_Remaps::EvtButtonClick(wxCommandEvent& event)
 
 		case ID_HELP_REMAPS:
 		{
-			WndFromText( this, "HowTo do remaps", GetRessourceFile_String( "remaps.txt" )).ShowModal();
+			WndFromText( this, wxT("HowTo do remaps"), GetRessourceFile_String( wxT("remaps.txt") )).ShowModal();
 			break;
 		}
 	}
@@ -1537,9 +1535,9 @@ void Panel_Remaps::EvtPickerImgBaseChg( wxFileDirPickerEvent& )
 	// Get the path
 	wxString str_path = Convert_To_Ob_Path( pickerBaseImg->GetPath() );
 
-	if( str_path == "" )
+	if( str_path == wxString() )
 	{
-		wxMessageBox( "Can't use this file.\nIs it really in the project data Directory ?", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Can't use this file.\nIs it really in the project data Directory ?"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 	txtctrl_imgBase->SetValue( str_path );
@@ -1554,9 +1552,9 @@ void Panel_Remaps::EvtPickerImgDestChg( wxFileDirPickerEvent& event )
 	// Get the path
 	wxString str_path = Convert_To_Ob_Path( pickerDestImg->GetPath() );
 
-	if( str_path == "" )
+	if( str_path == wxString() )
 	{
-		wxMessageBox( "Can't use this file.\nIs it really in the project data Directory ?", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Can't use this file.\nIs it really in the project data Directory ?"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 	txtctrl_destimg->SetValue( str_path );
@@ -1614,10 +1612,10 @@ void Panel_Remaps::EvtKillFocus(wxFocusEvent& event )
 	if(	paletteCtrl->isChanged && curr_ind_remap >= 0 )
 	{
 		//Make the user sure to abort his modifications
-		int res = wxMessageBox( wxString("Change have been made in the current palette.\n")
-							+ "If you don't save them now you can loose them\n" +
-							+ "Do the save ?"
-							, "Question", wxYES_NO | wxICON_INFORMATION, this );
+		int res = wxMessageBox( wxT("Change have been made in the current palette.\n"
+							 "If you don't save them now you can loose them\n" 
+							 "Do the save ?")
+							 , wxT("Question"), wxYES_NO | wxICON_INFORMATION, this );
 
 		if( res == wxYES )
 		{

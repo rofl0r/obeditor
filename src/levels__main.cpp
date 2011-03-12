@@ -73,9 +73,9 @@ FileLevels_Reload( wxWindow* _parent )
 
 	if( fileLevels->obj_container == NULL )
 	{
-		wxMessageBox( "The selected project does not contain a valid 'levels.txt' file\n\n" +
+		wxMessageBox( wxT("The selected project does not contain a valid 'levels.txt' file\n\n") +
 						levels_path.GetFullPath()
-					  , "Problem", wxOK | wxICON_INFORMATION, _parent );
+						, wxT("Problem"), wxOK | wxICON_INFORMATION, _parent );
 		delete fileLevels;
 		fileLevels = NULL;
 		return false;
@@ -87,7 +87,7 @@ FileLevels_Reload( wxWindow* _parent )
 void
 Init_Filter_Type_List( wxComboBox* comb_ctrl )
 {
-	comb_ctrl->Append( "ALL" );
+	comb_ctrl->Append( wxT("ALL") );
 	
 	int arr_types_filter[] =
 			{
@@ -181,7 +181,7 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
 
 	arr_entities__size = 0;
 	arr_entities = NULL;
-	last_txt_filter = "";
+	last_txt_filter = wxString();
 
 	if( curr_mod != NULL )
 	{
@@ -234,13 +234,13 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
 
 		// Label
 		sizer_topright->Add( 
-					new wxStaticText(mainPanel, wxID_ANY, "Entities")
+		new wxStaticText(mainPanel, wxID_ANY, wxT("Entities"))
 					,0 ,wxALIGN_CENTER | wxTOP | wxBOTTOM, 5 
 					);
 
 		// Text Entry Filter
 		entities_filter = new wxTextCtrl(mainPanel, wxID_ANY
-				, "", wxDefaultPosition, wxDefaultSize
+				, wxString(), wxDefaultPosition, wxDefaultSize
 				, wxSUNKEN_BORDER );
 		entities_filter->Connect(
 		    wxEVT_KEY_UP
@@ -249,7 +249,7 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
 		sizer_topright->Add( entities_filter, 0, wxEXPAND  | wxBOTTOM, 10 );
 		
 		// Combo Boxes Filter
-		cbbox_entities_type = new wxComboBox(mainPanel, wxID_ANY, "ALL",
+		cbbox_entities_type = new wxComboBox(mainPanel, wxID_ANY, wxT("ALL"),
 									wxDefaultPosition, wxDefaultSize,
 									0, NULL,
 									wxCB_DROPDOWN | wxCB_READONLY );
@@ -303,7 +303,7 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
 					, wxLB_SINGLE| wxLB_SORT|wxLB_NEEDED_SB);
 		for( size_t i = 0; i <= SST_MAX; i++ )
 		{
-			object_SuperType_list->Append( "  " + Stage__SuperType_ToStr(i) , (void*) i );
+			object_SuperType_list->Append( wxT("  ") + Stage__SuperType_ToStr(i) , (void*) i );
 		}
 		object_SuperType_list->Connect( wxEVT_COMMAND_LISTBOX_SELECTED
 		  , wxCommandEventHandler(LevelEditorFrame::Evt_SuperType_Selection_Change )
@@ -312,7 +312,7 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
 		  , wxMouseEventHandler(LevelEditorFrame::Evt_SuperType_DblClick)
 		  , NULL, this);
 		
-		wxStaticBoxSizer *sizer_object_type_list = new wxStaticBoxSizer( wxVERTICAL, mainPanel, "Super Types" );
+		  wxStaticBoxSizer *sizer_object_type_list = new wxStaticBoxSizer( wxVERTICAL, mainPanel, wxT("Super Types" ));
 		sizer_object_type_list->SetMinSize( wxSize(LISTBOX_MINWIDTH, wxDefaultCoord) );
 		sizer_object_type_list->Add( object_SuperType_list, 1, 0 );
 		sizer_bottom->Add( sizer_object_type_list, 0, wxEXPAND );
@@ -328,7 +328,7 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
 		  , wxMouseEventHandler(LevelEditorFrame::Evt_Type_DblClick)
 		  , NULL, this);
 
-		sizer_object_type_list = new wxStaticBoxSizer( wxVERTICAL, mainPanel, "Objects" );
+		  sizer_object_type_list = new wxStaticBoxSizer( wxVERTICAL, mainPanel, wxT("Objects") );
 		sizer_object_type_list->SetMinSize( wxSize(LISTBOX_MINWIDTH, wxDefaultCoord) );
 		sizer_object_type_list->Add( object_Type_list, 1, 0 );
 		sizer_bottom->Add( sizer_object_type_list, 0, wxEXPAND );
@@ -352,7 +352,7 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
 			, wxCommandEventHandler(LevelEditorFrame::Evt_ObjectList_Selection_Change )
 			, NULL, this);
 
-		wxStaticBoxSizer *sizer_object_list = new wxStaticBoxSizer( wxVERTICAL, mainPanel, "Objects" );
+			wxStaticBoxSizer *sizer_object_list = new wxStaticBoxSizer( wxVERTICAL, mainPanel, wxT("Objects") );
 		sizer_object_list->SetMinSize( wxSize(LISTBOX_MINWIDTH, wxDefaultCoord) );
 		sizer_object_list->Add( objects_List, 1, wxEXPAND );
 		sizer_bottom->Add( sizer_object_list, 0, wxEXPAND );
@@ -372,86 +372,86 @@ LevelEditorFrame::LevelEditorFrame(wxWindow *_parent, const wxString& title)
     wxMenu *subMenu;
 
     wxMenu *menuLoadSave = new wxMenu;
-    menuLoadSave->Append( ID_STAGE_RELOAD,	   "Reload the stage\tF5" );
-    menuLoadSave->Append( ID_STAGE_RELOAD_ALL, "Reload ALL" );
+    menuLoadSave->Append( ID_STAGE_RELOAD,	   wxT("Reload the stage\tF5") );
+    menuLoadSave->Append( ID_STAGE_RELOAD_ALL, wxT("Reload ALL" ));
     menuLoadSave->AppendSeparator();
-    menuLoadSave->Append( ID_STAGE_SAVE,	 "Save the stage\tF2" );
-    menuLoadSave->Append( ID_LEVELSTXT_SAVE, "Save LEVELS.TXT\tSHIFT-F2" );
-    menuLoadSave->Append( ID_STAGE_SAVE_ALL, "Save ALL" );
+    menuLoadSave->Append( ID_STAGE_SAVE,	 wxT("Save the stage\tF2" ));
+    menuLoadSave->Append( ID_LEVELSTXT_SAVE, wxT("Save LEVELS.TXT\tSHIFT-F2") );
+    menuLoadSave->Append( ID_STAGE_SAVE_ALL, wxT("Save ALL" ));
     menuLoadSave->AppendSeparator();
-    menuLoadSave->Append( ID_OPEN_IN_EDITOR, "Open Stage in External Editor\tF3" );
-    menuLoadSave->Append( ID_OPEN_LEVELSTXT_IN_EDITOR, "Open levels.txt in External Editor\tSHIFT-F3" );
+    menuLoadSave->Append( ID_OPEN_IN_EDITOR, wxT("Open Stage in External Editor\tF3" ));
+    menuLoadSave->Append( ID_OPEN_LEVELSTXT_IN_EDITOR, wxT("Open levels.txt in External Editor\tSHIFT-F3" ));
     menuLoadSave->AppendSeparator();
-    menuLoadSave->Append( ID_BACK_TO_STARTFRAME,	    "Quit to Mods Window" );
-    menuBar->Append( menuLoadSave, "Load/Save" );
+    menuLoadSave->Append( ID_BACK_TO_STARTFRAME,	    wxT("Quit to Mods Window" ));
+    menuBar->Append( menuLoadSave, wxT("Load/Save" ));
 
     menuSets = new wxMenu;
-    menuSets->Append( ID_SET_NEW,	        "Add new SET" );
-    menuSets->Append( ID_SET_EDIT_SETTINGS, "SET Properties" );
-    menuSets->Append( ID_SET_EDIT_EXTENDED_PROPS, "SET Extended Properties" );
+    menuSets->Append( ID_SET_NEW,	        wxT("Add new SET" ));
+    menuSets->Append( ID_SET_EDIT_SETTINGS, wxT("SET Properties" ));
+    menuSets->Append( ID_SET_EDIT_EXTENDED_PROPS, wxT("SET Extended Properties" ));
     menuSets->AppendSeparator();
 		subMenu = new wxMenu;
-		subMenu->Append( ID_SET_LIST_START, "<SET LIST>" );
-	menuSets->Append( new wxMenuItem(menuSets, ID_SET_LIST, "Change current SET", "", wxITEM_NORMAL,subMenu ));
-    menuBar->Append( menuSets, "| Edit SETs" );
+		subMenu->Append( ID_SET_LIST_START, wxT("<SET LIST>" ));
+		menuSets->Append( new wxMenuItem(menuSets, ID_SET_LIST, wxT("Change current SET"), wxString(), wxITEM_NORMAL,subMenu ));
+		menuBar->Append( menuSets, wxT("| Edit SETs") );
 
     menuStage = new wxMenu;
-    menuStage->Append( ID_STAGE_NEW,	        "Add new STAGE" );
-    menuStage->Append( ID_STAGE_EDIT_DECLARE_SETTINGS, "STAGE Declaration Properties" );
-    menuStage->Append( ID_STAGE_EDIT_SETTINGS, "STAGE Properties" );
+    menuStage->Append( ID_STAGE_NEW,	        wxT("Add new STAGE" ));
+    menuStage->Append( ID_STAGE_EDIT_DECLARE_SETTINGS, wxT("STAGE Declaration Properties" ));
+    menuStage->Append( ID_STAGE_EDIT_SETTINGS, wxT("STAGE Properties" ));
 
-    menuStage->Append( ID_STAGE_EDIT_EXTENDED_PROPS, "STAGE Extended Properties" );
+    menuStage->Append( ID_STAGE_EDIT_EXTENDED_PROPS, wxT("STAGE Extended Properties" ));
     menuStage->AppendSeparator();
 		subMenu = new wxMenu;
-		subMenu->Append( ID_STAGE_LIST_START, "<STAGE LIST>" );
-	menuStage->Append( new wxMenuItem(menuStage, ID_STAGE_LIST, "Change current STAGE", "", wxITEM_NORMAL,subMenu ));
+		subMenu->Append( ID_STAGE_LIST_START, wxT("<STAGE LIST>" ));
+		menuStage->Append( new wxMenuItem(menuStage, ID_STAGE_LIST, wxT("Change current STAGE"), wxString(), wxITEM_NORMAL,subMenu ));
     menuStage->AppendSeparator();
-    menuStage->Append( ID_STAGE_LOADED_ENTITIES, "Loaded Entities" );
-    menuBar->Append( menuStage, "| Edit STAGEs" );
+    menuStage->Append( ID_STAGE_LOADED_ENTITIES, wxT("Loaded Entities" ));
+    menuBar->Append( menuStage, wxT("| Edit STAGEs" ));
 
     menuScene = new wxMenu;
-    menuScene->Append( ID_BACKGROUND,	     "Background" );
-    menuScene->Append( ID_SCENE_BG_EDIT_ORDER, "Bg Layers" );
+    menuScene->Append( ID_BACKGROUND,	     wxT("Background" ));
+    menuScene->Append( ID_SCENE_BG_EDIT_ORDER, wxT("Bg Layers" ));
 		subMenu = new wxMenu;
-		subMenu->Append( ID_SCENE_PANELS_EDIT_ORDER, "ReOrder" );
-		subMenu->Append( ID_SCENE_PANELS_ADD, "Add a new one" );
+		subMenu->Append( ID_SCENE_PANELS_EDIT_ORDER, wxT("ReOrder" ));
+		subMenu->Append( ID_SCENE_PANELS_ADD, wxT("Add a new one" ));
 		subMenu->AppendSeparator();
-		subMenu->Append( ID_SCENE_PANELS_LIST_START, "<PANELS LIST>" );
-    menuScene->Append( new wxMenuItem(menuScene, ID_SCENE_MENU_PANELS, "Panels", "", wxITEM_NORMAL,subMenu ));
+		subMenu->Append( ID_SCENE_PANELS_LIST_START, wxT("<PANELS LIST>" ));
+		menuScene->Append( new wxMenuItem(menuScene, ID_SCENE_MENU_PANELS, wxT("Panels"), wxString(), wxITEM_NORMAL,subMenu ));
 		subMenu = new wxMenu;
-		subMenu->Append( ID_SCENE_FRONTPANEL_ORDER, "Edit" );
+		subMenu->Append( ID_SCENE_FRONTPANEL_ORDER, wxT("Edit" ));
 		subMenu->AppendSeparator();
-		subMenu->Append( ID_SCENE_FRONTPANEL_LIST_START, "<Front Panel list>" );
-    menuScene->Append( new wxMenuItem(menuScene, ID_SCENE_FRONTPANEL, "Front Panels", "", wxITEM_NORMAL,subMenu ));
+		subMenu->Append( ID_SCENE_FRONTPANEL_LIST_START, wxT("<Front Panel list>" ));
+		menuScene->Append( new wxMenuItem(menuScene, ID_SCENE_FRONTPANEL, wxT("Front Panels"), wxString(), wxITEM_NORMAL,subMenu ));
 
     menuScene->AppendSeparator();
-    menuScene->Append( ID_SCENE_TEST, "Test Scene" );
-    menuBar->Append( menuScene, "| Edit Scene" );
+    menuScene->Append( ID_SCENE_TEST, wxT("Test Scene" ));
+    menuBar->Append( menuScene, wxT("| Edit Scene" ));
 
     menuObjects = new wxMenu;
-    menuObjects->Append( ID_OBJECT_COPY,	   "Duplicate\tCTRL-D" );
-    menuObjects->Append( ID_OBJECT_SUPP,       "Delete\tCTRL-DEL" );
-    menuObjects->Append( ID_OBJECT_PROPERTIES, "Properties\tALT-P" );
+    menuObjects->Append( ID_OBJECT_COPY,	   wxT("Duplicate\tCTRL-D" ));
+    menuObjects->Append( ID_OBJECT_SUPP,       wxT("Delete\tCTRL-DEL" ));
+    menuObjects->Append( ID_OBJECT_PROPERTIES, wxT("Properties\tALT-P" ));
 //    menuObjects->Append( ID_OBJECT_EDIT_EXTENDED_PROPS, "Extended Properties" );
     menuObjects->AppendSeparator();
-    menuObjects->Append( ID_OBJECT_SORT_AT_OBJECTS, "Sort Objects with\"AT\"" );
-    menuBar->Append( menuObjects, "| Edit Object" );
+    menuObjects->Append( ID_OBJECT_SORT_AT_OBJECTS, wxT("Sort Objects with\"AT\"" ));
+    menuBar->Append( menuObjects, wxT("| Edit Object" ));
 
     menuUnRedo = new wxMenu;
-    menuUnRedo->Append( ID_UNDO, "Undo\tCTRL-Z" )->Enable(false);
-    menuUnRedo->Append( ID_REDO, "Redo\tCTRL-SHIFT-Z" )->Enable(false);
-    menuBar->Append( menuUnRedo, "| History" );
+    menuUnRedo->Append( ID_UNDO, wxT("Undo\tCTRL-Z" ))->Enable(false);
+    menuUnRedo->Append( ID_REDO, wxT("Redo\tCTRL-SHIFT-Z" ))->Enable(false);
+    menuBar->Append( menuUnRedo, wxT("| History" ));
     
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append( ID_HELP_PLEASE, "Manual" );
-    menuBar->Append( menuHelp, "| ?" );
+    menuHelp->Append( ID_HELP_PLEASE, wxT("Manual" ));
+    menuBar->Append( menuHelp, wxT("| ?" ));
 
     SetMenuBar( menuBar );
 
     //**************************
     // Popups Menus
     menuAdd = new wxMenu();
-    menuAdd->Append( wxID_NEW, "Add One" );
+    menuAdd->Append( wxID_NEW, wxT("Add One" ));
     
     //**************************
     // FINISHING THE WIDGETS
@@ -512,12 +512,12 @@ void LevelEditorFrame::EvtClose( wxCloseEvent& event)
 	
 	// Make the user sure
 	wxString modifs = GetModifsDone();
-	if( modifs != "" )
+	if( modifs != wxString() )
 	{
-		int _reponse = wxMessageBox( "Modification made to this files will be loose :\n"
-					+ modifs + "\n\n"
-					+ "Do you still want to quit ?"
-				, "ATTENTION !"
+		int _reponse = wxMessageBox( wxT("Modification made to this files will be loose :\n")
+		+ modifs + wxT("\n\n")
+		+ wxT("Do you still want to quit ?")
+		, wxT("ATTENTION !")
 				, wxICON_EXCLAMATION | wxYES_NO, leFrame );
 
 		if( _reponse != wxYES )
@@ -536,7 +536,7 @@ void LevelEditorFrame::EvtClose( wxCloseEvent& event)
 	Frame_SaveCoord( this, wxT("editstage_frame"));
 
 	// Save to autoload this frame
-	config->Write("/autoload/frame", "edit_stage" );
+	config->Write(wxT("/autoload/frame"), wxT("edit_stage") );
 
 	startFrame->b_reset_leFrame = true;
 	startFrame->Show();
@@ -571,13 +571,13 @@ void LevelEditorFrame::Evt_SET__Select( wxCommandEvent& evt_menu )
 
 	if( levels_sets == NULL )
 	{
-		wxMessageBox( "A SET has been selected in the menu although no sets are loaded !!", "BUG BUG !" );
+		wxMessageBox(wxT( "A SET has been selected in the menu although no sets are loaded !!"), wxT("BUG BUG !") );
 		return;
 	}
 	else if( ind_menu < 0 || ind_menu >= (int) nb_set )
 	{
-		wxMessageBox( "The founded ind for the SET selected in the menu si out of range : <" +IntToStr(ind_menu) + " !!"
-				, "BUG BUG !" );
+		wxMessageBox( wxT("The founded ind for the SET selected in the menu si out of range : <") +IntToStr(ind_menu) + wxT(" !!")
+		, wxT("BUG BUG !") );
 		return;
 	}
 
@@ -597,13 +597,13 @@ void LevelEditorFrame::Evt_STAGE__Select( wxCommandEvent& evt_menu )
 
 	if( stage_list == NULL )
 	{
-		wxMessageBox( "A STAGE has been selected in the menu although no sets are loaded !!", "BUG BUG !" );
+		wxMessageBox( wxT("A STAGE has been selected in the menu although no sets are loaded !!"), wxT("BUG BUG !") );
 		return;
 	}
 	else if( ind_menu < 0 || ind_menu >= (int) nb_stage )
 	{
-		wxMessageBox( "The founded ind for the STAGE selected in the menu si out of range : <" +IntToStr(ind_menu) + " !!"
-				, "BUG BUG !" );
+		wxMessageBox( wxT("The founded ind for the STAGE selected in the menu si out of range : <") +IntToStr(ind_menu) + wxT(" !!")
+		, wxT("BUG BUG !") );
 		return;
 	}
 
@@ -742,8 +742,8 @@ void LevelEditorFrame::Evt_OpenStageInEditor( wxCommandEvent& evt_menu )
 {
 	if( curr_stage_declaration == NULL )
 	{
-		wxMessageBox( "No STAGE selected !!!",
-						  "ERROR", wxOK | wxICON_EXCLAMATION, leFrame );
+		wxMessageBox( wxT("No STAGE selected !!!"),
+			      wxT("ERROR"), wxOK | wxICON_EXCLAMATION, leFrame );
 		return;
 	}
 
@@ -789,8 +789,8 @@ void LevelEditorFrame::Evt_LoadedEntities( wxCommandEvent& evt_menu )
 {
 	if( curr_stageFile == NULL || curr_stageFile->obj_container == NULL )
 	{
-		wxMessageBox( "No current stage file loaded !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+		wxMessageBox( wxT("No current stage file loaded !!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 		return;
 	}
 
@@ -804,7 +804,7 @@ LevelEditorFrame::Evt_Help(wxCommandEvent& evt_menu )
 {
 	if( helpWin != NULL )
 		delete helpWin;
-	helpWin = new WndFromText( this, "Manual", GetRessourceFile_String( "manual_stage.txt" ));
+	helpWin = new WndFromText( this, wxT("Manual"), GetRessourceFile_String( wxT("manual_stage.txt") ));
 	helpWin->Show(true);
 }
 
@@ -814,18 +814,18 @@ void LevelEditorFrame::Evt_BACKGROUND_Click(wxCommandEvent& evt_menu )
 {
 	if( curr_stageFile == NULL )
 	{
-		wxMessageBox( "Curr_stageFile == NULL !!!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("Curr_stageFile == NULL !!!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 		return;
 	}
 	else if( curr_stageFile->obj_container == NULL )
 	{
-		wxMessageBox( "Curr_stageFile->obj_container == NULL !!!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("Curr_stageFile->obj_container == NULL !!!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 		return;
 	}
 	
-	BG_Configure( (ob_BG_Layer*) curr_stageFile->obj_container->GetSubObject( "background"), true );
+	BG_Configure( (ob_BG_Layer*) curr_stageFile->obj_container->GetSubObject( wxT("background")), true );
 }
 
 
@@ -856,7 +856,7 @@ void
 LevelEditorFrame::Evt_BGLayer_Click( wxCommandEvent& evt_menu )
 {
 	int ind_menu = evt_menu.GetId() - ID_SCENE_BG_LIST_START;
-	wxMessageBox( "BG num " + IntToStr( ind_menu ) );
+	wxMessageBox( wxT("BG num ") + IntToStr( ind_menu ) );
 }
 
 
@@ -906,7 +906,7 @@ LevelEditorFrame::Evt_SuperType_Selection_Change( wxCommandEvent& evt_menu )
 {
 	wxString sel_str = object_SuperType_list->GetStringSelection();
 	int _sst = SST_NONE;
-	if( sel_str != "" )
+	if( sel_str != wxString() )
 		_sst = Stage__SuperType_ToInt( sel_str.Right(sel_str.Len() - 2 ) );
 	
 	SuperType__Select( _sst );
@@ -918,7 +918,7 @@ LevelEditorFrame::Evt_SuperType_DblClick( wxMouseEvent& evt )
 {
 	wxString sel_str = object_SuperType_list->GetStringSelection();
 	int _sst = SST_NONE;
-	if( sel_str != "" )
+	if( sel_str != wxString() )
 		_sst = Stage__SuperType_ToInt( sel_str.Right(sel_str.Len() - 2 ));
 	
 	if( _sst != SST_NONE )
@@ -943,7 +943,7 @@ void
 LevelEditorFrame::Evt_Type_Selection_Change( wxCommandEvent& evt_menu )
 {
 	wxString sel_str = object_Type_list->GetStringSelection();
-	if( sel_str == "" )
+	if( sel_str == wxString() )
 	{
 		TYPE__Select(STAGETYPE_NONE);
 		return;
@@ -959,7 +959,7 @@ LevelEditorFrame::Evt_Type_DblClick( wxMouseEvent& evt )
 {
 	wxString sel_str = object_Type_list->GetStringSelection();
 	int _t = STAGETYPE_NONE;
-	if( sel_str != "" )
+	if( sel_str != wxString() )
 		_t = Stage__Type_ToInt( sel_str.Right(sel_str.Len()-2) );
 	
 	if( _t != STAGETYPE_NONE )
@@ -1075,7 +1075,7 @@ LevelEditorFrame::Evt_TYPEListRightClik( wxMouseEvent& evt )
 		return;
 
 	// Have to get the TYPE of the object
-	int _TYPE = (int) object_Type_list->GetClientData( ind );
+	int _TYPE = (size_t) object_Type_list->GetClientData( ind );
 	
 	// Only Some type have ADD popup menu
 	bool b_continue = false;
@@ -1114,8 +1114,8 @@ LevelEditorFrame::Evt_TYPEListRightClik( wxMouseEvent& evt )
 
 	if( b_filtered == true )
 	{
-		wxMessageBox( "You have hidden this type of objects !!"
-				, "Impossible", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("You have hidden this type of objects !!")
+		, wxT("Impossible"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 	
@@ -1135,7 +1135,7 @@ LevelEditorFrame::Evt_TYPEListAddOne( wxCommandEvent& evt )
 		return;
 
 	// Have to get the TYPE of the object
-	int _TYPE = (int) object_Type_list->GetClientData( ind );
+	int _TYPE = (size_t) object_Type_list->GetClientData( ind );
 	
 	OBJECT__Add_Default_of_Type( _TYPE );
 }
@@ -1161,8 +1161,8 @@ LevelEditorFrame::Evt_ObjectProps(wxCommandEvent& evt )
 {
 	if(aSet_Selected.size() != 1 )
 	{
-		wxMessageBox( "No property with multi or no selection"
-					  , "Impossible", wxOK | wxICON_INFORMATION, leFrame );
+		wxMessageBox( wxT("No property with multi or no selection")
+		, wxT("Impossible"), wxOK | wxICON_INFORMATION, leFrame );
 		return;
 	}
 	OBJECT__ListSelected__Props();
@@ -1177,8 +1177,8 @@ LevelEditorFrame::Evt_Object_SortAT(wxCommandEvent& evt )
 	ob_stage* stg = (ob_stage*) curr_stageFile->obj_container;
 	
 	// First make the user sure
-	int rep = wxMessageBox( "This will put all the objects with a \"AT\"\nproperty at the end of the file, sorted by the \"AT\" position\nAre you sure that's what you want ?"
-					, "Question !!", wxYES_NO | wxICON_EXCLAMATION, this );
+	int rep = wxMessageBox( wxT("This will put all the objects with a \"AT\"\nproperty at the end of the file, sorted by the \"AT\" position\nAre you sure that's what you want ?")
+	, wxT("Question !!"), wxYES_NO | wxICON_EXCLAMATION, this );
 	if( rep != wxYES )
 		return;
 	
@@ -1187,13 +1187,13 @@ LevelEditorFrame::Evt_Object_SortAT(wxCommandEvent& evt )
 	ob_object** arr_obj = stg->GetAllSubObjS( nb_subobj );
 	if( nb_subobj == 0 )
 	{
-		wxMessageBox( "No objects in the stage file !"
-					, "ProPlem !", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("No objects in the stage file !")
+		, wxT("ProPlem !"), wxOK | wxICON_EXCLAMATION, this );
 		return;
 	}
 	
 	// make a history group
-	theHistoryManager.GroupStart("Sort ATs objects" );
+	theHistoryManager.GroupStart(wxT("Sort ATs objects" ));
 	
 	list<ob_stage_at*> ats_obj;
 	for( size_t i = 0; i < nb_subobj; i++ )
@@ -1209,8 +1209,8 @@ LevelEditorFrame::Evt_Object_SortAT(wxCommandEvent& evt )
 		// close the history group
 		theHistoryManager.GroupEnd();
 		
-		wxMessageBox( "No \"AT\" objects in the stage file !"
-					, "ProPlem !", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("No \"AT\" objects in the stage file !")
+		, wxT("ProPlem !"), wxOK | wxICON_EXCLAMATION, this );
 		return;
 	}
 
@@ -1283,15 +1283,15 @@ bool LevelEditorFrame::STAGE__Save( obFileStage* _fStage )
 {
 	if( _fStage == NULL )
 	{
-		wxMessageBox( "STAGE__Save() : NULL argument !!"
-					  , "BUG !!", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("STAGE__Save() : NULL argument !!")
+		, wxT("BUG !!"), wxOK | wxICON_EXCLAMATION, this );
 		return false;
 	}
 
 	if( ! _fStage->Write() )
 	{
-		wxMessageBox( "Unable to write the file  :\n\n" + _fStage->filename.GetFullPath()
-					  , "Error !!", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("Unable to write the file  :\n\n") + _fStage->filename.GetFullPath()
+		, wxT("Error !!"), wxOK | wxICON_EXCLAMATION, this );
 		return false;
 	}
 	return true;
@@ -1304,22 +1304,22 @@ bool LevelEditorFrame::STAGE__Reload( bool b_quiet )
 {
 	if( curr_stage_declaration == NULL )
 	{
-		wxMessageBox( "STAGE__Reload() : NULL curr_stage_declaration !!"
-					  , "BUG !!", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("STAGE__Reload() : NULL curr_stage_declaration !!")
+		, wxT("BUG !!"), wxOK | wxICON_EXCLAMATION, this );
 		return false;
 	}
 
 	if( curr_stage_declaration->stage == NULL )
 	{
-		wxMessageBox( "STAGE__Reload() : NULL curr_stage !!"
-					  , "BUG !!", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("STAGE__Reload() : NULL curr_stage !!")
+		, wxT("BUG !!"), wxOK | wxICON_EXCLAMATION, this );
 		return false;
 	}
 
 	if( curr_stage_declaration->stage->changed && ! b_quiet )
 	{
-		int rep = wxMessageBox( "Discard modifications made to the stage ?"
-					  , "Question !!", wxYES_NO | wxICON_EXCLAMATION, this );
+		int rep = wxMessageBox( wxT("Discard modifications made to the stage ?")
+		, wxT("Question !!"), wxYES_NO | wxICON_EXCLAMATION, this );
 		if( rep != wxYES )
 			return false;
 	}
@@ -1346,8 +1346,8 @@ void LevelEditorFrame::SET__Edit_Settings()
 {
 	if( curr_set == NULL )
 	{
-		wxMessageBox( "No Curr SET defined !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("No Curr SET defined !!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 		return;
 	}
 	wxString old_set_name = curr_set->GetSetName();
@@ -1355,7 +1355,7 @@ void LevelEditorFrame::SET__Edit_Settings()
 	// No history for this operation
 	theHistoryManager.Set_State( false );
 	
-	myWnd_SETProperties t( leFrame, curr_set, "Current Set Properties" );
+	myWnd_SETProperties t( leFrame, curr_set, wxT("Current Set Properties") );
 	t.ShowModal();
 	
 	theHistoryManager.Set_State(true);
@@ -1371,8 +1371,8 @@ void LevelEditorFrame::SET__Edit_Settings()
 		wxMenuItem* _it = subMenu->FindItem( m_id );
 		if( _it == NULL )
 		{
-			wxMessageBox( "Can't find the menu item with the id returned, for the current set!!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, this );
+			wxMessageBox( wxT("Can't find the menu item with the id returned, for the current set!!")
+			, wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 		}
 		else
 		{
@@ -1388,24 +1388,24 @@ void LevelEditorFrame::SET__Edit_ExtendedSettings()
 {
 	if( curr_set == NULL )
 	{
-		wxMessageBox( "No curr set selected !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("No curr set selected !!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 		return;
 	}
 
 	// fire the modal dialog
-	GridPropFrame *temp = new GridPropFrame( this, curr_set, "Set Extended Properties" );
+	GridPropFrame *temp = new GridPropFrame( this, curr_set, wxT("Set Extended Properties" ));
 	wxArrayString filter;
-	filter.Add("select");
-	filter.Add("nosame");
-	filter.Add("noshare");
-	filter.Add("ifcomplete");
-	filter.Add("lives");
-	filter.Add("credits");
-	filter.Add("maxplayers");
-	filter.Add("typemp");
-	filter.Add("cansave");
-	filter.Add("scene");
+	filter.Add(wxT("select"));
+	filter.Add(wxT("nosame"));
+	filter.Add(wxT("noshare"));
+	filter.Add(wxT("ifcomplete"));
+	filter.Add(wxT("lives"));
+	filter.Add(wxT("credits"));
+	filter.Add(wxT("maxplayers"));
+	filter.Add(wxT("typemp"));
+	filter.Add(wxT("cansave"));
+	filter.Add(wxT("scene"));
 
 	temp->SetFilter_Properties( filter );
 
@@ -1431,7 +1431,7 @@ void LevelEditorFrame::SET__Edit_ExtendedSettings()
 void LevelEditorFrame::STAGE__Edit_Declare_Settings()
 {
 	myWnd_LEVELSSTAGEProperties t( leFrame, curr_stage_declaration
-					, true, "Stage Declaration Properties" );
+	, true, wxT("Stage Declaration Properties" ));
 					
 	// No history for this operation
 	theHistoryManager.Set_State( false );
@@ -1444,7 +1444,7 @@ void LevelEditorFrame::STAGE__Edit_Declare_Settings()
 	{
 		fileLevels->changed = true;
 
-		wxString new_stagefilename = curr_stage_declaration->GetSubObject_Token( "file" );
+		wxString new_stagefilename = curr_stage_declaration->GetSubObject_Token( wxT("file") );
 		wxString old_stagefilename;
 		if( curr_stageFile != NULL )
 			old_stagefilename = Convert_To_Ob_Path(curr_stageFile->filename.GetFullPath() );
@@ -1457,8 +1457,8 @@ void LevelEditorFrame::STAGE__Edit_Declare_Settings()
 		wxMenuItem* _it = subMenu->FindItem( m_id );
 		if( _it == NULL )
 		{
-			wxMessageBox( "Can't find the menu item with the current stage !!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, this );
+			wxMessageBox( wxT("Can't find the menu item with the current stage !!")
+			, wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 		}
 		else
 		{
@@ -1475,14 +1475,14 @@ void LevelEditorFrame::STAGE__Edit_Declare_Settings()
 			//Ask the user to be sure
 			if( curr_stageFile != NULL && curr_stageFile->changed )
 			{
-				int _reponse = wxMessageBox( "Modification have been made to\n"
-							+ old_stagefilename + "\n\n"
-							+ "Still want to change the stageFile in levels.txt ?"
-						, "ATTENTION !"
+				int _reponse = wxMessageBox( wxT("Modification have been made to\n")
+				+ old_stagefilename + wxT("\n\n"
+				"Still want to change the stageFile in levels.txt ?")
+				, wxT("ATTENTION !")
 						, wxICON_EXCLAMATION | wxYES_NO );
 				if( _reponse != wxYES )
 				{
-					curr_stage_declaration->SetProperty( "file", old_stagefilename );
+					curr_stage_declaration->SetProperty(wxT( "file"), old_stagefilename );
 					return;
 				}
 			}
@@ -1530,31 +1530,31 @@ void LevelEditorFrame::STAGE__Edit_ExtendedSettings()
 {
 	if( curr_stageFile == NULL || curr_stageFile->obj_container == NULL )
 	{
-		wxMessageBox( "No curr stage file avalaible !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("No curr stage file avalaible !!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 		return;
 	}
 
 	// fire the modal dialog
-	GridPropFrame *temp = new GridPropFrame( this, curr_stageFile->obj_container, "Stage Extended Properties" );
+	GridPropFrame *temp = new GridPropFrame( this, curr_stageFile->obj_container, wxT("Stage Extended Properties") );
 	wxArrayString filter;
-	filter.Add("setweap");
-	filter.Add("noslow");
-	filter.Add("maxtossspeed");
-	filter.Add("maxfallspeed");
-	filter.Add("gravity");
-	filter.Add("endhole");
-	filter.Add("blocked");
-	filter.Add("mirror");
-	filter.Add("rock");
-	filter.Add("notime");
-	filter.Add("noreset");
-	filter.Add("settime");
-	filter.Add("bossmusic");
-	filter.Add("music");
-	filter.Add("type");
-	filter.Add("order");
-	filter.Add("direction");
+	filter.Add(wxT("setweap"));
+	filter.Add(wxT("noslow"));
+	filter.Add(wxT("maxtossspeed"));
+	filter.Add(wxT("maxfallspeed"));
+	filter.Add(wxT("gravity"));
+	filter.Add(wxT("endhole"));
+	filter.Add(wxT("blocked"));
+	filter.Add(wxT("mirror"));
+	filter.Add(wxT("rock"));
+	filter.Add(wxT("notime"));
+	filter.Add(wxT("noreset"));
+	filter.Add(wxT("settime"));
+	filter.Add(wxT("bossmusic"));
+	filter.Add(wxT("music"));
+	filter.Add(wxT("type"));
+	filter.Add(wxT("order"));
+	filter.Add(wxT("direction"));
 
 	temp->SetFilter_Properties( filter );
 
@@ -1603,7 +1603,7 @@ wxString LevelEditorFrame::GetModifsDone()
 	wxString ModifsDone;
 	if( fileLevels->changed )
 	{
-		ModifsDone += "- levels.txt\n";
+		ModifsDone += wxT("- levels.txt\n");
 	}
 
 	size_t nb_sets;
@@ -1623,7 +1623,7 @@ wxString LevelEditorFrame::GetModifsDone()
 		for( size_t j = 0; j < nb_stage; j++ )
 		{
 			if( l_stages[j]->stage != NULL && l_stages[j]->stage->changed )
-				ModifsDone += "- " + l_stages[j]->stage->filename.GetFullName() + "\n";
+				ModifsDone += wxT("- ") + l_stages[j]->stage->filename.GetFullName() + wxT("\n");
 		}
 
 		delete[] l_stages;
@@ -1638,7 +1638,7 @@ wxString LevelEditorFrame::GetModifsDone()
 void 
 LevelEditorFrame::ReloadAll( bool b_quiet, bool b_save_states )
 {
-	wxBusyInfo( "Reloading...", this );
+	wxBusyInfo( wxT("Reloading..."), this );
 	//*************************
 	// Search for modifications done
 	wxString ModifsDone;
@@ -1647,12 +1647,12 @@ LevelEditorFrame::ReloadAll( bool b_quiet, bool b_save_states )
 
 	//*************************
 	// MAKE the user sure
-	if( ModifsDone != "" )
+	if( ModifsDone != wxString() )
 	{
-		int _reponse = wxMessageBox( "Modification made to this files will be loose :\n"
-					+ ModifsDone + "\n\n"
-					+ "Do you still want to reload everything ?"
-				, "ATTENTION !"
+		int _reponse = wxMessageBox( wxT("Modification made to this files will be loose :\n")
+		+ ModifsDone + wxT("\n\n"
+		"Do you still want to reload everything ?")
+		, wxT("ATTENTION !")
 				, wxICON_EXCLAMATION | wxYES_NO );
 
 		if( _reponse != wxYES )
@@ -1666,7 +1666,7 @@ LevelEditorFrame::ReloadAll( bool b_quiet, bool b_save_states )
 	
 	//*************************
 	// Preventive
-	Disable( "ALL" );
+	Disable(wxT( "ALL") );
 
 
 	//*************************
@@ -1727,28 +1727,28 @@ LevelEditorFrame::ReloadAll( bool b_quiet, bool b_save_states )
 	}
 
 	bool b_select_ok = false;
-	if( curr_SetName  != "" )
+	if( curr_SetName  != wxString() )
 		if( SET__Select(curr_SetName, true) )
 			b_select_ok = true;
 	if( ! b_select_ok )
 	{
-		Disable( "NO_SET_SELECTED" );
+		Disable( wxT("NO_SET_SELECTED") );
 		if( ! b_quiet && nb_set > 0 )
-			wxMessageBox( "No SET selected !!", "Information" );
+			wxMessageBox( wxT("No SET selected !!"), wxT("Information") );
 	}
 
 	else if( nb_stage > 0 )
 	{
 		b_select_ok = false;
-		if( curr_StageName  != "" )
+		if( curr_StageName  != wxString() )
 			if( STAGE__Select(curr_StageName) )
 				b_select_ok = true;
 
 		if( ! b_select_ok )
 		{
-			Disable( "NO_STAGE_SELECTED" );
+			Disable( wxT("NO_STAGE_SELECTED") );
 			if( ! b_quiet && nb_stage >  0 )
-				wxMessageBox( "No STAGE selected !!", "Information" );
+				wxMessageBox( wxT("No STAGE selected !!"), wxT("Information") );
 		}
 	}
 
@@ -1764,14 +1764,14 @@ void LevelEditorFrame::UpdateTitle()
 {
 	wxString newTitle = baseTitle;
 	if( curr_set == NULL )
-		newTitle += " - NO SET SELECTED";
+		newTitle += wxT(" - NO SET SELECTED");
 	else
 	{
-		newTitle += " - " + curr_set->GetSetName();
+		newTitle += wxT(" - ") + curr_set->GetSetName();
 		if( curr_stage_declaration == NULL )
-			newTitle += " : NO STAGE SELECTED";
+			newTitle += wxT(" : NO STAGE SELECTED");
 		else
-			newTitle += " : " + curr_stage_declaration->GetStageName();
+			newTitle += wxT(" : ") + curr_stage_declaration->GetStageName();
 	}
 	SetTitle( newTitle );
 }
@@ -1791,29 +1791,29 @@ void LevelEditorFrame::Disable( const wxString& what_to_disable )
 
 void LevelEditorFrame::Disable_MenuItems( const wxString& what_to_disable )
 {
-	bool b_enable_levels = ! ( 	what_to_disable == "ALL" ||  what_to_disable == "NO_LEVELS_TXT" );
+	bool b_enable_levels = ! ( 	what_to_disable == wxT("ALL") ||  what_to_disable == wxT("NO_LEVELS_TXT") );
 
 	menuBar->FindItem(ID_LEVELSTXT_SAVE)->Enable( b_enable_levels );
 
 	// SETs MENU
-	bool b_enable_sets = b_enable_levels && ! ( what_to_disable == "NO_SET" );
+	bool b_enable_sets = b_enable_levels && ! ( what_to_disable == wxT("NO_SET") );
 	EnableItemsMenu( menuSets, b_enable_sets );
 	menuBar->FindItem(ID_SET_NEW)->Enable( b_enable_levels );
-	menuBar->FindItem(ID_SET_EDIT_SETTINGS)->Enable( b_enable_sets && what_to_disable != "NO_SET_SELECTED" );
-	menuBar->FindItem(ID_SET_EDIT_EXTENDED_PROPS)->Enable( b_enable_sets && what_to_disable != "NO_SET_SELECTED" );
+	menuBar->FindItem(ID_SET_EDIT_SETTINGS)->Enable( b_enable_sets && what_to_disable != wxT("NO_SET_SELECTED") );
+	menuBar->FindItem(ID_SET_EDIT_EXTENDED_PROPS)->Enable( b_enable_sets && what_to_disable != wxT("NO_SET_SELECTED") );
 
 
 	// STAGEs options from levels.txt MENU
 	bool b_enable_LEVELSTXTstage = b_enable_sets &&
-		! ( what_to_disable == "NO_STAGE" || what_to_disable == "NO_SET_SELECTED" );
+	! ( what_to_disable == wxT("NO_STAGE") || what_to_disable == wxT("NO_SET_SELECTED") );
 	EnableItemsMenu( menuStage, b_enable_LEVELSTXTstage );
-	menuBar->FindItem(ID_STAGE_NEW)->Enable( b_enable_sets && what_to_disable != "NO_SET_SELECTED" );
-	menuBar->FindItem(ID_STAGE_EDIT_DECLARE_SETTINGS)->Enable( b_enable_LEVELSTXTstage && what_to_disable != "NO_STAGE_SELECTED" );
-	menuBar->FindItem(ID_STAGE_RELOAD)->Enable( b_enable_LEVELSTXTstage && what_to_disable != "NO_STAGE_SELECTED" );
+	menuBar->FindItem(ID_STAGE_NEW)->Enable( b_enable_sets && what_to_disable != wxT("NO_SET_SELECTED" ));
+	menuBar->FindItem(ID_STAGE_EDIT_DECLARE_SETTINGS)->Enable( b_enable_LEVELSTXTstage && what_to_disable != wxT("NO_STAGE_SELECTED" ));
+	menuBar->FindItem(ID_STAGE_RELOAD)->Enable( b_enable_LEVELSTXTstage && what_to_disable != wxT("NO_STAGE_SELECTED" ));
 
 
 	bool b_enable_stage = b_enable_LEVELSTXTstage &&
-		! ( what_to_disable == "NO_FILESTAGE" || what_to_disable == "NO_STAGE_SELECTED" );
+	! ( what_to_disable == wxT("NO_FILESTAGE") || what_to_disable == wxT("NO_STAGE_SELECTED") );
 	menuBar->FindItem(ID_STAGE_EDIT_SETTINGS)->Enable( b_enable_stage );
 	menuBar->FindItem(ID_STAGE_EDIT_EXTENDED_PROPS)->Enable( b_enable_stage );
 	menuBar->FindItem(ID_STAGE_LOADED_ENTITIES)->Enable( b_enable_stage );
@@ -1821,9 +1821,9 @@ void LevelEditorFrame::Disable_MenuItems( const wxString& what_to_disable )
 
 	// SCENEs MENU
 	bool b_enable_scene = b_enable_stage &&
-			! ( what_to_disable == "NO_SCENE"
-				|| what_to_disable == "NO_SCENE_NO_OBJECT"
-				|| what_to_disable == "NO_STAGE_SELECTED"
+	! ( what_to_disable == wxT("NO_SCENE")
+	|| what_to_disable == wxT("NO_SCENE_NO_OBJECT")
+	|| what_to_disable == wxT("NO_STAGE_SELECTED")
 				);
 //	b_enable_scene = true; //FIXME
 	EnableItemsMenu( menuScene, b_enable_scene );
@@ -1831,9 +1831,9 @@ void LevelEditorFrame::Disable_MenuItems( const wxString& what_to_disable )
 
 	// OBJECTs MENU
 	bool b_enable_object = b_enable_stage &&
-			! (    what_to_disable == "NO_OBJECT"
-				|| what_to_disable == "NO_SCENE_NO_OBJECT"
-				|| what_to_disable == "NO_SET_SELECTED"
+	! (    what_to_disable == wxT("NO_OBJECT")
+	|| what_to_disable == wxT("NO_SCENE_NO_OBJECT")
+	|| what_to_disable == wxT("NO_SET_SELECTED")
 			  );
 	EnableItemsMenu( menuObjects, b_enable_object );
 
@@ -1885,9 +1885,9 @@ void LevelEditorFrame::SET__Load_List( bool b_quiet )
 
 	if( fileLevels == NULL )
 	{
-		Disable("NO_LEVELS_TXT");
+		Disable(wxT("NO_LEVELS_TXT"));
 		if( ! b_quiet )
-			wxMessageBox( "The file levels.txt is not loaded !!", "Problem !" );
+			wxMessageBox(wxT( "The file levels.txt is not loaded !!"), wxT("Problem !") );
 	}
 
 	else
@@ -1896,9 +1896,9 @@ void LevelEditorFrame::SET__Load_List( bool b_quiet )
 		levels_sets = ((ob_levels*) fileLevels->obj_container)->GetSets(nb_set);
 		if( levels_sets == NULL )
 		{
-			Disable("NO_SET");
+			Disable(wxT("NO_SET"));
 			if( ! b_quiet )
-				wxMessageBox( "The file levels.txt contain no <Set> !!", "Problem !" );
+				wxMessageBox( wxT("The file levels.txt contain no <Set> !!"), wxT("Problem !") );
 		}
 		else
 		{
@@ -1923,9 +1923,9 @@ void LevelEditorFrame::STAGE__Load_List( bool b_quiet )
 
 	if( curr_set == NULL )
 	{
-		Disable("NO_SET_SELECTED");
+		Disable(wxT("NO_SET_SELECTED"));
 		if( ! b_quiet )
-			wxMessageBox( "Before editing you must select a set and a stage", "Information" );
+			wxMessageBox( wxT("Before editing you must select a set and a stage"), wxT("Information") );
 	}
 
 	else
@@ -1935,9 +1935,9 @@ void LevelEditorFrame::STAGE__Load_List( bool b_quiet )
 
 		if( stage_list == NULL )
 		{
-			Disable("NO_STAGE");
+			Disable(wxT("NO_STAGE"));
 			if( ! b_quiet )
-				wxMessageBox( "The SET contain no stage !!", "ProPlem !" );
+				wxMessageBox(wxT( "The SET contain no stage !!"), wxT("ProPlem !") );
 		}
 		else
 		{
@@ -1979,7 +1979,7 @@ bool LevelEditorFrame::SET__Select( const wxString& _name, bool b_no_choose_stag
 		for( int i= 0; i < (int) nb_stage;i++)
 			_stages.Add(stage_list[i]->GetStageName() );
 
-		wxSingleChoiceDialog wChoice( this, "Which Stage you wanna edit ?", "Select a Stage", _stages );
+		wxSingleChoiceDialog wChoice( this, wxT("Which Stage you wanna edit ?"), wxT("Select a Stage"), _stages );
 
 		// User changed his mind
 		if( wChoice.ShowModal() != wxID_OK )
@@ -1998,7 +1998,7 @@ bool LevelEditorFrame::SET__Select( const wxString& _name, bool b_no_choose_stag
 
 	else
 	{
-		Disable( "NO_STAGE" );
+		Disable( wxT("NO_STAGE" ));
 	}
 
 	SET__Save_LastSession( curr_set->GetSetName() );
@@ -2060,10 +2060,10 @@ LevelEditorFrame::STAGE__Select( const wxString& _name, bool b_no_saves )
 
 	if( ! curr_stage_declaration->LoadStage(true) )
 	{
-		wxMessageBox( "Unable to load the file for the stage\n\n" +
+		wxMessageBox( wxT("Unable to load the file for the stage\n\n") +
 						curr_stage_declaration->GetFileName()
-					  , "Problem", wxOK | wxICON_EXCLAMATION, this );
-		Disable( "NO_FILESTAGE" );
+						, wxT("Problem"), wxOK | wxICON_EXCLAMATION, this );
+						Disable( wxT("NO_FILESTAGE") );
 		return true;
 	}
 
@@ -2082,7 +2082,7 @@ LevelEditorFrame::STAGE__Select( const wxString& _name, bool b_no_saves )
 	stageView->Refresh();
 	stageView->LoadState();
 
-	Disable( "NONE" );
+	Disable( wxT("NONE") );
 
 	// Re-enable history manager
 	theHistoryManager.Set_State( true );
@@ -2098,15 +2098,15 @@ void LevelEditorFrame::Menu_ResetListItem( int id_submenu, int id_startlist )
 	wxMenuItem* mit = menuBar->FindItem(id_submenu);
 	if( mit == NULL )
 	{
-		wxMessageBox( "Menu_ResetListItem() : Unable to find the submenu item !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+		wxMessageBox( wxT("Menu_ResetListItem() : Unable to find the submenu item !!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 		return;
 	}
 	wxMenu* subMenu = mit->GetSubMenu();
 	if( subMenu == NULL )
 	{
-		wxMessageBox( "Menu_ResetListItem() : the submenu item doesn't have a submenu !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+		wxMessageBox( wxT("Menu_ResetListItem() : the submenu item doesn't have a submenu !!")
+		, wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 		return;
 	}
 
@@ -2127,8 +2127,8 @@ void LevelEditorFrame::Menu_ResetListItem( int id_submenu, int id_startlist )
 		wxMenuItem* t_it = subMenu->FindItemByPosition( i );
 		if( t_it == NULL )
 		{
-			wxMessageBox( "Menu_AddListItem() : FindItemByPosition() misunderstanded  !!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+			wxMessageBox( wxT("Menu_AddListItem() : FindItemByPosition() misunderstanded  !!")
+						  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 			return;
 		}
 
@@ -2146,15 +2146,15 @@ bool LevelEditorFrame::Menu_AddListItem( int id_submenu, int id_startlist, const
 	wxMenuItem* mit = menuBar->FindItem(id_submenu);
 	if( mit == NULL )
 	{
-		wxMessageBox( "Menu_AddListItem() : Unable to find the submenu item !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+		wxMessageBox( wxT("Menu_AddListItem() : Unable to find the submenu item !!")
+					  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 		return false;
 	}
 	wxMenu* subMenu = mit->GetSubMenu();
 	if( subMenu == NULL )
 	{
-		wxMessageBox( "Menu_AddListItem() : the submenu item doesn't have a submenu !!"
-					  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+		wxMessageBox( wxT("Menu_AddListItem() : the submenu item doesn't have a submenu !!")
+					  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 		return false;
 	}
 
@@ -2167,8 +2167,8 @@ bool LevelEditorFrame::Menu_AddListItem( int id_submenu, int id_startlist, const
 	{
 		if( ind_insert > 0 )
 		{
-			wxMessageBox( "Menu_AddListItem() : Try to insert item in an empty list !!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+			wxMessageBox( wxT("Menu_AddListItem() : Try to insert item in an empty list !!")
+						  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 			return false;
 		}
 		subMenu->Append( id_startlist, name );
@@ -2184,8 +2184,8 @@ bool LevelEditorFrame::Menu_AddListItem( int id_submenu, int id_startlist, const
 		wxMenuItem* t_it = subMenu->FindItemByPosition( i );
 		if( t_it == NULL )
 		{
-			wxMessageBox( "Menu_AddListItem() : FindItemByPosition() misunderstanded  !!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+			wxMessageBox( wxT("Menu_AddListItem() : FindItemByPosition() misunderstanded  !!")
+						  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 			return false;
 		}
 
@@ -2243,7 +2243,7 @@ void LevelEditorFrame::BG_AddToMenu( const wxString& _name, int ind, bool b_quie
 		if( _it == NULL )
 		{
 			wxMessageBox( "Can't find MenuItem Background Order  !!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+						  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 			return;
 		}
 		else
@@ -2260,7 +2260,7 @@ void LevelEditorFrame::BG_Reload()
 
 	size_t nb_bg;
 	ob_BG_Layer** bgs = (ob_BG_Layer**) 
-			curr_stageFile->obj_container->GetSubObjectS( "bglayer", nb_bg );
+	curr_stageFile->obj_container->GetSubObjectS( wxT("bglayer"), nb_bg );
 
 /*
 	for( size_t i = 0; i < nb_bg; i++ )
@@ -2283,7 +2283,7 @@ LevelEditorFrame::BG_Configure( ob_BG_Layer* _obj, bool b_background )
 	myWnd_BGProperties t( leFrame, _obj, b_background );
 	
 	// make a history group
-	theHistoryManager.GroupStart("Configure Background" );
+	theHistoryManager.GroupStart(wxT("Configure Background" ));
 
 	t.ShowModal();
 	
@@ -2320,10 +2320,10 @@ bool
 LevelEditorFrame::BG_Order()
 {
 	// Check if there is some background
-	if( curr_stageFile->GetProperty( "Background" ) == NULL )
+	if( curr_stageFile->GetProperty( wxT("Background") ) == NULL )
 	{
-		wxMessageBox( "First configure a Background for this stage !"
-				  , "Impossible"
+		wxMessageBox(wxT("First configure a Background for this stage !")
+		, wxT("Impossible")
 				  , wxICON_HAND |wxOK, this );
 		return false;
 	}
@@ -2335,7 +2335,7 @@ LevelEditorFrame::BG_Order()
 			);
 			
 	// make a history group
-	theHistoryManager.GroupStart("Edit Background" );
+	theHistoryManager.GroupStart(wxT("Edit Background" ));
 
 	t.ShowModal();
 	
@@ -2419,8 +2419,8 @@ void LevelEditorFrame::Panel_AddToMenu( const wxString& _name, int ind, bool b_q
 		wxMenuItem *_it = menuBar->FindItem(ID_SCENE_PANELS_EDIT_ORDER);
 		if( _it == NULL )
 		{
-			wxMessageBox( "Can't find MenuItem Panels Order  !!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+			wxMessageBox( wxT("Can't find MenuItem Panels Order  !!")
+						  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 			return;
 		}
 		else
@@ -2453,15 +2453,15 @@ bool LevelEditorFrame::Panel_Add()
 {
 	if( curr_stageFile == NULL )
 	{
-		wxMessageBox( "NO current stage file selected !!", "BUG BUG !" );
+		wxMessageBox( wxT("NO current stage file selected !!"), wxT("BUG BUG !") );
 		return false;
 	}
 
 	myWnd_PanelProperties t( leFrame, NULL );
-	t.SetTitle( "New Panel" );
+	t.SetTitle( wxT("New Panel" ));
 	
 	// make a history group
-	theHistoryManager.GroupStart("Add new Panel" );
+	theHistoryManager.GroupStart(wxT("Add new Panel" ));
 	
 	t.ShowModal();
 
@@ -2485,11 +2485,11 @@ LevelEditorFrame::Panel_Order()
 {
 	if( curr_stageFile == NULL )
 	{
-		wxMessageBox( "NO current stage file selected !!", "BUG BUG !" );
+		wxMessageBox( wxT("NO current stage file selected !!"), wxT("BUG BUG !") );
 		return false;
 	}
 
-	ob_object* obj_order = curr_stageFile->GetProperty( "order" );
+ob_object* obj_order = curr_stageFile->GetProperty( wxT("order") );
 
 	// If no order currently exist
 	if( obj_order == NULL )
@@ -2502,8 +2502,8 @@ LevelEditorFrame::Panel_Order()
 
 		if( nb_pans == 0 )
 		{
-			wxMessageBox( "No panel exist in the current Stage File\nCreate some before editing the order",
-							  "Problem", wxOK | wxICON_EXCLAMATION, leFrame );
+			wxMessageBox( wxT("No panel exist in the current Stage File\nCreate some before editing the order"),
+					  wxT("Problem"), wxOK | wxICON_EXCLAMATION, leFrame );
 			return false;
 		}
 
@@ -2522,7 +2522,7 @@ LevelEditorFrame::Panel_Order()
 	myWnd_EditPanelOrder t( leFrame, (ob_stage*) curr_stageFile->obj_container );
 	
 	// make a history group
-	theHistoryManager.GroupStart("Edit Panels order" );
+	theHistoryManager.GroupStart(wxT("Edit Panels order") );
 	
 	t.ShowModal();
 
@@ -2558,8 +2558,8 @@ LevelEditorFrame::FrontPanel_AddToMenu( const wxString& _name, int ind, bool b_q
 		wxMenuItem *_it = menuBar->FindItem(ID_SCENE_FRONTPANEL_ORDER);
 		if( _it == NULL )
 		{
-			wxMessageBox( "Can't find MenuItem FrontPanels Edit !!"
-						  , "BUG", wxOK | wxICON_EXCLAMATION, leFrame );
+			wxMessageBox( wxT("Can't find MenuItem FrontPanels Edit !!")
+						  , wxT("BUG"), wxOK | wxICON_EXCLAMATION, leFrame );
 			return;
 		}
 		else
@@ -2590,7 +2590,7 @@ LevelEditorFrame::FrontPanel_Edit_a_panel( int ind_panel, bool b_quiet )
 {
 	if( curr_stageFile == NULL )
 	{
-		wxMessageBox( "NO current stage file selected !!", "BUG BUG !" );
+		wxMessageBox( wxT("NO current stage file selected !!"), wxT("BUG BUG !") );
 		return;
 	}
 
@@ -2600,13 +2600,13 @@ LevelEditorFrame::FrontPanel_Edit_a_panel( int ind_panel, bool b_quiet )
 
 	if( nb_panels == 0 )
 	{
-		wxMessageBox( "No FrontPanels avalaible in current stage file selected !!", "BUG BUG !" );
+		wxMessageBox( wxT("No FrontPanels avalaible in current stage file selected !!"), wxT("BUG BUG !") );
 		return;
 	}
 
 	if( (int) nb_panels <= ind_panel )
 	{
-		wxMessageBox( "Ind panel out of range !!", "BUG BUG !" );
+		wxMessageBox( wxT("Ind panel out of range !!"), wxT("BUG BUG !") );
 		delete[] pans;
 		return;
 	}
@@ -2617,7 +2617,7 @@ LevelEditorFrame::FrontPanel_Edit_a_panel( int ind_panel, bool b_quiet )
 	myWnd_FrontPanelProperties t( leFrame, thePan );
 
 	// make a history group
-	theHistoryManager.GroupStart("Edit a Panel" );
+	theHistoryManager.GroupStart(wxT("Edit a Panel" ));
 	
 	t.ShowModal();
 
@@ -2638,7 +2638,7 @@ LevelEditorFrame::FrontPanel_Edit_All()
 {
 	if( curr_stageFile == NULL )
 	{
-		wxMessageBox( "NO current stage file selected !!", "BUG BUG !" );
+		wxMessageBox( wxT("NO current stage file selected !!"), wxT("BUG BUG !") );
 		return;
 	}
 
@@ -2649,7 +2649,7 @@ LevelEditorFrame::FrontPanel_Edit_All()
 			, curr_set );
 
 	// make a history group
-	theHistoryManager.GroupStart("Edit the Frontpanels" );
+	theHistoryManager.GroupStart(wxT("Edit the Frontpanels" ));
 	
 	t.ShowModal();
 	
@@ -2670,14 +2670,14 @@ LevelEditorFrame::SET__Select_LastSession()
 	if( nb_set <= 0 )
 		return;
 
-	wxString last_set = ConfigEdit_Read( "last_GameSet_selected", "" );
+	wxString last_set = ConfigEdit_Read( wxT("last_GameSet_selected"), wxString() );
 	bool b_select_ok = false;
-	if( last_set != "" )
+	if( last_set != wxString() )
 		if( SET__Select( last_set, true ) )
 			b_select_ok = true;
 
 	if( ! b_select_ok )
-		Disable( "NO_SET_SELECTED" );
+		Disable( wxT("NO_SET_SELECTED" ));
 
 }
 
@@ -2686,7 +2686,7 @@ LevelEditorFrame::SET__Select_LastSession()
 
 void LevelEditorFrame::SET__Save_LastSession( const wxString& _setName )
 {
-	ConfigEdit_Write( "last_GameSet_selected", _setName );
+	ConfigEdit_Write( wxT("last_GameSet_selected"), _setName );
 }
 
 //****************************************************
@@ -2696,14 +2696,14 @@ void LevelEditorFrame::STAGE__Select_LastSession()
 	if( nb_stage <= 0 )
 		return;
 
-	wxString _last = ConfigEdit_Read( "last_Stage_selected", "" );
+	wxString _last = ConfigEdit_Read( wxT("last_Stage_selected"), wxString() );
 	bool b_select_ok = false;
-	if( _last != "" )
+	if( _last != wxString() )
 		if( STAGE__Select( _last, true ))
 			b_select_ok = true;
 
 	if( ! b_select_ok )
-		Disable( "NO_STAGE_SELECTED" );
+		Disable( wxT("NO_STAGE_SELECTED") );
 }
 
 
@@ -2711,14 +2711,14 @@ void LevelEditorFrame::STAGE__Select_LastSession()
 
 void LevelEditorFrame::STAGE__Save_LastSession( const wxString& _stageName )
 {
-	ConfigEdit_Write( "last_Stage_selected", _stageName );
+	ConfigEdit_Write( wxT("last_Stage_selected"), _stageName );
 }
 
 //****************************************************
 
 void LevelEditorFrame::SET__New()
 {
-	myWnd_SETProperties t( leFrame, NULL, "New Set Properties" );
+	myWnd_SETProperties t( leFrame, NULL, wxT("New Set Properties") );
 	
 	// No history for these ones
 	theHistoryManager.Set_State( false );
@@ -2734,8 +2734,8 @@ void LevelEditorFrame::SET__New()
 				((ob_StagesSet*)t.theObj)->GetSetName().Upper() 
 				)
 			{
-				wxMessageBox( "A Set with the same name already exists !"
-					,"Impossible"
+				wxMessageBox( wxT("A Set with the same name already exists !")
+				,wxT("Impossible")
 					, wxICON_EXCLAMATION | wxOK, leFrame );
 				t.theObj->Rm();
 				t.theObj = NULL;
@@ -2779,7 +2779,7 @@ LevelEditorFrame::Panel_Edit( int ind_menu, bool b_quiet)
 {
 	if( curr_stageFile == NULL )
 	{
-		wxMessageBox( "NO current stage file selected !!", "BUG BUG !" );
+		wxMessageBox(wxT("NO current stage file selected !!"), wxT("BUG BUG !") );
 		return;
 	}
 
@@ -2789,13 +2789,13 @@ LevelEditorFrame::Panel_Edit( int ind_menu, bool b_quiet)
 
 	if( nb_panels == 0 )
 	{
-		wxMessageBox( "No panels avalaible in current stage file selected !!", "BUG BUG !" );
+		wxMessageBox( wxT("No panels avalaible in current stage file selected !!"), wxT("BUG BUG !") );
 		return;
 	}
 
 	if( (int) nb_panels <= ind_menu )
 	{
-		wxMessageBox( "Ind panel out of range !!", "BUG BUG !" );
+		wxMessageBox( wxT("Ind panel out of range !!"), wxT("BUG BUG !") );
 		delete[] pans;
 		return;
 	}
@@ -2806,7 +2806,7 @@ LevelEditorFrame::Panel_Edit( int ind_menu, bool b_quiet)
 	myWnd_PanelProperties t( leFrame, thePan );
 
 	// make a history group
-	theHistoryManager.GroupStart("Edit a panel" );
+	theHistoryManager.GroupStart(wxT("Edit a panel") );
 	
 	t.ShowModal();
 
@@ -2870,12 +2870,12 @@ LevelEditorFrame::Menu_DoRedos__Update_Labels(list<History_Group*>::iterator it_
 	{
 		if(theHistoryManager.it_now == it_end || it_group == it_end )
 		{
-			t_redo->SetItemLabel( "Redo\tCTRL-SHIFT-Z");
+			t_redo->SetItemLabel( wxT("Redo\tCTRL-SHIFT-Z"));
 			t_redo->Enable( false );
 		}
 		else
 		{
-			t_redo->SetItemLabel( "Redo - " + (*it_group)->GetName() + "\tCTRL-SHIFT-Z");
+			t_redo->SetItemLabel( wxT("Redo - ") + (*it_group)->GetName() + wxT("\tCTRL-SHIFT-Z"));
 			t_redo->Enable( true );
 		}
 	}
@@ -2886,14 +2886,14 @@ LevelEditorFrame::Menu_DoRedos__Update_Labels(list<History_Group*>::iterator it_
 		if( theHistoryManager.IsFirstGroup( it_group )
 			|| theHistoryManager.IsHistory_Empty() )
 		{
-			t_undo->SetItemLabel( "Undo\tCTRL-Z");
+			t_undo->SetItemLabel( wxT("Undo\tCTRL-Z"));
 			t_undo->Enable( false );
 		}
 		else
 		{
 			list<History_Group*>::iterator it_t(it_group);
 			it_t--;
-			t_undo->SetItemLabel( "Undo - " + (*it_t)->GetName() + "\tCTRL-Z");
+			t_undo->SetItemLabel( wxT("Undo - ") + (*it_t)->GetName() + wxT("\tCTRL-Z"));
 			t_undo->Enable( true );
 		}
 	}
@@ -3028,7 +3028,7 @@ level__onUndo(
 		{
 			// So previous controls state are in this elt
 			if(theHistoryManager.initial_datas == NULL )
-				wxMessageBox( "BUG !!\nlevel__onUndo()\nFirst elt has no state setted !!!\n" );
+				wxMessageBox( wxT("BUG !!\nlevel__onUndo()\nFirst elt has no state setted !!!\n") );
 			else
 				leFrame->Restore_ControlsState( theHistoryManager.initial_datas );
 		}

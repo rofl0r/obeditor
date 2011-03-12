@@ -118,7 +118,7 @@ wListAnims::wListAnims(wxWindow* parent, wxWindowID id, const wxPoint& pos, cons
 		const wxString choices[], long style, const wxValidator& validator, const wxString& name)
 :myListBox(parent, id, pos, size, n, choices, style, validator, name)
 {
-	last_session_anim = "";
+	last_session_anim = wxString();
 	loading = false;
 	wxSize _t(200, 400 );
 	SetMinSize( _t );
@@ -140,7 +140,7 @@ void wListAnims::AssociateToListFrame( wxWindow* _wList_frames)
 void wListAnims::ReloadLastSessionAnim()
 {
 	// Load the last anim for this entity
-	last_session_anim =  ConfigEdit_Read( "last_anim_edited" );
+	last_session_anim =  ConfigEdit_Read( wxT("last_anim_edited") );
 }
 
 //*************************************************************************
@@ -175,10 +175,10 @@ void wListAnims::Refresh_List( bool b_keep_current_selection )
 	wxString prev_selected = GetStringSelection();
 
 	// First valid refresh
-	if( last_session_anim != "" )
+	if( last_session_anim != wxString() )
 	{
 		prev_selected = last_session_anim;
-		last_session_anim = "";
+		last_session_anim = wxString();
 	}
 	else
 		prev_selected = last_anim_selected;
@@ -224,7 +224,7 @@ void wListAnims::Refresh_List( bool b_keep_current_selection )
 	{
 		if( b_keep_current_selection )
 		{
-			if( prev_selected != "" )
+			if( prev_selected != wxString() )
 			{
 				for( int i = 0; i < arr_anims_count; i ++)
 					if( arr_anims[i]->GetToken(0) == prev_selected )
@@ -253,7 +253,7 @@ void wListAnims::Refresh_List( bool b_keep_current_selection )
 		if( arr_anims_count == 0 )
 		{
 			curr_anim = NULL;
-			last_anim_selected = "";
+			last_anim_selected = wxString();
 		}
 		else
 		{
@@ -291,7 +291,7 @@ wListAnims::ProcessSelectionChange()
 
 	int ind = GetSelection();
 	curr_anim = NULL;
-	last_anim_selected = "";
+	last_anim_selected = wxString();
 	if( map_ind_numAnim[ind] >= 0 && map_ind_numAnim[ind] < (int) GetCount() )
 	{
 		curr_anim = arr_anims[map_ind_numAnim[ind]];
@@ -301,7 +301,7 @@ wListAnims::ProcessSelectionChange()
 	if( entityFrame->May_Register_ControlsState() == true )
 	{
 // 		entityFrame->hist_anim_selected = GetStringSelection();
-		entityFrame->Register_ControlsState_inHistory("ProcessSelectionChange");
+	entityFrame->Register_ControlsState_inHistory(wxT("ProcessSelectionChange"));
 	}
 }
 
@@ -376,10 +376,10 @@ wListAnims_Editable::wListAnims_Editable(wxWindow* parent, wxWindowID id, const 
 :wListAnims(parent, id, pos, size, n, choices, style, validator, name)
 {
 	popMenu = new 	wxMenu();
-	popMenu->Append( CMD_NEW, "New Anim" );
-	popMenu->Append( CMD_DEL, "Delete Anim" );
-	popMenu->Append( CMD_COPY, "Copy Anim" );
-	popMenu->Append( CMD_RENAME, "Rename Anim" );
+	popMenu->Append( CMD_NEW, wxT("New Anim" ));
+	popMenu->Append( CMD_DEL, wxT("Delete Anim") );
+	popMenu->Append( CMD_COPY, wxT("Copy Anim" ));
+	popMenu->Append( CMD_RENAME, wxT("Rename Anim") );
 }
 
 
@@ -399,15 +399,15 @@ void wListAnims_Editable::EvtRenameAnim(wxCommandEvent& event )
 		return;
 
 	// Get the elt under the mouse
-	wxTextEntryDialog *_dialog = new wxTextEntryDialog(this, "Rename Anim", "New name for the anim ", "UNNAMED",
+	wxTextEntryDialog *_dialog = new wxTextEntryDialog(this, wxT("Rename Anim"), wxT("New name for the anim "), wxT("UNNAMED"),
 				wxOK | wxCANCEL | wxCENTRE );
 	int response = _dialog->ShowModal();
 
 	if( response  == wxID_OK )
 	{
 		wxString animname = _dialog->GetValue().Trim().Trim(false);
-		if( animname == "")
-			wxMessageBox( "Anim name is empty", "Error", wxOK | wxICON_INFORMATION, this );
+		if( animname == wxString())
+			wxMessageBox( wxT("Anim name is empty"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		else
 		{
 			arr_anims[indanim]->SetToken(0 , animname );
@@ -426,24 +426,24 @@ void wListAnims_Editable::EvtNewAnim( wxCommandEvent& event )
 {
 //	int indanim = GetSelection();
 
-	wxTextEntryDialog _dialog(this, "New anim", "Name for the new anim ", "UNNAMED",
+	wxTextEntryDialog _dialog(this, wxT("New anim"), wxT("Name for the new anim "), wxT("UNNAMED"),
 				wxOK | wxCANCEL | wxCENTRE );
 	int response = _dialog.ShowModal();
 
 	if( response  == wxID_OK )
 	{
 		wxString animname = _dialog.GetValue().Trim().Trim(false);
-		if( animname == "")
-			wxMessageBox( "Anim name is empty", "Error", wxOK | wxICON_INFORMATION, this );
+		if( animname == wxString())
+			wxMessageBox( wxT("Anim name is empty"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		else
 		{
 			theHistoryManager.Set_State( false );
 			ob_anim* newanim = new ob_anim();
-			newanim->SetName("anim");
+			newanim->SetName(wxT("anim"));
 			newanim->SetToken(0 ,animname );
 			theHistoryManager.Set_State( true );
 			
-			theHistoryManager.GroupStart( "New Anim " + animname );
+			theHistoryManager.GroupStart( wxT("New Anim ") + animname );
 			entity->obj_container->Add_SubObj( newanim );
 			theHistoryManager.GroupEnd();
 
@@ -475,15 +475,15 @@ void wListAnims_Editable::EvtCopyAnim(wxCommandEvent& event )
 		return;
 
 	// Get the elt under the mouse
-	wxTextEntryDialog *_dialog = new wxTextEntryDialog(this, "Anim copy", "Name for the copied anim ", "UNNAMED",
+	wxTextEntryDialog *_dialog = new wxTextEntryDialog(this, wxT("Anim copy"), wxT("Name for the copied anim "), wxT("UNNAMED"),
 				wxOK | wxCANCEL | wxCENTRE );
 	int response = _dialog->ShowModal();
 
 	if( response  == wxID_OK )
 	{
 		wxString animname = _dialog->GetValue().Trim().Trim(false);
-		if( animname == "")
-			wxMessageBox( "Anim name is empty", "Error", wxOK | wxICON_INFORMATION, this );
+		if( animname == wxString())
+			wxMessageBox( wxT("Anim name is empty"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		else
 		{
 			theHistoryManager.Set_State( false );
@@ -491,7 +491,7 @@ void wListAnims_Editable::EvtCopyAnim(wxCommandEvent& event )
 			newanim->SetToken(0 ,animname );
 			theHistoryManager.Set_State( true );
 			
-			theHistoryManager.GroupStart( "Copy Anim " + arr_anims[indanim]->GetToken(0) );
+			theHistoryManager.GroupStart( wxT("Copy Anim ") + arr_anims[indanim]->GetToken(0) );
 			entity->obj_container->Add_SubObj( newanim );
 			theHistoryManager.GroupEnd();
 
@@ -521,13 +521,13 @@ void wListAnims_Editable::EvtDeleteAnim(wxCommandEvent& event )
 		return;
 
 	// Make the guy to be sure
-	int res = wxMessageBox( "Are really sure that you want to delete the anim <" +
-					arr_anims[indanim]->GetToken(0).Upper() + "> ?",
-					"Hey !", wxYES_NO | wxICON_INFORMATION, this );
+	int res = wxMessageBox( wxT("Are really sure that you want to delete the anim <") +
+	arr_anims[indanim]->GetToken(0).Upper() + wxT("> ?"),
+				wxT("Hey !"), wxYES_NO | wxICON_INFORMATION, this );
 
 	if( res == wxYES )
 	{
-		theHistoryManager.GroupStart( "Del Anim " + arr_anims[indanim]->GetToken(0) );
+		theHistoryManager.GroupStart( wxT("Del Anim ") + arr_anims[indanim]->GetToken(0) );
 		arr_anims[indanim]->Rm();
 		theHistoryManager.GroupEnd();
 		

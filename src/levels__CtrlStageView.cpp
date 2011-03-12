@@ -44,7 +44,7 @@ StageView::StageView(Panel_StageView* _parent)
 	f_mouse = 0;
 	pset_obj_in_sel_rect = new set<ob_stage_object*>;
 	
-	SetToolTip( "" );
+	SetToolTip( wxString() );
 	theTip = GetToolTip();
 	theTip->SetDelay( 200 );
 	theTip->Enable( false );
@@ -398,9 +398,9 @@ StageView::Init_PanelData( size_t curr_ind )
 	if( srcImg == NULL )
 	{
 		wxImage* panel_noImg = new wxImage( *noImg );
-		panel_noImg->Rescale( curr_mod->video_res.x
-					  , curr_mod->video_res.y );
-		obImgs_Mgr->AbsorbeImage( "panel_noImg", NULL, panel_noImg);
+		panel_noImg->Rescale( curr_mod->video_res.x, 
+			curr_mod->video_res.y );
+			obImgs_Mgr->AbsorbeImage( wxT("panel_noImg"), NULL, panel_noImg);
 		srcImg = panel_noImg;
 	}
 
@@ -437,20 +437,20 @@ StageView::Init_PanelImage( size_t curr_ind )
 			, t->ob_panel->GetFileName().GetFullPath()
 			);
 
-	bool b_panel_noImg_exists = obImgs_Mgr->IsImageExists( "panel_noImg" );
+	bool b_panel_noImg_exists = obImgs_Mgr->IsImageExists( wxT("panel_noImg") );
 	
 	if( src_img != NULL && b_panel_noImg_exists == false )
 	{
 		wxImage* panel_noImg = new wxImage( *noImg );
 		panel_noImg->Rescale( src_img->GetWidth()
 					  , src_img->GetHeight() );
-		obImgs_Mgr->AbsorbeImage( "panel_noImg", NULL, panel_noImg);
+					  obImgs_Mgr->AbsorbeImage( wxT("panel_noImg"), NULL, panel_noImg);
 	}
 	
 	if( src_img != NULL )
 		t->img_key = t->ob_panel->GetFileName().GetFullPath();
 	else
-		t->img_key = "panel_noImg";
+		t->img_key = wxT("panel_noImg");
 	
 	return;
 }
@@ -690,7 +690,7 @@ StageView::OnPaint( wxPaintEvent& _evt )
 			obImgs_Mgr->Reset();
 		}
 		ClearBackground();
-		wxString img_txt = "No Valid Stage Selected !";
+		wxString img_txt = wxT("No Valid Stage Selected !");
 		dc.SetBackground( *wxWHITE_BRUSH);
 		dc.SetPen( *wxBLACK_PEN );
 		dc.Clear();
@@ -1141,7 +1141,7 @@ StageView::EvtMouse( wxMouseEvent& evt )
 		// Put the tooltip
 		wxString tip_txt=
 			  IntToStr((int)(evt.m_x / zoom_factor+coords.x))
-			+ " , " 
+			  + wxT(" , ") 
 			+ IntToStr((int)(evt.m_y / zoom_factor+coords.y))
 			;
 		theTip->SetTip( tip_txt );

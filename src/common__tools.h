@@ -32,7 +32,7 @@ void Frame_SaveCoord( wxWindow* it, const wxString& name );
 void Frame_DestroySavedCoord( const wxString& name );
 
 // Shortcuts Saves/Write config for the EditFrame objects
-wxString	ConfigEdit_Read( const wxString& subpath, const wxString& def_val = "" );
+wxString	ConfigEdit_Read( const wxString& subpath, const wxString& def_val = wxString() );
 void 		ConfigEdit_Write( const wxString& subpath, const wxString& val );
 
 void ClearMenu( wxMenu* menu );
@@ -68,7 +68,7 @@ wxArrayString
 wxString IntToStr( int i );
 wxString IntToStr( size_t i );
 wxString FloatToStr( const float f);
-inline wxString BoolToStr(const bool b ){ return (b ? "1" : "0"); }
+inline wxString BoolToStr(const bool b ){ return (b ? wxT("1") : wxT("0")); }
 
 int StrToInt( const wxString& str, bool& ok );
 int StrToInt( const wxString& str );
@@ -94,7 +94,7 @@ bool StrIsFloat( const wxString& str );
 inline wxArrayString
 	Concat_ArrayString( const wxArrayString & arr1, const wxArrayString & arr2 );
 wxString 
-	ArrStrConcat( const wxArrayString& arrStr, const wxString& separator = "" );
+	ArrStrConcat( const wxArrayString& arrStr, const wxString& separator = wxString() );
 wxArrayString 
 	StrSplit( const wxString& str, const wxString& delim, bool b_remove_emtpy = true );
 

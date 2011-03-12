@@ -92,11 +92,11 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 			// PLATFORM DATAS
 			//**************************
 
-			chckbx_noplatform = new wxCheckBox(scrollPanel, ID_NO_PLATFORM,	"No/Clone Platform", wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+			chckbx_noplatform = new wxCheckBox(scrollPanel, ID_NO_PLATFORM,	wxT("No/Clone Platform"), wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 			chckbx_noplatform->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(Panel_Platform::EvtButtonClick), NULL, this );
 			sizer_topCenter->Add( chckbx_noplatform, 0, wxALL | wxALIGN_LEFT, border_size );
 
-			wxStaticBoxSizer *sizer_PlatformDatas = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "Platform Datas" );
+			wxStaticBoxSizer *sizer_PlatformDatas = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("Platform Datas") );
 			sizer_topCenter->Add( sizer_PlatformDatas, 0, wxALL, border_size );
 
 			wxGridSizer *sizer_temp = new wxGridSizer( 8, 2, border_size, border_size );
@@ -104,10 +104,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// OFFSET X
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "xPos", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("xPos"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_off_x = new wxTextCtrl(scrollPanel, ID_PLAT_OFF_X, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_off_x = new wxTextCtrl(scrollPanel, ID_PLAT_OFF_X, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_off_x->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				sizer_temp->Add( txtctrl_off_x, 0, wxALL | wxCENTER, border_size );
 			}
@@ -115,10 +115,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// OFFSET Y
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "yPos", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("yPos"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_off_y = new wxTextCtrl(scrollPanel, ID_PLAT_OFF_Y, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_off_y = new wxTextCtrl(scrollPanel, ID_PLAT_OFF_Y, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_off_y->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				txtctrl_off_y->MoveAfterInTabOrder( txtctrl_off_x );
 				sizer_temp->Add( txtctrl_off_y, 0, wxALL | wxCENTER, border_size );
@@ -127,10 +127,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// Uper left
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "upperleft", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("upperleft"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_up_l = new wxTextCtrl(scrollPanel, ID_PLAT_UPL, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_up_l = new wxTextCtrl(scrollPanel, ID_PLAT_UPL, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_up_l->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				txtctrl_up_l->MoveAfterInTabOrder( txtctrl_off_y );
 				sizer_temp->Add( txtctrl_up_l, 0, wxALL | wxCENTER, border_size );
@@ -139,10 +139,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// lower left
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "lowerleft", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("lowerleft"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_d_l = new wxTextCtrl(scrollPanel, ID_PLAT_DL, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_d_l = new wxTextCtrl(scrollPanel, ID_PLAT_DL, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_d_l->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				txtctrl_d_l->MoveAfterInTabOrder( txtctrl_up_l );
 				sizer_temp->Add( txtctrl_d_l, 0, wxALL | wxCENTER, border_size );
@@ -151,10 +151,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// Upper right
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "upperright", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("upperright"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_up_r = new wxTextCtrl(scrollPanel, ID_PLAT_UPR, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_up_r = new wxTextCtrl(scrollPanel, ID_PLAT_UPR, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_up_r->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				txtctrl_up_r->MoveAfterInTabOrder( txtctrl_d_l );
 				sizer_temp->Add( txtctrl_up_r, 0, wxALL | wxCENTER, border_size );
@@ -163,10 +163,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// Lower right
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "lowerright", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("lowerright"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_l_r = new wxTextCtrl(scrollPanel, ID_PLAT_LR, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_l_r = new wxTextCtrl(scrollPanel, ID_PLAT_LR, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_l_r->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				txtctrl_l_r->MoveAfterInTabOrder( txtctrl_up_r );
 				sizer_temp->Add( txtctrl_l_r, 0, wxALL | wxCENTER, border_size );
@@ -175,10 +175,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// depth
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "depth", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("depth"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_depth = new wxTextCtrl(scrollPanel, ID_PLAT_DEPTH, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_depth = new wxTextCtrl(scrollPanel, ID_PLAT_DEPTH, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_depth->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				txtctrl_depth->MoveAfterInTabOrder( txtctrl_l_r );
 				sizer_temp->Add( txtctrl_depth, 0, wxALL | wxCENTER, border_size );
@@ -187,10 +187,10 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 
 			// altitude
 			{
-				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, "alt", wxPoint(wxDefaultCoord, 8) );
+				wxStaticText *txt_temp = new wxStaticText( scrollPanel, wxID_ANY, wxT("alt"), wxPoint(wxDefaultCoord, 8) );
 				sizer_temp->Add( txt_temp, 0, wxALL | wxCENTER, border_size );
 
-				txtctrl_alt = new wxTextCtrl(scrollPanel, ID_PLAT_ALT, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+				txtctrl_alt = new wxTextCtrl(scrollPanel, ID_PLAT_ALT, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 				txtctrl_alt->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Platform::EvtCommand), NULL, this);
 				txtctrl_alt->MoveAfterInTabOrder( txtctrl_depth );
 				sizer_temp->Add( txtctrl_alt, 0, wxALL | wxCENTER, border_size );
@@ -200,7 +200,7 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 			wxSizer *sizer_color = new wxBoxSizer( wxHORIZONTAL );
 			sizer_topCenter->Add( sizer_color, 0 , wxALL );
 
-			wxStaticText *txt_color = new wxStaticText( scrollPanel, wxID_ANY, "Color :", wxPoint(wxDefaultCoord, 8) );
+			wxStaticText *txt_color = new wxStaticText( scrollPanel, wxID_ANY, wxT("Color :"), wxPoint(wxDefaultCoord, 8) );
 			sizer_color->Add( txt_color, 0, wxALL | wxCENTER, border_size );
 
 			plat_color = new MyPaletteElementCtrl(scrollPanel);
@@ -221,11 +221,11 @@ Panel_Platform::Panel_Platform(wxNotebook* _parent)
 		sizer_topRightUp->Add( sizer_anim_ctrls, 0, wxALL|wxEXPAND, 6 );
 
 		wxBitmapButton* butt_Zoom_M = new wxBitmapButton( this, ID_ZOOM_M,
-			wxBitmap( wxImage( GetRessourceFile_String("zoom-out.png"))));
+				wxBitmap( wxImage( GetRessourceFile_String(wxT("zoom-out.png")))));
 		sizer_anim_ctrls->Add( butt_Zoom_M, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
 		wxBitmapButton* butt_Zoom_P = new wxBitmapButton( this, ID_ZOOM_P,
-			wxBitmap( wxImage( GetRessourceFile_String("zoom-in.png"))));
+				wxBitmap( wxImage( GetRessourceFile_String(wxT("zoom-in.png")))));
 		sizer_anim_ctrls->Add( butt_Zoom_P, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
 		sizer_topRightUp->AddStretchSpacer();
@@ -319,13 +319,13 @@ void Panel_Platform::Update_PlaftformDatas()
 	if( frameActive == NULL || frameActive->GetImage() == noImg )
 	{
 		scrollPanel->Enable( false );
-		wxMessageBox( "Not a valid frame for making a platform", "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Not a valid frame for making a platform"), wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
 	scrollPanel->Enable( true );
 
-	ob_object* platform_prop = frameActive->GetSubObject( "platform" );
+	ob_object* platform_prop = frameActive->GetSubObject( wxT("platform") );
 
 	if( platform_prop == NULL )
 		EnablePlatform( false );
@@ -335,7 +335,7 @@ void Panel_Platform::Update_PlaftformDatas()
 		if( nb_tokens != 6 && nb_tokens != 8 )
 		{
 			scrollPanel->Enable( false );
-			wxMessageBox( "Malformed platform property in entity header", "ProPlem", wxOK | wxICON_INFORMATION, this );
+			wxMessageBox( wxT("Malformed platform property in entity header"), wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 			return;
 		}
 
@@ -345,8 +345,8 @@ void Panel_Platform::Update_PlaftformDatas()
 		if( nb_tokens == 6 )
 		{
 			// set some default value to offset x and y
-			ob_object* fr_offsets = frameActive->GetSubObject( "offset" );
-			platform_prop->SetName( "platform" );
+			ob_object* fr_offsets = frameActive->GetSubObject( wxT("offset") );
+			platform_prop->SetName( wxT("platform" ));
 			platform_prop->SetToken( 0, fr_offsets->GetToken( 0 ) );
 			platform_prop->SetToken( 1, fr_offsets->GetToken( 1 ) );
 
@@ -402,11 +402,11 @@ void Panel_Platform::Update_entity_platform()
 {
 	if( curr_anim == NULL || frameActive == NULL )
 	{
-		wxMessageBox( "No animation selected !!", "ProPlem", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No animation selected !!"), wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
-	ob_object* platform_prop = frameActive->GetSubObject( "platform" );
+	ob_object* platform_prop = frameActive->GetSubObject( wxT("platform" ));
 
 	if( platform_prop == NULL )
 		return;
@@ -504,7 +504,7 @@ void Panel_Platform::EvtButtonClick(wxCommandEvent& event)
 			// Deletion case
 			if( chckbx_noplatform->GetValue() == true )
 			{
-				ob_object* platform_prop = frameActive->GetSubObject( "platform" );
+				ob_object* platform_prop = frameActive->GetSubObject( wxT("platform" ));
 				if( platform_prop != NULL )
 				{
 					platform_prop->Rm();
@@ -513,7 +513,7 @@ void Panel_Platform::EvtButtonClick(wxCommandEvent& event)
 				Frame_CascadeChanges();
 				Update_PlaftformDatas();
 				// If a cloned value has appear, decheck the box
-				if( frameActive->GetSubObject( "platform" ) != NULL )
+				if( frameActive->GetSubObject( wxT("platform") ) != NULL )
 					chckbx_noplatform->SetValue( false );
 				platformView->UpdateFrames();
 			}
@@ -524,14 +524,14 @@ void Panel_Platform::EvtButtonClick(wxCommandEvent& event)
 				if( frameActive == NULL || frameActive->GetImage() == NULL || frameActive->GetImage() == noImg )
 				{
 					scrollPanel->Enable( false );
-					wxMessageBox( "Not a valid frame for making a platform", "ProPlem", wxOK | wxICON_INFORMATION, this );
+					wxMessageBox( wxT("Not a valid frame for making a platform"), wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 					return;
 				}
 
 				entity->SetChanged();
 
 				// set some default value
-				ob_object* fr_offsets = frameActive->GetSubObject( "offset" );
+				ob_object* fr_offsets = frameActive->GetSubObject( wxT("offset") );
 				wxString new_tokens[8];
 				new_tokens[0] = fr_offsets->GetToken( 0 );
 				new_tokens[1] = fr_offsets->GetToken( 1 );
@@ -546,7 +546,7 @@ void Panel_Platform::EvtButtonClick(wxCommandEvent& event)
 				new_tokens[6] = IntToStr( w/4 );
 				new_tokens[7] = IntToStr( 2*h/3 );
 
-				frameActive->SetProperty( "platform", new_tokens, 8 );
+				frameActive->SetProperty( wxT("platform"), new_tokens, 8 );
 
 				Update_PlaftformDatas();
 				platformView->UpdateFrames();

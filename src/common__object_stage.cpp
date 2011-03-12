@@ -40,14 +40,35 @@ using namespace std;
  */
 
 wxString stageHeaderTags[] = {
-		  "loadingbg", "music", "allowselect","direction", "facing"
-		, "rock", "bgspeed", "mirror", "bossmusic", "settime"
-		, "setweap", "notime", "noreset", "noslow"
-		, "type", "nohit", "gravity", "maxfallspeed", "maxtossspeed"
-		, "cameratype"
-		, "stagenumber", "palette"
-		, "updatescript", "updatedscript", "keyscript", "levelscript", "endlevelscript"
-		, "blocked","endhole"
+	wxT("loadingbg"), 
+	wxT("music"), 
+	wxT("allowselect"),
+	wxT("direction"), 
+	wxT("facing"), 
+	wxT("rock"), 
+	wxT("bgspeed"), 
+	wxT("mirror"), 
+	wxT("bossmusic"), 
+	wxT("settime"), 
+	wxT("setweap"), 
+	wxT("notime"), 
+	wxT("noreset"), 
+	wxT("noslow"), 
+	wxT("type"), 
+	wxT("nohit"), 
+	wxT("gravity"), 
+	wxT("maxfallspeed"), 
+	wxT("maxtossspeed"), 
+	wxT("cameratype"), 
+	wxT("stagenumber"), 
+	wxT("palette"), 
+	wxT("updatescript"), 
+	wxT("updatedscript"), 
+	wxT("keyscript"), 
+	wxT("levelscript"), 
+	wxT("endlevelscript"), 
+	wxT("blocked"),
+	wxT("endhole")
 };
 
 
@@ -131,7 +152,7 @@ ob_stage::Add_SubObj( ob_object* temp )
 {
 	if( ob_object_container::Add_SubObj( temp ) == true )
 	{
-		if( temp->name.Upper() == "DIRECTION" )
+		if( temp->name.Upper() == wxT("DIRECTION") )
 			Direction_ComputeAndCache();
 		return true;
 	}
@@ -143,26 +164,26 @@ ob_stage::Add_SubObj( ob_object* temp )
 int 
 ob_stage::Direction_ComputeAndCache()
 {
-	wxString str_dir =  GetSubObject_Token( "direction", 0 ).Upper();
+	wxString str_dir =  GetSubObject_Token( wxT("direction"), 0 ).Upper();
 	
-	if( 	   str_dir == ""    || str_dir == "RIGHT"
-		||str_dir == "BOTH" || str_dir == "RIGHTLEFT"
+	if( 	   str_dir == wxString()    || str_dir == wxT("RIGHT")
+		||str_dir == wxT("BOTH") || str_dir == wxT("RIGHTLEFT")
 		)
 		direction = STAGE_RIGHT;
 	
-	else if( str_dir == "LEFT" || str_dir == "LEFTRIGHT" )
+	else if( str_dir == wxT("LEFT") || str_dir == wxT("LEFTRIGHT") )
 		direction = STAGE_LEFT;
 	
-	else if( str_dir == "UP" )
+	else if( str_dir == wxT("UP") )
 		direction = STAGE_UP;
 	
-	else if( str_dir == "DOWN" )
+	else if( str_dir == wxT("DOWN") )
 		direction = STAGE_DOWN;
 	
-	else if( str_dir == "IN"  || str_dir == "INOUT" )
+	else if( str_dir == wxT("IN")  || str_dir == wxT("INOUT") )
 		direction = STAGE_IN;
 	
-	else if( str_dir == "OUT" || str_dir == "OUTIN" )
+	else if( str_dir == wxT("OUT") || str_dir == wxT("OUTIN") )
 		direction = STAGE_OUT;
 	else
 		direction = STAGE_RIGHT;
@@ -285,9 +306,9 @@ ob_stage::Get_SubObj_With_StageType( const int stage_type )
 wxString 
 ob_stage::Get_Panels_Order()
 {
-	wxString res = "";
+	wxString res = wxString();
 	size_t nb_orders;
-	ob_object** orders = GetSubObjectS( "order",nb_orders );
+	ob_object** orders = GetSubObjectS( wxT("order"),nb_orders );
 	if( orders == NULL )
 		return res;
 	else
@@ -397,7 +418,7 @@ bool ob_stage::Add_SubObj_Panel( ob_object* _obj, bool b_after )
 		{
 			t = l_obj[nb-1];
 			delete[] l_obj;
-			if( t->next->name.Upper() == "ORDER" && _obj->type != OB_TYPE_STAGE_PANEL )
+			if( t->next->name.Upper() == wxT("ORDER") && _obj->type != OB_TYPE_STAGE_PANEL )
 				t = t->next;
 
 			return t->InsertObject_After( _obj );
@@ -406,7 +427,7 @@ bool ob_stage::Add_SubObj_Panel( ob_object* _obj, bool b_after )
 		{
 			t = l_obj[0];
 			delete[] l_obj;
-			if( t->prev->name.Upper() == "ORDER" && _obj->type != OB_TYPE_STAGE_PANEL )
+			if( t->prev->name.Upper() == wxT("ORDER") && _obj->type != OB_TYPE_STAGE_PANEL )
 				t = t->prev;
 			return t->InsertObject_Before( _obj );
 		}
@@ -496,7 +517,7 @@ ob_stage::Add_SubObj( ob_object* _obj, bool b_sort_at )
 
 
 	// Add a background layer
-	else if( _obj->name.Upper() == "BACKGROUND" || _obj->name.Upper() == "BGLAYER"
+	else if( _obj->name.Upper() == wxT("BACKGROUND") || _obj->name.Upper() == wxT("BGLAYER")
 				|| _obj->type  == OB_TYPE_BG_LAYER
 				)
 	{
@@ -504,21 +525,21 @@ ob_stage::Add_SubObj( ob_object* _obj, bool b_sort_at )
 	}
 
 	// Add a front panel object
-	else if(   _obj->name.Upper() == "FRONTPANEL" || _obj->type  == OB_TYPE_FRONT_PANEL )
+	else if(   _obj->name.Upper() == wxT("FRONTPANEL") || _obj->type  == OB_TYPE_FRONT_PANEL )
 	{
 		return Add_SubObj_FrontLayer( _obj );
 	}
 
 	// Add a panel object
-	else if(   _obj->name.Upper() == "PANEL" || _obj->type  == OB_TYPE_STAGE_PANEL
-			|| _obj->name.Upper() == "ORDER" )
+	else if(   _obj->name.Upper() == wxT("PANEL") || _obj->type  == OB_TYPE_STAGE_PANEL
+		|| _obj->name.Upper() == wxT("ORDER") )
 	{
 		return Add_SubObj_Panel( _obj );
 	}
 
 	// Add a Wall/Hole object
-	else if(   _obj->name.Upper() == "WALL" || _obj->type  == OB_TYPE_WALL
-			|| _obj->name.Upper() == "HOLE" || _obj->type  == OB_TYPE_HOLE )
+	else if(   _obj->name.Upper() == wxT("WALL") || _obj->type  == OB_TYPE_WALL
+		|| _obj->name.Upper() == wxT("HOLE") || _obj->type  == OB_TYPE_HOLE )
 	{
 		return Add_SubObj_WallHole( _obj );
 	}
@@ -534,7 +555,7 @@ ob_stage::Add_SubObj( ob_object* _obj, bool b_sort_at )
 	else
 	{
 		ObjectsLog( MYLOG_WARNING, -1,
-				"ob_stage::Add_SubObj : Unknown object type : " + _obj->name );
+			    wxT("ob_stage::Add_SubObj : Unknown object type : ") + _obj->name );
 		return Add_SubObj_Header( _obj );
 	}
 }
@@ -558,19 +579,19 @@ ob_object* ob_stage::Guess_and_ConstructNewObject(MyLine* line, const int _num_l
 	ob_object *temp;
 
 
-	if( _name.Upper() == "BACKGROUND" || _name.Upper() == "BGLAYER" )
+	if( _name.Upper() == wxT("BACKGROUND") || _name.Upper() == wxT("BGLAYER") )
 		temp = new ob_BG_Layer(line,_num_line);
 
-	else if( _name.Upper() == "FRONTPANEL" )
+	else if( _name.Upper() == wxT("FRONTPANEL") )
 		temp = new ob_front_panel(line,_num_line);
 
-	else if( _name.Upper() == "PANEL" )
+	else if( _name.Upper() == wxT("PANEL") )
 		temp = new ob_stage_panel(line,_num_line);
 
-	else if( _name.Upper() == "HOLE" )
+	else if( _name.Upper() == wxT("HOLE") )
 		temp = new ob_hole(line,_num_line);
 
-	else if( _name.Upper() == "WALL" )
+	else if( _name.Upper() == wxT("WALL") )
 		temp = new ob_wall(line,_num_line);
 
 	else if( ob_player_spawn::Get_StageObjectType(_name) != STAGETYPE_NONE )
@@ -604,19 +625,19 @@ ob_stage::Guess_and_ConstructNewObject(const wxString& __name, const wxString& t
 	wxArrayString _tokens;
 	_tokens.Add( token0 );
 
-	if( _name.Upper() == "BACKGROUND" || _name.Upper() == "BGLAYER" )
+	if( _name.Upper() == wxT("BACKGROUND") || _name.Upper() == wxT("BGLAYER") )
 		temp = new ob_BG_Layer(_name,_tokens);
 
-	else if( _name.Upper() == "FRONTPANEL" )
+	else if( _name.Upper() == wxT("FRONTPANEL") )
 		temp = new ob_front_panel(_name,_tokens);
 
-	else if( _name.Upper() == "PANEL" )
+	else if( _name.Upper() == wxT("PANEL") )
 		temp = new ob_stage_panel(_name,_tokens);
 
-	else if( _name.Upper() == "HOLE" )
+	else if( _name.Upper() == wxT("HOLE"))
 		temp = new ob_hole(_name,_tokens);
 
-	else if( _name.Upper() == "WALL" )
+	else if( _name.Upper() == wxT("WALL") )
 		temp = new ob_wall(_name,_tokens);
 
 	else if( ob_player_spawn::Get_StageObjectType(_name) != STAGETYPE_NONE )
@@ -694,8 +715,8 @@ void ob_BG_Layer::Validate()
 wxString ob_BG_Layer::GetName()
 {
 	wxString path = GetToken( 0 );
-	if( path == "" )
-		return "NOFILE";
+	if( path == wxString() )
+		return wxT("NOFILE");
 
 	wxFileName fn = GetObFile( path );
 	return fn.GetFullName();
@@ -715,8 +736,8 @@ wxFileName ob_BG_Layer::GetFileName()
 void 
 ob_BG_Layer::SetToDefault()
 {
-	name = "bglayer";
-	SetAllTokenFromStr( "data 0.5 0.5 0 0 0 0 5000 5000 0 0" );
+	name = wxT("bglayer");
+	SetAllTokenFromStr( wxT("data 0.5 0.5 0 0 0 0 5000 5000 0 0") );
 }
 
 //**********************************************
@@ -725,47 +746,47 @@ ob_BG_Layer::FillMissings()
 {
 	size_t i = 0;
 	if( nb_tokens < i+1 )
-		SetToken( i, "data" );
+		SetToken( i, wxT("data") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0.5" );
+		SetToken( i, wxT("0.5") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0.5" );
+		SetToken( i, wxT("0.5") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0" );
+		SetToken( i, wxT("0") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0" );
+		SetToken( i, wxT("0") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0" );
+		SetToken( i, wxT("0") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0" );
+		SetToken( i, wxT("0") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "5000" );
+		SetToken( i, wxT("5000") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "5000" );
+		SetToken( i, wxT("5000") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0" );
+		SetToken( i, wxT("0") );
 	i++;
 	
 	if( nb_tokens < i+1 )
-		SetToken( i, "0" );
+		SetToken( i, wxT("0") );
 	i++;
 }
 
@@ -787,8 +808,8 @@ ob_BG_Layer::Get_RepeatingVal( int direction )
 			res = GetToken( 8 );
 			break;
 	}
-	if( res == "" )
-		res = "5000";
+	if( res == wxString() )
+		res = wxT("5000");
 	return StrToInt( res );
 }
 
@@ -888,8 +909,8 @@ wxString
 ob_front_panel::GetName()
 {
 	wxString path = GetToken( 0 );
-	if( path == "" )
-		return "NOFILE";
+	if( path == wxString() )
+		return wxT("NOFILE");
 
 	wxFileName fn = GetObFile( path );
 	return fn.GetFullName();
@@ -966,8 +987,8 @@ void ob_stage_panel::Validate()
 wxString ob_stage_panel::GetName()
 {
 	wxString path = GetToken( 0 );
-	if( path == "" )
-		return "NOFILE";
+	if( path == wxString() )
+		return wxT("NOFILE");
 
 	wxFileName fn = GetObFile( path );
 	return fn.GetFullName();
@@ -978,10 +999,10 @@ wxString ob_stage_panel::GetName()
 
 void ob_stage_panel::SetToDefault()
 {
-	name = "panel";
-	SetToken( 0, "none" );
-	SetToken( 1, "none" );
-	SetToken( 2, "none" );
+	name = wxT("panel");
+	SetToken( 0, wxT("none" ));
+	SetToken( 1, wxT("none" ));
+	SetToken( 2, wxT("none" ));
 }
 
 
@@ -990,7 +1011,7 @@ void ob_stage_panel::SetToDefault()
 wxFileName ob_stage_panel::GetFileName()
 {
 	wxString ob_path = GetToken( 0 );
-	if( ob_path == "" )
+	if( ob_path == wxString() )
 		return wxFileName();
 
 	return GetObFile( ob_path );
@@ -1074,8 +1095,8 @@ ob_stage_object::CoordsToStr()
 {
 	int x,y;
 	if( Get_Coords(x,y) == false )
-		return "NO Coords";
-	return IntToStr(x) + " , " + IntToStr(y);
+		return wxT("NO Coords");
+	return IntToStr(x) + wxT(" , ") + IntToStr(y);
 }
 
 
@@ -1152,12 +1173,12 @@ ob_wall::Get_Coords(int& x, int& y)
 	y = -1;
 	wxString t;
 	t = GetToken( 0 );
-	if( t == "" )
+	if( t == wxString() )
 		return false;
 	x = StrToInt( t );
 	
 	t = GetToken( 1 );
-	if( t == "" )
+	if( t == wxString() )
 		return false;
 	y = StrToInt( t );
 	
@@ -1178,14 +1199,14 @@ ob_wall::Coords_Decal( const wxSize& _decal )
 void 
 ob_wall::Init_and_Center( wxSize& _here )
 {
-	SetToken(0,"0");	//X
-	SetToken(1,"0");	//Z
-	SetToken(2,"10");//ul
-	SetToken(3,"0");//ll
-	SetToken(4,"40");//ur
-	SetToken(5,"30");//lr
-	SetToken(6,"30");//depth
-	SetToken(7,"20");//alt
+	SetToken(0,wxT("0"));	//X
+	SetToken(1,wxT("0"));	//Z
+	SetToken(2,wxT("10"));//ul
+	SetToken(3,wxT("0"));//ll
+	SetToken(4,wxT("40"));//ur
+	SetToken(5,wxT("30"));//lr
+	SetToken(6,wxT("30"));//depth
+	SetToken(7,wxT("20"));//alt
 	
 	SetToken(0,IntToStr(_here.x - 20) );	//X
 	SetToken(1,IntToStr(_here.y + 25) );	//Z
@@ -1249,12 +1270,12 @@ ob_hole::Get_Coords(int& x, int& y)
 	y = -1;
 	wxString t;
 	t = GetToken( 0 );
-	if( t == "" )
+	if( t == wxString() )
 		return false;
 	x = StrToInt( t );
 	
 	t = GetToken( 1 );
-	if( t == "" )
+	if( t == wxString() )
 		return false;
 	y = StrToInt( t );
 	
@@ -1275,13 +1296,13 @@ ob_hole::Coords_Decal( const wxSize& _decal )
 void 
 ob_hole::Init_and_Center( wxSize& _here )
 {
-	SetToken(0,"0");	//X
-	SetToken(1,"0");	//Z
-	SetToken(2,"10");//ul
-	SetToken(3,"0");//ll
-	SetToken(4,"40");//ur
-	SetToken(5,"30");//lr
-	SetToken(6,"30");//depth
+	SetToken(0,wxT("0"));	//X
+	SetToken(1,wxT("0"));	//Z
+	SetToken(2,wxT("10"));//ul
+	SetToken(3,wxT("0"));//ll
+	SetToken(4,wxT("40"));//ur
+	SetToken(5,wxT("30"));//lr
+	SetToken(6,wxT("30"));//depth
 	
 	SetToken(0,IntToStr(_here.x - 20) );	//X
 	SetToken(1,IntToStr(_here.y + 15) );	//Z
@@ -1299,8 +1320,8 @@ ob_hole::Init_and_Center( wxSize& _here )
 
 int ob_player_spawn::Get_StageObjectType( const wxString& _name )
 {
-	if( _name.Upper() == "SPAWN1" || _name.Upper() == "SPAWN2"
-		|| _name.Upper() == "SPAWN3" || _name.Upper() == "SPAWN4" )
+	if( _name.Upper() == wxT("SPAWN1") || _name.Upper() == wxT("SPAWN2")
+		|| _name.Upper() == wxT("SPAWN3") || _name.Upper() == wxT("SPAWN4") )
 		return SOBJ_PLAYER_SPAWN;
 	else
 		return STAGETYPE_NONE;
@@ -1357,12 +1378,12 @@ ob_player_spawn::Get_Coords(int& x, int& y)
 	y = -1;
 	wxString t;
 	t = GetToken( 0 );
-	if( t == "" )
+	if( t == wxString() )
 		return false;
 	x = StrToInt( t );
 	
 	t = GetToken( 1 );
-	if( t == "" )
+	if( t == wxString() )
 		return false;
 	y = StrToInt( t );
 	
@@ -1397,34 +1418,34 @@ ob_player_spawn::Init_and_Center( wxSize& _here )
 
 int ob_stage_at::Get_StageObjectType( const wxString& _name )
 {
-	if( _name.Upper() == "SCROLLZ" || _name.Upper() == "SCROLLX" )
+	if( _name.Upper() == wxT("SCROLLZ") || _name.Upper() == wxT("SCROLLX") )
 		return SOBJ_SCROLLZ;
 
-	else if( _name.Upper() == "GROUP" )
+	else if( _name.Upper() == wxT("GROUP") )
 		return SOBJ_GROUP;
 
-	else if( _name.Upper() == "LIGHT" )
+	else if( _name.Upper() == wxT("LIGHT") )
 		return SOBJ_LIGHT;
 
-	else if( _name.Upper() == "SHADOWCOLOR" )
+	else if( _name.Upper() == wxT("SHADOWCOLOR") )
 		return SOBJ_SHADOWCOLOR;
 
-	else if( _name.Upper() == "SHADOWALPHA" )
+	else if( _name.Upper() == wxT("SHADOWALPHA") )
 		return SOBJ_SHADOWALPHA;
 
-	else if( _name.Upper() == "SETPALETTE" )
+	else if( _name.Upper() == wxT("SETPALETTE") )
 		return SOBJ_SETPALETTE;
 
-	else if( _name.Upper() == "BLOCKADE" )
+	else if( _name.Upper() == wxT("BLOCKADE") )
 		return SOBJ_BLOCKADE;
 
-	else if( _name.Upper() == "WAIT" )
+	else if( _name.Upper() == wxT("WAIT") )
 		return SOBJ_WAIT;
 
-	else if( _name.Upper() == "NOJOIN" )
+	else if( _name.Upper() == wxT("NOJOIN") )
 		return SOBJ_NOJOIN;
 
-	else if( _name.Upper() == "CANJOIN" )
+	else if( _name.Upper() == wxT("CANJOIN") )
 		return SOBJ_CANJOIN;
 
 	else
@@ -1486,10 +1507,10 @@ bool ob_stage_at::Eat(  MyLine* line, const int _num_line )
 	wxString _name = *(line->GetToken(0)->data);
 
 	// MUST BE followed by a  <AT> Tag, or there is a problem
-	if( _name.Upper() != "AT" )
+	if( _name.Upper() != wxT("AT") )
 	{
 		ObjectsLog( MYLOG_ERROR, _num_line + 1,
-				"The upper object <" + name + "> require a tag <AT> which is not present !" );
+			    wxT("The upper object <") + name + wxT("> require a tag <AT> which is not present !") );
 		ungry = false;
 		return false;
 	}
@@ -1513,12 +1534,12 @@ ob_stage_at::Get_Coords(int& x, int& y)
 {
 	x = -1;
 	y = -1;
-	ob_object* o = GetSubObject( "AT" );
+	ob_object* o = GetSubObject( wxT("AT") );
 	if( o == NULL )
 		return false;
 	
 	wxString _tok = o->GetToken( 0 );
-	if( _tok == "" )
+	if( _tok == wxString() )
 		return false;
 	
 	x = StrToInt( _tok );
@@ -1530,7 +1551,7 @@ ob_stage_at::Get_Coords(int& x, int& y)
 int   
 ob_stage_at::GetAt()
 {
-	ob_object* subobj = GetSubObject( "at" );
+	ob_object* subobj = GetSubObject( wxT("at") );
 	if( subobj == NULL )
 		return 0;
 	return StrToInt( subobj->GetToken(0 ));
@@ -1540,10 +1561,10 @@ ob_stage_at::GetAt()
 void  
 ob_stage_at::SetAt(int _here)
 {
-	ob_object* subobj = GetSubObject( "at" );
+	ob_object* subobj = GetSubObject( wxT("at") );
 	if( subobj == NULL )
 	{
-		subobj = new ob_object("at");
+		subobj = new ob_object(wxT("at"));
 		Add_SubObj( subobj );
 	}
 	subobj->SetToken( 0, IntToStr(_here));
@@ -1582,7 +1603,7 @@ ob_stage_at::Reorder_At()
 			continue;
 		}
 		
-		ob_object* subobj = sibling->GetSubObject( "AT" );
+		ob_object* subobj = sibling->GetSubObject( wxT("AT") );
 		if( subobj != NULL )
 		{
 			if( StrToInt( subobj->GetToken(0)) > at_val )
@@ -1605,7 +1626,7 @@ ob_stage_at::Reorder_At()
 				continue;
 			}
 			
-			ob_object* subobj = sibling->GetSubObject( "AT" );
+			ob_object* subobj = sibling->GetSubObject( wxT("AT") );
 			if( subobj != NULL )
 			{
 				if( StrToInt( subobj->GetToken(0)) < at_val )
@@ -1653,13 +1674,13 @@ ob_stage_at::Add_SubObj( ob_object* temp )
 {
 	if( temp == NULL )
 		return false;
-	if( temp->name.Upper() == "AT" )
+	if( temp->name.Upper() == wxT("AT") )
 		return ob_stage_object::Add_SubObj( temp );
 	
 	if( last_subobj == NULL )
 		return ob_stage_object::Add_SubObj( temp );
 	
-	if( last_subobj->name.Upper() == "AT" )
+	if( last_subobj->name.Upper() == wxT("AT") )
 		return last_subobj->InsertObject_Before( temp );
 	
 	return ob_stage_object::Add_SubObj( temp );
@@ -1675,30 +1696,30 @@ ob_stage_at::Add_SubObj( ob_object* temp )
 
 int ob_spawn::Get_StageObjectType( const wxString& _name, const wxString& entity_name )
 {
-	if( _name.Upper() != "SPAWN" )
+	if( _name.Upper() != wxT("SPAWN") )
 		return STAGETYPE_NONE;
 
 	obFileEntity* ent = obFileStage::GetEntity( entity_name );
 	if( ent == NULL )
 		return STAGETYPE_NONE;
-	wxString ent_type = ent->obj_container->GetSubObject_Token( "type" );
+	wxString ent_type = ent->obj_container->GetSubObject_Token( wxT("type") );
 
-	if( ent_type.Upper() == "NONE" )
+	if( ent_type.Upper() == wxT("NONE") )
 		return SOBJ_NONE;
 
-	if( ent_type.Upper() == "STEAMER" )
+	if( ent_type.Upper() == wxT("STEAMER") )
 		return SOBJ_STEAMER;
 
-	if( ent_type.Upper() == "PANEL" )
+	if( ent_type.Upper() == wxT("PANEL") )
 		return SOBJ_PANEL;
 
-	if( ent_type.Upper() == "TEXT" )
+	if( ent_type.Upper() == wxT("TEXT") )
 		return SOBJ_TEXT;
 
-	if( ent_type.Upper() == "TRAP" )
+	if( ent_type.Upper() == wxT("TRAP") )
 		return SOBJ_TRAP;
 
-	if( ent_type.Upper() == "PSHOT" || ent_type.Upper() == "SHOT")
+	if( ent_type.Upper() == wxT("PSHOT") || ent_type.Upper() == wxT("SHOT"))
 		return SOBJ_SHOT;
 
 	else
@@ -1709,15 +1730,15 @@ int ob_spawn::Get_StageObjectType( const wxString& _name, const wxString& entity
 
 wxString obSpawnTags[] = 
 	{
-	"at",
-	"2pspawn",
-	"3pspawn",
-	"4pspawn",
-	"flip",
-	"alias",
-	"map",
-	"spawnscript",
-	"coords",
+		wxT("at"),
+		wxT("2pspawn"),
+		wxT("3pspawn"),
+		wxT("4pspawn"),
+		wxT("flip"),
+		wxT("alias"),
+		wxT("map"),
+		wxT("spawnscript"),
+		wxT("coords"),
 	 };
 
 bool 
@@ -1730,13 +1751,13 @@ ob_spawn::Is_AcceptedTag( const wxString& _name )
 int
 ob_spawn::Get_Entity_StageType( const wxString& ent_name )
 {
-	int ent_stype = ob_spawn::Get_StageObjectType( "SPAWN", ent_name );
+	int ent_stype = ob_spawn::Get_StageObjectType( wxT("SPAWN"), ent_name );
 
 	if( ent_stype == STAGETYPE_NONE )
-		ent_stype = ob_spawn_healthy::Get_StageObjectType( "SPAWN", ent_name );
+		ent_stype = ob_spawn_healthy::Get_StageObjectType( wxT("SPAWN"), ent_name );
 
 	if( ent_stype == STAGETYPE_NONE )
-		ent_stype = ob_spawn_item::Get_StageObjectType( "SPAWN", ent_name );
+		ent_stype = ob_spawn_item::Get_StageObjectType( wxT("SPAWN"), ent_name );
 	
 	return ent_stype;
 }
@@ -1818,12 +1839,12 @@ bool ob_spawn::Eat(  MyLine* line, const int _num_line )
 		wxString _name = *(line->GetToken(0)->data);
 		if( GetSubObject( _name ) != NULL )
 			ObjectsLog( MYLOG_ERROR, _num_line + 1,
-				"The object <" + name + "> contain two <" + _name +"> tag !" );
+				    wxT("The object <") + name +wxT( "> contain two <") + _name +wxT("> tag !") );
 			
 		Add_SubObj( new ob_object( line, _num_line ) );
 		
 		// An <AT> close the stuff
-		if( _name.Upper() == "AT" )
+		if( _name.Upper() == wxT("AT") )
 		{
 			ungry = false;
 			Validate();
@@ -1845,16 +1866,16 @@ bool ob_spawn::Eat(  MyLine* line, const int _num_line )
 void 
 ob_spawn::Validate()
 {
-	if( GetSubObject( "AT" ) == NULL )
+	if( GetSubObject( wxT("AT") ) == NULL )
 	{
 		ObjectsLog( MYLOG_ERROR, num_line + 1,
-				"The object <" + name + "> require a tag <AT> which is not present !" );
+			    wxT("The object <") + name + wxT("> require a tag <AT> which is not present !" ));
 	}
 
-	if( GetSubObject( "COORDS" ) == NULL )
+	if( GetSubObject( wxT("COORDS") ) == NULL )
 	{
 		ObjectsLog( MYLOG_ERROR, num_line + 1,
-				"The object <" + name + "> require a tag <COORDS> which is not present !" );
+			    wxT("The object <") + name + wxT("> require a tag <COORDS> which is not present !") );
 	}
 }
 
@@ -1863,7 +1884,7 @@ wxString
 ob_spawn::Get_ScreenList_Name()
 {
 	if( entity_ref == NULL )
-		return "NO Entity";
+		return wxT("NO Entity");
 	return entity_ref->Name();
 };
 
@@ -1875,16 +1896,16 @@ ob_spawn::Get_Coords(int& x, int& y)
 		return false;
 	y = -1;
 
-	ob_object* o = GetSubObject( "coords" );
+	ob_object* o = GetSubObject(wxT( "coords" ));
 	if( o == NULL )
 		return false;
 	wxString _tok = o->GetToken( 0 );
-	if( _tok == "" )
+	if( _tok == wxString() )
 		return false;
 	x += StrToInt( _tok );
 
 	_tok = o->GetToken( 1 );
-	if( _tok == "" )
+	if( _tok == wxString() )
 		return false;
 
 	y = StrToInt( _tok );
@@ -1896,11 +1917,11 @@ void
 ob_spawn::Coords_Decal( const wxSize& _decal )
 {
 	SetAt( GetAt() + _decal.x );
-	ob_object* coords = GetSubObject( "coords" );
+	ob_object* coords = GetSubObject(wxT( "coords" ));
 	if( coords == NULL )
 	{
-		coords = new ob_object("coords");
-		coords->SetToken(0,"0");
+		coords = new ob_object(wxT("coords"));
+		coords->SetToken(0,wxT("0"));
 		Add_SubObj( coords );
 	}
 	coords->SetToken( 1, IntToStr(StrToInt(coords->GetToken(1)) + _decal.y) );
@@ -1911,11 +1932,11 @@ void
 ob_spawn::Init_and_Center( wxSize& _here )
 {
 	ob_stage_at::Init_and_Center( _here );
-	ob_object* coords = GetSubObject( "coords" );
+	ob_object* coords = GetSubObject( wxT("coords") );
 	if( coords == NULL )
 	{
-		coords = new ob_object("coords");
-		coords->SetToken(0,"0");
+		coords = new ob_object(wxT("coords"));
+		coords->SetToken(0,wxT("0"));
 		Add_SubObj( coords );
 	}
 	coords->SetToken( 1, IntToStr(_here.y) );
@@ -1932,21 +1953,21 @@ ob_spawn::Init_and_Center( wxSize& _here )
 
 int ob_spawn_healthy::Get_StageObjectType( const wxString& _name,  const wxString& entity_name )
 {
-	if( _name.Upper() != "SPAWN" )
+	if( _name.Upper() != wxT("SPAWN") )
 		return STAGETYPE_NONE;
 
 	obFileEntity* ent = obFileStage::GetEntity( entity_name );
 	if( ent == NULL )
 		return STAGETYPE_NONE;
-	wxString ent_type = ent->obj_container->GetSubObject_Token( "type" );
+	wxString ent_type = ent->obj_container->GetSubObject_Token( wxT("type") );
 
-	if( ent_type.Upper() == "OBSTACLE" )
+	if( ent_type.Upper() == wxT("OBSTACLE") )
 		return SOBJ_OBSTACLE;
 
-	if( ent_type.Upper() == "NPC" )
+	if( ent_type.Upper() == wxT("NPC") )
 		return SOBJ_NPC;
 
-	if( ent_type.Upper() == "ENEMY" )
+	if( ent_type.Upper() == wxT("ENEMY") )
 		return SOBJ_ENEMY;
 	
 	return STAGETYPE_NONE;
@@ -1956,29 +1977,29 @@ int ob_spawn_healthy::Get_StageObjectType( const wxString& _name,  const wxStrin
 
 wxString obSpawnHealthyTags[] = 
 	{ 
-	"boss",
-	"health",
-	"2phealth",
-	"3phealth",
-	"4phealth",
-	"score",
-	"nolife",
-	"dying",
+		wxT("boss"),
+		wxT("health"),
+		wxT("2phealth"),
+		wxT("3phealth"),
+		wxT("4phealth"),
+		wxT("score"),
+		wxT("nolife"),
+		wxT("dying"),
 
-	"weapon",
-	"aggression",
-	
-	"item",
-	"credit",
-	"2pitem",
-	"3pitem",
-	"4pitem",
-	"itemmap",
-	"itemhealth",
-	"itemalias",
-	"itemtrans",
-	"itemalpha",
-	"itemtrans",
+		wxT("weapon"),
+		wxT("aggression"),
+
+		wxT("item"),
+		wxT("credit"),
+		wxT("2pitem"),
+		wxT("3pitem"),
+		wxT("4pitem"),
+		wxT("itemmap"),
+		wxT("itemhealth"),
+		wxT("itemalias"),
+		wxT("itemtrans"),
+		wxT("itemalpha"),
+		wxT("itemtrans"),
 	};
 
 bool ob_spawn_healthy::Is_AcceptedTag( const wxString& _name )
@@ -1990,17 +2011,17 @@ bool ob_spawn_healthy::Is_AcceptedTag( const wxString& _name )
 //----------------------------------------------------------------------
 wxString obItemHoldedTags[] = 
 	{
-	"item",
-	"credit",
-	"2pitem",
-	"3pitem",
-	"4pitem",
-	"itemmap",
-	"itemhealth",
-	"itemalias",
-	"itemtrans",
-	"itemalpha",
-	"itemtrans",
+		wxT("item"),
+		wxT("credit"),
+		wxT("2pitem"),
+		wxT("3pitem"),
+		wxT("4pitem"),
+		wxT("itemmap"),
+		wxT("itemhealth"),
+		wxT("itemalias"),
+		wxT("itemtrans"),
+		wxT("itemalpha"),
+		wxT("itemtrans"),
 	};
 
 bool 
@@ -2064,18 +2085,18 @@ void ob_spawn_healthy::Validate()
 
 int ob_spawn_item::Get_StageObjectType( const wxString& _name,  const wxString& entity_name )
 {
-	if( _name.Upper() != "SPAWN" )
+	if( _name.Upper() != wxT("SPAWN" ))
 		return STAGETYPE_NONE;
 
 	obFileEntity* ent = obFileStage::GetEntity( entity_name );
 	if( ent == NULL )
 		return STAGETYPE_NONE;
-	wxString ent_type = ent->obj_container->GetSubObject_Token( "type" );
+	wxString ent_type = ent->obj_container->GetSubObject_Token( wxT("type" ));
 
-	if( ent_type.Upper() == "ITEM" )
+	if( ent_type.Upper() == wxT("ITEM") )
 		return SOBJ_ITEM;
 
-	if( ent_type.Upper() == "ENDLEVEL" )
+	if( ent_type.Upper() == wxT("ENDLEVEL") )
 		return SOBJ_ENDLEVEL;
 	
 	return STAGETYPE_NONE;
@@ -2084,8 +2105,8 @@ int ob_spawn_item::Get_StageObjectType( const wxString& _name,  const wxString& 
 //**********************************************
 wxString obSpawnItemTags[] = 
   { 
-	"mp", 
-	"credit", 
+	wxT("mp"), 
+	wxT("credit"), 
   };
 
 bool ob_spawn_item::Is_AcceptedTag(const wxString& _name )
@@ -2328,21 +2349,21 @@ Stage__SuperType_ToStr( const int _sst )
 	switch( _sst )
 	{
 		case SST_OTHER:
-			return "Other";
+			return wxT("Other");
 		case SST_GEOMETRY:
-			return "Geometry";
+			return wxT("Geometry");
 		case SST_CONTROL:
-			return "Control";
+			return wxT("Control");
 		case SST_VISUAL_FX:
-			return "Visual Fx";
+			return wxT("Visual Fx");
 		case SST_STUFFS:
-			return "Stuff";
+			return wxT("Stuff");
 		case SST_DECORATION:
-			return "Decoration";
+			return wxT("Decoration");
 		case SST_LIVINGS:
-			return "Living";
+			return wxT("Living");
 		default:
-			return "NONE";
+			return wxT("NONE");
 	}
 }
 
@@ -2350,19 +2371,19 @@ Stage__SuperType_ToStr( const int _sst )
 int	
 Stage__SuperType_ToInt( const wxString& _sst )
 {
-	if( _sst == "Other" )
+	if( _sst == wxT("Other" ))
 		return SST_OTHER;
-	if( _sst == "Geometry" )
+	if( _sst == wxT("Geometry" ))
 		return SST_GEOMETRY;
-	if( _sst == "Control" )
+	if( _sst == wxT("Control" ))
 		return SST_CONTROL;
-	if( _sst == "Visual Fx" )
+	if( _sst == wxT("Visual Fx" ))
 		return SST_VISUAL_FX;
-	if( _sst == "Stuff" )
+	if( _sst == wxT("Stuff" ))
 		return SST_STUFFS;
-	if( _sst == "Decoration" )
+	if( _sst == wxT("Decoration" ))
 		return SST_DECORATION;
-	if( _sst == "Living" )
+	if( _sst == wxT("Living" ))
 		return SST_LIVINGS;
 	return SST_NONE;
 }
@@ -2437,53 +2458,53 @@ Stage__Type_Is_in_SuperType( const int _stype, const int _sst )
 int		
 Stage__Type_ToInt( const wxString& _sst )
 {
-	if( _sst == "Text" )
+	if( _sst == wxT("Text") )
 		return SOBJ_TEXT;
-	if( _sst == "EndLevel" )
+	if( _sst == wxT("EndLevel" ))
 		return SOBJ_ENDLEVEL;
-	if( _sst == "Player Spawn" )
+	if( _sst == wxT("Player Spawn" ))
 		return SOBJ_PLAYER_SPAWN;
-	if( _sst == "SetPalette" )
+	if( _sst == wxT("SetPalette" ))
 		return SOBJ_SETPALETTE;
-	if( _sst == "Wall" )
+	if( _sst == wxT("Wall" ))
 		return SOBJ_WALL;
-	if( _sst == "Hole" )
+	if( _sst == wxT("Hole" ))
 		return SOBJ_HOLE;
-	if( _sst == "Wait" )
+	if( _sst == wxT("Wait" ))
 		return SOBJ_WAIT;
-	if( _sst == "NoJoin" )
+	if( _sst == wxT("NoJoin" ))
 		return SOBJ_NOJOIN;
-	if( _sst == "CanJoin" )
+	if( _sst == wxT("CanJoin" ))
 		return SOBJ_CANJOIN;
-	if( _sst == "Scroll[zx]" )
+	if( _sst == wxT("Scroll[zx]" ))
 		return SOBJ_SCROLLZ;
-	if( _sst == "Blockade" )
+	if( _sst == wxT("Blockade" ))
 		return SOBJ_BLOCKADE;
-	if( _sst == "Group" )
+	if( _sst == wxT("Group" ))
 		return SOBJ_GROUP;
-	if( _sst == "ShadowColor" )
+	if( _sst == wxT("ShadowColor" ))
 		return SOBJ_SHADOWCOLOR;
-	if( _sst == "ShadowAlpha" )
+	if( _sst == wxT("ShadowAlpha" ))
 		return SOBJ_SHADOWALPHA;
-	if( _sst == "Light" )
+	if( _sst == wxT("Light" ))
 		return SOBJ_LIGHT;
-	if( _sst == "Trap" )
+	if( _sst == wxT("Trap" ))
 		return SOBJ_TRAP;
-	if( _sst == "Shot" )
+	if( _sst == wxT("Shot" ))
 		return SOBJ_SHOT;
-	if( _sst == "Item" )
+	if( _sst == wxT("Item" ))
 		return SOBJ_ITEM;
-	if( _sst == "Obstacle" )
+	if( _sst == wxT("Obstacle" ))
 		return SOBJ_OBSTACLE;
-	if( _sst == "Steamer" )
+	if( _sst == wxT("Steamer" ))
 		return SOBJ_STEAMER;
-	if( _sst == "none" )
+	if( _sst == wxT("none" ))
 		return SOBJ_NONE;
-	if( _sst == "Panel" )
+	if( _sst == wxT("Panel" ))
 		return SOBJ_PANEL;
-	if( _sst == "Npc" )
+	if( _sst == wxT("Npc" ))
 		return SOBJ_NPC;
-	if( _sst == "Enemy" )
+	if( _sst == wxT("Enemy" ))
 		return SOBJ_ENEMY;
 	return STAGETYPE_NONE;
 }
@@ -2495,55 +2516,55 @@ Stage__Type_ToStr( const int _sst )
 	switch( _sst )
 	{
 		case SOBJ_TEXT:
-			return "Text";
+			return wxT("Text");
 		case SOBJ_ENDLEVEL:
-			return "EndLevel";
+			return wxT("EndLevel");
 		case SOBJ_PLAYER_SPAWN:
-			return "Player Spawn";
+			return wxT("Player Spawn");
 		case SOBJ_SETPALETTE:
-			return "SetPalette";
+			return wxT("SetPalette");
 		case SOBJ_WALL:
-			return "Wall";
+			return wxT("Wall");
 		case SOBJ_HOLE:
-			return "Hole";
+			return wxT("Hole");
 		case SOBJ_WAIT:
-			return "Wait";
+			return wxT("Wait");
 		case SOBJ_NOJOIN:
-			return "NoJoin";
+			return wxT("NoJoin");
 		case SOBJ_CANJOIN:
-			return "CanJoin";
+			return wxT("CanJoin");
 		case SOBJ_SCROLLZ:
-			return "Scroll[zx]";
+			return wxT("Scroll[zx]");
 		case SOBJ_BLOCKADE:
-			return "Blockade";
+			return wxT("Blockade");
 		case SOBJ_GROUP:
-			return "Group";
+			return wxT("Group");
 		case SOBJ_SHADOWCOLOR:
-			return "ShadowColor";
+			return wxT("ShadowColor");
 		case SOBJ_SHADOWALPHA:
-			return "ShadowAlpha";
+			return wxT("ShadowAlpha");
 		case SOBJ_LIGHT:
-			return "Light";
+			return wxT("Light");
 		case SOBJ_TRAP:
-			return "Trap";
+			return wxT("Trap");
 		case SOBJ_SHOT:
-			return "Shot";
+			return wxT("Shot");
 		case SOBJ_ITEM:
-			return "Item";
+			return wxT("Item");
 		case SOBJ_OBSTACLE:
-			return "Obstacle";
+			return wxT("Obstacle");
 		case SOBJ_STEAMER:
-			return "Steamer";
+			return wxT("Steamer");
 		case SOBJ_NONE:
-			return "none";
+			return wxT("none");
 		case SOBJ_PANEL:
-			return "Panel";
+			return wxT("Panel");
 		case SOBJ_NPC:
-			return "Npc";
+			return wxT("Npc");
 		case SOBJ_ENEMY:
-			return "Enemy";
+			return wxT("Enemy");
 		default:
-			return "NoType";
+			return wxT("NoType");
 	}
 }
 

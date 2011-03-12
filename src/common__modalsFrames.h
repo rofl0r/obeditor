@@ -27,25 +27,25 @@ class frameEdit_request
 {
 public:
 	frameEdit_request(
-						const wxString& _propname = "UNNAMED",
-						const wxString& _label = "NO-LABEL",
-						int _type = PROPTYPE_UNDEF,
-						const wxString& _request = "_TOKEN_0",
-						bool _b_del_ifempty = false,
-						wxArrayString _enums = arrStr_empty,
-						int _labelw = wxDefaultCoord,
-						int _fieldw = wxDefaultCoord
-						);
+		const wxString& _propname = wxT("UNNAMED"),
+		const wxString& _label = wxT("NO-LABEL"),
+		int _type = PROPTYPE_UNDEF,
+		const wxString& _request = wxT("_TOKEN_0"),
+		bool _b_del_ifempty = false,
+		wxArrayString _enums = arrStr_empty,
+		int _labelw = wxDefaultCoord,
+		int _fieldw = wxDefaultCoord
+	);
 	void Set(
-			const wxString _propname = "UNNAMED",
-			const wxString _label = "NO-LABEL",
-			int _type = PROPTYPE_STRING_NO_WS,
-			const wxString _request = "_TOKEN_0",
-			bool _b_del_ifempty = true,
-			wxArrayString _enums = arrStr_empty,
-			int _labelw = wxDefaultCoord,
-			int _fieldw = wxDefaultCoord
-			);
+		const wxString _propname = wxT("UNNAMED"),
+		const wxString _label = wxT("NO-LABEL"),
+		int _type = PROPTYPE_STRING_NO_WS,
+		const wxString _request = wxT("_TOKEN_0"),
+		bool _b_del_ifempty = true,
+		wxArrayString _enums = arrStr_empty,
+		int _labelw = wxDefaultCoord,
+		int _fieldw = wxDefaultCoord
+	);
 
 	~frameEdit_request();
 
@@ -72,7 +72,8 @@ protected:
 class FrameEditProperties : public wxDialog
 {
 public:
-	FrameEditProperties(wxWindow *_parent, ob_object* _theObj = NULL, const wxString& _title = "NO-TITLE",
+	FrameEditProperties(wxWindow *_parent, ob_object* _theObj = NULL,
+			const wxString& _title = wxT("NO-TITLE"),
 			int more_style = 0 );
 	~FrameEditProperties();
 
@@ -131,8 +132,8 @@ class GridPropFrame : public wxDialog
 public:
 	GridPropFrame( wxWindow *parent,
 					ob_object* _theObj,
-					const wxString& Title ="Set some properties",
-					const wxString& _intro ="You can change/add/del properties here",
+					const wxString& Title =wxT("Set some properties"),
+					const wxString& _intro =wxT("You can change/add/del properties here"),
 					long style = wxDEFAULT_DIALOG_STYLE, bool b_sort = true );
 	~GridPropFrame();
 
@@ -223,7 +224,7 @@ class WndImgShow : public wxDialog
 {
 public:
 	WndImgShow( wxWindow* parent, const wxString& _title
-			, wxImage* _theImg, const wxString& some_text = "" );
+	, wxImage* _theImg, const wxString& some_text = wxString() );
 };
 
 #endif /*MYMODALSFRAMES_H_*/

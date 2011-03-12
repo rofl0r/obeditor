@@ -23,7 +23,7 @@ const int margin_orderCtrl = 25;
 //****************************************************
 
 myWnd_EditPanelOrder::myWnd_EditPanelOrder( wxWindow* _parent, ob_stage* _stage )
-:wxDialog( _parent, wxID_ANY, "Panel Order", wxDefaultPosition, wxDefaultSize
+:wxDialog( _parent, wxID_ANY, wxT("Panel Order"), wxDefaultPosition, wxDefaultSize
 		,wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxDEFAULT_DIALOG_STYLE | wxFULL_REPAINT_ON_RESIZE )
 , font_Alphabet( 18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, true )
 , font_Label( 16, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxNORMAL, true )
@@ -84,7 +84,7 @@ void myWnd_EditPanelOrder::Init()
 	// Stage == NULL
 	if( stage == NULL )
 	{
-		wxStaticText* t = new wxStaticText( thePanel, wxID_ANY, "STAGE OBJECT == NULL !!");
+		wxStaticText* t = new wxStaticText( thePanel, wxID_ANY, wxT("STAGE OBJECT == NULL !!"));
 		t->SetFont(font_Alphabet);
 		sizer_main->Add( t, 0, wxCENTER );
 	}
@@ -94,7 +94,7 @@ void myWnd_EditPanelOrder::Init()
 	// Set up the window
 	else if( nb_panels <= 0 )
 	{
-		wxStaticText* t = new wxStaticText( thePanel, wxID_ANY, "NO PANELS DEFINED !!");
+		wxStaticText* t = new wxStaticText( thePanel, wxID_ANY, wxT("NO PANELS DEFINED !!"));
 		t->SetFont(font_Alphabet);
 		sizer_main->Add( t, 0, wxCENTER );
 	}
@@ -107,7 +107,7 @@ void myWnd_EditPanelOrder::Init()
 		//*****************************
 		// Panel BGs List
 
-		t_stat = new wxStaticText( thePanel, wxID_ANY, "Avalaible panels",
+		t_stat = new wxStaticText( thePanel, wxID_ANY, wxT("Avalaible panels"),
 				wxDefaultPosition, wxDefaultSize );
 		t_stat->SetFont( font_Label );
 		sizer_main->Add( t_stat, 0, wxALL, margins );
@@ -148,9 +148,9 @@ void myWnd_EditPanelOrder::Init()
 		//*****************************
 		// ADD the control Text of the order
 		sizer_temp = new wxBoxSizer( wxHORIZONTAL );
-		t_stat = new wxStaticText( thePanel, wxID_ANY, "Order\n(Use arrow Keys)" );
+		t_stat = new wxStaticText( thePanel, wxID_ANY, wxT("Order\n(Use arrow Keys)") );
 		sizer_temp->Add( t_stat, 0, wxCENTER );
-		txtCtrl_order = new wxTextCtrl( thePanel, wxID_ANY, "",
+		txtCtrl_order = new wxTextCtrl( thePanel, wxID_ANY, wxString(),
 				wxDefaultPosition, wxDefaultSize, 0,
 				wxValidator_Restrict_Range( 'a', wxChar( 'a' + nb_panels - 1 ) ) );
 		txtCtrl_order->Connect( wxEVT_KEY_UP , wxKeyEventHandler(myWnd_EditPanelOrder::Evt_Order_KeyPress), NULL, this);
@@ -163,7 +163,7 @@ void myWnd_EditPanelOrder::Init()
 
 		//Init the order
 /*		// No order, make a initial one
-		if( curr_order == "" )
+		if( curr_order == wxString() )
 		{
 			for( size_t i =0; i < nb_panels; i++ )
 				curr_order += wxChar( 'a' + i );
@@ -174,7 +174,7 @@ void myWnd_EditPanelOrder::Init()
 
 		//*****************************
 		// ADD the view of the order
-		t_stat = new wxStaticText( thePanel, wxID_ANY, "Order view",
+		t_stat = new wxStaticText( thePanel, wxID_ANY, wxT("Order view"),
 				wxDefaultPosition, wxDefaultSize );
 		t_stat->SetFont( font_Label );
 		sizer_main->Add( t_stat, 0, wxALL, margins );
@@ -202,13 +202,13 @@ void myWnd_EditPanelOrder::Init()
 
 		sizer_temp->AddStretchSpacer();
 
-		wxButton* t_butt = new wxButton( thePanel, wxID_ANY, "OK" );
+		wxButton* t_butt = new wxButton( thePanel, wxID_ANY, wxT("OK") );
 		t_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED , wxCommandEventHandler(myWnd_EditPanelOrder::Evt_Click_OK), NULL, this);
 		sizer_temp->Add( t_butt );
 
 		sizer_temp->AddSpacer( 30 );
 
-		t_butt = new wxButton( thePanel, wxID_ANY, "CANCEL" );
+		t_butt = new wxButton( thePanel, wxID_ANY, wxT("CANCEL" ));
 		t_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED , wxCommandEventHandler(myWnd_EditPanelOrder::Evt_Click_CANCEL), NULL, this);
 		sizer_temp->Add( t_butt );
 
@@ -219,7 +219,7 @@ void myWnd_EditPanelOrder::Init()
 
 	SetSizer( sizer_wrapper );
 	Show();
-	Frame_RestorePrevCoord( this, "Panels_Ordering" );
+	Frame_RestorePrevCoord( this, wxT("Panels_Ordering" ));
 }
 
 
@@ -243,7 +243,7 @@ void myWnd_EditPanelOrder::ZeroInit()
 
 void myWnd_EditPanelOrder::EvtClose( wxCloseEvent& event )
 {
-	Frame_SaveCoord( this, "Panels_Ordering" );
+	Frame_SaveCoord( this, wxT("Panels_Ordering" ));
 	event.Skip();
 }
 
@@ -282,12 +282,12 @@ void myWnd_EditPanelOrder::Evt_Click_OK( wxCommandEvent& evt )
 		if( curr_order != old_order )
 		{
 			b_chg = true;
-			orders = stage->GetSubObjectS( "order", nb_orders );
+			orders = stage->GetSubObjectS( wxT("order"), nb_orders );
 
 			if( orders == NULL )
 			{
 				orders = new ob_object*[1];
-				orders[0] = new ob_object( "order" );
+				orders[0] = new ob_object( wxT("order") );
 				nb_orders = 1;
 				stage->Add_SubObj( orders[0] );
 			}
@@ -299,7 +299,7 @@ void myWnd_EditPanelOrder::Evt_Click_OK( wxCommandEvent& evt )
 				ob_object* o;
 				if( curr_ind >= nb_orders )
 				{
-					o = new ob_object("order" );
+					o = new ob_object(wxT("order" ));
 					last_obj->InsertObject_After( o );
 				}
 				else
@@ -435,7 +435,7 @@ void myWnd_EditPanelOrder::Evt_Order_Changed( wxCommandEvent& evt )
 
 					if( ! b_no_change_after )
 					{
-						wxMessageBox( "More than one change at one time can't be handled !!\nChange after case..." );
+						wxMessageBox( wxT("More than one change at one time can't be handled !!\nChange after case...") );
 						b_accept_change = false;
 					}
 					else
@@ -453,7 +453,7 @@ void myWnd_EditPanelOrder::Evt_Order_Changed( wxCommandEvent& evt )
 
 						if( ind_in_map == -1 )
 						{
-							wxMessageBox( "BUG ??\nNo indice in map found for the insertion !!!" );
+							wxMessageBox( wxT("BUG ??\nNo indice in map found for the insertion !!!") );
 							b_accept_change = false;
 						}
 						else
@@ -504,7 +504,7 @@ void myWnd_EditPanelOrder::Evt_Order_Changed( wxCommandEvent& evt )
 
 					if( ! b_no_change_after )
 					{
-						wxMessageBox( "More than one change at one time can't be handled !!\nChange after case..." );
+						wxMessageBox( wxT("More than one change at one time can't be handled !!\nChange after case...") );
 						b_accept_change = false;
 					}
 					else
@@ -526,7 +526,7 @@ void myWnd_EditPanelOrder::Evt_Order_Changed( wxCommandEvent& evt )
 						// Problem
 						if( ind_in_map == -1 )
 						{
-							wxMessageBox( "BUG ??\nNo indice in map found for the suppression !!!" );
+							wxMessageBox( wxT("BUG ??\nNo indice in map found for the suppression !!!" ));
 							b_accept_change = false;
 						}
 
@@ -583,7 +583,7 @@ void myWnd_EditPanelOrder::Evt_Order_Changed( wxCommandEvent& evt )
 				// Too much changes
 				if( ind_change == -2 )
 				{
-					wxMessageBox( "More than one change at one time can't be handled !!\nChange after case..." );
+					wxMessageBox( wxT("More than one change at one time can't be handled !!\nChange after case..." ));
 					b_accept_change = false;
 				}
 

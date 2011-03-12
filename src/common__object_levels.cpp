@@ -33,7 +33,7 @@ ob_levels::Guess_and_ConstructNewObject(MyLine* line, const int _num_line )
 
 	wxString _name = *(line->GetToken(0)->data);
 	ob_object *temp;
-	if( _name.Upper() == "SET" )
+	if( _name.Upper() == wxT("SET") )
 		temp = new ob_StagesSet(line,_num_line);
 	else
 		temp = new ob_object( line, _num_line);
@@ -154,7 +154,7 @@ bool ob_levels::Set_Tag(const wxString& _tag, wxArrayString _tokens )
  * The object which hold the datas about a game (mod)
  */
 
-wxString stagedeclaration_tag[] = { "Z", "FILE", "BRANCH",  };
+wxString stagedeclaration_tag[] = { wxT("Z"), wxT("FILE"), wxT("BRANCH"),  };
 
 bool IsStageDeclarationTag( wxString& t )
 {
@@ -192,7 +192,7 @@ bool ob_StagesSet::Eat(  MyLine* line, const int _num_line )
 
 	// If new set
 	if( ! line->IsComment() && ! line->IsEmpty()  )
-		if( line->GetToken(0)->data->Upper() == "SET"  )
+		if( line->GetToken(0)->data->Upper() == wxT("SET")  )
 		{
 			if(     last_subobj->type == OB_TYPE_STAGE_DECLARATION
 				&&  ! ((ob_StageDeclaration*) last_subobj )->b_completed )
@@ -201,7 +201,7 @@ bool ob_StagesSet::Eat(  MyLine* line, const int _num_line )
 				if( line->GetToken(1) != NULL && line->GetToken(1)->data != NULL )
 					__t =  *(line->GetToken(1)->data);
 				ObjectsLog( MYLOG_WARNING, 1 + _num_line,
-						"new SET of Stage <" + __t + "> declared although a stage declaration is still uncomplete." );
+					    wxT("new SET of Stage <") + __t + wxT("> declared although a stage declaration is still uncomplete.") );
 			}
 			ungry = false;
 			return false;
@@ -220,7 +220,7 @@ bool ob_StagesSet::Eat(  MyLine* line, const int _num_line )
 			if( line->GetToken(1) != NULL && line->GetToken(1)->data != NULL )
 				__t ==  *(line->GetToken(1)->data);
 			ObjectsLog( MYLOG_WARNING, _num_line + 1,
-				"Tag <" + __t + "> pop in a middle of a stage declaration !!" );
+				    wxT("Tag <") + __t + wxT("> pop in a middle of a stage declaration !!") );
 		}
 		else
 			return true;
@@ -242,7 +242,7 @@ bool ob_StagesSet::Eat(  MyLine* line, const int _num_line )
 
 	//-------------------------
 	// Annoying "next" tag case :(
-	if( _name.Upper() == "NEXT" )
+	if( _name.Upper() == wxT("NEXT") )
 	{
 		// Gotta merge all from here up to the previous stage_declaration
 		ob_object* obj_next = new ob_object( line, _num_line );
@@ -254,7 +254,7 @@ bool ob_StagesSet::Eat(  MyLine* line, const int _num_line )
 		// No merging will be done
 		if( temp == NULL || temp->type != OB_TYPE_STAGE_DECLARATION )
 		{
-			ObjectsLog( MYLOG_WARNING, _num_line + 1,"Tag <NEXT> found without previous stage declaration !!!" );
+			ObjectsLog( MYLOG_WARNING, _num_line + 1,wxT("Tag <NEXT> found without previous stage declaration !!!") );
 			Add_SubObj( obj_next );
 		}
 
@@ -444,16 +444,16 @@ bool ob_StagesSet::Set_Tag(const wxString& _tag, wxArrayString _tokens )
 
 void ob_StagesSet::SetToDefault()
 {
-	name = "SET";
-	SetToken( 0, "UNAMED" );
-	Add_SubObj( new ob_object("nosame", "1" ) );
-	Add_SubObj( new ob_object("noshare", "0" ) );
-	Add_SubObj( new ob_object("ifcomplete", "0" ) );
-	Add_SubObj( new ob_object("lives", "3" ) );
-	Add_SubObj( new ob_object("credits", "3" ) );
-	Add_SubObj( new ob_object("maxplayers", "2" ) );
-	Add_SubObj( new ob_object("typemp", "0" ) );
-	Add_SubObj( new ob_object("cansave", "0" ) );
+	name = wxT("SET");
+	SetToken( 0, wxT("UNAMED" ));
+	Add_SubObj( new ob_object(wxT("nosame"), wxT("1" )) );
+	Add_SubObj( new ob_object(wxT("noshare"), wxT("0" )) );
+	Add_SubObj( new ob_object(wxT("ifcomplete"), wxT("0") ) );
+	Add_SubObj( new ob_object(wxT("lives"), wxT("3") ) );
+	Add_SubObj( new ob_object(wxT("credits"), wxT("3") ) );
+	Add_SubObj( new ob_object(wxT("maxplayers"), wxT("2") ) );
+	Add_SubObj( new ob_object(wxT("typemp"), wxT("0") ) );
+	Add_SubObj( new ob_object(wxT("cansave"), wxT("0") ) );
 }
 
 
@@ -488,7 +488,7 @@ ob_StageDeclaration::ob_StageDeclaration( const wxString& _name, wxArrayString& 
 	SetType( OB_TYPE_STAGE_DECLARATION );
 	b_completed = false;
 	stage = NULL;
-	if( _name.Upper() == "FILE" )
+	if( _name.Upper() == wxT("FILE") )
 		b_completed = true;
 
 	ob_object* temp = new ob_object( _name, _tokens );
@@ -531,7 +531,7 @@ bool ob_StageDeclaration::Eat(  MyLine* line, const int _num_line )
 
 
 	wxString _name = *(line->GetToken(0)->data);
-	if( _name.Upper() == "FILE" )
+	if( _name.Upper() == wxT("FILE") )
 	{
 		b_completed = true;
 		ungry = false;
@@ -547,14 +547,14 @@ bool ob_StageDeclaration::Eat(  MyLine* line, const int _num_line )
 bool ob_StageDeclaration::Add_SubObj( ob_object* _obj )
 {
 	// Add the next at the end
-	if( _obj->name.Upper() == "NEXT" )
+	if( _obj->name.Upper() == wxT("NEXT") )
 	{
 		return Append_SubObj( _obj );
 	}
 	// Add the branch just after "FILE"
-	else if( _obj->name.Upper() == "BRANCH" )
+	else if( _obj->name.Upper() == wxT("BRANCH") )
 	{
-		ob_object * t = GetSubObject( "BRANCH" );
+		ob_object * t = GetSubObject( wxT("BRANCH") );
 		if( t == NULL )
 			return Append_SubObj( _obj );
 		else
@@ -603,7 +603,7 @@ void ob_StageDeclaration::Validate()
 void ob_StageDeclaration::SetStageName(const wxString& _sn)
 {
 	// Branch Name
-	ob_object* temp = GetSubObject( "BRANCH" );
+	ob_object* temp = GetSubObject( wxT("BRANCH") );
 	if( temp != NULL)
 		temp->SetToken( 0, _sn );
 
@@ -612,19 +612,19 @@ void ob_StageDeclaration::SetStageName(const wxString& _sn)
 	while( t != NULL )
 	{
 		wxString c = t->GetComment();
-		int _ind = c.Find( "# STAGENAME : " );
+		int _ind = c.Find( wxT("# STAGENAME : ") );
 		if( _ind != wxNOT_FOUND )
 		{
-			_ind += wxString("# STAGENAME : ").Len();
+			_ind += wxString::FromAscii("# STAGENAME : ").Len();
 			wxString _pref = c.Mid(0, _ind);
-			t->SetComment( _pref + " " + _sn);
+			t->SetComment( _pref + wxT(" ") + _sn);
 			return;
 		}
 		t = t->next;
 	}
 
 	// Have to add a prefix
-	PrependCommentLine( "\t# STAGENAME : " + _sn );
+	PrependCommentLine( wxT("\t# STAGENAME : ") + _sn );
 }
 
 
@@ -633,7 +633,7 @@ void ob_StageDeclaration::SetStageName(const wxString& _sn)
 wxString ob_StageDeclaration::GetStageName()
 {
 	// Branch Name is mandatory
-	ob_object* temp = GetSubObject( "BRANCH" );
+	ob_object* temp = GetSubObject( wxT("BRANCH"));
 	if( temp != NULL)
 		return temp->GetToken( 0 );
 
@@ -642,10 +642,10 @@ wxString ob_StageDeclaration::GetStageName()
 	while( t != NULL )
 	{
 		wxString c = t->GetComment();
-		int _ind = c.Find( "# STAGENAME : " );
+		int _ind = c.Find( wxT("# STAGENAME : ") );
 		if( _ind != wxNOT_FOUND )
 		{
-			_ind += wxString("# STAGENAME : ").Len();
+			_ind += wxString::FromAscii("# STAGENAME : ").Len();
 			wxString res = c.Mid( _ind, c.Len() - _ind);
 			res.Trim().Trim(false );
 			return res;
@@ -654,8 +654,8 @@ wxString ob_StageDeclaration::GetStageName()
 	}
 
 	wxString res = wxFileName(GetFileName()).GetFullName();
-	if( res == "" )
-		res = "UNNAMED";
+	if( res == wxString() )
+		res = wxT("UNNAMED");
 	return res;
 }
 
@@ -664,11 +664,11 @@ wxString ob_StageDeclaration::GetStageName()
 
 bool ob_StageDeclaration::SetFileName(const wxString& _fn)
 {
-	ob_object* temp = GetSubObject( "FILE" );
+	ob_object* temp = GetSubObject( wxT("FILE") );
 	if( temp != NULL)
 		return temp->SetToken( 0, _fn );
 
-	temp = new ob_object( "FILE", _fn );
+	temp = new ob_object( wxT("FILE"), _fn );
 	return Add_SubObj( temp );
 }
 
@@ -677,7 +677,7 @@ bool ob_StageDeclaration::SetFileName(const wxString& _fn)
 
 wxString ob_StageDeclaration::GetFileName()
 {
-	return GetObFile( GetSubObject_Token( "FILE", 0 )).GetFullPath();
+	return GetObFile( GetSubObject_Token( wxT("FILE"), 0 )).GetFullPath();
 }
 
 
@@ -721,7 +721,7 @@ wxString ob_StageDeclaration::GetFileName()
 bool ob_StageDeclaration::Set_BranchTag( const wxString& _bn)
 {
 	// If a "Branch" tag is already setted
-	ob_object* temp = GetSubObject( "BRANCH" );
+	ob_object* temp = GetSubObject(wxT("BRANCH") );
 	if( temp != NULL )
 	{
 		// Just Change the name
@@ -730,7 +730,7 @@ bool ob_StageDeclaration::Set_BranchTag( const wxString& _bn)
 	}
 
 	// No branch tag ? -> Create one at the start of the stage declaration
-	ob_object* _branch = new ob_object( "BRANCH", _bn );
+	ob_object* _branch = new ob_object( wxT("BRANCH"), _bn );
 	Prepend_SubObj( _branch );
 	SetStageName( _bn );
 	return true;
@@ -759,7 +759,7 @@ bool ob_StageDeclaration::Set_Tag(const wxString& _tag, wxArrayString _tokens )
 	}
 
 	//try to find the FILE tag
-	temp = GetSubObject( "FILE" );
+	temp = GetSubObject( wxT("FILE") );
 
 	// No FILE Elt -> Cancel the operation
 	if( temp != NULL)
@@ -776,7 +776,7 @@ bool ob_StageDeclaration::Set_Tag(const wxString& _tag, wxArrayString _tokens )
 wxSize 
 ob_StageDeclaration::GetDefScrollzBounds()
 {
-	ob_object* subobj = GetSubObject( "Z" );
+	ob_object* subobj = GetSubObject( wxT("Z") );
 	if( subobj == NULL )
 		return wxSize(160,232);
 	return wxSize( StrToInt(subobj->GetToken(0)), StrToInt(subobj->GetToken(1)) );

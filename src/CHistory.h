@@ -16,7 +16,7 @@ public:
 	History_Elt( int _type, ob_object* _o, ob_object* _o_related, bool b_append );
 	// For TOKEN_CHANGE, TOKEN_ADD, TOKEN_RM
 	History_Elt(  int _type, ob_object* _o
-			, const wxString& _token_val = "", int _token_pos = 0 );
+			, const wxString& _token_val = wxString(), int _token_pos = 0 );
 	void Zero_Init();
 	virtual ~History_Elt();
 
@@ -130,7 +130,7 @@ public:
 	bool IsUndoing(){return (m_flag&M_IN_DO_OR_UNDO) != 0;};
 	
 public:
-	void Group__Append( const wxString& grp_name = "" );
+	void Group__Append( const wxString& grp_name = wxString() );
 	
 	void Clear_Future();
 

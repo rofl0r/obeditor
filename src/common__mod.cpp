@@ -14,7 +14,7 @@ Mod::Mod( const wxString& _name )
 {
 	name = _name;
 	wxString t;
-	config->Read("/Mod/" + name +"/dirData", &t );
+	config->Read(wxT("/Mod/") + name +wxT("/dirData"), &t );
 	dirData = t;
 	
 	ZeroInit();
@@ -33,10 +33,10 @@ Mod::Mod( const wxString& _name, const wxString& _dataDir )
 void
 Mod::ZeroInit()
 {
-	models_txt = "models.txt";
-	levels_txt = "levels.txt";
-	bgs_dir = "";
-	scenes_dir = "";
+	models_txt = wxT("models.txt");
+	levels_txt = wxT("levels.txt");
+	bgs_dir = wxString();
+	scenes_dir = wxString();
 	colourdepth = 8;
 	video_res.x = 320;
 	video_res.y = 240;
@@ -47,7 +47,7 @@ Mod::ZeroInit()
 void
 Mod::Load_Video_txt()
 {
-	wxFileName fn( GetObFile( "data/video.txt" ));
+	wxFileName fn( GetObFile( wxT("data/video.txt") ) );
 	if( fn.FileExists() == false )
 		return;
 	obFileVideoTxt video_txt( fn );
@@ -56,36 +56,36 @@ Mod::Load_Video_txt()
 	
 	ob_object* subobj;
 	
-	subobj = video_txt.GetProperty( "models" );
+	subobj = video_txt.GetProperty( wxT("models") );
 	if( subobj != NULL )
 		models_txt = subobj->GetToken( 0 );
 	
-	subobj = video_txt.GetProperty( "levels" );
+	subobj = video_txt.GetProperty( wxT("levels") );
 	if( subobj != NULL )
 		levels_txt = subobj->GetToken( 0 );
 	
-	subobj = video_txt.GetProperty( "backgrounds" );
+	subobj = video_txt.GetProperty( wxT("backgrounds") );
 	if( subobj != NULL )
 		bgs_dir = subobj->GetToken( 0 );
 	
-	subobj = video_txt.GetProperty( "scenes" );
+	subobj = video_txt.GetProperty( wxT("scenes" ));
 	if( subobj != NULL )
 		scenes_dir = subobj->GetToken( 0 );
 	
-	subobj = video_txt.GetProperty( "colourdepth" );
+	subobj = video_txt.GetProperty( wxT("colourdepth" ));
 	if( subobj != NULL )
 	{
 		wxString t = subobj->GetToken( 0 );
-		if( t.Upper() == "8BIT" )
+		if( t.Upper() == wxT("8BIT" ))
 			colourdepth = 8;
-		else if( t.Upper() == "16BIT" )
+		else if( t.Upper() == wxT("16BIT" ))
 			colourdepth = 16;
-		else if( t.Upper() == "32BIT" )
+		else if( t.Upper() == wxT("32BIT") )
 			colourdepth = 32;
 	}
 	
 	
-	subobj = video_txt.GetProperty( "video" );
+	subobj = video_txt.GetProperty( wxT("video") );
 	if( subobj != NULL )
 	{
 		int video = StrToInt( subobj->GetToken(0));
@@ -225,10 +225,10 @@ bool ModsList::Delete( const wxString& modName)
 	delete temp;
 	for( int i = ind; i< arr_mods_size - 1; i ++)
 	{
-		config->RenameEntry(  "Mod" + IntToStr(i +1), "Mod" + IntToStr(i) );
+		config->RenameEntry(  wxT("Mod") + IntToStr(i +1), wxT("Mod") + IntToStr(i) );
 		arr_mods[i] = arr_mods[i+1];
 	}
-	config->DeleteEntry( "/Mod" + IntToStr(arr_mods_size -1) );
+	config->DeleteEntry( wxT("/Mod") + IntToStr(arr_mods_size -1) );
 	arr_mods[arr_mods_size -1] = NULL;
 	arr_mods_size--;
 	return true;

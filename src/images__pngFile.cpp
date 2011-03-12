@@ -336,7 +336,7 @@ bool wxIndexedPNG::SaveAs( const wxString& str_pngFile )
 
 int wxIndexedPNG::ReadPng( const wxString& str_fn)
 {
-	FILE *fp = fopen(str_fn, "rb");
+	FILE *fp = fopen((char*)str_fn.c_str(), "rb");
 	if (!fp)
 		return 1;
 
@@ -463,7 +463,7 @@ int wxIndexedPNG::ReadPng( const wxString& str_fn)
 
 int wxIndexedPNG::WritePng( const wxString& str_fn )
 { // Writing a copy from scratch
-	FILE *fp = fopen(str_fn, "wb");
+	FILE *fp = fopen((char*)str_fn.c_str(), "wb");
 	if (!fp)
 	   return 1;
 

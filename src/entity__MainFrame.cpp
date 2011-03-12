@@ -43,11 +43,11 @@ int ent_g_flag;
 void SetLastSessionSelectedEntity()
 {
 	// Set the current selected object
-	wxString last_ent = ConfigEdit_Read( "last_entity_selected", "" );
+	wxString last_ent = ConfigEdit_Read( wxT("last_entity_selected"), wxString() );
 	if( models_count > 0 )
 	{
 		int last_ind = 0;
-		if( last_ent != "" )
+		if( last_ent != wxString() )
 		{
 			for( int i =0; i < models_count; i++)
 				if( models_name[i] == last_ent )
@@ -96,7 +96,7 @@ EntityFrame::EntityFrame(wxWindow *_parent, const wxString& title)
 	b_NoAnimPage = false;
 	entitySelection_time = 0;
 	entityLastSelection_time = -1;
-	curr_entity_filename = "";
+	curr_entity_filename = wxString();
 	ent_g_flag = 0;
 	b_started = false;
 
@@ -123,7 +123,7 @@ EntityFrame::EntityFrame(wxWindow *_parent, const wxString& title)
 
 	// Currently selected anim (Note: -1 => no anim selected )
 	curr_anim = NULL;
-	last_anim_selected = "";
+	last_anim_selected = wxString();
 
 	// array and array size of Frames loaded
 	curr_frames_count = 0;
@@ -139,7 +139,7 @@ EntityFrame::EntityFrame(wxWindow *_parent, const wxString& title)
 	//**************************
 	// PANELS
 	//**************************
-	panel_Errors = new Panel_Errors( onglets, "Errors" );
+	panel_Errors = new Panel_Errors( onglets, wxT("Errors") );
 	onglets->AddPage(panel_Errors, wxT("Errors") );
 
 	panel_EntOverview =  new PanelEntity_Overview(onglets);
@@ -159,38 +159,38 @@ EntityFrame::EntityFrame(wxWindow *_parent, const wxString& title)
 	//**************************
     wxMenu *menuLoadSave = new wxMenu;
 
-    menuLoadSave->Append( ID_OPEN_IN_EDITOR,	    "Open External Editor  (F3)" );
+    menuLoadSave->Append( ID_OPEN_IN_EDITOR,	    wxT("Open External Editor  (F3)") );
     menuLoadSave->AppendSeparator();
-    menuLoadSave->Append( ID_ENTITIES_CURR_RELOAD,	"Reload Current Entity  (F4)" );
-    menuLoadSave->Append( ID_ENTITIES_CURR_SAVE,	"Save Current Entity     (F2)" );
+    menuLoadSave->Append( ID_ENTITIES_CURR_RELOAD,	wxT("Reload Current Entity  (F4)") );
+    menuLoadSave->Append( ID_ENTITIES_CURR_SAVE,	wxT("Save Current Entity     (F2)" ));
     menuLoadSave->AppendSeparator();
-    menuLoadSave->Append( ID_ENTITIES_RELOADALL, 	"Reload all entities   (Shift + F2)" );
-    menuLoadSave->Append( ID_ENTITIES_SAVEALL,		"Save   all entities    (Shift + F4)" );
+    menuLoadSave->Append( ID_ENTITIES_RELOADALL, 	wxT("Reload all entities   (Shift + F2)") );
+    menuLoadSave->Append( ID_ENTITIES_SAVEALL,		wxT("Save   all entities    (Shift + F4)" ));
     menuLoadSave->AppendSeparator();
-    menuLoadSave->Append( ID_ENTITIES_RELOAD_MODELSTXT, "Reload entities list" );
+    menuLoadSave->Append( ID_ENTITIES_RELOAD_MODELSTXT, wxT("Reload entities list" ));
 
     menuHistory = new wxMenu;
-    menuHistory->Append( ID_ENTITIES_HISTORY_CLEAR, "Clear this list" );
+    menuHistory->Append( ID_ENTITIES_HISTORY_CLEAR, wxT("Clear this list") );
     menuHistory->AppendSeparator();
 
     menuUnRedo = new wxMenu;
-    menuUnRedo->Append( ID_UNDO, "Undo\tCTRL-Z" )->Enable(false);
-    menuUnRedo->Append( ID_REDO, "Redo\tCTRL-SHIFT-Z" )->Enable(false);
+    menuUnRedo->Append( ID_UNDO, wxT("Undo\tCTRL-Z" ))->Enable(false);
+    menuUnRedo->Append( ID_REDO, wxT("Redo\tCTRL-SHIFT-Z") )->Enable(false);
 
     wxMenu *menuAnims = new wxMenu;
-    menuAnims->Append( ID_ENTITIES_RELOAD_GIFS, "Reload Frames (F5)" );
-    menuAnims->Append( ID_ENTITIES_RESCALE_BOXES, "Rescale Boxes and Offsets (F6)" );
+    menuAnims->Append( ID_ENTITIES_RELOAD_GIFS, wxT("Reload Frames (F5)") );
+    menuAnims->Append( ID_ENTITIES_RESCALE_BOXES, wxT("Rescale Boxes and Offsets (F6)") );
 
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append( ID_HELP_PLEASE, "Manual" );
+    menuHelp->Append( ID_HELP_PLEASE, wxT("Manual") );
 
 
     menuBar = new wxMenuBar;
-    menuBar->Append( menuLoadSave, "Load/Save" );
-    menuBar->Append( menuHistory, "Last Entities" );
-    menuBar->Append( menuAnims, "Animation" );
-    menuBar->Append( menuUnRedo, "History" );
-    menuBar->Append( menuHelp, "?" );
+    menuBar->Append( menuLoadSave, wxT("Load/Save") );
+    menuBar->Append( menuHistory, wxT("Last Entities") );
+    menuBar->Append( menuAnims, wxT("Animation") );
+    menuBar->Append( menuUnRedo, wxT("History") );
+    menuBar->Append( menuHelp, wxT("?") );
 
     SetMenuBar( menuBar );
 
@@ -225,14 +225,14 @@ void EntityFrame::EvtClose( wxCloseEvent& event)
 
 	// Save last entity selected
 	wxString last_entity_edited = panel_EntOverview->list_entities->GetStringSelection();
-	ConfigEdit_Write( "last_entity_selected", last_entity_edited );
+	ConfigEdit_Write( wxT("last_entity_selected"), last_entity_edited );
 
 	// Save to autoload this frame
-	config->Write("/autoload/frame", "edit_entity" );
+	config->Write(wxT("/autoload/frame"), wxT("edit_entity" ));
 
 	// Save the last anim edited
 	wxString temp = panel_Anims->list_Anims->GetStringSelection();
-	ConfigEdit_Write( "last_anim_edited", temp );
+	ConfigEdit_Write( wxT("last_anim_edited"), temp );
 
 	panel_Anims->EvtClose( event);
 	panel_EntOverview->EvtClose( event);
@@ -335,7 +335,7 @@ void EntityFrame::EvtMenu(wxCommandEvent& event)
 			break;
 
 		case ID_HELP_PLEASE:
-			WndFromText( this, "Manual", GetRessourceFile_String( "manual.txt" )).ShowModal();
+			WndFromText( this, wxT("Manual"), GetRessourceFile_String( wxT("manual.txt") )).ShowModal();
 			break;
 
 		case ID_OPEN_IN_EDITOR:
@@ -344,30 +344,30 @@ void EntityFrame::EvtMenu(wxCommandEvent& event)
 			wxString editor_path;
 			if( ! config->Read( wxT("/startFrame/editor_program"), &editor_path ) )
 			{
-				wxMessageBox( "Did you correctly set the editor in the start window ??",
-				                  "ProPlem", wxOK | wxICON_INFORMATION, this );
+				wxMessageBox( wxT("Did you correctly set the editor in the start window ??"),
+					      wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 				break;
 			}
 
 			if( ! wxFileName(editor_path).FileExists() )
 			{
-				wxMessageBox( "Unable to find " + editor_path + " ??",
-				                  "ProPlem", wxOK | wxICON_INFORMATION, this );
+				wxMessageBox( wxT("Unable to find ") + editor_path + wxT(" ??"),
+					      wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 				break;
 			}
 
 			// Get the current file to edit
 			if( entity == NULL )
 			{
-				wxMessageBox( "No current entity to edit ??",
-								  "ProPlem", wxOK | wxICON_INFORMATION, this );
+				wxMessageBox( wxT("No current entity to edit ??"),
+					      wxT("ProPlem"), wxOK | wxICON_INFORMATION, this );
 				break;
 			}
 
 			wxString __path = entity->filename.GetFullPath();
 
 				// Launch the editor
-				wxExecute( wxString("\"") + editor_path + "\" \"" + __path + "\"" );
+				wxExecute( wxT("\"") + editor_path +wxT("\" \"") + __path + wxT("\"") );
 		}
 
 		default:
@@ -420,7 +420,7 @@ EntityFrame::EntityAnimsHistory__Append(const wxString& _ent_name)
 	// Create a non-empty label
 	wxString pent_name = _ent_name;
 	if( IsEmpty( pent_name ) == true )
-		pent_name = "EMPTY";
+		pent_name = wxT("EMPTY");
 		
 	// Append the stuff
 	menuHistory->Append(vect_ent_history.size()+ID_ENTITIES_HISTORY_START,pent_name );
@@ -536,13 +536,13 @@ EntityFrame::PanelPageChanging(wxNotebookEvent& event )
 		if( panel_EntOverview->EntityChanged() == 1 )
 		{
 			int res = wxMessageDialog( thepanel,
-					"Change have been made to the current entity\nWrite the changes now ??",
-					"Question !", wxYES_NO | wxSTAY_ON_TOP).ShowModal();
+				wxT("Change have been made to the current entity\nWrite the changes now ??"),
+						   wxT("Question !"), wxYES_NO | wxSTAY_ON_TOP).ShowModal();
 
 			if( res == wxID_YES )
 			{
 				if( ! entity->Write() )
-					wxMessageBox( "Error, can't write the file !!", "Error !"
+					wxMessageBox( wxT("Error, can't write the file !!"), wxT("Error !")
 					, wxYES_NO | wxICON_ERROR, thepanel  );
 			}
 			else
@@ -627,7 +627,7 @@ void EntityFrame::Reload_Anims()
 	if( arr_anims != NULL )
 	{
 		Sort_ob_Object_ByTag( arr_anims, arr_anims_count, 0 );
-		if( last_anim_selected != "" )
+		if( last_anim_selected != wxString() )
 			for( int i  = 0; i < arr_anims_count; i++)
 				if( arr_anims[i]->GetToken(0).Upper() == last_anim_selected.Upper() )
 				{
@@ -661,7 +661,7 @@ EntityFrame::EvtUndo(wxCommandEvent& event)
 {
 	// Register ctrls states when undoing the present
 	if( theHistoryManager.IsPresent() )
-		Register_ControlsState_inHistory("EvtUndo");
+		Register_ControlsState_inHistory(wxT("EvtUndo"));
 	if( theHistoryManager.UnDo() == false )
 	{
 		// Beep user
@@ -680,12 +680,12 @@ EntityFrame::Menu_DoRedos__Update_Labels(list<History_Group*>::iterator it_group
 	{
 		if(theHistoryManager.it_now == it_end || it_group == it_end )
 		{
-			t_redo->SetItemLabel( "Redo\tCTRL-SHIFT-Z");
+			t_redo->SetItemLabel( wxT("Redo\tCTRL-SHIFT-Z"));
 			t_redo->Enable( false );
 		}
 		else
 		{
-			t_redo->SetItemLabel( "Redo - " + (*it_group)->GetName() + "\tCTRL-SHIFT-Z");
+			t_redo->SetItemLabel( wxT("Redo - ") + (*it_group)->GetName() + wxT("\tCTRL-SHIFT-Z"));
 			t_redo->Enable( true );
 		}
 	}
@@ -696,14 +696,14 @@ EntityFrame::Menu_DoRedos__Update_Labels(list<History_Group*>::iterator it_group
 		if( theHistoryManager.IsFirstGroup( it_group )
 			|| theHistoryManager.IsHistory_Empty() )
 		{
-			t_undo->SetItemLabel( "Undo\tCTRL-Z");
+			t_undo->SetItemLabel( wxT("Undo\tCTRL-Z"));
 			t_undo->Enable( false );
 		}
 		else
 		{
 			list<History_Group*>::iterator it_t(it_group);
 			it_t--;
-			t_undo->SetItemLabel( "Undo - " + (*it_t)->GetName() + "\tCTRL-Z");
+			t_undo->SetItemLabel( wxT("Undo - ") + (*it_t)->GetName() + wxT("\tCTRL-Z"));
 			t_undo->Enable( true );
 		}
 	}
@@ -873,7 +873,7 @@ wxString
 ConfigEdit_Read( const wxString& subpath, const wxString& def_val)
 {
 	wxString res;
-	config->Read("/editFrame/" + theModsList->GetSelectedProjectName() + "/" + subpath,
+	config->Read(wxT("/editFrame/") + theModsList->GetSelectedProjectName() + wxT("/") + subpath,
 				&res, def_val);
 	return res;
 }
@@ -881,7 +881,7 @@ ConfigEdit_Read( const wxString& subpath, const wxString& def_val)
 void
 ConfigEdit_Write( const wxString& subpath, const wxString& val )
 {
-	config->Write("/editFrame/" + theModsList->GetSelectedProjectName() + "/" + subpath,
+	config->Write(wxT("/editFrame/") + theModsList->GetSelectedProjectName() + wxT("/") + subpath,
 				val);
 	return;
 }
@@ -907,7 +907,7 @@ ent__onUndo(
 		{
 			// So previous controls state are in this elt
 			if(theHistoryManager.initial_datas == NULL )
-				wxMessageBox( "BUG !!\nent__onUndo()\nFirst elt has no state setted !!!\n" );
+				wxMessageBox( wxT("BUG !!\nent__onUndo()\nFirst elt has no state setted !!!\n") );
 			else
 				entityFrame->Restore_ControlsState( theHistoryManager.initial_datas );
 		}

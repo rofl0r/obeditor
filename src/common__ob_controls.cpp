@@ -39,7 +39,7 @@ atom_path*
 ANN__new_atom( int num_token )
 {
 	atom_path* t = new atom_path;
-	t->tag = "";
+	t->tag = wxString();
 	t->num_token = num_token;
 	return t;
 }
@@ -82,7 +82,7 @@ ob_token_path::operator=( const ob_token_path& obtp )
 ob_token_path::ob_token_path(const ob_token_path& ob_tp, const wxString& subtag,int num_sub_token )
 {
 	*this = ob_tp;
-	if( subtag != "" )
+	if( subtag != wxString() )
 	{
 		l_atoms.push_back( ANN__new_atom( subtag ) );
 		if( num_sub_token >= 0 )
@@ -136,16 +136,16 @@ ob_token_path::GetPath()
 	{
 		if( *it == NULL )
 			continue;
-		if( (*it)->tag != "" )
+		if( (*it)->tag != wxString() )
 		{
 			if( res.Len() == 0 )
 				res += (*it)->tag;
 			else
-				res += ">" + (*it)->tag;
+				res += wxT(">") + (*it)->tag;
 		}
 		else
 		{
-			res += "=" + IntToStr((*it)->num_token );
+			res += wxT("=") + IntToStr((*it)->num_token );
 			return res;
 		}
 	}
@@ -171,7 +171,7 @@ ob_token_path::BuildPath_Sibling_Token( int decal )
 			continue;
 			
 		res->l_atoms.push_back( ANN__new_atom(*it) );
-		if( (*it)->tag == "" )
+		if( (*it)->tag == wxString() )
 		{
 			nb_tokens++;
 			b_ok = true;
@@ -202,7 +202,7 @@ ob_token_path::Append__SubToken( int num_sub_token )
 		return false;
 	if( l_atoms.size() < 1 )
 		return false;
-	if( l_atoms.back()->tag != "" )
+	if( l_atoms.back()->tag != wxString() )
 		return false;
 	l_atoms.push_back( ANN__new_atom( num_sub_token ));
 	return true;
@@ -212,9 +212,9 @@ ob_token_path::Append__SubToken( int num_sub_token )
 bool
 ob_token_path::Append__SubTag( const wxString& subtag )
 {
-	if( subtag == "" );
+	if( subtag == wxString() );
 		return  false;
-	if( l_atoms.back()->tag == "" )
+	if( l_atoms.back()->tag == wxString() )
 		return false;
 	l_atoms.push_back( ANN__new_atom( subtag ));
 	return true;
@@ -232,7 +232,7 @@ ob_token_path::Resolve_With( ob_object* _o )
 		if( res == NULL )
 			return NULL;
 		atom_path* at = (*it);
-		if( at->tag != "" )
+		if( at->tag != wxString() )
 			res = res->GetSubObject( at->tag );
 		else
 			break; 
@@ -244,12 +244,12 @@ ob_token_path::Resolve_With( ob_object* _o )
 wxString 
 ob_token_path::Get_With( ob_object* _o )
 {
-	if( l_atoms.back()->tag != "" )
-		return "";
+	if( l_atoms.back()->tag != wxString() )
+		return wxString();
 	
 	ob_object* subobj = Resolve_With( _o );
 	if( subobj == NULL )
-		return "";
+		return wxString();
 	return subobj->GetToken( l_atoms.back()->num_token );
 }
 
@@ -282,7 +282,7 @@ ob_property::ob_property(  const wxString& _tag,const int _num_token
 			, int _type_prop
 			, const wxString& _def_val, int _do_on_default )
 {
-	int ind_dblpt = _tag.Find( ":" );
+	int ind_dblpt = _tag.Find( wxT(":") );
 	if( ind_dblpt != wxNOT_FOUND )
 	{
 		prefix = _tag.Left(ind_dblpt);
@@ -290,7 +290,7 @@ ob_property::ob_property(  const wxString& _tag,const int _num_token
 	}
 	else
 	{
-		prefix = "";
+		prefix = wxString();
 		tag = _tag;
 	}
 	num_token = _num_token;
@@ -329,7 +329,7 @@ ob_property::SetEnums(wxWindow* _comboBox, const wxArrayString& _displayed, cons
 {
 	if( _displayed.Count() != _values.Count() )
 	{
-		wxMessageBox( "BUG!!!\nob_property::SetEnums\n counts doesn't match !\n" );
+		wxMessageBox( wxT("BUG!!!\nob_property::SetEnums\n counts doesn't match !\n") );
 		return;
 	}
 	
@@ -413,7 +413,7 @@ ob_property::BuildControls(
 	{
 		sizer_sub = new wxBoxSizer( wxHORIZONTAL );
 		
-		if( str_label != "" )
+		if( str_label != wxString() )
 		{
 			label = new wxStaticText( parent, wxID_ANY, str_label
 							,wxDefaultPosition,wxSize(label_w,-1) );
@@ -421,7 +421,7 @@ ob_property::BuildControls(
 		}
 		
 		theCtrl =  new wxTextCtrl( 
-					parent, wxID_ANY, ""
+					parent, wxID_ANY, wxString()
 					, wxDefaultPosition, wxSize(ctrl_w,-1)
 					, wxBORDER_SUNKEN|wxTE_PROCESS_ENTER |more_styles
 					, *validator
@@ -436,7 +436,7 @@ ob_property::BuildControls(
 	else if( _type == 1 )
 	{
 		sizer_sub = new wxBoxSizer( wxHORIZONTAL );
-		if( str_label != "" )
+		if( str_label != wxString() )
 		{
 			label = new wxStaticText( parent, wxID_ANY, str_label
 							,wxDefaultPosition,wxSize(label_w,-1)
@@ -446,7 +446,7 @@ ob_property::BuildControls(
 		
 		theCtrl = new prObFileChooserCtrl(
 						parent, wxID_ANY
-						, ""
+						, wxString()
 						, true
 						, ctrl_w
 						);
@@ -480,7 +480,7 @@ ob_property::BuildControls(
 		sizer_sub->Add(label, 0, wxALIGN_CENTER );
 		
 		theCtrl =  new wxComboBox(
-						 parent, wxID_ANY, ""
+						 parent, wxID_ANY, wxString()
 						, wxDefaultPosition, wxSize( ctrl_w, -1 )
 						, 0, NULL
 						, more_styles
@@ -506,18 +506,18 @@ wxString
 ob_property::Get_SpecialDefault_Val(ob_object* _o )
 {
 	if( referer_path.IsEmpty() == true )
-		return "";
+		return wxString();
 	
 	if( ob_stage::Is_Stage_Spawn_Type( _o ) == true )
 	{
 		ob_spawn* o = (ob_spawn*) _o;
 		if( o->entity_ref == NULL || o->entity_ref->obj_container == NULL)
-			return "";
+			return wxString();
 		
 		return referer_path.Get_With( o->entity_ref->obj_container );
 	}
 
-	return "";
+	return wxString();
 }
 
 //-------------------------------------------------------------
@@ -545,7 +545,7 @@ ob_property::Get_Default_Val(ob_object* _o )
 	if( _o == NULL )
 		return def_val;
 	wxString res = Get_SpecialDefault_Val( _o );
-	if( res != "" )
+	if( res != wxString() )
 		return res;
 	return def_val;
 }
@@ -554,12 +554,12 @@ ob_property::Get_Default_Val(ob_object* _o )
 wxString 
 ob_property::Get_Curr_Value(ob_object* _o)
 {
-	if( tag.Upper() == _o->name.Upper() || tag == "" )
+	if( tag.Upper() == _o->name.Upper() || tag == wxString() )
 		return _o->GetToken( num_token );
 	
 	ob_object* subobj = _o->GetSubObject( tag );
 	if( subobj == NULL  )
-		return "";
+		return wxString();
 	
 	return subobj->GetToken( num_token );
 }
@@ -576,16 +576,16 @@ ob_property::Update_CtrlVal( wxWindow* ctrl )
 		return false;
 	wxString w_name = ctrl->GetName();
 	wxString typ_Ctrl = w_name.Left(2);
-	if( 	   typ_Ctrl != "TC"
-		&& typ_Ctrl != "CO"
-		&& typ_Ctrl != "CH"
+	if( 	   typ_Ctrl != wxT("TC")
+		&& typ_Ctrl != wxT("CO")
+		&& typ_Ctrl != wxT("CH")
 		)
 		return false;
 	
 	// Get the curr val for the object
 	wxString val = Get_Curr_Value( obj );
 	
-	if( typ_Ctrl == "TC" )
+	if( typ_Ctrl == wxT("TC") )
 	{
 		wxTextCtrl* t = ((wxTextCtrl*)ctrl);
 		if( t->GetValue() == val )
@@ -595,7 +595,7 @@ ob_property::Update_CtrlVal( wxWindow* ctrl )
 		return true;
 	}
 	
-	if( typ_Ctrl == "CO" )
+	if( typ_Ctrl == wxT("CO") )
 	{
 		wxComboBox* t = ((wxComboBox*)ctrl);
 		int curr_ind = t->GetCurrentSelection();
@@ -619,10 +619,10 @@ ob_property::Update_CtrlVal( wxWindow* ctrl )
 		return true;
 	}
 	
-	if( typ_Ctrl == "CH" )
+	if( typ_Ctrl == wxT("CH") )
 	{
 		wxCheckBox* t = ((wxCheckBox*)ctrl);
-		if( t->GetValue() == (val == "1") )
+		if( t->GetValue() == (val == wxT("1")) )
 			return true;
 		
 		obj->SetEdited( true );
@@ -640,15 +640,15 @@ ob_property::CreateDefaultObject(ob_object* o)
 {
 	ob_object* subobj = new ob_object( tag );
 	wxString pref = tag;
-	if( prefix != "" )
-		pref = prefix + ":" + pref;
+	if( prefix != wxString() )
+		pref = prefix + wxT(":") + pref;
 	// Insert default values
 	for( int i = 0; i < num_token - 1; i ++ )
 	{
-		wxString t_tag = pref + "=" + IntToStr(i);
+		wxString t_tag = pref + wxT("=") + IntToStr(i);
 		if( ob_props.find(t_tag) == ob_props.end() ||ob_props[t_tag] == NULL )
 		{
-			subobj->SetToken( i, "0" );
+			subobj->SetToken( i, wxT("0") );
 		}
 		else
 		{
@@ -679,9 +679,9 @@ ob_property::MayTruncate(ob_object* obj, ob_object* subobj, wxWindow* theCtrl )
 {
 	size_t i = num_token + 1;
 	wxString pref = tag;
-	if( prefix != "" )
-		pref = prefix + ":" + pref;
-	wxString t_tag = pref + "=" + IntToStr(i);
+	if( prefix != wxString() )
+		pref = prefix + wxT(":") + pref;
+	wxString t_tag = pref + wxT("=") + IntToStr(i);
 	while( ob_props.find(t_tag) != ob_props.end() && ob_props[t_tag] != NULL )
 	{
 		// Subobject deny truncation
@@ -694,7 +694,7 @@ ob_property::MayTruncate(ob_object* obj, ob_object* subobj, wxWindow* theCtrl )
 			return;
 		
 		i++;
-		wxString t_tag = pref + "=" + IntToStr(i);
+		wxString t_tag = pref + wxT("=") + IntToStr(i);
 	}
 
 	// truncate the uppers tokens
@@ -707,7 +707,7 @@ ob_property::MayTruncate(ob_object* obj, ob_object* subobj, wxWindow* theCtrl )
 	// truncate the lowers tokens
 	for(  i = num_token;i >= 0; i-- )
 	{
-		wxString t_tag = pref + "=" + IntToStr(i);
+		wxString t_tag = pref + wxT("=") + IntToStr(i);
 		if( ob_props.find(t_tag) != ob_props.end() && ob_props[t_tag] != NULL )
 			return;
 
@@ -734,7 +734,7 @@ ob_property::pUpdate( ob_object* obj, wxWindow* theCtrl, const wxString& val )
 {
 	wxString prec_val;
 	ob_object* subobj = NULL;
-	if( tag.Upper() != obj->name.Upper() && tag != "" )
+	if( tag.Upper() != obj->name.Upper() && tag != wxString() )
 	{
 		subobj = obj->GetSubObject( tag );
 		if( subobj == NULL && val == Get_Default_Val(obj) )
@@ -787,7 +787,7 @@ ob_property::Evt_TxtChange(wxCommandEvent& evt)
 		return;
 
 	wxString val = _ctrl->GetValue();
-	if( val == "" && (do_on_default & OBPROP_SETDEF_IFEMPTY) != 0 )
+	if( val == wxString() && (do_on_default & OBPROP_SETDEF_IFEMPTY) != 0 )
 	{
 		val = Get_Default_Val(obj);
 		_ctrl->ChangeValue( val );
@@ -966,7 +966,7 @@ prObFileChooserCtrl::prObFileChooserCtrl(
 	b_updating = false;
 
 	//******************************************
-	txtCtrl_file = new wxTextCtrl(this, wxID_ANY, "",wxDefaultPosition, wxDefaultSize,
+	txtCtrl_file = new wxTextCtrl(this, wxID_ANY, wxString(),wxDefaultPosition, wxDefaultSize,
 			wxTE_PROCESS_ENTER | wxTE_PROCESS_TAB | wxTE_RIGHT );
 	txtCtrl_file->SetInsertionPointEnd();
 	txtCtrl_file->Connect( wxID_ANY, wxEVT_KEY_DOWN, wxKeyEventHandler(prObFileChooserCtrl::EvtCharPress), NULL, this );
@@ -988,7 +988,7 @@ prObFileChooserCtrl::prObFileChooserCtrl(
 	if( _b_file_must_exist )
 		fp_style |= wxFLP_FILE_MUST_EXIST;
 	filePck_file = new wxFilePickerCtrl( this, wxID_ANY,
-						dataDirPath.GetFullPath(), "Select custom selection screen file", "*.*",
+					     dataDirPath.GetFullPath(), wxT("Select custom selection screen file"), wxT("*.*"),
 						wxDefaultPosition, wxDefaultSize, fp_style );
 	filePck_file->SetMaxSize( wxSize(30, wxDefaultCoord ));
 	filePck_file->SetInitialSize(wxSize(filePickerW, filePickerH ));
@@ -1050,9 +1050,9 @@ void prObFileChooserCtrl::EvtCharPress( wxKeyEvent& event )
 		if( err != 0 )
 		{
 			if( err == 1 )
-				wxMessageBox( "Not a valid OB file !", "WARNING", wxOK | wxICON_EXCLAMATION, this );
+				wxMessageBox( wxT("Not a valid OB file !"), wxT("WARNING"), wxOK | wxICON_EXCLAMATION, this );
 			else if( err == 2 )
-				wxMessageBox( "File doesn't exist !", "WARNING", wxOK | wxICON_EXCLAMATION, this );
+				wxMessageBox( wxT("File doesn't exist !"), wxT("WARNING"), wxOK | wxICON_EXCLAMATION, this );
 
 			txtCtrl_file->SetBackgroundColour( wxColour( 255, 200,200));
 		}
@@ -1073,9 +1073,9 @@ void prObFileChooserCtrl::EvtImgPickerChg(wxFileDirPickerEvent& event )
 	if( err != 0 )
 	{
 		if( err == 1 )
-			wxMessageBox( "Not a valid OB file !", "WARNING", wxOK | wxICON_EXCLAMATION, this );
+			wxMessageBox( wxT("Not a valid OB file !"), wxT("WARNING"), wxOK | wxICON_EXCLAMATION, this );
 		else if( err == 2 )
-			wxMessageBox( "File doesn't exist !", "WARNING", wxOK | wxICON_EXCLAMATION, this );
+			wxMessageBox( wxT("File doesn't exist !"), wxT("WARNING"), wxOK | wxICON_EXCLAMATION, this );
 	}
 }
 
@@ -1153,7 +1153,7 @@ prObFileChooserCtrl::Update(bool b_filePicker )
 		fn = Convert_To_Ob_Path( filePck_file->GetPath() );
 
 		// Not a valid obpath
-		if( fn == "" )
+		if( fn == wxString() )
 		{
 		    b_updating = false;
 			return 1;
@@ -1244,13 +1244,13 @@ void prObFileChooserCtrl::Init()
 		return;
 	b_init = true;
 
-	if( File_or_Directory != "" )
+	if( File_or_Directory != wxString() )
 		if( SetFullPath( File_or_Directory ) )
 			return;
 
 	if( dataDirPath.DirExists() )
 	{
-		wxString dummy_file = wxDir::FindFirst( dataDirPath.GetFullPath(), "*", wxDIR_FILES );
+		wxString dummy_file = wxDir::FindFirst( dataDirPath.GetFullPath(), wxT("*"), wxDIR_FILES );
 		if( wxFileName( dummy_file ).FileExists() )
 		{
 			filePck_file->SetPath( dummy_file  );
@@ -1258,7 +1258,7 @@ void prObFileChooserCtrl::Init()
 		}
 	}
 	else
-		wxMessageBox( "DataDir path invalid : <" + dataDirPath.GetFullPath() + ">", "WARNING", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("DataDir path invalid : <") + dataDirPath.GetFullPath() + wxT(">"), wxT("WARNING"), wxOK | wxICON_EXCLAMATION, this );
 
 }
 

@@ -150,7 +150,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		wxBoxSizer *sizer_topCentertop = new wxBoxSizer( wxVERTICAL );
 		sizer_topCenter->Add( sizer_topCentertop, 0, wxRIGHT | wxEXPAND, 20 );
 
-		animation_ctrlprop = new wxButton(scrollPanel, ID_ANIM_PROPS, "Animation Data" );
+		animation_ctrlprop = new wxButton(scrollPanel, ID_ANIM_PROPS, wxT("Animation Data") );
 		animation_ctrlprop->SetMinSize( wxSize( btns_width, wxDefaultCoord ));
 		animation_ctrlprop->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TheScrollPanel::EvtButtonClick), new wxVariant((long) ID_ANIM_PROPS), scrollPanel );
 		animation_ctrlprop->Connect( wxEVT_CHAR,
@@ -158,7 +158,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 					NULL, this );
 		sizer_topCentertop->Add( animation_ctrlprop, 1, wxALL | wxEXPAND, 1 );
 
-		butt_ExtFramProp = new wxButton(scrollPanel, ID_EXT_FRAM_PROPS, "Extended Frame Data" );
+		butt_ExtFramProp = new wxButton(scrollPanel, ID_EXT_FRAM_PROPS, wxT("Extended Frame Data") );
 		butt_ExtFramProp->SetMinSize( wxSize( btns_width, wxDefaultCoord ));
 		butt_ExtFramProp->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TheScrollPanel::EvtButtonClick), new wxVariant((long) ID_EXT_FRAM_PROPS), scrollPanel);
 		butt_ExtFramProp->MoveAfterInTabOrder( animation_ctrlprop );
@@ -173,7 +173,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		//**************************
 		sizer_topCenter->AddSpacer(fix_spacer_height);
 
-		wxStaticBoxSizer *sizer_PATHS = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "Paths" );
+		wxStaticBoxSizer *sizer_PATHS = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("Paths") );
 		wxStaticBox *_sb;
 		wxColour _colour;
 		sizer_topCenter->Add( sizer_PATHS, 0, wxALL | wxEXPAND, 2 );
@@ -184,10 +184,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxBoxSizer *sizer_img = new wxBoxSizer( wxHORIZONTAL );
 			sizer_PATHS->Add( sizer_img, 0 , wxEXPAND );
 
-			wxStaticText *txt_img_file = new wxStaticText( scrollPanel, wxID_ANY, "Img", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_img_file = new wxStaticText( scrollPanel, wxID_ANY, wxT("Img"), wxPoint(wxDefaultCoord,8) );
 			sizer_img->Add( txt_img_file, 0, wxALL, 4 );
 
-			txtctrl_imgFile = new wxTextCtrl(scrollPanel, IMG_FILE, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+			txtctrl_imgFile = new wxTextCtrl(scrollPanel, IMG_FILE, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
 			txtctrl_imgFile->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_imgFile->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -197,7 +197,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			sizer_img->Add( txtctrl_imgFile, 1, wxEXPAND );
 
 			pickerFrame = new wxFilePickerCtrl( scrollPanel, ID_PICKER_FRAME_PATH,
-								dataDirPath.GetFullPath(), "Select the frame image", "*.*",
+							    dataDirPath.GetFullPath(), wxT("Select the frame image"), wxT("*.*"),
 								wxDefaultPosition, wxDefaultSize, wxFLP_OPEN | wxFLP_FILE_MUST_EXIST );
 			pickerFrame->Connect(wxEVT_COMMAND_FILEPICKER_CHANGED , wxFileDirPickerEventHandler(TheScrollPanel::EvtImgPickerChg), new wxVariant((long) ID_PICKER_FRAME_PATH), scrollPanel);
 			pickerFrame->SetMaxSize( wxSize(30, wxDefaultCoord ));
@@ -210,11 +210,11 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxBoxSizer *sizer_snd = new wxBoxSizer( wxHORIZONTAL );
 			sizer_PATHS->Add( sizer_snd, 0 , wxEXPAND );
 
-			wxStaticText *txt_sound = new wxStaticText( scrollPanel, wxID_ANY, "Snd", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_sound = new wxStaticText( scrollPanel, wxID_ANY, wxT("Snd"), wxPoint(wxDefaultCoord,8) );
 			sizer_snd->Add( txt_sound, 0, wxALL, 4 );
 
-			txtctrl_soundFile = new wxTextCtrl(scrollPanel, SND_FILE, "",wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
-			__PushCtrlData( "sound", "", _MY_TEXT, txtctrl_soundFile );
+			txtctrl_soundFile = new wxTextCtrl(scrollPanel, SND_FILE, wxString(),wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_RIGHT );
+			__PushCtrlData( wxT("sound"), wxString(), _MY_TEXT, txtctrl_soundFile );
 			txtctrl_soundFile->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_soundFile->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -224,7 +224,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			sizer_snd->Add( txtctrl_soundFile, 1, wxEXPAND );
 
 			pickerSound = new wxFilePickerCtrl( scrollPanel, ID_PICKER_SOUND_PATH,
-						dataDirPath.GetFullPath(), "Select the sound for this frame", "*.*",
+							    dataDirPath.GetFullPath(), wxT("Select the sound for this frame"), wxT("*.*"),
 						wxDefaultPosition, wxDefaultSize, wxFLP_OPEN | wxFLP_FILE_MUST_EXIST );
 			pickerSound->Connect(wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler(TheScrollPanel::EvtSndPickerChg), new wxVariant((long) ID_PICKER_SOUND_PATH), scrollPanel);
 			pickerSound->SetMaxSize( wxSize(30, wxDefaultCoord ));
@@ -242,14 +242,14 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		sizer_topCenter->Add( sizer_Delay, 0, wxRIGHT | wxEXPAND, 20 );
 
 		// DELAY
-		wxStaticText *txt_delay = new wxStaticText( scrollPanel, wxID_ANY, "Delay", wxPoint(wxDefaultCoord,8),
+		wxStaticText *txt_delay = new wxStaticText( scrollPanel, wxID_ANY, wxT("Delay"), wxPoint(wxDefaultCoord,8),
 			wxDefaultSize, wxALIGN_RIGHT );
 		sizer_Delay->Add( txt_delay, 0, wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 4 );
 
-		txtctrl_delay = new wxTextCtrl(scrollPanel,ID_DELAY,"",wxDefaultPosition,wxSize(60, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_delay = new wxTextCtrl(scrollPanel,ID_DELAY,wxString(),wxDefaultPosition,wxSize(60, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_delay->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_delay->MoveAfterInTabOrder( txtctrl_soundFile );
-		__PushCtrlData( "delay", "", _MY_TEXT, txtctrl_delay );
+		__PushCtrlData( wxT("delay"), wxString(), _MY_TEXT, txtctrl_delay );
 		txtctrl_delay->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
 					NULL, this );
@@ -263,7 +263,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		//**************************
 		sizer_topCenter->AddSpacer(fix_spacer_height);
 
-		wxStaticBoxSizer *sizer_Offset = new wxStaticBoxSizer( wxHORIZONTAL, scrollPanel, "OffSet" );
+		wxStaticBoxSizer *sizer_Offset = new wxStaticBoxSizer( wxHORIZONTAL, scrollPanel, wxT("OffSet") );
 		_sb = sizer_Offset->GetStaticBox();
 		_colour = _sb->GetBackgroundColour();
 		_sb->SetBackgroundColour(MeltColor(_colour,wxColour(0,120,0)));
@@ -271,11 +271,11 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 
 		sizer_Offset->AddStretchSpacer();
 
-		wxStaticText *txt_offsetX = new wxStaticText( scrollPanel, wxID_ANY, "X", wxPoint(wxDefaultCoord,8),
+		wxStaticText *txt_offsetX = new wxStaticText( scrollPanel, wxID_ANY, wxT("X"), wxPoint(wxDefaultCoord,8),
 			wxDefaultSize, wxALIGN_RIGHT );
 		sizer_Offset->Add( txt_offsetX, 0, wxALL | wxALIGN_CENTER_VERTICAL, 4 );
 
-		txtctrl_offset_X = new wxTextCtrl(scrollPanel,OFFSET_X,"",wxDefaultPosition,wxSize(60, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_offset_X = new wxTextCtrl(scrollPanel,OFFSET_X,wxString(),wxDefaultPosition,wxSize(60, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_offset_X->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_offset_X->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
@@ -283,11 +283,11 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		txtctrl_offset_X->MoveAfterInTabOrder( txtctrl_delay );
 		sizer_Offset->Add( txtctrl_offset_X, 0, wxALL, 2 );
 
-		wxStaticText *txt_offsetY = new wxStaticText( scrollPanel, wxID_ANY, "y", wxPoint(wxDefaultCoord,8),
+		wxStaticText *txt_offsetY = new wxStaticText( scrollPanel, wxID_ANY, wxT("y"), wxPoint(wxDefaultCoord,8),
 			wxDefaultSize, wxALIGN_RIGHT );
 		sizer_Offset->Add( txt_offsetY, 1, wxALL | wxALIGN_CENTER_VERTICAL, 4 );
 
-		txtctrl_offset_Y = new wxTextCtrl(scrollPanel,OFFSET_Y,"",wxDefaultPosition, wxSize(60, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_offset_Y = new wxTextCtrl(scrollPanel,OFFSET_Y,wxString(),wxDefaultPosition, wxSize(60, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_offset_Y->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_offset_Y->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
@@ -296,7 +296,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		sizer_Offset->Add( txtctrl_offset_Y, 0, wxALL, 2 );
 
 		wxBitmapButton *clone_offset_butt = new wxBitmapButton( scrollPanel, wxID_ANY,
-				wxBitmap( wxImage( GetRessourceFile_String("copy-small.png"))));
+			wxBitmap( wxImage( GetRessourceFile_String(wxT("copy-small.png")))));
 		clone_offset_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Anims::DoDeleteOffset), NULL, this);
 		sizer_Offset->Add( clone_offset_butt, 0, wxALL, 2 );
 
@@ -308,46 +308,46 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		//**************************
 		sizer_topCenter->AddSpacer(fix_spacer_height);
 
-		wxStaticBoxSizer *sizer_FrameMoves = new wxStaticBoxSizer( wxHORIZONTAL, scrollPanel, "Moves Axies" );
+		wxStaticBoxSizer *sizer_FrameMoves = new wxStaticBoxSizer( wxHORIZONTAL, scrollPanel, wxT("Moves Axies") );
 		sizer_topCenter->Add( sizer_FrameMoves, 0, wxRIGHT | wxEXPAND, 20 );
 
-		wxStaticText *txt_moveX = new wxStaticText( scrollPanel, wxID_ANY, "X", wxPoint(wxDefaultCoord,8),
+		wxStaticText *txt_moveX = new wxStaticText( scrollPanel, wxID_ANY, wxT("X"), wxPoint(wxDefaultCoord,8),
 			wxDefaultSize, wxALIGN_RIGHT );
 		sizer_FrameMoves->Add( txt_moveX, 0, wxALL | wxALIGN_CENTER_VERTICAL, 4 );
 
-		txtctrl_move_X = new wxTextCtrl(scrollPanel,MOVE_X,"",wxDefaultPosition,wxSize(25, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_move_X = new wxTextCtrl(scrollPanel,MOVE_X,wxString(),wxDefaultPosition,wxSize(25, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_move_X->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_move_X->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
 					NULL, this );
 		txtctrl_move_X->MoveAfterInTabOrder( txtctrl_offset_Y );
-		__PushCtrlData( "move", "0", _MY_TEXT, txtctrl_move_X );
+		__PushCtrlData( wxT("move"), wxT("0"), _MY_TEXT, txtctrl_move_X );
 		sizer_FrameMoves->Add( txtctrl_move_X, 1, wxALL, 2 );
 
-		wxStaticText *txt_moveA = new wxStaticText( scrollPanel, wxID_ANY, "A", wxPoint(wxDefaultCoord,8),
+		wxStaticText *txt_moveA = new wxStaticText( scrollPanel, wxID_ANY, wxT("A"), wxPoint(wxDefaultCoord,8),
 			wxDefaultSize, wxALIGN_RIGHT );
 		sizer_FrameMoves->Add( txt_moveA, 1, wxALL | wxALIGN_CENTER_VERTICAL, 4 );
 
-		txtctrl_move_A = new wxTextCtrl(scrollPanel,MOVE_A,"",wxDefaultPosition, wxSize(25, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_move_A = new wxTextCtrl(scrollPanel,MOVE_A,wxString(),wxDefaultPosition, wxSize(25, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_move_A->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_move_A->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
 					NULL, this );
 		txtctrl_move_A->MoveAfterInTabOrder( txtctrl_move_X );
-		__PushCtrlData( "movea", "0", _MY_TEXT, txtctrl_move_A );
+		__PushCtrlData( wxT("movea"), wxT("0"), _MY_TEXT, txtctrl_move_A );
 		sizer_FrameMoves->Add( txtctrl_move_A, 1, wxALL, 2 );
 
-		wxStaticText *txt_moveZ = new wxStaticText( scrollPanel, wxID_ANY, "Z", wxPoint(wxDefaultCoord,8),
+		wxStaticText *txt_moveZ = new wxStaticText( scrollPanel, wxID_ANY, wxT("Z"), wxPoint(wxDefaultCoord,8),
 			wxDefaultSize, wxALIGN_RIGHT );
 		sizer_FrameMoves->Add( txt_moveZ, 1, wxALL | wxALIGN_CENTER_VERTICAL, 4 );
 
-		txtctrl_move_Z = new wxTextCtrl(scrollPanel,MOVE_Z,"",wxDefaultPosition, wxSize(25, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_move_Z = new wxTextCtrl(scrollPanel,MOVE_Z,wxString(),wxDefaultPosition, wxSize(25, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_move_Z->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_move_Z->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
 					NULL, this );
 		txtctrl_move_Z->MoveAfterInTabOrder( txtctrl_move_A );
-		__PushCtrlData( "movez", "0", _MY_TEXT, txtctrl_move_Z );
+		__PushCtrlData( wxT("movez"), wxT("0"), _MY_TEXT, txtctrl_move_Z );
 		sizer_FrameMoves->Add( txtctrl_move_Z, 1, wxALL, 2 );
 
 
@@ -358,13 +358,13 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		//**************************
 		sizer_topCenter->AddSpacer(fix_spacer_height);
 
-		wxStaticBoxSizer *sizer_bbox = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "BeatBox" );
+		wxStaticBoxSizer *sizer_bbox = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("BeatBox") );
 		sizer_topCenter->Add( sizer_bbox, 0, wxRIGHT | wxEXPAND, 20 );
 
 		wxBoxSizer *sizer_temp_bb = new wxBoxSizer( wxHORIZONTAL );
 		sizer_bbox->Add( sizer_temp_bb, 0, wxALL, 2 );
 
-		txtctrl_bbox_X = new wxTextCtrl(scrollPanel, BBOX_X, "",wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_bbox_X = new wxTextCtrl(scrollPanel, BBOX_X, wxString(),wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_bbox_X->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_bbox_X->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
@@ -372,7 +372,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		txtctrl_bbox_X->MoveAfterInTabOrder( txtctrl_move_Z );
 		sizer_temp_bb->Add( txtctrl_bbox_X, 0, wxALL, 2 );
 
-		txtctrl_bbox_Y = new wxTextCtrl(scrollPanel,BBOX_Y,"",wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_bbox_Y = new wxTextCtrl(scrollPanel,BBOX_Y,wxString(),wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_bbox_Y->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_bbox_Y->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
@@ -380,7 +380,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		txtctrl_bbox_Y->MoveAfterInTabOrder( txtctrl_bbox_X );
 		sizer_temp_bb->Add( txtctrl_bbox_Y, 0, wxALL, 2 );
 
-		txtctrl_bbox_W = new wxTextCtrl(scrollPanel,BBOX_W,"",wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_bbox_W = new wxTextCtrl(scrollPanel,BBOX_W,wxString(),wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_bbox_W->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_bbox_W->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
@@ -388,7 +388,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		txtctrl_bbox_W->MoveAfterInTabOrder( txtctrl_bbox_Y );
 		sizer_temp_bb->Add( txtctrl_bbox_W, 0, wxALL, 2 );
 
-		txtctrl_bbox_H = new wxTextCtrl(scrollPanel,BBOX_H,"",wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_bbox_H = new wxTextCtrl(scrollPanel,BBOX_H,wxString(),wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_bbox_H->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_bbox_H->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
@@ -396,7 +396,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		txtctrl_bbox_H->MoveAfterInTabOrder( txtctrl_bbox_W );
 		sizer_temp_bb->Add( txtctrl_bbox_H, 0, wxALL, 2 );
 
-		txtctrl_bbox_Z = new wxTextCtrl(scrollPanel,BBOX_Z,"",wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
+		txtctrl_bbox_Z = new wxTextCtrl(scrollPanel,BBOX_Z,wxString(),wxDefaultPosition, wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER );
 		txtctrl_bbox_Z->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 		txtctrl_bbox_Z->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_TxtCtrl_KeyUp),
@@ -408,7 +408,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		sizer_bbox->Add( sizer_temp_bb, 0, wxALL, 2 );
 
 		del_bbox_butt = new wxBitmapButton( scrollPanel, ID_DEL_BBOX,
-				wxBitmap( wxImage( GetRessourceFile_String("delete-small.png"))));
+						    wxBitmap( wxImage( GetRessourceFile_String(wxT("delete-small.png")))));
 		del_bbox_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(TheScrollPanel::EvtButtonClick), new wxVariant((long) ID_DEL_BBOX), scrollPanel);
 		del_bbox_butt->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -416,7 +416,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		sizer_temp_bb->Add( del_bbox_butt, 0, wxALL, 2 );
 
 		wxBitmapButton *clone_bbox_butt = new wxBitmapButton( scrollPanel, wxID_ANY,
-				wxBitmap( wxImage( GetRessourceFile_String("copy-small.png"))));
+								      wxBitmap( wxImage( GetRessourceFile_String(wxT("copy-small.png")))));
 		clone_bbox_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Anims::DoDeleteBBox), NULL, this);
 		clone_bbox_butt->Connect( wxEVT_CHAR,
 					wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -438,7 +438,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		//**************************
 		sizer_topCenter->AddSpacer(fix_spacer_height);
 
-		wxStaticBoxSizer *sizer_attacks = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "Attacks" );
+		wxStaticBoxSizer *sizer_attacks = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("Attacks") );
 		_sb = sizer_attacks->GetStaticBox();
 		_colour = _sb->GetBackgroundColour();
 		_sb->SetBackgroundColour(MeltColor(_colour,wxColour(120,0,0)));
@@ -450,8 +450,8 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxBoxSizer *sizer_attacks_choice = new wxBoxSizer( wxHORIZONTAL );
 			sizer_attacks->Add( sizer_attacks_choice, 0, wxALL );
 
-			wxString lst_choices[] = { "attack", "blast", "shock",
-							   "burn", "freeze", "steal" };
+			wxString lst_choices[] = { wxT("attack"), wxT("blast"), wxT("shock"),
+				wxT("burn"), wxT("freeze"), wxT("steal") };
 			choiceBox_attacks = new wxChoice( scrollPanel, ATTACK_CHOICE, wxDefaultPosition, wxDefaultSize
 							,	t_size_of(lst_choices), lst_choices);
 			choiceBox_attacks->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(Panel_Anims::Evt_Attack_BaseName_Change), NULL, this);
@@ -461,11 +461,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			choiceBox_attacks->MoveAfterInTabOrder( txtctrl_bbox_H );
 			sizer_attacks_choice->Add( choiceBox_attacks, 0, wxCENTER |wxALL, 4  );
 
-			txt_attacks = new wxStaticText( scrollPanel, wxID_ANY, "num:" );
+			txt_attacks = new wxStaticText( scrollPanel, wxID_ANY, wxT("num:") );
 			sizer_attacks_choice->Add( txt_attacks, 0, wxCENTER | wxALL, 4 );
 
-			txtctrl_att_num
-					= new wxTextCtrl( scrollPanel, ID_ATT_NUM, ""
+			txtctrl_att_num	= new wxTextCtrl( scrollPanel, ID_ATT_NUM, wxString()
 							,wxDefaultPosition, wxSize(40, wxDefaultCoord) );
 			txtctrl_att_num->Connect( wxEVT_COMMAND_TEXT_UPDATED,
 					wxCommandEventHandler(Panel_Anims::Evt_Attack_NumChange),
@@ -477,7 +476,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 
 			
 			del_attbox_butt = new wxBitmapButton( scrollPanel, ID_DEL_ATTBOX,
-					wxBitmap( wxImage( GetRessourceFile_String("delete-small.png"))));
+							      wxBitmap( wxImage( GetRessourceFile_String(wxT("delete-small.png")))));
 			del_attbox_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Anims::ATTACK__Set_Zero), NULL, this);
 			del_attbox_butt->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -485,7 +484,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			sizer_attacks_choice->Add( del_attbox_butt, 0, wxCENTER |wxALL, 2 );
 
 			wxBitmapButton *clone_attbox_butt = new wxBitmapButton( scrollPanel, wxID_ANY,
-					wxBitmap( wxImage( GetRessourceFile_String("copy-small.png"))));
+					wxBitmap( wxImage( GetRessourceFile_String(wxT("copy-small.png")))));
 			clone_attbox_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Anims::ATTACK__Set_Clone), NULL, this);
 			clone_attbox_butt->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -508,10 +507,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxBoxSizer *sizer_attacks_box = new wxBoxSizer( wxHORIZONTAL );
 			sizer_attacks->Add( sizer_attacks_box, 0, wxALL );
 
-			wxStaticText *txt_attbox = new wxStaticText( scrollPanel, wxID_ANY, "Att-Box", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_attbox = new wxStaticText( scrollPanel, wxID_ANY, wxT("Att-Box"), wxPoint(wxDefaultCoord,8) );
 			sizer_attacks_box->Add( txt_attbox, 0, wxALL, 4 );
 
-			txtctrl_attbox_X = new wxTextCtrl( scrollPanel, ATTBOX_X, ""
+			txtctrl_attbox_X = new wxTextCtrl( scrollPanel, ATTBOX_X, wxString()
 							,wxDefaultPosition, wxSize(40, wxDefaultCoord) );
 			ATT_CTRL_CONNECT( txtctrl_attbox_X,
 						   wxEVT_COMMAND_TEXT_UPDATED,
@@ -522,7 +521,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_attbox_X->MoveAfterInTabOrder( choiceBox_attacks );
 			sizer_attacks_box->Add( txtctrl_attbox_X, 0, wxALL, 2 );
 
-			txtctrl_attbox_Y = new wxTextCtrl( scrollPanel, ATTBOX_Y, ""
+			txtctrl_attbox_Y = new wxTextCtrl( scrollPanel, ATTBOX_Y, wxString()
 							,wxDefaultPosition, wxSize(40, wxDefaultCoord) );
 			ATT_CTRL_CONNECT( txtctrl_attbox_Y,
 						   wxEVT_COMMAND_TEXT_UPDATED,
@@ -533,7 +532,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_attbox_Y->MoveAfterInTabOrder( txtctrl_attbox_X );
 			sizer_attacks_box->Add( txtctrl_attbox_Y, 0, wxALL, 2 );
 
-			txtctrl_attbox_W = new wxTextCtrl( scrollPanel, ATTBOX_W, ""
+			txtctrl_attbox_W = new wxTextCtrl( scrollPanel, ATTBOX_W, wxString()
 							,wxDefaultPosition, wxSize(40, wxDefaultCoord) );
 			ATT_CTRL_CONNECT( txtctrl_attbox_W,
 						   wxEVT_COMMAND_TEXT_UPDATED,
@@ -544,7 +543,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_attbox_W->MoveAfterInTabOrder( txtctrl_attbox_Y );
 			sizer_attacks_box->Add( txtctrl_attbox_W, 0, wxALL, 2 );
 
-			txtctrl_attbox_H = new wxTextCtrl( scrollPanel, ATTBOX_H, ""
+			txtctrl_attbox_H = new wxTextCtrl( scrollPanel, ATTBOX_H, wxString()
 							,wxDefaultPosition, wxSize(40, wxDefaultCoord) );
 			ATT_CTRL_CONNECT( txtctrl_attbox_H,
 						   wxEVT_COMMAND_TEXT_UPDATED,
@@ -561,7 +560,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxBoxSizer *sizer_attacks_chkbx = new wxBoxSizer( wxHORIZONTAL );
 			sizer_attacks->Add( sizer_attacks_chkbx, 0, wxALL | wxEXPAND );
 
-			chckbx_block = new wxCheckBox(scrollPanel,B_BLOK,	"Unblockable",
+			chckbx_block = new wxCheckBox(scrollPanel,B_BLOK,	wxT("Unblockable"),
 					wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 			ATT_CTRL_CONNECT(    chckbx_block,
 						   wxEVT_COMMAND_CHECKBOX_CLICKED,
@@ -572,7 +571,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			chckbx_block->MoveAfterInTabOrder( txtctrl_attbox_H );
 			sizer_attacks_chkbx->Add( chckbx_block, 1, wxALL | wxALIGN_CENTRE, 2 );
 
-			chckbx_flash = new wxCheckBox(scrollPanel,B_FLASH,	"No-Flash",
+			chckbx_flash = new wxCheckBox(scrollPanel,B_FLASH,	wxT("No-Flash"),
 					wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 			ATT_CTRL_CONNECT(    chckbx_flash,
 						   wxEVT_COMMAND_CHECKBOX_CLICKED,
@@ -590,10 +589,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxGridSizer *sizer_attacks_someProps = new wxGridSizer( 2, 4, 0, 0 );
 			sizer_attacks->Add( sizer_attacks_someProps, 0, wxALL );
 
-			wxStaticText *txt_dmgs = new wxStaticText( scrollPanel, wxID_ANY, "Dmgs", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_dmgs = new wxStaticText( scrollPanel, wxID_ANY, wxT("Dmgs"), wxPoint(wxDefaultCoord,8) );
 			sizer_attacks_someProps->Add( txt_dmgs, 0, wxALL, 4 );
 
-			txtctrl_dmgs = new wxTextCtrl(scrollPanel,DMGS_VAL,"",wxDefaultPosition,wxSize(40, wxDefaultCoord));
+			txtctrl_dmgs = new wxTextCtrl(scrollPanel,DMGS_VAL,wxString(),wxDefaultPosition,wxSize(40, wxDefaultCoord));
 			ATT_CTRL_CONNECT(    txtctrl_dmgs,
 						   wxEVT_COMMAND_TEXT_UPDATED,
 						   Evt_Attack_ValChange )
@@ -603,10 +602,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_dmgs->MoveAfterInTabOrder( chckbx_flash );
 			sizer_attacks_someProps->Add( txtctrl_dmgs, 0, wxALL, 2 );
 
-			txt_pow = new wxStaticText( scrollPanel, wxID_ANY, "KnockD", wxPoint(wxDefaultCoord,8) );
+			txt_pow = new wxStaticText( scrollPanel, wxID_ANY, wxT("KnockD"), wxPoint(wxDefaultCoord,8) );
 			sizer_attacks_someProps->Add( txt_pow, 0, wxALL, 4 );
 
-			txtctrl_pow = new wxTextCtrl( scrollPanel, PWD_VAL,"",wxDefaultPosition, wxSize(40,wxDefaultCoord));
+			txtctrl_pow = new wxTextCtrl( scrollPanel, PWD_VAL,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord));
 			ATT_CTRL_CONNECT(    txtctrl_pow,
 						   wxEVT_COMMAND_TEXT_UPDATED,
 						   Evt_Attack_ValChange )
@@ -616,10 +615,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_pow->MoveAfterInTabOrder( txtctrl_dmgs );
 			sizer_attacks_someProps->Add( txtctrl_pow, 0, wxALL, 2 );
 
-			wxStaticText *txt_Pause = new wxStaticText( scrollPanel, wxID_ANY, "Pause", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_Pause = new wxStaticText( scrollPanel, wxID_ANY, wxT("Pause"), wxPoint(wxDefaultCoord,8) );
 			sizer_attacks_someProps->Add( txt_Pause, 0, wxALL, 4 );
 
-			txtctrl_pause = new wxTextCtrl( scrollPanel, CTRL_PAUSE_VAL,"",wxDefaultPosition, wxSize(40,wxDefaultCoord));
+			txtctrl_pause = new wxTextCtrl( scrollPanel, CTRL_PAUSE_VAL,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord));
 			ATT_CTRL_CONNECT(    txtctrl_pause,
 						   wxEVT_COMMAND_TEXT_UPDATED,
 						   Evt_Attack_ValChange )
@@ -629,10 +628,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_pause->MoveAfterInTabOrder( txtctrl_pow );
 			sizer_attacks_someProps->Add( txtctrl_pause, 0, wxALL, 2 );
 
-			wxStaticText *txt_zRang = new wxStaticText( scrollPanel, wxID_ANY, "zRang", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_zRang = new wxStaticText( scrollPanel, wxID_ANY, wxT("zRang"), wxPoint(wxDefaultCoord,8) );
 			sizer_attacks_someProps->Add( txt_zRang, 0, wxALL, 4 );
 
-			txtctrl_zrange = new wxTextCtrl( scrollPanel, ZRANGE,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_zrange = new wxTextCtrl( scrollPanel, ZRANGE,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 			ATT_CTRL_CONNECT(    txtctrl_zrange,
 						   wxEVT_COMMAND_TEXT_UPDATED,
 						   Evt_Attack_ValChange )
@@ -647,7 +646,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		//**************************
 		sizer_topCenter->AddSpacer(fix_spacer_height);
 
-		chckbx_flipframe = new wxCheckBox(scrollPanel, ID_FLIPFRAME,	"Is the Flipframe"
+		chckbx_flipframe = new wxCheckBox(scrollPanel, ID_FLIPFRAME,	wxT("Is the Flipframe")
 					, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 		chckbx_flipframe->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(TheScrollPanel::EvtButtonClick), new wxVariant((long) ID_FLIPFRAME), scrollPanel);
 		chckbx_flipframe->Connect( wxEVT_CHAR,
@@ -663,7 +662,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 
 			sizer_topCenter->AddSpacer(fix_spacer_height);
 
-			wxStaticBoxSizer *sizer_DrawMethods = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "DrawMethod" );
+			wxStaticBoxSizer *sizer_DrawMethods = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("DrawMethod") );
 			_sb = sizer_DrawMethods->GetStaticBox();
 			_colour = _sb->GetBackgroundColour();
 			_sb->SetBackgroundColour(MeltColor(_colour,wxColour(0,0,120)));
@@ -672,7 +671,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxFlexGridSizer *sizer_grid_drawmethod00 = new wxFlexGridSizer( 1, 2, 0, 0 );
 			sizer_DrawMethods->Add( sizer_grid_drawmethod00, 0, wxALL );
 
-			chckbx_nodrawmethod = new wxCheckBox(scrollPanel,ID_NODRAWMETHOD,	"No DrawMethod"
+			chckbx_nodrawmethod = new wxCheckBox(scrollPanel,ID_NODRAWMETHOD,	wxT("No DrawMethod")
 						, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 			chckbx_nodrawmethod->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(TheScrollPanel::EvtButtonClick), NULL, scrollPanel);
 			chckbx_nodrawmethod->Connect( wxEVT_CHAR,
@@ -682,7 +681,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			sizer_grid_drawmethod00->Add( chckbx_nodrawmethod, 0, wxALIGN_LEFT | wxALL, 10 );
 
 			wxBitmapButton *clone_DM_butt = new wxBitmapButton( scrollPanel, wxID_ANY,
-					wxBitmap( wxImage( GetRessourceFile_String("copy-small.png"))));
+									    wxBitmap( wxImage( GetRessourceFile_String(wxT("copy-small.png")))));
 			clone_DM_butt->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(Panel_Anims::DoDeleteDrawmethod), NULL, this);
 			sizer_grid_drawmethod00->Add( clone_DM_butt, 0, wxALL, 2 );
 			clone_DM_butt->Connect( wxEVT_CHAR,
@@ -693,10 +692,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxGridSizer *sizer_grid_drawmethod0 = new wxGridSizer( 1, 4, 0, 0 );
 			sizer_DrawMethods->Add( sizer_grid_drawmethod0, 0, wxALL );
 
-			wxStaticText *txt_scX = new wxStaticText( scrollPanel, wxID_ANY, "ScaleX", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_scX = new wxStaticText( scrollPanel, wxID_ANY, wxT("ScaleX"), wxPoint(wxDefaultCoord,8) );
 			sizer_grid_drawmethod0->Add( txt_scX, 0, wxALL, 4 );
 
-			txtctrl_scaleX = new wxTextCtrl(scrollPanel, ID_SCALEX,"",wxDefaultPosition,wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_scaleX = new wxTextCtrl(scrollPanel, ID_SCALEX,wxString(),wxDefaultPosition,wxSize(40, wxDefaultCoord), wxTE_PROCESS_ENTER);
 			txtctrl_scaleX->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_scaleX->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -704,10 +703,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_scaleX->MoveAfterInTabOrder( chckbx_nodrawmethod );
 			sizer_grid_drawmethod0->Add( txtctrl_scaleX, 0, wxALL, 2 );
 
-			wxStaticText *txt_xcY = new wxStaticText( scrollPanel, wxID_ANY, "ScaleY", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_xcY = new wxStaticText( scrollPanel, wxID_ANY, wxT("ScaleY"), wxPoint(wxDefaultCoord,8) );
 			sizer_grid_drawmethod0->Add( txt_xcY, 0, wxALL, 4 );
 
-			txtctrl_scaleY = new wxTextCtrl( scrollPanel, ID_SCALEY,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_scaleY = new wxTextCtrl( scrollPanel, ID_SCALEY,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 			txtctrl_scaleY->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_scaleY->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -719,7 +718,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxGridSizer *sizer_grid_drawmethod1 = new wxGridSizer( 1, 2, 0, 0 );
 			sizer_DrawMethods->Add( sizer_grid_drawmethod1, 0, wxALL );
 
-			chckbx_flipx = new wxCheckBox(scrollPanel,ID_FLIPX,	"FlipX"
+			chckbx_flipx = new wxCheckBox(scrollPanel,ID_FLIPX,	wxT("FlipX")
 						, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 			chckbx_flipx->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			chckbx_flipx->Connect( wxEVT_CHAR,
@@ -728,7 +727,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			chckbx_flipx->MoveAfterInTabOrder( txtctrl_scaleY );
 			sizer_grid_drawmethod1->Add( chckbx_flipx, 0, wxALL, 2 );
 
-			chckbx_flipy = new wxCheckBox(scrollPanel,ID_FLIPY,	"FlipY"
+			chckbx_flipy = new wxCheckBox(scrollPanel,ID_FLIPY,	wxT("FlipY")
 						, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 			chckbx_flipy->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			chckbx_flipy->Connect( wxEVT_CHAR,
@@ -741,10 +740,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxGridSizer *sizer_grid_drawmethod2 = new wxGridSizer( 2, 4, 0, 0 );
 			sizer_DrawMethods->Add( sizer_grid_drawmethod2, 0, wxALL );
 
-			wxStaticText *txt_shiftX = new wxStaticText( scrollPanel, wxID_ANY, "ShiftX", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_shiftX = new wxStaticText( scrollPanel, wxID_ANY, wxT("ShiftX"), wxPoint(wxDefaultCoord,8) );
 			sizer_grid_drawmethod2->Add( txt_shiftX, 0, wxALL, 4 );
 
-			txtctrl_shiftX = new wxTextCtrl( scrollPanel, ID_SHIFTX,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_shiftX = new wxTextCtrl( scrollPanel, ID_SHIFTX,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 			txtctrl_shiftX->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_shiftX->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -752,10 +751,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_shiftX->MoveAfterInTabOrder( chckbx_flipy );
 			sizer_grid_drawmethod2->Add( txtctrl_shiftX, 0, wxALL, 2 );
 
-			wxStaticText *txt_alpha = new wxStaticText( scrollPanel, wxID_ANY, "alpha", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_alpha = new wxStaticText( scrollPanel, wxID_ANY, wxT("alpha"), wxPoint(wxDefaultCoord,8) );
 			sizer_grid_drawmethod2->Add( txt_alpha, 0, wxALL, 4 );
 
-			txtctrl_alpha = new wxTextCtrl( scrollPanel, ID_ALPHA,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_alpha = new wxTextCtrl( scrollPanel, ID_ALPHA,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 			txtctrl_alpha->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_alpha->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -765,10 +764,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 
 
 
-			wxStaticText *txt_remap = new wxStaticText( scrollPanel, wxID_ANY, "Remap", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_remap = new wxStaticText( scrollPanel, wxID_ANY, wxT("Remap"), wxPoint(wxDefaultCoord,8) );
 			sizer_grid_drawmethod2->Add( txt_remap, 0, wxALL, 4 );
 
-			txtctrl_remap = new wxTextCtrl( scrollPanel, ID_REMAP,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_remap = new wxTextCtrl( scrollPanel, ID_REMAP,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 			txtctrl_remap->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_remap->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -776,10 +775,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_remap->MoveAfterInTabOrder( txtctrl_alpha );
 			sizer_grid_drawmethod2->Add( txtctrl_remap, 0, wxALL, 2 );
 
-			wxStaticText *txt_fillcolor = new wxStaticText( scrollPanel, wxID_ANY, "fillcolor", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_fillcolor = new wxStaticText( scrollPanel, wxID_ANY, wxT("fillcolor"), wxPoint(wxDefaultCoord,8) );
 			sizer_grid_drawmethod2->Add( txt_fillcolor, 0, wxALL, 4 );
 
-			txtctrl_fillcolor = new wxTextCtrl( scrollPanel, ID_FILLCOLOR,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_fillcolor = new wxTextCtrl( scrollPanel, ID_FILLCOLOR,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 			txtctrl_fillcolor->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_fillcolor->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -791,10 +790,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			wxFlexGridSizer *sizer_grid_drawmethod3 = new wxFlexGridSizer( 1, 3, 0, 0 );
 			sizer_DrawMethods->Add( sizer_grid_drawmethod3, 0, wxALL );
 
-			wxStaticText *txt_rotate = new wxStaticText( scrollPanel, wxID_ANY, "rotate", wxPoint(wxDefaultCoord,8) );
+			wxStaticText *txt_rotate = new wxStaticText( scrollPanel, wxID_ANY, wxT("rotate"), wxPoint(wxDefaultCoord,8) );
 			sizer_grid_drawmethod3->Add( txt_rotate, 0, wxALL, 4 );
 
-			txtctrl_rotate = new wxTextCtrl( scrollPanel, ID_ROTATE,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+			txtctrl_rotate = new wxTextCtrl( scrollPanel, ID_ROTATE,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 			txtctrl_rotate->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			txtctrl_rotate->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -802,7 +801,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 			txtctrl_rotate->MoveAfterInTabOrder( txtctrl_fillcolor );
 			sizer_grid_drawmethod3->Add( txtctrl_rotate, 0, wxALL, 2 );
 
-			chckbx_fliprotate = new wxCheckBox(scrollPanel,ID_FLIPROTATE,	"FlipRotate"
+			chckbx_fliprotate = new wxCheckBox(scrollPanel,ID_FLIPROTATE,	wxT("FlipRotate")
 						, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 			chckbx_fliprotate->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(Panel_Anims::EvtCommand), NULL, this);
 			chckbx_fliprotate->Connect( wxEVT_CHAR,
@@ -818,13 +817,13 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 
 				sizer_topCenter->AddSpacer(fix_spacer_height);
 
-				sizer_Jump = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "Jump stuffs" );
+				sizer_Jump = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("Jump stuffs") );
 				_sb = sizer_Jump->GetStaticBox();
 				_colour = _sb->GetBackgroundColour();
 				_sb->SetBackgroundColour(MeltColor(_colour,wxColour(0,120,120)));
 				sizer_topCenter->Add( sizer_Jump, 0, wxRIGHT | wxEXPAND, 20 );
 
-				chckbx_jumpframe = new wxCheckBox(scrollPanel,ID_JUMPFRAME,	"Is the JumpFrame"
+				chckbx_jumpframe = new wxCheckBox(scrollPanel,ID_JUMPFRAME,	wxT("Is the JumpFrame")
 							, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 				chckbx_jumpframe->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(TheScrollPanel::EvtButtonClick), NULL, scrollPanel);
 				chckbx_jumpframe->Connect( wxEVT_CHAR,
@@ -834,7 +833,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 				sizer_Jump->Add( chckbx_jumpframe, 0, wxALIGN_LEFT | wxALL, 10 );
 
 				{
-					wxStaticBoxSizer *sizer_jump_datas = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, "Datas" );
+					wxStaticBoxSizer *sizer_jump_datas = new wxStaticBoxSizer( wxVERTICAL, scrollPanel, wxT("Datas") );
 					staticBox_jump_datas = sizer_jump_datas->GetStaticBox();
 					sizer_Jump->Add( sizer_jump_datas, 0, wxRIGHT | wxEXPAND, 20 );
 
@@ -842,10 +841,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 					wxBoxSizer *sizer_temp = new wxBoxSizer( wxHORIZONTAL );
 					sizer_jump_datas->Add( sizer_temp, 0, wxALL, 4 );
 
-					txt_jump_h = new wxStaticText( scrollPanel, wxID_ANY, "height", wxPoint(wxDefaultCoord,8) );
+					txt_jump_h = new wxStaticText( scrollPanel, wxID_ANY, wxT("height"), wxPoint(wxDefaultCoord,8) );
 					sizer_temp->Add( txt_jump_h, 0, wxALL, 4 );
 
-					txtctrl_jump_h = new wxTextCtrl( scrollPanel, ID_JUMPH,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+					txtctrl_jump_h = new wxTextCtrl( scrollPanel, ID_JUMPH,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 					txtctrl_jump_h->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(TheScrollPanel::EvtCommand), NULL, scrollPanel);
 					txtctrl_jump_h->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -856,10 +855,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 					sizer_temp = new wxBoxSizer( wxHORIZONTAL );
 					sizer_jump_datas->Add( sizer_temp, 0, wxALL, 4 );
 
-					txt_jump_x = new wxStaticText( scrollPanel, wxID_ANY, "speedx", wxPoint(wxDefaultCoord,8) );
+					txt_jump_x = new wxStaticText( scrollPanel, wxID_ANY, wxT("speedx"), wxPoint(wxDefaultCoord,8) );
 					sizer_temp->Add( txt_jump_x, 0, wxALL, 4 );
 
-					txtctrl_jump_x = new wxTextCtrl( scrollPanel, ID_JUMPX,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+					txtctrl_jump_x = new wxTextCtrl( scrollPanel, ID_JUMPX,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 					txtctrl_jump_x->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(TheScrollPanel::EvtCommand), NULL, this);
 					txtctrl_jump_x->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -870,10 +869,10 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 					sizer_temp = new wxBoxSizer( wxHORIZONTAL );
 					sizer_jump_datas->Add( sizer_temp, 0, wxALL, 4 );
 
-					txt_jump_z = new wxStaticText( scrollPanel, wxID_ANY, "speedz", wxPoint(wxDefaultCoord,8) );
+					txt_jump_z = new wxStaticText( scrollPanel, wxID_ANY, wxT("speedz"), wxPoint(wxDefaultCoord,8) );
 					sizer_temp->Add( txt_jump_z, 0, wxALL, 4 );
 
-					txtctrl_jump_z = new wxTextCtrl( scrollPanel, ID_JUMPZ,"",wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
+					txtctrl_jump_z = new wxTextCtrl( scrollPanel, ID_JUMPZ,wxString(),wxDefaultPosition, wxSize(40,wxDefaultCoord), wxTE_PROCESS_ENTER);
 					txtctrl_jump_z->Connect( wxEVT_COMMAND_TEXT_UPDATED , wxCommandEventHandler(TheScrollPanel::EvtCommand), NULL, this);
 					txtctrl_jump_z->Connect( wxEVT_CHAR,
 						wxKeyEventHandler(Panel_Anims::Evt_Ctrl_FrameNavig),
@@ -881,7 +880,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 					sizer_temp->Add( txtctrl_jump_z, 0, wxALL, 2 );
 				}
 
-				chckbx_dropframe = new wxCheckBox(scrollPanel,ID_DROPFRAME,	"Is the DropFrame"
+				chckbx_dropframe = new wxCheckBox(scrollPanel,ID_DROPFRAME,	wxT("Is the DropFrame")
 							, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 				chckbx_dropframe->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(TheScrollPanel::EvtButtonClick), NULL, scrollPanel);
 				chckbx_dropframe->Connect( wxEVT_CHAR,
@@ -890,7 +889,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 				chckbx_dropframe->MoveAfterInTabOrder( chckbx_dropframe );
 				sizer_Jump->Add( chckbx_dropframe, 0, wxALIGN_LEFT | wxALL, 10 );
 
-				chckbx_landframe = new wxCheckBox(scrollPanel,ID_LANDFRAME,	"Is the LandFrame"
+				chckbx_landframe = new wxCheckBox(scrollPanel,ID_LANDFRAME,	wxT("Is the LandFrame")
 							, wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT | wxTAB_TRAVERSAL);
 				chckbx_landframe->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED , wxCommandEventHandler(TheScrollPanel::EvtButtonClick), NULL, scrollPanel);
 				chckbx_landframe->Connect( wxEVT_CHAR,
@@ -912,32 +911,32 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 
 		//**************************
 		//Animation controls
-		wxStaticBoxSizer *sizer_anim_ctrls = new wxStaticBoxSizer( wxHORIZONTAL, this, "Anim Controls" );
+		wxStaticBoxSizer *sizer_anim_ctrls = new wxStaticBoxSizer( wxHORIZONTAL, this, wxT("Anim Controls") );
 		sizer_topRightUp->Add( sizer_anim_ctrls, 0, wxALL, 6 );
 
 		wxGridSizer *sizer_grid_temp = new wxGridSizer( 2, 2, 3, 3 );
 		sizer_anim_ctrls->Add( sizer_grid_temp, 0, wxALL );
 
 		butt_Zoom_M = new wxBitmapButton( this, ID_ZOOM_M,
-			wxBitmap( wxImage( GetRessourceFile_String("zoom-out.png"))));
+						  wxBitmap( wxImage( GetRessourceFile_String(wxT("zoom-out.png")))));
 		sizer_grid_temp->Add( butt_Zoom_M, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
 		butt_Zoom_P = new wxBitmapButton( this, ID_ZOOM_P,
-			wxBitmap( wxImage( GetRessourceFile_String("zoom-in.png"))));
+						  wxBitmap( wxImage( GetRessourceFile_String(wxT("zoom-in.png")))));
 		sizer_grid_temp->Add( butt_Zoom_P, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
 		butt_Loop = new wxBitmapButton( this, ID_LOOP_BTN,
-			wxBitmap( wxImage( GetRessourceFile_String("noloop.png"))));
+						wxBitmap( wxImage( GetRessourceFile_String(wxT("noloop.png")))));
 		sizer_grid_temp->Add( butt_Loop, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
 		butt_Sound = new wxBitmapButton( this, ID_SOUND_MUTE,
-			wxBitmap( wxImage( GetRessourceFile_String("sound-on.png"))));
+						 wxBitmap( wxImage( GetRessourceFile_String(wxT("sound-on.png")))));
 		sizer_grid_temp->Add( butt_Sound, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 
 
 		//**************************
 		// Big Frame number
-		txt_FrameNumber = new wxStaticText( this, wxID_ANY, "0", wxDefaultPosition
+		txt_FrameNumber = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition
 							, wxDefaultSize, wxALIGN_CENTRE);
 		txt_FrameNumber->SetFont(	wxFont(40, wxFONTFAMILY_DEFAULT,
 									wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, true ));
@@ -947,34 +946,34 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 		//**************************
 		// Play/Stop Animation
 		butt_Play = new wxBitmapButton( this, ID_PLAY_STOP,
-			wxBitmap( wxImage( GetRessourceFile_String("aktion.png"))));
+						wxBitmap( wxImage( GetRessourceFile_String(wxT("aktion.png")))));
 		sizer_topRightUp->Add( butt_Play, 0, wxTOP|wxALIGN_CENTER_VERTICAL, 10 );
 
 
 		//**************************
 		// Assigns buttons
-		wxStaticBoxSizer *sizerStatic_SetBoxes = new wxStaticBoxSizer( wxHORIZONTAL, this, "Assign boxes" );
+		wxStaticBoxSizer *sizerStatic_SetBoxes = new wxStaticBoxSizer( wxHORIZONTAL, this, wxT("Assign boxes") );
 		sizer_topRightUp->Add( sizerStatic_SetBoxes, 0, wxALL|wxEXPAND, 2 );
 
 		wxFlexGridSizer *sizer_SetBoxes  = new wxFlexGridSizer( 2, 3, 4, 4 );
 		sizerStatic_SetBoxes->Add( sizer_SetBoxes, 0, wxALL|wxEXPAND, 6 );
 
-			toBBox = new wxButton(this, ID_To_BBOX, "->BBox", wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
+		toBBox = new wxButton(this, ID_To_BBOX, wxT("->BBox"), wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
 			toBBox->Disable();
 			sizer_SetBoxes->Add( toBBox, 0, wxALL, 2 );
 
-			toAtt = new wxButton(this, ID_To_ATTBOX, "->Att", wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
+			toAtt = new wxButton(this, ID_To_ATTBOX, wxT("->Att"), wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
 			toAtt->Disable();
 			sizer_SetBoxes->Add( toAtt, 0, wxALL, 2 );
 
-			wxButton *toClear = new wxButton(this, ID_To_CLEAR, "Clear", wxDefaultPosition, wxSize(75,wxDefaultCoord)  );;
+			wxButton *toClear = new wxButton(this, ID_To_CLEAR, wxT("Clear"), wxDefaultPosition, wxSize(75,wxDefaultCoord)  );;
 			sizer_SetBoxes->Add( toClear, 0, wxALL, 2 );
 
-			toOffset = new wxButton(this, ID_To_OFFSET, "->Offs", wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
+			toOffset = new wxButton(this, ID_To_OFFSET, wxT("->Offs"), wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
 			toOffset->Disable();
 			sizer_SetBoxes->Add( toOffset, 0, wxALL, 2 );
 
-			toXA = new wxButton(this, ID_To_XA, "->X:A", wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
+			toXA = new wxButton(this, ID_To_XA, wxT("->X:A"), wxDefaultPosition, wxSize(75,wxDefaultCoord)  );
 			toXA->Disable();
 			sizer_SetBoxes->Add( toXA, 0, wxALL, 2 );
 
@@ -1002,7 +1001,7 @@ Panel_Anims::Panel_Anims( wxNotebook *onglets )
 	list_Anims->ReloadLastSessionAnim();
 	list_Anims->Refresh_List();
 	ResetFrameDatas();
-	ATTACK__SetActive("DEF");
+	ATTACK__SetActive(wxT("DEF"));
 	Layout();
 }
 
@@ -1026,7 +1025,7 @@ void Panel_Anims::OnActivate()
 	if( b_entity_has_change )
 	{
 		// Reload Frame data
-		ATTACK__SetActive( "DEF" );
+		ATTACK__SetActive(wxT( "DEF" ));
 		Update_FrameDatas();
 	}
 	animation_ctrl->UpdateNavigation();
@@ -1074,7 +1073,7 @@ void Panel_Anims::DoDeleteOffset(wxCommandEvent& event)
 	if( frameActive == NULL )
 		return;
 
-	ob_object *_tt = frameActive->GetSubObject( "offset" );
+	ob_object *_tt = frameActive->GetSubObject( wxT("offset") );
 	if( _tt != NULL )
 	{
 		_tt->Rm();
@@ -1092,7 +1091,7 @@ void Panel_Anims::DoDeleteBBox(wxCommandEvent& event)
 	if( frameActive == NULL )
 		return;
 
-	ob_object *_tt = frameActive->GetSubObject( "bbox" );
+	ob_object *_tt = frameActive->GetSubObject( wxT("bbox") );
 	if( _tt != NULL )
 	{
 		_tt->Rm();
@@ -1137,8 +1136,8 @@ Panel_Anims::ATTACK__Set_Zero(wxCommandEvent& event)
 		ob_frame_attack *t = new ob_frame_attack();
 		frameActive->Add_SubObj( t );
 
-		t->SetName( "Attack1" );
-		t->SetToken( 0, "0" );
+		t->SetName( wxT("Attack1"));
+		t->SetToken( 0, wxT("0") );
 
 		panel_Anims->Refresh_FrameData_AnimControl();
 		ATTACK__OnUpdate(NULL);
@@ -1153,7 +1152,7 @@ void Panel_Anims::DoDeleteDrawmethod(wxCommandEvent& event)
 		return;
 
 	bool _b_change = false;
-	ob_object *_tt = frameActive->GetSubObject( "nodrawmethod" );
+	ob_object *_tt = frameActive->GetSubObject( wxT("nodrawmethod") );
 	if( _tt != NULL )
 	{
 		_tt->Rm();
@@ -1161,7 +1160,7 @@ void Panel_Anims::DoDeleteDrawmethod(wxCommandEvent& event)
 		_b_change = true;
 	}
 
-	_tt = frameActive->GetSubObject( "drawmethod" );
+	_tt = frameActive->GetSubObject( wxT("drawmethod") );
 	if( _tt != NULL )
 	{
 		_tt->Rm();
@@ -1184,11 +1183,11 @@ wxColour cloneColour( 255, 255, 160 );
 //***********************************************************************************
 #define DFR_TOK_TOSTR( prop, i )			\
 	frameActive->prop[i] == NO_CLONED_VAL	\
-	? "" 							\
+	? wxString() 							\
 	: IntToStr(frameActive->prop[i])
 #define DFR_TOK_TOSTR_S( prop )			\
 	frameActive->prop == NO_CLONED_VAL	\
-	? "" 							\
+	? wxString() 							\
 	: IntToStr(frameActive->prop)
 #define DFR_TOK_TOBOOL( prop, i )			\
 	(frameActive->prop[i] != NO_CLONED_VAL	\
@@ -1225,8 +1224,8 @@ void Panel_Anims::Update_FrameDatas()
 
 	//------------------------
 	// SOUND
-	txtctrl_soundFile->ChangeValue(frameActive->GetSubObject_Token("sound", 0));
-	__path = GetObFile( frameActive->GetSubObject_Token("sound", 0) );
+	txtctrl_soundFile->ChangeValue(frameActive->GetSubObject_Token(wxT("sound"), 0));
+	__path = GetObFile( frameActive->GetSubObject_Token(wxT("sound"), 0) );
 	if( __path.FileExists() )
 		pickerSound->SetPath( __path.GetFullPath() );
 
@@ -1295,7 +1294,7 @@ void Panel_Anims::Update_FrameDatas()
 
 	//*********************
 	// ATTACKS
-	ATTACK__SetActive("");
+	ATTACK__SetActive(wxString());
 
 	//*********************
 	// FLIPFRAME
@@ -1413,7 +1412,7 @@ void Panel_Anims::Update_FrameDatas()
 
 		if( _jumpState == 2 && curr_anim != NULL )
 		{
-			ob_object *jumpframe_prop = curr_anim->GetSubObject( "jumpframe" );
+			ob_object *jumpframe_prop = curr_anim->GetSubObject( wxT("jumpframe") );
 			if( jumpframe_prop != NULL )
 			{
 				txtctrl_jump_h->ChangeValue( jumpframe_prop->GetToken( 1 ));
@@ -1529,7 +1528,7 @@ Panel_Anims::ATTACK__SetActive( const wxString& _att_name )
 	if( frameActive == NULL )
 	{
 		choiceBox_attacks->SetSelection(0);
-		txtctrl_att_num->ChangeValue( "1" );
+		txtctrl_att_num->ChangeValue( wxT("1") );
 	}
 
 	//----------------------------------------------
@@ -1537,28 +1536,28 @@ Panel_Anims::ATTACK__SetActive( const wxString& _att_name )
 	else
 	{
 		// Ask the default one
-		if( att_name == "DEF" )
+		if( att_name == wxT("DEF") )
 		{
 			att_name = frameActive->GetFirstAvalaibleAttack_name();
-			if( att_name == "" )
-				att_name = "ATTACK1";
+			if( att_name == wxString() )
+				att_name = wxT("ATTACK1");
 		}
 		
 		// If there is one => the one, else do nothing
-		if( att_name == "" )
+		if( att_name == wxString() )
 		{
 			att_name = frameActive->GetFirstAvalaibleAttack_name();
 		}
 		
 		// MAJ GUI elements of the attack name
 		// simple Attack case
-		if(  att_name.Left(6).Upper() == "ATTACK" )
+		if(  att_name.Left(6).Upper() == wxT("ATTACK") )
 		{
 			choiceBox_attacks->SetSelection(0);
 			// Update textCtrl of the attack num
 			txtctrl_att_num->ChangeValue( att_name.Right(att_name.Len()-6));
 		}
-		else if( att_name != "" )
+		else if( att_name != wxString() )
 		{
 			wxString _att_name = att_name.Lower();
 			wxArrayString _arr_attacks = choiceBox_attacks->GetStrings();
@@ -1584,27 +1583,27 @@ Panel_Anims::ATTACK__SetActive( const wxString& _att_name )
 	
 	// Check if attack num have to be showned
 	wxString curr_choice = choiceBox_attacks->GetStringSelection();
-	bool b_enable_num = ( curr_choice.Upper() == "ATTACK" );
+	bool b_enable_num = ( curr_choice.Upper() ==wxT( "ATTACK" ));
 //	txt_attacks->Show(b_show);
 	txtctrl_att_num->Enable(b_enable_num);
 	txtctrl_att_num->Refresh();
 	
 	// special case everywhere
-	if( att_name == "blast" )
+	if( att_name == wxT("blast") )
 	{
-		txtctrl_pow->ChangeValue("");
+		txtctrl_pow->ChangeValue(wxString());
 		txtctrl_pow->Enable(false);
-		txt_pow->SetLabel("");
+		txt_pow->SetLabel(wxString());
 		txt_pow->Enable(false);
 	}
 	else
 	{
 		txtctrl_pow->Enable();
 		txt_pow->Enable();
-		if( att_name == "freeze" )
-			txt_pow->SetLabel("Time");
+		if( att_name == wxT("freeze" ))
+			txt_pow->SetLabel(wxT("Time"));
 		else
-			txt_pow->SetLabel("KnockD");
+			txt_pow->SetLabel(wxT("KnockD"));
 	}
 
 	if( frameActive != NULL )
@@ -1620,7 +1619,7 @@ Panel_Anims::ATTACK__SetActive( const wxString& _att_name )
 		i++;
 		txtctrl_dmgs->ChangeValue(DFR_TOK_TOSTR(attBox,i));
 		i++;
-		if( att_name != "blast" )
+		if( att_name != wxT("blast") )
 		{
 			txtctrl_pow->ChangeValue(DFR_TOK_TOSTR(attBox,i));
 			i++;
@@ -1664,18 +1663,18 @@ Panel_Anims::ATTACK__SetActive( const wxString& _att_name )
 
 void Panel_Anims::ResetFrameDatas()
 {
-	txtctrl_imgFile->ChangeValue("");
-	txtctrl_soundFile->ChangeValue("");
-	txtctrl_delay->ChangeValue("");
-	txtctrl_offset_X->ChangeValue("");
-	txtctrl_offset_Y->ChangeValue("");
-	txtctrl_move_X->ChangeValue("");
-	txtctrl_move_A->ChangeValue("");
-	txtctrl_move_Z->ChangeValue("");
-	txtctrl_bbox_X->ChangeValue("");
-	txtctrl_bbox_Y->ChangeValue("");
-	txtctrl_bbox_W->ChangeValue("");
-	txtctrl_bbox_H->ChangeValue("");
+	txtctrl_imgFile->ChangeValue(wxString());
+	txtctrl_soundFile->ChangeValue(wxString());
+	txtctrl_delay->ChangeValue(wxString());
+	txtctrl_offset_X->ChangeValue(wxString());
+	txtctrl_offset_Y->ChangeValue(wxString());
+	txtctrl_move_X->ChangeValue(wxString());
+	txtctrl_move_A->ChangeValue(wxString());
+	txtctrl_move_Z->ChangeValue(wxString());
+	txtctrl_bbox_X->ChangeValue(wxString());
+	txtctrl_bbox_Y->ChangeValue(wxString());
+	txtctrl_bbox_W->ChangeValue(wxString());
+	txtctrl_bbox_H->ChangeValue(wxString());
 	ResetAttacksFrameDatas();
 	if( animation_ctrl != NULL )
 		animation_ctrl->StopPlaying();
@@ -1686,16 +1685,16 @@ void Panel_Anims::ResetFrameDatas()
 
 void Panel_Anims::ResetAttacksFrameDatas()
 {
-	txtctrl_attbox_X->ChangeValue("");
-	txtctrl_attbox_Y->ChangeValue("");
-	txtctrl_attbox_W->ChangeValue("");
-	txtctrl_attbox_H->ChangeValue("");
+	txtctrl_attbox_X->ChangeValue(wxString());
+	txtctrl_attbox_Y->ChangeValue(wxString());
+	txtctrl_attbox_W->ChangeValue(wxString());
+	txtctrl_attbox_H->ChangeValue(wxString());
 	chckbx_block->SetValue(false);
 	chckbx_flash->SetValue(false);
-	txtctrl_dmgs->ChangeValue("");
-	txtctrl_pow->ChangeValue("");
-	txtctrl_pause->ChangeValue("");
-	txtctrl_zrange->ChangeValue("");
+	txtctrl_dmgs->ChangeValue(wxString());
+	txtctrl_pow->ChangeValue(wxString());
+	txtctrl_pause->ChangeValue(wxString());
+	txtctrl_zrange->ChangeValue(wxString());
 	if( animation_ctrl != NULL )
 		animation_ctrl->StopPlaying();
 }
@@ -1792,8 +1791,8 @@ void Panel_Anims::EvtButtonClick(wxCommandEvent& event)
 			if( frameActive != NULL )
 			{
 				wxArrayString __p_bbox;
-				__p_bbox.Add("0");
-				frameActive->SetProperty( "bbox", __p_bbox);
+				__p_bbox.Add(wxT("0"));
+				frameActive->SetProperty( wxT("bbox"), __p_bbox);
 				panel_Anims->Frame_CascadeChanges();
 				panel_Anims->Update_FrameDatas();
 				entity->SetChanged();
@@ -1817,18 +1816,18 @@ void Panel_Anims::EvtButtonClick(wxCommandEvent& event)
 
 		case ID_LOOP_BTN:
 			if( panel_Anims->animation_ctrl->b_looping )
-				panel_Anims->butt_Loop->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String("noloop.png"))));
+				panel_Anims->butt_Loop->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String(wxT("noloop.png")))));
 			else
-				panel_Anims->butt_Loop->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String("loop.png"))));
+				panel_Anims->butt_Loop->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String(wxT("loop.png")))));
 
 			panel_Anims->animation_ctrl->b_looping = ( ! panel_Anims->animation_ctrl->b_looping);
 			break;
 
 		case ID_SOUND_MUTE:
 			if( panel_Anims->animation_ctrl->b_sound_on )
-				panel_Anims->butt_Sound->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String("sound-off.png"))));
+				panel_Anims->butt_Sound->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String(wxT("sound-off.png")))));
 			else
-				panel_Anims->butt_Sound->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String("sound-on.png"))));
+				panel_Anims->butt_Sound->SetBitmapLabel(wxBitmap( wxImage( GetRessourceFile_String(wxT("sound-on.png")))));
 
 			panel_Anims->animation_ctrl->b_sound_on = ( ! panel_Anims->animation_ctrl->b_sound_on);
 			break;
@@ -1884,13 +1883,13 @@ void Panel_Anims::EvtButtonClick(wxCommandEvent& event)
 			if( frameActive != NULL )
 			{
 				bool b_update = false;
-				ob_object * _tt = frameActive->GetSubObject( "nodrawmethod" );
+				ob_object * _tt = frameActive->GetSubObject( wxT("nodrawmethod") );
 				if( chckbx_nodrawmethod->GetValue() == true )
 				{
 					if( _tt == NULL )
 					{
-						frameActive->SetProperty( "nodrawmethod", NULL, 0 );
-						_tt = frameActive->GetSubObject( "drawmethod");
+						frameActive->SetProperty( wxT("nodrawmethod"), NULL, 0 );
+						_tt = frameActive->GetSubObject( wxT("drawmethod"));
 						if( _tt != NULL )
 						{
 							_tt->Rm();
@@ -2000,16 +1999,16 @@ void Panel_Anims::DoEditAnimProps()
 
 	// fire the modal dialog
 	GridPropFrame *temp = new GridPropFrame( this, curr_anim,
-				"Animation Properties" );
+						 wxT("Animation Properties") );
 	wxArrayString filter;
-	filter.Add("frame");
-	filter.Add("flipframe");
-	filter.Add("jumpframe");
-	filter.Add("dropframe");
-	filter.Add("landframe");
+	filter.Add(wxT("frame"));
+	filter.Add(wxT("flipframe"));
+	filter.Add(wxT("jumpframe"));
+	filter.Add(wxT("dropframe"));
+	filter.Add(wxT("landframe"));
 	temp->SetFilter_Properties( filter );
 	
-	theHistoryManager.GroupStart( "Edit Anim Props" );
+	theHistoryManager.GroupStart( wxT("Edit Anim Props") );
 	temp->ShowModal();
 	theHistoryManager.GroupEnd();
 	
@@ -2028,17 +2027,21 @@ void Panel_Anims::DoEditFrameProps()
 
 	// fire the modal dialog
 	GridPropFrame *temp = new GridPropFrame( this, frameActive,
-				"More frame Properties" );
+						 wxT("More frame Properties") );
 
-	wxString arr_filter[] = {"delay", "offset", "bbox", "attack", "attack1",
-"attack2", "attack3", "attack4", "attack5", "attack6", "attack7", "attack8", "attack9",  "attack10", "attack11",
-"attack12", "attack13", "attack14", "attack15", "attack16", "attack17", "attack18", "attack19"
-"blast", "shock", "burn", "freeze", "steal",
-"move", "movea", "movez", "sound", "nodrawmethod", "drawmethod", "flipframe", "platform" };
+	wxString arr_filter[] = {
+		wxT("delay"), wxT("offset"), wxT("bbox"), wxT("attack"), wxT("attack1"),
+		wxT("attack2"), wxT("attack3"), wxT("attack4"), wxT("attack5"), wxT("attack6"), 
+		wxT("attack7"), wxT("attack8"), wxT("attack9"), wxT("attack10"), wxT("attack11"),
+		wxT("attack12"), wxT("attack13"), wxT("attack14"), wxT("attack15"), wxT("attack16"), 
+		wxT("attack17"), wxT("attack18"), wxT("attack19"), wxT("blast"), wxT("shock"), 
+		wxT("burn"), wxT("freeze"), wxT("steal"), wxT("move"), wxT("movea"),
+		wxT("movez"), wxT("sound"), wxT("nodrawmethod"), wxT("drawmethod"), 
+		wxT("flipframe"), wxT("platform") };
 	wxArrayString filter( t_size_of( arr_filter ), arr_filter );
 	temp->SetFilter_Properties( filter );
 	
-	theHistoryManager.GroupStart( "Edit Anim Props" );
+	theHistoryManager.GroupStart( wxT("Edit Anim Props") );
 	temp->ShowModal();
 	theHistoryManager.GroupEnd();
 	
@@ -2090,7 +2093,7 @@ Panel_Anims::ATTACK__OnUpdate(ob_frame_attack* att )
 		frameActive->UpdateClonedDatas(frameActive->Get_PreviousFrame());
 	else
 		panel_Anims->Frame_CascadeChanges();
-// 	panel_Anims->ATTACK__SetActive("");
+// 	panel_Anims->ATTACK__SetActive(wxString());
 	entity->SetChanged();
 	animation_ctrl->UpdateFrames();
 }
@@ -2157,7 +2160,7 @@ Panel_Anims::Evt_Attack_BaseName_Change( wxCommandEvent& event )
 
 	wxString visible_att_name = 
 		panel_Anims->choiceBox_attacks->GetStringSelection();
-	bool b_enable_num_att = (visible_att_name.Upper() == "ATTACK");
+		bool b_enable_num_att = (visible_att_name.Upper() == wxT("ATTACK"));
 	txtctrl_att_num->Enable( b_enable_num_att );
 }
 
@@ -2214,9 +2217,9 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 
 	//--------------------
 	// Evacuate the delete case
-	if( curr_val_X == "" && curr_val_Y == "" && curr_val_W == "" && curr_val_H == ""
-		&& dmgs_val == "" && _pow_val == "" && _pause_val == "" && ! b_block && ! b_noflash
-		&& _zrang == "" )
+	if( curr_val_X == wxString() && curr_val_Y == wxString() && curr_val_W == wxString() && curr_val_H == wxString()
+		&& dmgs_val == wxString() && _pow_val == wxString() && _pause_val == wxString() && ! b_block && ! b_noflash
+		&& _zrang == wxString() )
 	{
 		if( associate_ob != NULL )
 		{
@@ -2224,7 +2227,7 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 // 			delete associate_ob;
 			associate_ob = NULL;
 			ATTACK__OnUpdate(NULL);
-			panel_Anims->ATTACK__SetActive("");
+			panel_Anims->ATTACK__SetActive(wxString());
 		}
 	}
 
@@ -2239,23 +2242,23 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 		//--------------------
 		// Set some default val in case of empty fields
 		//		Note : take care of the "no-more attack box case"
-		if(	curr_val_X != "0" || curr_val_Y != "" || curr_val_W != "" || curr_val_H != ""
-			||  b_block || b_noflash || dmgs_val != "" || _pow_val != "" || _pause_val != ""
-			|| _zrang != "" )
+		if(	curr_val_X != wxT("0") || curr_val_Y != wxString() || curr_val_W != wxString() || curr_val_H != wxString()
+			||  b_block || b_noflash || dmgs_val != wxString() || _pow_val != wxString() || _pause_val != wxString()
+			|| _zrang != wxString() )
 		{
-			if( curr_val_X == "" ) 	{ curr_val_X = "0";}
-			if( curr_val_Y == "" ) 	{ curr_val_Y = "0";}
-			if( curr_val_W == "" ) 	{ curr_val_W = "0";}
-			if( curr_val_H == "" ) 	{ curr_val_H = "0";}
+			if( curr_val_X == wxString() ) 	{ curr_val_X = wxT("0");}
+			if( curr_val_Y == wxString() ) 	{ curr_val_Y = wxT("0");}
+			if( curr_val_W == wxString() ) 	{ curr_val_W = wxT("0");}
+			if( curr_val_H == wxString() ) 	{ curr_val_H = wxT("0");}
 
-			if( _zrang != "" ) 		{ last_token_set = 6;}
+			if( _zrang != wxString() ) 		{ last_token_set = 6;}
 
-			if( _pause_val == "" && last_token_set > 0)
+			if( _pause_val == wxString() && last_token_set > 0)
 			{ 
-				_pause_val = "0";
+				_pause_val = wxT("0");
 				panel_Anims->txtctrl_pause->ChangeValue( dmgs_val );
 			}
-			else if( _pause_val != "" )
+			else if( _pause_val != wxString() )
 				last_token_set = last_token_set > 0 ? last_token_set : 5;
 
 			if( b_noflash == true )
@@ -2263,23 +2266,23 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 			if( b_block == true )
 				last_token_set = last_token_set > 0 ? last_token_set : 3;
 
-			if( _prop_name != "blast" )
+			if( _prop_name != wxT("blast") )
 			{
-				if( _pow_val == "" && last_token_set > 0)
+				if( _pow_val == wxString() && last_token_set > 0)
 				{ 
-					_pow_val = "0";
+					_pow_val = wxT("0");
 					panel_Anims->txtctrl_pow->ChangeValue( dmgs_val );
 				}
-				else if( _pow_val != "" )
+				else if( _pow_val != wxString() )
 					last_token_set = last_token_set > 0 ? last_token_set : 2;
 			}
 
-			if( dmgs_val == "" && last_token_set > 0)
+			if( dmgs_val == wxString() && last_token_set > 0)
 			{ 
-				dmgs_val = "0";
+				dmgs_val = wxT("0");
 				panel_Anims->txtctrl_dmgs->ChangeValue( dmgs_val );
 			}
-			else if( dmgs_val != "" )
+			else if( dmgs_val != wxString() )
 				last_token_set = last_token_set > 0 ? last_token_set : 1;
 		}
 		else
@@ -2298,20 +2301,20 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 				t.Add( curr_val_Y );
 				t.Add( curr_val_W );
 				t.Add( curr_val_H );
-				if( dmgs_val != "" )
+				if( dmgs_val != wxString() )
 					t.Add( dmgs_val );
-				if( _prop_name != "blast" )
+				if( _prop_name != wxT("blast") )
 				{
-					if( _pow_val != "" )
+					if( _pow_val != wxString() )
 						t.Add( _pow_val );
 				}
 				if( last_token_set >= 3 )
 					t.Add( BoolToStr(b_block) );
 				if( last_token_set >= 4 )
 					t.Add( BoolToStr(b_noflash) );
-				if( _pause_val != "" )
+				if( _pause_val != wxString() )
 					t.Add( _pause_val );
-				if( _zrang != "" )
+				if( _zrang != wxString() )
 					t.Add( _zrang );
 			}
 			theHistoryManager.Set_State( false );
@@ -2322,7 +2325,7 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 			theHistoryManager.Set_State( true );
 			frameActive->Add_SubObj( associate_ob );
 			ATTACK__OnUpdate(associate_ob);
-			ATTACK__SetActive("");
+			ATTACK__SetActive(wxString());
 		}
 
 		//--------------------
@@ -2341,13 +2344,13 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 			wxString old_dmgs_val  =  associate_ob->GetToken(i);
 			i++;
 			wxString old_pow_val;
-			if( _prop_name != "blast" )
+			if( _prop_name != wxT("blast") )
 			{
 				old_pow_val  =  associate_ob->GetToken(i);
 				i++;
 			}
 			else
-				old_pow_val  =  "";
+				old_pow_val  =  wxString();
 			bool 	 old_b_block  =  StrToBool( associate_ob->GetToken(i));
 			i++;
 			bool 	 old_b_noflash  =  StrToBool( associate_ob->GetToken(i));
@@ -2368,17 +2371,17 @@ Panel_Anims::Evt_Attack_ValChange( wxCommandEvent& event )
 				t.Add( curr_val_Y );
 				t.Add( curr_val_W );
 				t.Add( curr_val_H );
-				if( dmgs_val != "" )
+				if( dmgs_val != wxString() )
 					t.Add( dmgs_val );
-				if( _pow_val != "" 	&& _prop_name != "blast" )
+				if( _pow_val != wxString() 	&& _prop_name != wxT("blast") )
 					t.Add( _pow_val );
 				if( last_token_set >= 3 )
 					t.Add( BoolToStr(b_block) );
 				if( last_token_set >= 4 )
 					t.Add( BoolToStr(b_noflash) );
-				if( _pause_val != "" )
+				if( _pause_val != wxString() )
 					t.Add( _pause_val );
-				if( _zrang != "" )
+				if( _zrang != wxString() )
 					t.Add( _zrang );
 			}
 
@@ -2428,7 +2431,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 		if( curr_anim == NULL || frameActive == NULL || ind_active_frame < 0 )
 			return;
 
-		ob_object *jumpframe_prop = curr_anim->GetSubObject( "jumpframe" );
+		ob_object *jumpframe_prop = curr_anim->GetSubObject( wxT("jumpframe") );
 		if( jumpframe_prop == NULL )
 			return;
 
@@ -2457,7 +2460,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 		// Check if the new path exist
 		wxFileName _wxpath = GetObFile( curr_path);
 		if( ! _wxpath.FileExists())
-			ObjectsLog( MYLOG_WARNING, -1, "Frame file <" + _wxpath.GetFullName() + "> doesn't exists" );
+			ObjectsLog( MYLOG_WARNING, -1, wxT("Frame file <") + _wxpath.GetFullName() + wxT("> doesn't exists") );
 
 // 		theHistoryManager.GroupStart( "Change Frame Image" );
 		frameActive->SetToken( 0, curr_path);
@@ -2473,7 +2476,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 	//****************************
 	else if( _ctlID == OFFSET_X || _ctlID == OFFSET_Y )
 	{
-		wxString _prop_name = "offset";
+		wxString _prop_name = wxT("offset");
 		ob_object* associate_ob  =  frameActive->GetSubObject(_prop_name);
 
 		wxString curr_val_X = panel_Anims->txtctrl_offset_X->GetValue();
@@ -2481,15 +2484,15 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 		wxString curr_val_Y = panel_Anims->txtctrl_offset_Y->GetValue();
 		curr_val_Y.Trim(false).Trim(true);
 
-		if( curr_val_X == "" )
+		if( curr_val_X == wxString() )
 		{ 
-			curr_val_X = "0";
-			panel_Anims->txtctrl_offset_X->ChangeValue("0");
+			curr_val_X = wxT("0");
+			panel_Anims->txtctrl_offset_X->ChangeValue(wxT("0"));
 		}
-		if( curr_val_Y == "" )
+		if( curr_val_Y == wxString() )
 		{ 
-			curr_val_Y = "0";
-			panel_Anims->txtctrl_offset_Y->ChangeValue("0");
+			curr_val_Y = wxT("0");
+			panel_Anims->txtctrl_offset_Y->ChangeValue(wxT("0"));
 		}
 
 		// avoid the NULL prop case
@@ -2519,7 +2522,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 	else if( _ctlID == BBOX_X || _ctlID == BBOX_Y || _ctlID == BBOX_W
 			|| _ctlID == BBOX_H || _ctlID == BBOX_Z )
 	{
-		wxString _prop_name = "bbox";
+		wxString _prop_name = wxT("bbox");
 		ob_object* associate_ob  =  frameActive->GetSubObject(_prop_name);
 
 		wxString curr_val_X = panel_Anims->txtctrl_bbox_X->GetValue();
@@ -2535,14 +2538,14 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 
 		//--------------------
 		// Evacuate the delete case
-		if(	curr_val_X == "" && curr_val_Y == "" && curr_val_W == ""
-			&& curr_val_H == ""  && curr_val_Z == "")
+		if(	curr_val_X == wxString() && curr_val_Y == wxString() && curr_val_W == wxString()
+			&& curr_val_H == wxString()  && curr_val_Z == wxString())
 		{
 			if( associate_ob != NULL )
 			{
 				b_changeMade = true;
 				update_showedFrame = 1;
-				theHistoryManager.GroupStart( "Del BBox" );
+				theHistoryManager.GroupStart( wxT("Del BBox") );
 				associate_ob->Rm();
 				theHistoryManager.GroupEnd();
 // 				delete associate_ob;
@@ -2555,24 +2558,24 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 		else
 		{
 			// Set some default val in case of empty fields
-			if( curr_val_X == "" )
+			if( curr_val_X == wxString() )
 			{ 
-				curr_val_X = "0";
+				curr_val_X = wxT("0");
 				panel_Anims->txtctrl_bbox_X->ChangeValue( curr_val_X );
 			}
-			if( curr_val_Y == "" )
+			if( curr_val_Y == wxString() )
 			{ 
-				curr_val_Y = "0";
+				curr_val_Y = wxT("0");
 				panel_Anims->txtctrl_bbox_Y->ChangeValue( curr_val_X );
 			}
-			if( curr_val_W == "" )
+			if( curr_val_W == wxString() )
 			{ 
-				curr_val_W = "0";
+				curr_val_W = wxT("0");
 				panel_Anims->txtctrl_bbox_W->ChangeValue( curr_val_X );
 			}
-			if( curr_val_H == "" )
+			if( curr_val_H == wxString() )
 			{ 
-				curr_val_H = "0";
+				curr_val_H = wxT("0");
 				panel_Anims->txtctrl_bbox_H->ChangeValue( curr_val_X );
 			}
 
@@ -2590,7 +2593,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				t.Add( curr_val_Y );
 				t.Add( curr_val_W );
 				t.Add( curr_val_H );
-				if( curr_val_Z != "0" && curr_val_Z != "" )
+				if( curr_val_Z != wxT("0") && curr_val_Z != wxString() )
 					t.Add( curr_val_Z );
 			}
 
@@ -2620,7 +2623,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				t.Add( curr_val_Y );
 				t.Add( curr_val_W );
 				t.Add( curr_val_H );
-				if( curr_val_Z != "0" )
+				if( curr_val_Z != wxT("0") )
 					t.Add( curr_val_Z );
 			}
 			
@@ -2644,7 +2647,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 
 		//--------------------
 		// Get the attack name
-		wxString _prop_name = "drawmethod";
+		wxString _prop_name = wxT("drawmethod");
 
 		//--------------------
 		// The associate object (possibly NULL)
@@ -2654,10 +2657,10 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 		// GET the values
 		wxString scaleX_val = panel_Anims->txtctrl_scaleX->GetValue();
 		scaleX_val.Trim(false).Trim(true);
-		if( scaleX_val == "" ) scaleX_val = "256";
+		if( scaleX_val == wxString() ) scaleX_val = wxT("256");
 		wxString scaleY_val = panel_Anims->txtctrl_scaleY->GetValue();
 		scaleY_val.Trim(false).Trim(true);
-		if( scaleY_val == "" ) scaleY_val = "256";
+		if( scaleY_val == wxString() ) scaleY_val = wxT("256");
 
 		bool b_flipx = panel_Anims->chckbx_flipx->GetValue();
 		bool b_flipy = panel_Anims->chckbx_flipy->GetValue();
@@ -2666,16 +2669,16 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 		shiftx_val.Trim(false).Trim(true);
 		wxString alpha_val = panel_Anims->txtctrl_alpha->GetValue();
 		alpha_val.Trim(false).Trim(true);
-		if( alpha_val == "" ) alpha_val = "-1";
+		if( alpha_val == wxString() ) alpha_val = wxT("-1");
 		wxString remap_val = panel_Anims->txtctrl_remap->GetValue();
 		remap_val.Trim(false).Trim(true);
-		if( remap_val == "" ) remap_val = "-1";
+		if( remap_val == wxString() ) remap_val = wxT("-1");
 		wxString fillcolor_val = panel_Anims->txtctrl_fillcolor->GetValue();
 		fillcolor_val.Trim(false).Trim(true);
-		if( fillcolor_val == "" ) fillcolor_val = "0";
+		if( fillcolor_val == wxString() ) fillcolor_val = wxT("0");
 		wxString rotate_val = panel_Anims->txtctrl_rotate->GetValue();
 		rotate_val.Trim(false).Trim(true);
-		if( rotate_val == "" ) rotate_val = "0";
+		if( rotate_val == wxString() ) rotate_val = wxT("0");
 
 		bool b_fliprotate = panel_Anims->chckbx_fliprotate->GetValue();
 
@@ -2687,13 +2690,13 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 		int _alpha = StrToInt( alpha_val );
 		if( _alpha < -1 || _alpha > 6 )
 		{
-			wxMessageBox( "Alpha val must be between -1 and 6", "Warning", wxOK | wxICON_INFORMATION, this );
+			wxMessageBox( wxT("Alpha val must be between -1 and 6"), wxT("Warning"), wxOK | wxICON_INFORMATION, this );
 		}
 		int _remap = StrToInt( remap_val );
 		int _fillcolor = StrToInt( fillcolor_val );
 		if( _fillcolor < 0 || _fillcolor > 255 )
 		{
-			wxMessageBox( "Fillcolor val must be between 0 and 255", "Warning", wxOK | wxICON_INFORMATION, this );
+			wxMessageBox( wxT("Fillcolor val must be between 0 and 255"), wxT("Warning"), wxOK | wxICON_INFORMATION, this );
 		}
 		int _rotate = StrToInt( rotate_val );
 
@@ -2707,19 +2710,19 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 			{
 				b_changeMade = true;
 				update_showedFrame = 2;
-				theHistoryManager.GroupStart( "Del DrawMethod" );
+				theHistoryManager.GroupStart( wxT("Del DrawMethod") );
 				associate_ob->Rm();
 				theHistoryManager.GroupEnd();
 // 				delete associate_ob;
 				associate_ob = NULL;
 			}
-			panel_Anims->txtctrl_scaleX->ChangeValue("");
-			panel_Anims->txtctrl_scaleY->ChangeValue("");
-			panel_Anims->txtctrl_shiftX->ChangeValue("");
-			panel_Anims->txtctrl_alpha->ChangeValue("");
-			panel_Anims->txtctrl_remap->ChangeValue("");
-			panel_Anims->txtctrl_fillcolor->ChangeValue("");
-			panel_Anims->txtctrl_rotate->ChangeValue("");
+			panel_Anims->txtctrl_scaleX->ChangeValue(wxString());
+			panel_Anims->txtctrl_scaleY->ChangeValue(wxString());
+			panel_Anims->txtctrl_shiftX->ChangeValue(wxString());
+			panel_Anims->txtctrl_alpha->ChangeValue(wxString());
+			panel_Anims->txtctrl_remap->ChangeValue(wxString());
+			panel_Anims->txtctrl_fillcolor->ChangeValue(wxString());
+			panel_Anims->txtctrl_rotate->ChangeValue(wxString());
 		}
 
 		//--------------------
@@ -2760,7 +2763,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				last_token_set--;
 			}
 			else
-				panel_Anims->txtctrl_scaleY->ChangeValue("");
+				panel_Anims->txtctrl_scaleY->ChangeValue(wxString());
 			
 			if( last_token_set >= 0 )
 			{
@@ -2789,7 +2792,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				last_token_set--;
 			}
 			else
-				panel_Anims->txtctrl_shiftX->ChangeValue("");
+				panel_Anims->txtctrl_shiftX->ChangeValue(wxString());
 			
 			if( last_token_set >= 0 )
 			{
@@ -2800,7 +2803,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				last_token_set--;
 			}
 			else
-				panel_Anims->txtctrl_alpha->ChangeValue("");
+				panel_Anims->txtctrl_alpha->ChangeValue(wxString());
 			
 			if( last_token_set >= 0 )
 			{
@@ -2811,7 +2814,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				last_token_set--;
 			}
 			else
-				panel_Anims->txtctrl_remap->ChangeValue("");
+				panel_Anims->txtctrl_remap->ChangeValue(wxString());
 			
 			if( last_token_set >= 0 )
 			{
@@ -2822,7 +2825,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				last_token_set--;
 			}
 			else
-				panel_Anims->txtctrl_fillcolor->ChangeValue("");
+				panel_Anims->txtctrl_fillcolor->ChangeValue(wxString());
 			
 			if( last_token_set >= 0 )
 			{
@@ -2833,7 +2836,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 				last_token_set--;
 			}
 			else
-				panel_Anims->txtctrl_rotate->ChangeValue("");
+				panel_Anims->txtctrl_rotate->ChangeValue(wxString());
 			
 			if( last_token_set >= 0 )
 			{
@@ -2850,7 +2853,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 			{
 				b_changeMade = true;
 				update_showedFrame = 2;
-				theHistoryManager.GroupStart( "Create DrawMethod" );
+				theHistoryManager.GroupStart( wxT("Create DrawMethod") );
 				frameActive->SetProperty( _prop_name,t );
 				theHistoryManager.GroupEnd();
 			}
@@ -2969,7 +2972,7 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 					curr_val.Trim(false).Trim(true);
 
 					// Deletion case
-					if( curr_val == "" )
+					if( curr_val == wxString() )
 					{
 						ob_object *temp = frameActive->GetSubObject( *_prop_name );
 						
@@ -2998,17 +3001,17 @@ void Panel_Anims::DoCommand( int _ctlID, int force_updateMode )
 					return;
 			}
 
-			if( _prop_name->Upper() == "SOUND" )
+			if( _prop_name->Upper() == wxT("SOUND") )
 			{
-				wxString curr_path = frameActive->GetSubObject_Token( "sound" );
+				wxString curr_path = frameActive->GetSubObject_Token( wxT("sound" ));
 				// Check if the new path exist
 				wxFileName _wxpath = GetObFile( curr_path );
 				if( ! _wxpath.FileExists())
-					ObjectsLog( MYLOG_WARNING, -1, "Sound file <" + _wxpath.GetFullName() + "> doesn't exists" );
+					ObjectsLog( MYLOG_WARNING, -1, wxT("Sound file <") + _wxpath.GetFullName() + wxT("> doesn't exist") );
 				update_showedFrame = 0;
 			}
-			else if( _prop_name->Upper() == "MOVE" || _prop_name->Upper() == "MOVEA"
-				 || _prop_name->Upper() == "MOVEZ" || _prop_name->Upper() == "DELAY")
+			else if( _prop_name->Upper() == wxT("MOVE") || _prop_name->Upper() == wxT("MOVEA")
+				|| _prop_name->Upper() == wxT("MOVEZ") || _prop_name->Upper() == wxT("DELAY"))
 			{
 				update_showedFrame = 2;
 			}
@@ -3047,13 +3050,12 @@ Panel_Anims::Rescale_Boxes()
 {
 	if( frameActive == NULL || arr_anims_count <= 0 )
 	{
-		wxMessageBox( "No animations to rescale !", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No animations to rescale !"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
 	// Ask For the percentage
-	wxTextEntryDialog* ctrl_percent = new wxTextEntryDialog( this, "Percentage of the rescaling ?", "As you want"
-				,"100" );
+	wxTextEntryDialog* ctrl_percent = new wxTextEntryDialog( this, wxT("Percentage of the rescaling ?"), wxT("As you want"),wxT("100") );
 	ctrl_percent->ShowModal();
 	;
 	bool is_a_number = false;
@@ -3062,7 +3064,7 @@ Panel_Anims::Rescale_Boxes()
 
 	if( ! is_a_number )
 	{
-		wxMessageBox( "Not a valid integer !", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("Not a valid integer !"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
@@ -3083,7 +3085,7 @@ Panel_Anims::Rescale_Boxes()
 
 			//----------------------
 			// Resize the offset
-			ob_object *_offset = _fr->GetSubObject("offset");
+			ob_object *_offset = _fr->GetSubObject(wxT("offset"));
 			if( _offset != NULL )
 			{
 				_offset->SetToken(0, IntToStr( (int) ( StrToInt(_offset->arr_token[0]) * ratio )));
@@ -3092,7 +3094,7 @@ Panel_Anims::Rescale_Boxes()
 
 			//----------------------
 			// Resize the beat-box
-			ob_object *_bbox = _fr->GetSubObject("bbox");
+			ob_object *_bbox = _fr->GetSubObject(wxT("bbox"));
 			if( _bbox != NULL )
 			{
 				for( size_t k=0;k< _bbox->nb_tokens; k++)
@@ -3101,9 +3103,10 @@ Panel_Anims::Rescale_Boxes()
 
 			//----------------------
 			// Resize the attack-boxes
-			wxString lst_attacks[] = { "attack", "attack1", "attack2", "attack3", "attack4", "attack5",
-									   "attack6", "attack7", "attack8", "attack9"
-									 , "blast", "shock", "burn", "freeze", "steal" };
+			wxString lst_attacks[] = { wxT("attack"), wxT("attack1"), wxT("attack2"), 
+			wxT("attack3"), wxT("attack4"), wxT("attack5"), wxT("attack6"),
+			wxT("attack7"), wxT("attack8"), wxT("attack9"),
+			wxT("blast"), wxT("shock"), wxT("burn"), wxT("freeze"), wxT("steal") };
 			for( int k = 0; k < 15; k++)
 			{
 				wxString _att = lst_attacks[k];
@@ -3233,9 +3236,9 @@ void Panel_Anims::EvtImgPickerChg( wxFileDirPickerEvent& event )
 	// Get the path relatively to dataDir
 	wxString ob_path = Convert_To_Ob_Path( event.GetPath() );
 
-	if( ob_path == "" )
+	if( ob_path == wxString() )
 	{
-		wxMessageBox( "The following file doesn't belong to the project dir :\n"+ event.GetPath(), "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("The following file doesn't belong to the project dir :\n")+ event.GetPath(), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
@@ -3253,9 +3256,9 @@ void Panel_Anims::EvtSndPickerChg( wxFileDirPickerEvent& event )
 	// Get the path relatively to dataDir
 	wxString ob_path = Convert_To_Ob_Path( event.GetPath() );
 
-	if( ob_path == "" )
+	if( ob_path == wxString() )
 	{
-		wxMessageBox( "The following file doesn't belong to the project dir :\n"+ event.GetPath(), "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("The following file doesn't belong to the project dir :\n")+ event.GetPath(), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
@@ -3293,7 +3296,7 @@ void Panel_Anims::EvtAnimListChange(wxCommandEvent& event)
 void Panel_Anims::EvtAnimSelectionChange(wxCommandEvent& event)
 {
 	Panel_withAnims::EvtAnimSelectionChange(event);
-	ATTACK__SetActive( "DEF" );
+	ATTACK__SetActive( wxT("DEF") );
 }
 
 
@@ -3318,7 +3321,7 @@ Panel_Anims::EvtFrameSelectionChange(wxCommandEvent& event)
 	}
 	else
 	{
-		ATTACK__SetActive("");
+		ATTACK__SetActive(wxString());
 		Update_FrameDatas();
 	}
 

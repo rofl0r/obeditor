@@ -33,7 +33,7 @@ History_Elt::Zero_Init()
 	o = NULL;
 	o_related = NULL;
 	token_pos = 0;
-	token_val = "";
+	token_val = wxString();
 	datas = NULL;
 //	cout<<"History_Elt() : NEW ELT !"<<endl;
 }
@@ -49,7 +49,7 @@ History_Elt::History_Elt()
 History_Elt::History_Elt( int _type, ob_object* _o, ob_object* _o_related, bool b_parent )
 {
 	if( _o_related == NULL )
-		wxMessageBox( "BUG!!!!!\n\nHistory_Elt::History_Elt()\n_o_related == NULL !!!\n" );
+		wxMessageBox( wxT("BUG!!!!!\n\nHistory_Elt::History_Elt()\n_o_related == NULL !!!\n") );
 
 	debug_hist_elt_count++;
 	Zero_Init();
@@ -65,7 +65,7 @@ History_Elt::History_Elt( int _type, ob_object* _o, ob_object* _o_related, bool 
 			break;
 			
 		default:
-			wxMessageBox( "BUG!!!!!\nHistory_Elt::History_Elt()\nBad type for subobect change !!!\n" );
+			wxMessageBox( wxT("BUG!!!!!\nHistory_Elt::History_Elt()\nBad type for subobect change !!!\n") );
 			return;
 	}
 	
@@ -93,7 +93,7 @@ History_Elt::History_Elt(  int _type, ob_object* _o
 			break;
 
 		default:
-			wxMessageBox( "BUG!!!!!\n\nHistory_Elt::History_Elt()\nBad type for token change !!!\n" );
+			wxMessageBox( wxT("BUG!!!!!\n\nHistory_Elt::History_Elt()\nBad type for token change !!!\n") );
 			return;
 	}
 
@@ -149,40 +149,40 @@ History_Elt::~History_Elt()
 wxString
 History_Elt::ToStr()
 {
-	wxString res = IntToStr((int)this->o) + " : ";
+	wxString res = IntToStr((size_t)this->o) + wxT(" : ");
 	switch( type )
 	{
 		case H_DUMMY:
-			res = "Dummy : ";
+			res = wxT("Dummy : ");
 			break;
 		case H_NAME_CHANGE:
-			res = "NAME_CHG : ";
+			res = wxT("NAME_CHG : ");
 			break;
 		case H_TOKEN_CHANGE:
-			res = "TOK_CHG : ";
+			res = wxT("TOK_CHG : ");
 			break;
 		case H_TOKEN_ADD:
-			res = "TOK_ADD : ";
+			res = wxT("TOK_ADD : ");
 			break;
 		case H_TOKEN_RM:
-			res = "TOK_RM : ";
+			res = wxT("TOK_RM : ");
 			break;
 		case H_OBJ_INSERT:
-			res = "OBJ_INSERT : ";
+			res = wxT("OBJ_INSERT : ");
 			break;
 		case H_OBJ_RM:
-			res = "OBJ_RM : ";
+			res = wxT("OBJ_RM : ");
 			break;
 		default:
-			res = "BUG_type : ";
+			res = wxT("BUG_type : ");
 			break;
 	}
 	if( o==NULL)
-		res += "NULL";
+		res += wxT("NULL");
 	else if( theHistoryManager.l_orphans.count( o ) > 0 )
-		res += IntToStr((int)o) + " : INVALID";
+		res += IntToStr((size_t)o) + wxT(" : INVALID");
 	else
-		res += IntToStr((int)o) + " : " + o->name + "," + o->GetToken(0);
+		res += IntToStr((size_t)o) + wxT(" : ") + o->name + wxT(",") + o->GetToken(0);
 	
 	return  res;
 }
@@ -240,7 +240,7 @@ History_Elt::Do(  std::list<History_Group*>::iterator it_grp)
 			
 		case H_DUMMY:
 		default:
-			wxMessageBox( "BUG!!!!!\n\nHistory_Elt::Do()\nType Invalid !!!\n" );
+			wxMessageBox( wxT("BUG!!!!!\n\nHistory_Elt::Do()\nType Invalid !!!\n"));
 			break;
 	}
 	
@@ -308,7 +308,7 @@ History_Elt::UnDo(  std::list<History_Group*>::iterator it_grp)
 			break;
 		case H_DUMMY:
 		default:
-			wxMessageBox( "BUG!!!!!\n\nHistory_Elt::Do()\nType Invalid !!!\n" );
+			wxMessageBox( wxT("BUG!!!!!\n\nHistory_Elt::Do()\nType Invalid !!!\n") );
 			break;
 	}
 
@@ -413,32 +413,32 @@ History_Group::UnDo(list<History_Group*>::iterator it_grp)
 wxString 
 History_Group::GetName()
 {
-	if( name != "" )
+	if( name != wxString())
 		return name;
 	if( l_elts.empty() == true )
-		return "NOTHING !!";
+		return wxT("NOTHING !!");
 	
 	History_Elt* _elt = l_elts.front();
 	wxString res;
 	switch( _elt->type )
 	{
 		case History_Elt::H_NAME_CHANGE:
-			res = "Prop Rename " + _elt->token_val;
+			res = wxT("Prop Rename ") + _elt->token_val;
 			break;
 		case History_Elt::H_TOKEN_CHANGE:
 		case History_Elt::H_TOKEN_ADD:
 		case History_Elt::H_TOKEN_RM:
-			res = "Prop Change " + _elt->o->name;
+			res = wxT("Prop Change ") + _elt->o->name;
 			break;
 		case History_Elt::H_OBJ_INSERT:
-			res = "Insertion " + _elt->o->name;
+			res = wxT("Insertion ") + _elt->o->name;
 			break;
 		case History_Elt::H_OBJ_RM:
-			res = "Deletion " + _elt->o->name;
+			res = wxT("Deletion ") + _elt->o->name;
 			break;
 		case History_Elt::H_DUMMY:
 		default:
-			res = "NOTHING ";
+			res = wxT("NOTHING ");
 			break;
 	}
 	
@@ -488,7 +488,7 @@ History_Manager::Set_State(bool b_enable)
 	if( b_enable == true )
 	{
 		if( disable_count == 0 )
-			wxMessageBox( "BUG!!\n\nHistory_Manager::Set_State()\nToo much Call!\n");
+			wxMessageBox( wxT("BUG!!\n\nHistory_Manager::Set_State()\nToo much Call!\n"));
 		else
 			disable_count--;
 	}
@@ -541,7 +541,7 @@ History_Manager::GroupEnd()
 		return;
 	
 	if( it_now != l_history_groups.end() )
-		wxMessageBox( "BUG !!!\nGroupEnd()\nit_now is not the end !\n");
+		wxMessageBox( wxT("BUG !!!\nGroupEnd()\nit_now is not the end !\n"));
 	
 	std::list<History_Group*>::iterator it_t(it_now);
 	it_t--;
@@ -582,7 +582,7 @@ History_Manager::Clear_History()
 	if( initial_datas != NULL && onDeleteHistory_data != NULL )
 		(*onDeleteHistory_data)(initial_datas);
 	else if( initial_datas != NULL && onDeleteHistory_data == NULL )
-		wxMessageBox( "BUG !!!\nHistory_Manager::Clear_History()\ninitial_datas != NULL && onDeleteHistory_data == NULL !!!\n");
+		wxMessageBox( wxT("BUG !!!\nHistory_Manager::Clear_History()\ninitial_datas != NULL && onDeleteHistory_data == NULL !!!\n"));
 	initial_datas = NULL;
 
 	// Tell about no more doS and undoS
@@ -951,7 +951,7 @@ Get_Prev_Ctrl_States(list<History_Group*>::iterator it_grp,bool b_grp_end_elt_va
 	
 	if( (*it_t)->l_elts.empty() == true )
 	{
-		wxMessageBox( "BUG !!\nGet_Prev_Ctrl_States()\nGroup is Empty !!!\n" );
+		wxMessageBox( wxT("BUG !!\nGet_Prev_Ctrl_States()\nGroup is Empty !!!\n" ));
 		return NULL;
 	}
 	
@@ -970,6 +970,6 @@ Get_Prev_Ctrl_States(list<History_Group*>::iterator it_grp,bool b_grp_end_elt_va
 		return theHistoryManager.initial_datas;
 	
 	else
-		wxMessageBox( "BUG !!\nGet_Prev_Ctrl_States()\nNo previous Groups States !!!\n" );
+		wxMessageBox( wxT("BUG !!\nGet_Prev_Ctrl_States()\nNo previous Groups States !!!\n"));
 	return NULL;
 }

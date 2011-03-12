@@ -53,11 +53,11 @@ PanelEntity_Overview::PanelEntity_Overview(wxNotebook* onglets)
 		wxBoxSizer *sizer_main = new wxBoxSizer( wxHORIZONTAL );
 
 	// List Entities Sizer
-		wxStaticBoxSizer *sizer_listEntities = new wxStaticBoxSizer( wxVERTICAL, this, "Entities" );
+		wxStaticBoxSizer *sizer_listEntities = new wxStaticBoxSizer( wxVERTICAL, this, wxT("Entities") );
 		sizer_main->Add( sizer_listEntities,0,wxEXPAND );
 
 	// Right Panel Sizer
-		wxStaticBoxSizer *sizer_Right = new wxStaticBoxSizer( wxVERTICAL, this, "Overview of the entity" );
+		wxStaticBoxSizer *sizer_Right = new wxStaticBoxSizer( wxVERTICAL, this, wxT("Overview of the entity") );
 		sizer_main->Add( sizer_Right,1,wxEXPAND );
 
 	// RightUP Panel Sizer
@@ -65,11 +65,11 @@ PanelEntity_Overview::PanelEntity_Overview(wxNotebook* onglets)
 		sizer_Right->Add( sizer_RightUp,0,wxEXPAND | wxFIXED_MINSIZE );
 
 	// Entity path Sizer
-		wxStaticBoxSizer *sizer_EntPath = new wxStaticBoxSizer( wxVERTICAL, this, "Entity file" );
+		wxStaticBoxSizer *sizer_EntPath = new wxStaticBoxSizer( wxVERTICAL, this, wxT("Entity file" ));
 		sizer_RightUp->Add( sizer_EntPath, 1, wxEXPAND );
 
 	// Entity properties Sizer
-		wxStaticBoxSizer *sizer_PropEntity = new wxStaticBoxSizer( wxHORIZONTAL, this, "Properties" );
+		wxStaticBoxSizer *sizer_PropEntity = new wxStaticBoxSizer( wxHORIZONTAL, this, wxT("Properties" ));
 		sizer_Right->Add( sizer_PropEntity, 1, wxEXPAND | wxALL , 5 );
 
 	//******************
@@ -77,12 +77,12 @@ PanelEntity_Overview::PanelEntity_Overview(wxNotebook* onglets)
 	//******************
 
 	// Path of the entity file
-		wPathEntityFile = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize,
+		wPathEntityFile = new wxTextCtrl(this, wxID_ANY, wxString(), wxDefaultPosition, wxDefaultSize,
 				wxTE_READONLY | wxSUNKEN_BORDER );
 		wPathEntityFile->SetOwnBackgroundColour( wxColour(220,220,220) );
 		sizer_EntPath->Add( wPathEntityFile,0, wxEXPAND );
 
-		fileErrorMessage = new  wxStaticText(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize,
+		fileErrorMessage = new  wxStaticText(this, wxID_ANY, wxString(), wxDefaultPosition, wxDefaultSize,
 				wxALIGN_RIGHT );
 		fileErrorMessage->SetOwnForegroundColour( wxColour(250,0,0) );
 		sizer_EntPath->Add( fileErrorMessage,0 );
@@ -109,11 +109,11 @@ PanelEntity_Overview::PanelEntity_Overview(wxNotebook* onglets)
 	// Entity Properties
 		list_ent_Props = new GridOb_ObjectProperties( this );
 		wxArrayString tt;
-		tt.Add( "frame" );
-		tt.Add( "anim" );
-		tt.Add( "remap" );
-		tt.Add( "palette" );
-		tt.Add( "alternatepal" );
+		tt.Add( wxT("frame" ));
+		tt.Add( wxT("anim" ));
+		tt.Add( wxT("remap" ));
+		tt.Add( wxT("palette" ));
+		tt.Add( wxT("alternatepal" ));
 		list_ent_Props->SetFilter_Properties( tt );
 		sizer_PropEntity->Add( list_ent_Props, 1, wxEXPAND, 5 );
 
@@ -178,7 +178,7 @@ void PanelEntity_Overview::Save_Current(bool b_ask)
 	bool b_doSave = ! b_ask;
 	if( b_ask )
 	{
-		int res = wxMessageBox( "Change have been made to the entity <"+ entity->Name() +">\nWrite the changes now ??", "Question !"
+		int res = wxMessageBox( wxT("Change have been made to the entity <")+ entity->Name() +wxT(">\nWrite the changes now ??"), wxT("Question !")
 				, wxYES_NO | wxICON_INFORMATION, this );
 		if( res == wxYES )
 			b_doSave = true;
@@ -190,7 +190,7 @@ void PanelEntity_Overview::Save_Current(bool b_ask)
 	{
 		if( ! entity->Write() )
 		{
-			wxMessageBox( "Error, can't write the file !!", "Error !"
+			wxMessageBox( wxT("Error, can't write the file !!"), wxT("Error !")
 			, wxYES_NO | wxICON_ERROR , this );
 			entity->changed = 1;
 		}
@@ -224,7 +224,7 @@ void PanelEntity_Overview::SaveAll( bool b_ask )
 			bool b_doSave = ! b_ask;
 			if( b_ask )
 			{
-				int res = wxMessageBox( "Change have been made to the entity <"+ temp->Name() +">\nWrite the changes now ??", "Question !"
+				int res = wxMessageBox(wxT( "Change have been made to the entity <")+ temp->Name() +wxT(">\nWrite the changes now ??"), wxT("Question !")
 						, wxYES_NO | wxICON_INFORMATION, this );
 				if( res == wxYES )
 					b_doSave = true;
@@ -232,7 +232,7 @@ void PanelEntity_Overview::SaveAll( bool b_ask )
 			if( b_doSave )
 				if( ! temp->Write() )
 				{
-					wxMessageBox( "Error, can't write the file !!", "Error !"
+					wxMessageBox( wxT("Error, can't write the file !!"), wxT("Error !")
 					, wxYES_NO | wxICON_ERROR , this );
 				}
 		}
@@ -288,7 +288,7 @@ void PanelEntity_Overview::Reload_EntityList()
 	list_entities->Refresh_ListEntities();
 	loading = false;
 
-	if( old_selection != "" )
+	if( old_selection != wxString() )
 		list_entities->SetStringSelection( old_selection );
 		if( ! list_entities->GetSelection() == wxNOT_FOUND )
 			list_entities->SetSelection( 0 );
@@ -341,10 +341,10 @@ void PanelEntity_Overview::ChangeEntityOverview(ob_models* _ent)
 		list_ent_Props->Clear();
 		list_ent_Props->Disable();
 		Update_PagesAccessible();
-		curr_entity_filename = "";
+		curr_entity_filename = wxString();
 		avatarCtrl->SetImage( noImg );
 		avatarCtrl->Refresh();
-		wPathEntityFile->SetValue( "" );
+		wPathEntityFile->SetValue( wxString() );
 		entity = NULL;
 		return;
 	}
@@ -375,7 +375,7 @@ void PanelEntity_Overview::ChangeEntityOverview(ob_models* _ent)
 	{
 		wxFileName _ent_path = GetObFile( _subpath);
 		if( ! _ent_path.FileExists() )
-		    fileErrorMessage->SetLabel( "File doesn't exist" );
+			fileErrorMessage->SetLabel( wxT("File doesn't exist") );
 		else
 		{
 			_ent_file = new obFileEntity( _ent_path );
@@ -383,7 +383,7 @@ void PanelEntity_Overview::ChangeEntityOverview(ob_models* _ent)
 			{
 				delete _ent_file;
 				_ent_file = NULL;
-				fileErrorMessage->SetLabel( "File is empty or something" );
+				fileErrorMessage->SetLabel( wxT("File is empty or something") );
 			}
 		}
 
@@ -394,14 +394,14 @@ void PanelEntity_Overview::ChangeEntityOverview(ob_models* _ent)
 			list_ent_Props->Clear();
 			list_ent_Props->Disable();
 			Update_PagesAccessible();
-			curr_entity_filename = "";
+			curr_entity_filename = wxString();
 			return;
 		}
 		 hash_ent_obj[_name] = _ent_file;
 	}
 
 	list_ent_Props->Enable();
-	fileErrorMessage->SetLabel( "" );
+	fileErrorMessage->SetLabel( wxString() );
 	entity = _ent_file;
 
 	//--------------------------------
@@ -542,10 +542,10 @@ wListEntities::OnSelectionChange(wxCommandEvent& event )
 	entityFrame->entitySelection_time++;
 
 	// Update Displayed info
-	wxString _name = "NO ENTITY";
+	wxString _name = wxT("NO ENTITY");
 	if( entity != NULL )
 		_name = entity->Name();
-	entityFrame->SetTitle( wxString("ObEditor-") + obeditor_version + " : " + + _name);
+	entityFrame->SetTitle( wxT("ObEditor-") + obeditor_version + wxT(" : ") + + _name);
 	wxMenu *t = entityFrame->menuBar->GetMenu(0);
 	if( t != NULL )
 	{
@@ -554,10 +554,10 @@ wListEntities::OnSelectionChange(wxCommandEvent& event )
 		while (iter)
 		{
 			wxMenuItem *temp = iter->GetData();
-			if( temp->GetLabel().Right(4) == "(F2)" )
-				temp->SetItemLabel( "Save     <"+ _name + ">     (F2)" );
-			if( temp->GetLabel().Right(4) == "(F4)" )
-				temp->SetItemLabel( "Reload <"+ _name + ">     (F4)" );
+			if( temp->GetLabel().Right(4) == wxT("(F2)") )
+				temp->SetItemLabel( wxT("Save     <")+ _name + wxT(">     (F2)") );
+			if( temp->GetLabel().Right(4) == wxT("(F4)") )
+				temp->SetItemLabel( wxT("Reload <")+ _name + wxT(">     (F4)") );
 			iter = iter->GetNext();
 		}
 	}

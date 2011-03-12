@@ -26,7 +26,7 @@ const wxFont font_Label( 16, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxNORMAL,
 const int MAX_LAYERS = 20;
 const int REPEAT_FOREVER = 100;
 const int BTN_W = 50;
-wxString alphaChoices[] = {"0","1","2","3","4","5","6"};
+wxString alphaChoices[] = {wxT("0"),wxT("1"),wxT("2"),wxT("3"),wxT("4"),wxT("5"),wxT("6")};
 
 //****************************************************
 myWnd_EditBackground::myWnd_EditBackground( 
@@ -35,7 +35,7 @@ myWnd_EditBackground::myWnd_EditBackground(
 			, ob_StageDeclaration* _stage_declaration
 			, ob_StagesSet* _stage_set
 			)
-:wxDialog( _parent, wxID_ANY, "Edit Backgound", wxDefaultPosition, wxDefaultSize
+			:wxDialog( _parent, wxID_ANY, wxT("Edit Backgound"), wxDefaultPosition, wxDefaultSize
 		,wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxDEFAULT_DIALOG_STYLE )
 {
 	stage = _stage;
@@ -67,7 +67,7 @@ myWnd_EditBackground::myWnd_EditBackground(
 	// Control with current layer values
 		// PATH
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "Path" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("Path") )
 					,0,wxALL, BORDERS_SIZES );
 		
 		ctrl_path = new prObFileChooserCtrl( this );
@@ -84,10 +84,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 
 		// Xratio
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "xRat" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("xRat") )
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Xratio = new wxTextCtrl(this, wxID_ANY
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorFloatPositive() );
 		txtCtrl_Xratio->Connect( wxEVT_COMMAND_TEXT_ENTER
 			, wxCommandEventHandler(myWnd_EditBackground::Evt_bgParamChange )
@@ -103,10 +103,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Zratio
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "zRat" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("zRat") )
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Zratio = new wxTextCtrl(this, wxID_ANY
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorFloatPositive() );
 		txtCtrl_Zratio->Connect( wxEVT_KILL_FOCUS
 			, wxFocusEventHandler(myWnd_EditBackground::Evt_bgParamFocusOut)
@@ -122,10 +122,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Xpos
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "xPos" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("xPos") )
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Xpos = new wxTextCtrl(this, wxID_ANY
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorIntegerRelative() );
 		txtCtrl_Xpos->Connect( wxEVT_KILL_FOCUS
 			, wxFocusEventHandler(myWnd_EditBackground::Evt_bgParamFocusOut)
@@ -141,10 +141,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Zpos
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "zPos" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("zPos") )
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Zpos = new wxTextCtrl(this, wxID_ANY 
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorIntegerRelative() );
 		txtCtrl_Zpos->Connect( wxEVT_KILL_FOCUS
 			, wxFocusEventHandler(myWnd_EditBackground::Evt_bgParamFocusOut)
@@ -160,10 +160,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Xspace
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "xSpace" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("xSpace") )
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Xspace = new wxTextCtrl(this, wxID_ANY 
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorIntegerRelative() );
 		txtCtrl_Xspace->Connect( wxEVT_KILL_FOCUS
 			, wxFocusEventHandler(myWnd_EditBackground::Evt_bgParamFocusOut)
@@ -179,10 +179,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Zspace
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "zSpace" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("zSpace") )
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Zspace = new wxTextCtrl(this, wxID_ANY
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorIntegerRelative() );
 		txtCtrl_Zspace->Connect( wxEVT_KILL_FOCUS
 			, wxFocusEventHandler(myWnd_EditBackground::Evt_bgParamFocusOut)
@@ -198,10 +198,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Xrepeat
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "xRep" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("xRep" ))
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Xrepeat = new wxTextCtrl(this, wxID_ANY
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorIntegerRelative() );
 		txtCtrl_Xrepeat->Connect( wxEVT_KILL_FOCUS
 			, wxFocusEventHandler(myWnd_EditBackground::Evt_bgParamFocusOut)
@@ -217,10 +217,10 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Zrepeat
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "zRep" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("zRep" ))
 					,0,wxALL, BORDERS_SIZES );
 		txtCtrl_Zrepeat = new wxTextCtrl(this, wxID_ANY 
-			, "", wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
+			, wxString(), wxDefaultPosition,wxDefaultSize,wxTE_PROCESS_ENTER
 			, wxValidatorIntegerRelative() );
 		txtCtrl_Zrepeat->Connect( wxEVT_KILL_FOCUS
 			, wxFocusEventHandler(myWnd_EditBackground::Evt_bgParamFocusOut)
@@ -236,9 +236,9 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Transparency
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "Trans" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("Trans" ))
 					,0,wxALL, BORDERS_SIZES );
-		chkCtrl_transparency = new wxCheckBox(this, wxID_ANY, "" );
+		chkCtrl_transparency = new wxCheckBox(this, wxID_ANY, wxString() );
 		chkCtrl_transparency->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED
 			, wxCommandEventHandler(myWnd_EditBackground::Evt_bgParamChange )
 			, NULL, this);
@@ -250,9 +250,9 @@ myWnd_EditBackground::myWnd_EditBackground(
 		
 		// Alpha
 		t_sizer2 = new wxBoxSizer( wxVERTICAL );
-		t_sizer2->Add( new wxStaticText( this, wxID_ANY, "Alpha" )
+		t_sizer2->Add( new wxStaticText( this, wxID_ANY, wxT("Alpha" ))
 					,0,wxALL, BORDERS_SIZES );
-		comboCtrl_alpha = new wxComboBox(this, wxID_ANY, "0"
+				comboCtrl_alpha = new wxComboBox(this, wxID_ANY, wxT("0")
 				, wxDefaultPosition,wxDefaultSize
 				, 7, alphaChoices
 				, wxCB_READONLY|wxCB_DROPDOWN );
@@ -279,13 +279,13 @@ myWnd_EditBackground::myWnd_EditBackground(
 	t_sizer2 = new wxBoxSizer( wxHORIZONTAL );
 	t_sizer->Add( t_sizer2, 0, 0 );
 	
-	t_btn = new wxButton( this, wxID_ANY, "Move Up" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Move Up") );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(myWnd_EditBackground::Evt_MoveLayerUp)
 		, NULL, this);
 	t_sizer2->Add( t_btn, 0, wxALL, 3 );
 	
-	t_btn = new wxButton( this, wxID_ANY, "Move Down" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Move Down") );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(myWnd_EditBackground::Evt_MoveLayerDown)
 		, NULL, this);
@@ -294,13 +294,13 @@ myWnd_EditBackground::myWnd_EditBackground(
 	t_sizer2 = new wxBoxSizer( wxHORIZONTAL );
 	t_sizer->Add( t_sizer2, 0, 0 );
 	
-	t_btn = new wxButton( this, wxID_ANY, "New Layer" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("New Layer" ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(myWnd_EditBackground::Evt_NewLayer)
 		, NULL, this);
 	t_sizer2->Add( t_btn, 0, wxALL, 3 );
 
-	t_btn = new wxButton( this, wxID_ANY, "Delete Layer" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Delete Layer") );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(myWnd_EditBackground::Evt_DeleteLayer)
 		, NULL, this);
@@ -339,7 +339,7 @@ myWnd_EditBackground::myWnd_EditBackground(
 	t_sizer->AddStretchSpacer(3);
 	
 	// Btns OK CANCEL
-	t_btn = new wxButton( this, wxID_ANY, "OK" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("OK") );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(myWnd_EditBackground::Evt_OK)
 		, NULL, this);
@@ -347,7 +347,7 @@ myWnd_EditBackground::myWnd_EditBackground(
 
 	t_sizer->AddStretchSpacer();
 	
-	t_btn = new wxButton( this, wxID_ANY, "Cancel" );
+	t_btn = new wxButton( this, wxID_ANY, wxT("Cancel" ));
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(myWnd_EditBackground::Evt_Cancel)
 		, NULL, this);
@@ -386,7 +386,7 @@ myWnd_EditBackground::Init()
 	bool b_found = false;
 	for( size_t i = 0; i < nb_layers; i++)
 	{
-		if( t_objs[i]->name.Upper() == "BACKGROUND" )
+		if( t_objs[i]->name.Upper() == wxT("BACKGROUND" ))
 		{
 			if( i > 0 )
 			{
@@ -404,7 +404,7 @@ myWnd_EditBackground::Init()
 
 	if( b_found == false )
 	{
-		wxMessageBox( "No background Found !", "WARNING"
+		wxMessageBox( wxT("No background Found !"), wxT("WARNING")
 			, wxICON_EXCLAMATION | wxOK );
 	}
 	
@@ -492,17 +492,17 @@ myWnd_EditBackground::~myWnd_EditBackground()
 void 
 myWnd_EditBackground::Zero_Layer_Vals()
 {
-	ctrl_path->SetObPath("data");
-	txtCtrl_Xratio->SetValue( "1" );
-	txtCtrl_Zratio->SetValue( "1" );
-	txtCtrl_Xpos->SetValue( "0" );
-	txtCtrl_Zpos->SetValue( "0" );
-	txtCtrl_Xspace->SetValue( "0" );
-	txtCtrl_Zspace->SetValue( "0" );
-	txtCtrl_Xrepeat->SetValue( "5000" );
-	txtCtrl_Zrepeat->SetValue( "5000" );;
+	ctrl_path->SetObPath(wxT("data"));
+	txtCtrl_Xratio->SetValue( wxT("1" ));
+	txtCtrl_Zratio->SetValue( wxT("1" ));
+	txtCtrl_Xpos->SetValue( wxT("0" ));
+	txtCtrl_Zpos->SetValue( wxT("0" ));
+	txtCtrl_Xspace->SetValue( wxT("0" ));
+	txtCtrl_Zspace->SetValue( wxT("0" ));
+	txtCtrl_Xrepeat->SetValue( wxT("5000") );
+	txtCtrl_Zrepeat->SetValue( wxT("5000") );;
 	chkCtrl_transparency->SetValue( true );;
-	comboCtrl_alpha->SetValue( "0" );
+	comboCtrl_alpha->SetValue( wxT("0") );
 }
 
 
@@ -561,7 +561,7 @@ myWnd_EditBackground::Update_Layer_Vals()
 	
 	t = oLayers[num]->GetToken( i );
 	i++;
-	chkCtrl_transparency->SetValue( t == "1" );
+	chkCtrl_transparency->SetValue( t == wxT("1") );
 	
 	t = oLayers[num]->GetToken( i );
 	i++;
@@ -675,7 +675,7 @@ myWnd_EditBackground::Check_Param_Change()
 	}
 	i++;
 
-	t = chkCtrl_transparency->GetValue() ? "1" : "0";
+	t = chkCtrl_transparency->GetValue() ? wxT("1") : wxT("0");
 	if( t != oLayers[num]->GetToken( i ) )
 	{
 		b_update_view = true;
@@ -688,7 +688,7 @@ myWnd_EditBackground::Check_Param_Change()
 		oLayers[num]->SetToken( i, t );
 	i++;
 	
-	if( oLayers[num]->name.Upper() != "BACKGROUND" )
+	if( oLayers[num]->name.Upper() != wxT("BACKGROUND") )
 		listCtrl_bg->SetString( num, oLayers[num]->GetName() );
 	
 	if( b_update_view == true )
@@ -802,7 +802,7 @@ myWnd_EditBackground::Evt_OK( wxCommandEvent& evt_menu )
 				ob_BG_Layer* new_layer = (ob_BG_Layer*)  oLayers[i]->Clone();
 				if( prev_layer->InsertObject_After( new_layer ) == false )
 				{
-					wxMessageBox( "Unable to insert bgLayer !", "ERROR !!"
+					wxMessageBox( wxT("Unable to insert bgLayer !"), wxT("ERROR !!")
 							, wxICON_EXCLAMATION | wxOK );
 					delete new_layer;
 				}
@@ -933,7 +933,7 @@ myWnd_EditBackground::Evt_NewLayer( wxCommandEvent& evt_menu )
 	{
 		delete t.theObj;
 		t.theObj = NULL;
-		wxMessageBox( "TOO MUCH LAYERS !" );
+		wxMessageBox( wxT("TOO MUCH LAYERS !") );
 		return;
 	}
 	
@@ -961,7 +961,7 @@ myWnd_EditBackground::Evt_DeleteLayer( wxCommandEvent& evt_menu )
 	if( num == wxNOT_FOUND || num >= (int) nb_layers )
 		return;
 	
-	int res = wxMessageBox( "Sure to delete this layer ?", "Warning !"
+	int res = wxMessageBox( wxT("Sure to delete this layer ?"), wxT("Warning !")
 					, wxICON_EXCLAMATION | wxYES_NO, this );
 	if( res != wxYES )
 		return;

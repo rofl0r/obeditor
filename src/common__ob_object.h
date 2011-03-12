@@ -60,7 +60,7 @@ public:
 	**/
 	void ZeroInit();
 	ob_object( MyLine* line = NULL, const int num_line = -1);
-	ob_object( const wxString& _name, const wxString& _thetoken = "" );
+	ob_object( const wxString& _name, const wxString& _thetoken = wxString() );
 	ob_object( const wxString& _name, wxArrayString& _tokens);
 	ob_object* Clone();
 	void Rm();
@@ -95,7 +95,7 @@ public:
 	 */
 	ob_object*  GetSubObject( const wxString& name_subobj );
 	wxString    GetSubObject_Token( const wxString& name_subobj
-					, size_t num_tok = 0 , const wxString& def_val = "" );
+					, size_t num_tok = 0 , const wxString& def_val = wxString() );
 	ob_object** GetSubObjectS( const wxString& name, size_t& count );
 	ob_object** GetSubObjectS_ofType( const int _type , size_t& nb_subobj);
 	ob_object** GetAllSubObjS( size_t& res_size );

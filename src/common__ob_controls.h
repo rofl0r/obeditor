@@ -31,7 +31,7 @@ public:
 	ob_token_path(){};
 	ob_token_path( const wxString& tag, int num_token = -1 );
 	ob_token_path(const ob_token_path& ob_tp
-			, const wxString& subtag = ""
+	, const wxString& subtag = wxString()
 			, int	num_sub_token = -1 );
 	ob_token_path( ob_token_path& src );
 	ob_token_path& operator=( const ob_token_path& obtp );
@@ -84,7 +84,7 @@ public:
 public:
 	ob_property(  const wxString& tag,const int num_token = 0
 			, int type_prop = PROPTYPE_STRING
-			, const wxString& def_val = "", int do_on_default = OBPROP_DEL_TAG);
+			, const wxString& def_val = wxString(), int do_on_default = OBPROP_DEL_TAG);
 	~ob_property();
 
 	wxSizer* BuildControls( 
@@ -92,7 +92,7 @@ public:
 		, wxWindow* parent
 		, wxWindow*& res_Ctrl
 		, const wxString& ctrlName, int ctrl_w = wxDefaultCoord
-		, const wxString& str_label = "", int label_w = wxDefaultCoord
+		, const wxString& str_label = wxString(), int label_w = wxDefaultCoord
 		, int ctrl_more_styles = 0 );
 
 	//-------------------------------------------------------------
@@ -151,7 +151,7 @@ extern std::map<wxString,ob_property*> ob_props;
 class KalachnikofButton: public wxBitmapButton
 {
 public:
-	KalachnikofButton(wxWindow* parent, wxWindowID id, const wxBitmap& bitmap, const size_t _clicks_interval_ms = 200, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxBU_AUTODRAW, const wxValidator& validator = wxDefaultValidator, const wxString& name = "button" );
+	KalachnikofButton(wxWindow* parent, wxWindowID id, const wxBitmap& bitmap, const size_t _clicks_interval_ms = 200, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxBU_AUTODRAW, const wxValidator& validator = wxDefaultValidator, const wxString& name = wxT("button") );
 	~KalachnikofButton();
 
 	size_t clicks_interval;
@@ -174,7 +174,7 @@ public:
 	prObFileChooserCtrl(
 			  wxWindow *_parent
 			, const int _id = wxID_ANY
-			, const wxString& _File_or_Directory = ""
+			, const wxString& _File_or_Directory = wxString()
 			, const bool _b_file_must_exist = true
 			, const int _width =  wxDefaultCoord
 			, const int style = 0

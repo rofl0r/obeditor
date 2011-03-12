@@ -443,7 +443,7 @@ bool wxValidatorIntegerRelative::Validate(wxWindow* parent)
     if (!ctrl->IsEnabled())
     	return true;
 
-    if( value == "" )
+    if( value == wxString() )
     	return true;
 
     bool ok;
@@ -517,7 +517,7 @@ bool wxValidatorIntegerNegative::Validate(wxWindow* parent)
     if (!ctrl->IsEnabled())
     	return true;
 
-    if( value == "" )
+    if( value == wxString() )
     	return true;
 
     bool res = (StrToInt( value ) <= 0);
@@ -682,7 +682,7 @@ bool wxValidatorFloat::Validate(wxWindow* parent)
     if (!ctrl->IsEnabled())
     	return true;
 
-    if( value == "" )
+    if( value == wxString() )
     	return true;
 
     bool ok;
@@ -769,7 +769,7 @@ bool wxValidatorFloatPositive::Validate(wxWindow* parent)
     if (!ctrl->IsEnabled())
     	return true;
 
-    if( value == "" )
+    if( value == wxString() )
     	return true;
 
     bool ok;

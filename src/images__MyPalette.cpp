@@ -408,7 +408,7 @@ void MyPaletteElementCtrl::EvtDoubleClick(wxMouseEvent& event)
 	if( MyPaletteCtrl::mode8bit && eltmode != AUTO_ELTCOLOR )
 		return;
 
-	wxColour res = wxGetColourFromUser(this, wxColour( origin_r,origin_g,origin_b), "Choose the new colour");
+	wxColour res = wxGetColourFromUser(this, wxColour( origin_r,origin_g,origin_b), wxT("Choose the new colour"));
 
 	if( res.IsOk() )
 	{
@@ -496,7 +496,7 @@ MyPaletteCtrl::Constructor()
 	gridSizer = new wxGridSizer( 1,1, 3, 3);
 	mainSizer->Add( gridSizer, 1, wxEXPAND );
 
-	error_text = new wxStaticText( this, wxID_ANY, "No Palette Loaded" );
+	error_text = new wxStaticText( this, wxID_ANY, wxT("No Palette Loaded") );
 	wxSize _t = error_text->GetSize();
 	error_text->SetMinSize( _t );
 	gridSizer->Add( error_text );
@@ -532,10 +532,10 @@ bool MyPaletteCtrl::TryToInitWithImage( wxString& strpath )
 	Reset(false);
 
 	// Load the file and init the palette
-	if( wxFileName(strpath).GetExt().Upper() == "GIF" )
+	if( wxFileName(strpath).GetExt().Upper() == wxT("GIF") )
 		theSourceImg = new wxIndexedGIF( strpath );
 
-	else if( wxFileName(strpath).GetExt().Upper() == "PNG" )
+	else if( wxFileName(strpath).GetExt().Upper() == wxT("PNG") )
 		theSourceImg = new wxIndexedPNG( strpath );
 
 	if( !theSourceImg->IsOk() )
@@ -634,10 +634,10 @@ bool MyPaletteCtrl::InitRemapping_With( wxString& strpath )
 
 	// Load the file
 	imgFile *t_img;
-	if( wxFileName(strpath).GetExt().Upper() == "GIF" )
+	if( wxFileName(strpath).GetExt().Upper() == wxT("GIF") )
 		t_img = new wxIndexedGIF( strpath );
 
-	else if( wxFileName(strpath).GetExt().Upper() == "PNG" )
+	else if( wxFileName(strpath).GetExt().Upper() == wxT("PNG") )
 		t_img = new wxIndexedPNG( strpath );
 
 	if( ! t_img->IsOk() )
@@ -815,9 +815,9 @@ void MyPaletteCtrl::EvtPaletteEltClicked( wxCommandEvent& event )
 {
 	int ind = event.GetId() - ID_FIRST_PALETTE_ELT;
 	if( ind >= 0 && ind < nb_elts)
-		SelectColour( ind , (int) event.GetClientData() );
+		SelectColour( ind , (size_t) event.GetClientData() );
 	else
-		wxMessageBox( "Bug !!!\nMyPaletteCtrl::EvtPaletteEltClicked()\nind invalid !" );
+		wxMessageBox( wxT("Bug !!!\nMyPaletteCtrl::EvtPaletteEltClicked()\nind invalid !") );
 
 }
 
@@ -1032,7 +1032,7 @@ void MyPaletteCtrl::DeselectEveryThing()
 wxString MyPaletteCtrl::FullPath()const
 {
 	if( obj_associated == NULL )
-		return "";
+		return wxString();
 
 	return GetObFile( OBPath() ).GetFullPath();
 }
@@ -1042,7 +1042,7 @@ wxString MyPaletteCtrl::FullPath()const
 wxString MyPaletteCtrl::OBPath()const
 {
 	if( obj_associated == NULL )
-		return "";
+		return wxString();
 
 	return obj_associated->GetToken(2);
 }

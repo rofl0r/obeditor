@@ -65,91 +65,91 @@ void myWnd_SETProperties::InitProps()
 	reqs = new frameEdit_request[alloc];
 
 	int i =0;
-	reqs[i].name = "_TOKEN_0";
-	reqs[i].label = "SET name : ";
+	reqs[i].name = wxT("_TOKEN_0");
+	reqs[i].label = wxT("SET name : ");
 	reqs[i].SetPropType( PROPTYPE_STRING_NO_WS);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "20";
+	reqs[i].name = wxT("20");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "select";
+	reqs[i].name = wxT("select");
 	reqs[i].b_optional = true;
-	reqs[i].label = "Custom  Selection screen file : ";
+	reqs[i].label = wxT("Custom  Selection screen file : ");
 	reqs[i].SetPropType( PROPTYPE_OBFILE);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "20";
+	reqs[i].name = wxT("20");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "nosame";
-	reqs[i].label = "Clones characters forbidden";
+	reqs[i].name = wxT("nosame");
+	reqs[i].label = wxT("Clones characters forbidden");
 	reqs[i].SetPropType( PROPTYPE_BOOL);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "noshare";
-	reqs[i].label = "Players don't share credits";
+	reqs[i].name = wxT("noshare");
+	reqs[i].label = wxT("Players don't share credits");
 	reqs[i].SetPropType( PROPTYPE_BOOL);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "ifcomplete";
-	reqs[i].label = "Secret level";
+	reqs[i].name = wxT("ifcomplete");
+	reqs[i].label = wxT("Secret level");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "20";
+	reqs[i].name = wxT("20");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "lives";
-	reqs[i].label = "Nb of lives";
+	reqs[i].name = wxT("lives");
+	reqs[i].label = wxT("Nb of lives");
 	reqs[i].SetPropType( PROPTYPE_NUMBER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "credits";
-	reqs[i].label = "Nb of credits";
+	reqs[i].name = wxT("credits");
+	reqs[i].label = wxT("Nb of credits");
 	reqs[i].SetPropType( PROPTYPE_NUMBER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "20";
+	reqs[i].name = wxT("20");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "maxplayers";
-	reqs[i].label = "Max players";
+	reqs[i].name = wxT("maxplayers");
+	reqs[i].label = wxT("Max players");
 	reqs[i].SetPropType( PROPTYPE_ENUMS);
-	wxString t0[] = { "1", "2", "3", "4" };
+	wxString t0[] = { wxT("1"), wxT("2"), wxT("3"), wxT("4") };
 	TabStringToArrayString( t0, 4, reqs[i].enums );
 
 	i++;
-	reqs[i].name = "typemp";
-	reqs[i].label = "MP recovery mode";
+	reqs[i].name = wxT("typemp");
+	reqs[i].label = wxT("MP recovery mode");
 	reqs[i].SetPropType( PROPTYPE_RANGE);
-	wxString t1[] = { _T("With time"), _T("Hitting Enemies"), _T("Items and rebirth") };
+	wxString t1[] = { wxT("With time"), wxT("Hitting Enemies"), wxT("Items and rebirth") };
 	TabStringToArrayString( t1, 3, reqs[i].enums );
 
 	i++;
-	reqs[i].name = "cansave";
-	reqs[i].label = "Saving mode";
+	reqs[i].name = wxT("cansave");
+	reqs[i].label = wxT("Saving mode");
 	reqs[i].SetPropType( PROPTYPE_RANGE);
-	wxString t2[] = { _T("Disable"), _T("Last Level"), _T("Full") };
+	wxString t2[] = { wxT("Disable"), wxT("Last Level"), wxT("Full") };
 	TabStringToArrayString( t2, 3, reqs[i].enums );
 
 	i++;
@@ -175,7 +175,7 @@ myWnd_LEVELSSTAGEProperties::myWnd_LEVELSSTAGEProperties(wxWindow *_parent, ob_S
 	theObj = _stDeclar;
 	b_newObj = (theObj == NULL);
 
-	wndSavingName = "LevelstxtStageProperties";
+	wndSavingName = wxT("LevelstxtStageProperties");
 	if( b_init )
 		Init();
 }
@@ -194,22 +194,22 @@ void myWnd_LEVELSSTAGEProperties::Clicked_OK(bool b_close )
 {
 	FrameEditProperties::Clicked_OK(false);
 
-	wxString _newName = theObj->GetSubObject_Token( "temp_name" );
+	wxString _newName = theObj->GetSubObject_Token( wxT("temp_name") );
 
 	if( _newName != ((ob_StageDeclaration*)theObj)->GetStageName() )
 		b_chg = true;
 
 	// Must update the branch point
-	if( b_has_branch && !StrToInt( theObj->GetSubObject_Token( "temp_bhasbranch" ) ) )
+	if( b_has_branch && !StrToInt( theObj->GetSubObject_Token(wxT( "temp_bhasbranch") ) ) )
 	{
-		ob_object* branch = theObj->GetSubObject( "branch" );
+		ob_object* branch = theObj->GetSubObject(wxT( "branch") );
 		if( branch != NULL )
 			branch->Rm();
 	}
 
-	else if( ! b_has_branch && StrToInt( theObj->GetSubObject_Token( "temp_bhasbranch" ) ) )
+	else if( ! b_has_branch && StrToInt( theObj->GetSubObject_Token( wxT("temp_bhasbranch" )) ) )
 	{
-		ob_object* t = new ob_object( "branch", _newName );
+		ob_object* t = new ob_object( wxT("branch"), _newName );
 		theObj->Add_SubObj( t );
 	}
 
@@ -237,10 +237,10 @@ myWnd_LEVELSSTAGEProperties::Clicked_Cancel(bool b_close)
 void 
 myWnd_LEVELSSTAGEProperties::Cleanings()
 {
-	ob_object* t = theObj->GetSubObject( "temp_bhasbranch" );
+	ob_object* t = theObj->GetSubObject( wxT("temp_bhasbranch") );
 	if( t != NULL )
 		t->Rm();
-	t = theObj->GetSubObject( "temp_name" );
+	t = theObj->GetSubObject( wxT("temp_name" ));
 	if( t != NULL )
 		t->Rm();
 
@@ -252,7 +252,7 @@ myWnd_LEVELSSTAGEProperties::Cleanings()
 		ob_object* _b = NULL;
 		while( t != NULL )
 		{
-			if( t->name.Upper() == "BRANCH" )
+			if( t->name.Upper() == wxT("BRANCH") )
 			{
 				if( _f != NULL )
 				{
@@ -261,7 +261,7 @@ myWnd_LEVELSSTAGEProperties::Cleanings()
 				else
 					t = NULL;
 			}
-			else if( t->name.Upper() == "FILE" )
+			else if( t->name.Upper() == wxT("FILE") )
 			{
 				_f = t;
 			}
@@ -293,9 +293,9 @@ void myWnd_LEVELSSTAGEProperties::InitObj()
 
 	// Handle the stage name problem -> Create a name property
 	wxString StageName = ((ob_StageDeclaration*)theObj)->GetStageName();
-	b_has_branch = (theObj->GetSubObject( "branch" ) != NULL);
-	theObj->SetProperty( "temp_name", StageName );
-	theObj->SetProperty( "temp_bhasbranch", BoolToStr(b_has_branch) );
+	b_has_branch = (theObj->GetSubObject( wxT("branch") ) != NULL);
+	theObj->SetProperty( wxT("temp_name"), StageName );
+	theObj->SetProperty( wxT("temp_bhasbranch"), BoolToStr(b_has_branch) );
 }
 
 
@@ -309,55 +309,55 @@ void myWnd_LEVELSSTAGEProperties::InitProps()
 	int i =-1;
 
 	i++;
-	reqs[i].name = "temp_name";
-	reqs[i].label = "Stage name : ";
+	reqs[i].name = wxT("temp_name");
+	reqs[i].label = wxT("Stage name : ");
 	reqs[i].SetPropType( PROPTYPE_STRING_NO_WS);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "20";
+	reqs[i].name = wxT("20");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "file";
-	reqs[i].label = "Stage file : ";
+	reqs[i].name = wxT("file");
+	reqs[i].label = wxT("Stage file : ");
 	reqs[i].SetPropType( PROPTYPE_OBFILE);
 
 	i++;
-	reqs[i].name = "20";
+	reqs[i].name = wxT("20");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "_SUBOBJ_NAME%z%ALLTOKENS";
-	reqs[i].label = "Z : ";
+	reqs[i].name = wxT("_SUBOBJ_NAME%z%ALLTOKENS");
+	reqs[i].label = wxT("Z : ");
 	reqs[i].labelw = 40;
 	reqs[i].SetPropType( PROPTYPE_STRING);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "20";
+	reqs[i].name = wxT("20");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "temp_bhasbranch";
-	reqs[i].label = "Is a branch point";
+	reqs[i].name = wxT("temp_bhasbranch");
+	reqs[i].label = wxT("Is a branch point");
 	reqs[i].SetPropType( PROPTYPE_BOOL);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "next";
-	reqs[i].label = "Display 'Stage complete' screen";
+	reqs[i].name = wxT("next");
+	reqs[i].label = wxT("Display 'Stage complete' screen");
 	reqs[i].SetPropType( PROPTYPE_BOOL_EXSISTENCE);
 
 	i++;
-	reqs[i].name = "end";
-	reqs[i].label = "Game End";
+	reqs[i].name = wxT("end");
+	reqs[i].label = wxT("Game End");
 	reqs[i].SetPropType( PROPTYPE_BOOL_EXSISTENCE);
 
 
@@ -378,13 +378,13 @@ void myWnd_LEVELSSTAGEProperties::InitProps()
 
 
 myWnd_STAGEProperties::myWnd_STAGEProperties(wxWindow *_parent, ob_stage* _stage )
-:FrameEditProperties( _parent, NULL, "STAGE properties")
+:FrameEditProperties( _parent, NULL, wxT("STAGE properties"))
 {
 	theObj = _stage;
 
 	b_newObj = (theObj == NULL);
 
-	wndSavingName = "StageProperties";
+	wndSavingName = wxT("StageProperties");
 	Init();
 }
 
@@ -450,163 +450,174 @@ void myWnd_STAGEProperties::InitProps()
 	int i =-1;
 
 	i++;
-	reqs[i].name = "direction";
-	reqs[i].label = "Direction";
+	reqs[i].name = wxT("direction");
+	reqs[i].label = wxT("Direction");
 	reqs[i].SetPropType( PROPTYPE_ENUMS);
-	wxString t0[] = { "right", "both", "rightleft", "left", "leftright"
-				, "up", "down", "in", "inout", "out", "outin" };
+	wxString t0[] = { 
+		wxT("right"), 
+		wxT("both"), 
+		wxT("rightleft"), 
+		wxT("left"), 
+		wxT("leftright"), 
+		wxT("up"), 
+		wxT("down"), 
+		wxT("in"), 
+		wxT("inout"), 
+		wxT("out"), 
+		wxT("outin") 
+	};
 	TabStringToArrayString( t0, 11, reqs[i].enums );
-	reqs[i].defVal = "right";
+	reqs[i].defVal = wxT("right");
 	reqs[i].b_optional = true;
 
 	 
 	i++;
-	reqs[i].name = "_SUBOBJ_NAME%type%TOKEN%0";
-	reqs[i].label = "Is Bonus Stage";
+	reqs[i].name = wxT("_SUBOBJ_NAME%type%TOKEN%0");
+	reqs[i].label = wxT("Is Bonus Stage");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "_SUBOBJ_NAME%type%TOKEN%1";
-	reqs[i].label = "Specials are forbidden";
+	reqs[i].name = wxT("_SUBOBJ_NAME%type%TOKEN%1");
+	reqs[i].label = wxT("Specials are forbidden");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 	reqs[i].nb_missing_tokens = 1;
 	reqs[i].missing_tokens = new wxString[1];
-	reqs[i].missing_tokens[0] = "0";
+	reqs[i].missing_tokens[0] = wxT("0");
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "_SUBOBJ_NAME%type%TOKEN%2";
-	reqs[i].label = "Players are invicible";
+	reqs[i].name = wxT("_SUBOBJ_NAME%type%TOKEN%2");
+	reqs[i].label = wxT("Players are invicible");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 	reqs[i].nb_missing_tokens = 2;
 	reqs[i].missing_tokens = new wxString[2];
-	reqs[i].missing_tokens[0] = "0";
-	reqs[i].missing_tokens[1] = "0";
+	reqs[i].missing_tokens[0] = wxT("0");
+	reqs[i].missing_tokens[1] = wxT("0");
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "music";
-	reqs[i].label = "Level music";
+	reqs[i].name = wxT("music");
+	reqs[i].label = wxT("Level music");
 	reqs[i].SetPropType( PROPTYPE_OBFILE );
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "bossmusic";
-	reqs[i].label = "Bosses music";
+	reqs[i].name = wxT("bossmusic");
+	reqs[i].label = wxT("Bosses music");
 	reqs[i].SetPropType( PROPTYPE_OBFILE );
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "settime";
-	reqs[i].label = "Level time limit";
+	reqs[i].name = wxT("settime");
+	reqs[i].label = wxT("Level time limit");
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 
 	i++;
-	reqs[i].name = "noreset";
-	reqs[i].label = "Time reset mod :";
+	reqs[i].name = wxT("noreset");
+	reqs[i].label = wxT("Time reset mod :");
 	reqs[i].SetPropType( PROPTYPE_RANGE );
-	wxString t1[] = { _T("Respawns and Joins"), _T("Only on time out"), _T("On respawns") };
+	wxString t1[] = { wxT("Respawns and Joins"), wxT("Only on time out"), wxT("On respawns") };
 	TabStringToArrayString( t1, 3, reqs[i].enums );
 
 	i++;
-	reqs[i].name = "notime";
-	reqs[i].label = "Timer is hidden";
+	reqs[i].name = wxT("notime");
+	reqs[i].label = wxT("Timer is hidden");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "rock";
-	reqs[i].label = "Background Rocking effect :";
+	reqs[i].name = wxT("rock");
+	reqs[i].label = wxT("Background Rocking effect :");
 	reqs[i].labelw = 255;
 	reqs[i].SetPropType( PROPTYPE_RANGE );
-	wxString t2[] = { _T("None"), _T("Boat"), _T("Train"), _T("Hard road") };
+	wxString t2[] = { wxT("None"), wxT("Boat"), wxT("Train"), wxT("Hard road") };
 	TabStringToArrayString( t2, 4, reqs[i].enums );
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "mirror";
-	reqs[i].label = "Mirror in the background";
+	reqs[i].name = wxT("mirror");
+	reqs[i].label = wxT("Mirror in the background");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "blocked";
-	reqs[i].label = "The end of stage is a solid wall";
+	reqs[i].name = wxT("blocked");
+	reqs[i].label = wxT("The end of stage is a solid wall");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "endhole";
-	reqs[i].label = "The end of stage is hole";
+	reqs[i].name = wxT("endhole");
+	reqs[i].label = wxT("The end of stage is hole");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 	reqs[i].b_optional = true;
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "gravity";
-	reqs[i].label = "Gravity :";
+	reqs[i].name = wxT("gravity");
+	reqs[i].label = wxT("Gravity :");
 	reqs[i].labelw = 150;
 	reqs[i].SetPropType( PROPTYPE_NEGATIVENUMBER );
 	reqs[i].b_optional = true;
-	reqs[i].defVal = "-10";
+	reqs[i].defVal = wxT("-10");
 
 	i++;
-	reqs[i].name = "maxfallspeed";
-	reqs[i].label = "Maximum falling speed :";
+	reqs[i].name = wxT("maxfallspeed");
+	reqs[i].label = wxT("Maximum falling speed :");
 	reqs[i].labelw = 150;
 	reqs[i].SetPropType( PROPTYPE_NEGATIVENUMBER );
-	reqs[i].defVal = "-10";
+	reqs[i].defVal = wxT("-10");
 
 	i++;
-	reqs[i].name = "maxtossspeed";
-	reqs[i].label = "Maximum jumpheight :";
+	reqs[i].name = wxT("maxtossspeed");
+	reqs[i].label = wxT("Maximum jumpheight :");
 	reqs[i].labelw = 200;
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
-	reqs[i].defVal = "1000";
+	reqs[i].defVal = wxT("1000");
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 	i++;
-	reqs[i].name = "noslow";
-	reqs[i].label = "Game not slow down when beating a boss";
+	reqs[i].name = wxT("noslow");
+	reqs[i].label = wxT("Game not slow down when beating a boss");
 	reqs[i].SetPropType( PROPTYPE_BOOL );
 
 	i++;
-	reqs[i].name = "setweap";
-	reqs[i].label = "Nb weapons at start";
+	reqs[i].name = wxT("setweap");
+	reqs[i].label = wxT("Nb weapons at start");
 	reqs[i].labelw = 200;
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
@@ -628,9 +639,9 @@ void myWnd_STAGEProperties::InitProps()
 
 
 myWnd_STAGE_New::myWnd_STAGE_New(wxWindow *_parent )
-:myWnd_LEVELSSTAGEProperties( _parent, NULL,  false, "New Stage Declaration Properties")
+:myWnd_LEVELSSTAGEProperties( _parent, NULL,  false, wxT("New Stage Declaration Properties"))
 {
-	wndSavingName = "STAGE_New";
+	wndSavingName = wxT("STAGE_New");
 	Init();
 }
 
@@ -658,7 +669,7 @@ void myWnd_STAGE_New::Clicked_OK(bool b_close )
 	{
 		delete theObj;
 		theObj = NULL;
-		wxMessageBox( "No current SET selected !!\n\n", "BUG", wxOK | wxICON_EXCLAMATION, this );
+		wxMessageBox( wxT("No current SET selected !!\n\n"), wxT("BUG"), wxOK | wxICON_EXCLAMATION, this );
 	}
 	else
 	{
@@ -699,7 +710,7 @@ void myWnd_STAGE_New::InitControls()
 	// Add the after which one control
 	wxBoxSizer * sizer_temp = new wxBoxSizer( wxHORIZONTAL );
 
-	wxStaticText* t_stat = new wxStaticText( this, wxID_ANY, "Add it before the Stage : " );
+	wxStaticText* t_stat = new wxStaticText( this, wxID_ANY, wxT("Add it before the Stage : ") );
 	t_stat->SetMinSize( wxSize(270,  wxDefaultCoord) );
 	sizer_temp->Add( t_stat, 0, wxALIGN_CENTER );
 
@@ -711,10 +722,10 @@ void myWnd_STAGE_New::InitControls()
 			t.Add( stage_list[i]->GetStageName());
 	}
 
-	t.Add( "AT THE END" );
+	t.Add( wxT("AT THE END") );
 
 	// Build the list of Stages
-	cbCtrl_where = new wxComboBox(this, wxID_ANY, ""
+	cbCtrl_where = new wxComboBox(this, wxID_ANY, wxString()
 			, wxDefaultPosition, wxDefaultSize
 			, t,
 			wxCB_DROPDOWN | wxCB_READONLY );
@@ -739,7 +750,7 @@ void myWnd_STAGE_New::InitControls()
 
 
 myWnd_LoadedEnt::myWnd_LoadedEnt( wxWindow* _parent, ob_stage* _stage )
-:wxDialog( _parent, wxID_ANY, "Loaded Entities for this stage", wxDefaultPosition, wxDefaultSize,
+:wxDialog( _parent, wxID_ANY, wxT("Loaded Entities for this stage"), wxDefaultPosition, wxDefaultSize,
 			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER )
 {
 	wxBoxSizer *sizerWrapper = new wxBoxSizer( wxVERTICAL );
@@ -751,10 +762,10 @@ myWnd_LoadedEnt::myWnd_LoadedEnt( wxWindow* _parent, ob_stage* _stage )
 
 	// Get the loaded
 	size_t  nb_loads;
-	ob_object** l_loads = _stage->GetSubObjectS( "LOAD", nb_loads );
+	ob_object** l_loads = _stage->GetSubObjectS( wxT("LOAD"), nb_loads );
 	if( nb_loads == 0 )
 	{
-		wxStaticText* t_stat = new wxStaticText( this, wxID_ANY, "NO LOADED ENTITIES" );
+		wxStaticText* t_stat = new wxStaticText( this, wxID_ANY, wxT("NO LOADED ENTITIES") );
 		sizer_main->Add( t_stat );
 	}
 	else
@@ -799,13 +810,13 @@ myWnd_LoadedEnt::~myWnd_LoadedEnt()
 
 
 myWnd_PanelProperties::myWnd_PanelProperties(wxWindow *_parent, ob_stage_panel* _stage, bool b_init )
-:FrameEditProperties( _parent, NULL, "Panel properties" )
+:FrameEditProperties( _parent, NULL, wxT("Panel properties") )
 {
 	theObj = _stage;
 
 	b_newObj = (theObj == NULL);
 
-	wndSavingName = "PanelProperties";
+	wndSavingName = wxT("PanelProperties");
 	if( b_init)
 		Init();
 }
@@ -825,14 +836,14 @@ void myWnd_PanelProperties::Clicked_OK(bool b_close )
 	FrameEditProperties::Clicked_OK(false);
 
 	wxString new_path_norm   = theObj->GetToken(0);
-	if( new_path_norm == "" )
-		new_path_norm = "none";
+	if( new_path_norm == wxString() )
+		new_path_norm = wxT("none");
 	wxString new_path_neon   = theObj->GetToken(1);
-	if( new_path_neon == "" )
-		new_path_neon = "none";
+	if( new_path_neon == wxString() )
+		new_path_neon = wxT("none");
 	wxString new_path_screen = theObj->GetToken(2);
-	if( new_path_screen == "" )
-		new_path_screen = "none";
+	if( new_path_screen == wxString() )
+		new_path_screen = wxT("none");
 
 	if( 	new_path_norm != path_norm
 		||  new_path_neon != path_neon
@@ -887,29 +898,29 @@ void myWnd_PanelProperties::InitProps()
 	int i =-1;
 
 	i++;
-	reqs[i].name = "_TOKEN_0";
-	reqs[i].label = "Panel image file";
+	reqs[i].name = wxT("_TOKEN_0");
+	reqs[i].label = wxT("Panel image file");
 	reqs[i].SetPropType( PROPTYPE_OBFILE );
 
 	i++;
-	reqs[i].name = "_TOKEN_1";
-	reqs[i].label = "Neon file";
+	reqs[i].name = wxT("_TOKEN_1");
+	reqs[i].label = wxT("Neon file");
 	reqs[i].SetPropType( PROPTYPE_OBFILE );
 	reqs[i].nb_missing_tokens = 1;
 	reqs[i].missing_tokens = new wxString[1];
-	reqs[i].missing_tokens[0] = "none";
+	reqs[i].missing_tokens[0] = wxT("none");
 
 	i++;
-	reqs[i].name = "_TOKEN_2";
-	reqs[i].label = "Screen file";
+	reqs[i].name = wxT("_TOKEN_2");
+	reqs[i].label = wxT("Screen file");
 	reqs[i].SetPropType( PROPTYPE_OBFILE );
 	reqs[i].nb_missing_tokens = 2;
 	reqs[i].missing_tokens = new wxString[2];
-	reqs[i].missing_tokens[0] = "none";
-	reqs[i].missing_tokens[1] = "none";
+	reqs[i].missing_tokens[0] = wxT("none");
+	reqs[i].missing_tokens[1] = wxT("none");
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
@@ -933,12 +944,12 @@ void myWnd_PanelProperties::InitProps()
 
 
 myWnd_FrontPanelProperties::myWnd_FrontPanelProperties(wxWindow *_parent, ob_front_panel* _stage, bool b_init )
-:FrameEditProperties( _parent, NULL, "FrontPanel properties" )
+:FrameEditProperties( _parent, NULL, wxT("FrontPanel properties") )
 {
 	theObj = _stage;
 	b_newObj = (theObj == NULL);
 
-	wndSavingName = "FrontPanelProperties";
+	wndSavingName = wxT("FrontPanelProperties");
 	if( b_init)
 		Init();
 }
@@ -958,8 +969,8 @@ void myWnd_FrontPanelProperties::Clicked_OK(bool b_close )
 	FrameEditProperties::Clicked_OK(false);
 
 	wxString new_path = theObj->GetToken(0);
-	if( new_path == "" )
-		new_path = "none";
+	if( new_path == wxString() )
+		new_path = wxT("none");
 
 	if( 	new_path != path )
 	{
@@ -992,7 +1003,7 @@ void myWnd_FrontPanelProperties::InitObj()
 	if( theObj == NULL )
 	{
 		theObj = new ob_stage_panel();
-		theObj->SetName( "frontpanel" );
+		theObj->SetName( wxT("frontpanel" ));
 		b_newObj = true;
 	}
 
@@ -1010,8 +1021,8 @@ void myWnd_FrontPanelProperties::InitProps()
 	int i =-1;
 
 	i++;
-	reqs[i].name = "_TOKEN_0";
-	reqs[i].label = "FrontPanel image file";
+	reqs[i].name = wxT("_TOKEN_0");
+	reqs[i].label = wxT("FrontPanel image file");
 	reqs[i].SetPropType( PROPTYPE_OBFILE );
 
 	i++;
@@ -1032,14 +1043,14 @@ void myWnd_FrontPanelProperties::InitProps()
 
 
 myWnd_BGProperties::myWnd_BGProperties(wxWindow *_parent, ob_BG_Layer* _stage, bool _b_background, bool b_init )
-:FrameEditProperties( _parent, NULL, "Background Layer properties" )
+:FrameEditProperties( _parent, NULL, wxT("Background Layer properties") )
 {
 	theObj = _stage;
 
 	b_newObj = (theObj == NULL);
 
 	b_background = _b_background;
-	wndSavingName = "BG_Properties";
+	wndSavingName = wxT("BG_Properties");
 	if( b_init)
 		Init();
 }
@@ -1058,8 +1069,8 @@ void myWnd_BGProperties::Clicked_OK(bool b_close )
 {
 	FrameEditProperties::Clicked_OK(false);
 	if( theObj != NULL )
-		if( theObj->GetToken( 0 ) == "" )
-			theObj->SetToken( 0, "data" );
+		if( theObj->GetToken( 0 ) == wxString() )
+			theObj->SetToken( 0, wxT("data") );
 
 	if( b_close )
 		Close();
@@ -1085,9 +1096,9 @@ void myWnd_BGProperties::InitObj()
 		theObj = new ob_BG_Layer();
 		theObj->SetToDefault();
 		if( b_background == true )
-			theObj->SetName( "background" );
+			theObj->SetName( wxT("background") );
 		else
-			theObj->SetName( "bglayer" );
+			theObj->SetName( wxT("bglayer") );
 		b_newObj = true;
 	}
 	else
@@ -1105,277 +1116,277 @@ void myWnd_BGProperties::InitProps()
 	int i =-1;
 
 	i++;
-	reqs[i].name = "_TOKEN_0";
-	reqs[i].label = "Background image file";
+	reqs[i].name = wxT("_TOKEN_0");
+	reqs[i].label = wxT("Background image file");
 	reqs[i].SetPropType( PROPTYPE_OBFILE );
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 
 	i++;
-	reqs[i].name = "_TOKEN_1";
-	reqs[i].label = "xratio";
+	reqs[i].name = wxT("_TOKEN_1");
+	reqs[i].label = wxT("xratio");
 	reqs[i].SetPropType( PROPTYPE_FLOAT );
 	reqs[i].nb_missing_tokens = 1;
 	reqs[i].missing_tokens = new wxString[1];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].defVal = "0.5";
+	reqs[i].missing_tokens[0] = wxT("data");
+	reqs[i].defVal = wxT("0.5");
 
 	i++;
-	reqs[i].name = "_TOKEN_2";
-	reqs[i].label = "zratio";
+	reqs[i].name = wxT("_TOKEN_2");
+	reqs[i].label = wxT("zratio");
 	reqs[i].SetPropType( PROPTYPE_FLOAT );
 	reqs[i].nb_missing_tokens = 2;
 	reqs[i].missing_tokens = new wxString[2];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].missing_tokens[1] = "0.5";
-	reqs[i].defVal = "0.5";
+	reqs[i].missing_tokens[0] = wxT("data");
+	reqs[i].missing_tokens[1] = wxT("0.5");
+	reqs[i].defVal = wxT("0.5");
 
 	i++;
-	reqs[i].name = "15";
+	reqs[i].name = wxT("15");
 	//reqs[i].label = "Custom  Selection screen file : ";
 	reqs[i].SetPropType( PROPTYPE_SPACER);
 	// reqs[i].enums = ;
 
 
 	i++;
-	reqs[i].name = "_TOKEN_3";
-	reqs[i].label = "xpos";
+	reqs[i].name = wxT("_TOKEN_3");
+	reqs[i].label = wxT("xpos");
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 	reqs[i].nb_missing_tokens = 3;
 	reqs[i].missing_tokens = new wxString[3];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].missing_tokens[1] = "0.5";
-	reqs[i].missing_tokens[2] = "0.5";
-	reqs[i].defVal = "0";
+	reqs[i].missing_tokens[0] =wxT("data");
+	reqs[i].missing_tokens[1] = wxT("0.5");
+	reqs[i].missing_tokens[2] = wxT("0.5");
+	reqs[i].defVal = wxT("0");
 
 	i++;
-	reqs[i].name = "_TOKEN_4";
-	reqs[i].label = "zpos";
+	reqs[i].name = wxT("_TOKEN_4");
+	reqs[i].label = wxT("zpos");
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 	reqs[i].nb_missing_tokens = 4;
 	reqs[i].missing_tokens = new wxString[4];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].missing_tokens[1] = "0.5";
-	reqs[i].missing_tokens[2] = "0.5";
-	reqs[i].missing_tokens[3] = "0";
-	reqs[i].defVal = "0";
+	reqs[i].missing_tokens[0] = wxT("data");
+	reqs[i].missing_tokens[1] = wxT("0.5");
+	reqs[i].missing_tokens[2] = wxT("0.5");
+	reqs[i].missing_tokens[3] = wxT("0");
+	reqs[i].defVal = wxT("0");
 
 
 	i++;
-	reqs[i].name = "_TOKEN_5";
-	reqs[i].label = "xspace";
+	reqs[i].name = wxT("_TOKEN_5");
+	reqs[i].label = wxT("xspace");
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 	reqs[i].nb_missing_tokens = 5;
 	reqs[i].missing_tokens = new wxString[5];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].missing_tokens[1] = "0.5";
-	reqs[i].missing_tokens[2] = "0.5";
-	reqs[i].missing_tokens[3] = "0";
-	reqs[i].missing_tokens[4] = "0";
-	reqs[i].defVal = "0";
+	reqs[i].missing_tokens[0] = wxT("data");
+	reqs[i].missing_tokens[1] = wxT("0.5");
+	reqs[i].missing_tokens[2] = wxT("0.5");
+	reqs[i].missing_tokens[3] = wxT("0");
+	reqs[i].missing_tokens[4] = wxT("0");
+	reqs[i].defVal = wxT("0");
 
 
 	i++;
-	reqs[i].name = "_TOKEN_6";
-	reqs[i].label = "zspace";
+	reqs[i].name = wxT("_TOKEN_6");
+	reqs[i].label = wxT("zspace");
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 	reqs[i].nb_missing_tokens = 6;
 	reqs[i].missing_tokens = new wxString[6];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].missing_tokens[1] = "0.5";
-	reqs[i].missing_tokens[2] = "0.5";
-	reqs[i].missing_tokens[3] = "0";
-	reqs[i].missing_tokens[4] = "0";
-	reqs[i].missing_tokens[5] = "0";
-	reqs[i].defVal = "0";
+	reqs[i].missing_tokens[0] = wxT("data");
+	reqs[i].missing_tokens[1] = wxT("0.5");
+	reqs[i].missing_tokens[2] = wxT("0.5");
+	reqs[i].missing_tokens[3] = wxT("0");
+	reqs[i].missing_tokens[4] = wxT("0");
+	reqs[i].missing_tokens[5] = wxT("0");
+	reqs[i].defVal = wxT("0");
 
 
 	i++;
-	reqs[i].name = "_TOKEN_7";
-	reqs[i].label = "xrepeat";
+	reqs[i].name = wxT("_TOKEN_7");
+	reqs[i].label = wxT("xrepeat");
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 	reqs[i].nb_missing_tokens = 7;
 	reqs[i].missing_tokens = new wxString[7];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].missing_tokens[1] = "0.5";
-	reqs[i].missing_tokens[2] = "0.5";
-	reqs[i].missing_tokens[3] = "0";
-	reqs[i].missing_tokens[4] = "0";
-	reqs[i].missing_tokens[5] = "0";
-	reqs[i].missing_tokens[6] = "0";
-	reqs[i].defVal = "5000";
+	reqs[i].missing_tokens[0] = wxT("data");
+	reqs[i].missing_tokens[1] = wxT("0.5");
+	reqs[i].missing_tokens[2] = wxT("0.5");
+	reqs[i].missing_tokens[3] = wxT("0");
+	reqs[i].missing_tokens[4] = wxT("0");
+	reqs[i].missing_tokens[5] = wxT("0");
+	reqs[i].missing_tokens[6] = wxT("0");
+	reqs[i].defVal = wxT("5000");
 
 	i++;
-	reqs[i].name = "_TOKEN_8";
-	reqs[i].label = "zrepeat";
+	reqs[i].name = wxT("_TOKEN_8");
+	reqs[i].label = wxT("zrepeat");
 	reqs[i].SetPropType( PROPTYPE_NUMBER );
 	reqs[i].nb_missing_tokens = 8;
 	reqs[i].missing_tokens = new wxString[8];
-	reqs[i].missing_tokens[0] = "data";
-	reqs[i].missing_tokens[1] = "0.5";
-	reqs[i].missing_tokens[2] = "0.5";
-	reqs[i].missing_tokens[3] = "0";
-	reqs[i].missing_tokens[4] = "0";
-	reqs[i].missing_tokens[5] = "0";
-	reqs[i].missing_tokens[6] = "0";
-	reqs[i].missing_tokens[7] = "5000";
-	reqs[i].defVal = "5000";
+	reqs[i].missing_tokens[0] = wxT("data");
+	reqs[i].missing_tokens[1] = wxT("0.5");
+	reqs[i].missing_tokens[2] = wxT("0.5");
+	reqs[i].missing_tokens[3] = wxT("0");
+	reqs[i].missing_tokens[4] = wxT("0");
+	reqs[i].missing_tokens[5] = wxT("0");
+	reqs[i].missing_tokens[6] = wxT("0");
+	reqs[i].missing_tokens[7] = wxT("5000");
+	reqs[i].defVal = wxT("5000");
 
 
 	if( ! b_background )
 	{
 		i++;
-		reqs[i].name = "15";
+		reqs[i].name = wxT("15");
 		//reqs[i].label = "Custom  Selection screen file : ";
 		reqs[i].SetPropType( PROPTYPE_SPACER);
 		// reqs[i].enums = ;
 
 
 		i++;
-		reqs[i].name = "_TOKEN_9";
-		reqs[i].label = "use transparency";
+		reqs[i].name = wxT("_TOKEN_9");
+		reqs[i].label = wxT("use transparency");
 		reqs[i].SetPropType( PROPTYPE_BOOL );
 		reqs[i].nb_missing_tokens = 9;
 		reqs[i].missing_tokens = new wxString[9];
-		reqs[i].missing_tokens[0] = "data";
-		reqs[i].missing_tokens[1] = "0.5";
-		reqs[i].missing_tokens[2] = "0.5";
-		reqs[i].missing_tokens[3] = "0";
-		reqs[i].missing_tokens[4] = "0";
-		reqs[i].missing_tokens[5] = "0";
-		reqs[i].missing_tokens[6] = "0";
-		reqs[i].missing_tokens[7] = "5000";
-		reqs[i].missing_tokens[8] = "5000";
+		reqs[i].missing_tokens[0] = wxT("data");
+		reqs[i].missing_tokens[1] = wxT("0.5");
+		reqs[i].missing_tokens[2] = wxT("0.5");
+		reqs[i].missing_tokens[3] = wxT("0");
+		reqs[i].missing_tokens[4] = wxT("0");
+		reqs[i].missing_tokens[5] = wxT("0");
+		reqs[i].missing_tokens[6] = wxT("0");
+		reqs[i].missing_tokens[7] = wxT("5000");
+		reqs[i].missing_tokens[8] = wxT("5000");
 		reqs[i].b_optional = true;
 
 		i++;
-		reqs[i].name = "_TOKEN_10";
-		reqs[i].label = "alpha";
+		reqs[i].name = wxT("_TOKEN_10");
+		reqs[i].label = wxT("alpha");
 		reqs[i].SetPropType( PROPTYPE_ENUMS);
-		wxString t0[] = { "0", "1", "2", "3", "4", "5", "6" };
+		wxString t0[] = { wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6") };
 		TabStringToArrayString( t0, 7, reqs[i].enums );
 		reqs[i].nb_missing_tokens = 10;
 		reqs[i].missing_tokens = new wxString[10];
-		reqs[i].missing_tokens[0] = "data";
-		reqs[i].missing_tokens[1] = "0.5";
-		reqs[i].missing_tokens[2] = "0.5";
-		reqs[i].missing_tokens[3] = "0";
-		reqs[i].missing_tokens[4] = "0";
-		reqs[i].missing_tokens[5] = "0";
-		reqs[i].missing_tokens[6] = "0";
-		reqs[i].missing_tokens[7] = "5000";
-		reqs[i].missing_tokens[8] = "5000";
-		reqs[i].missing_tokens[9] = "0";
+		reqs[i].missing_tokens[0] = wxT("data");
+		reqs[i].missing_tokens[1] = wxT("0.5");
+		reqs[i].missing_tokens[2] = wxT("0.5");
+		reqs[i].missing_tokens[3] = wxT("0");
+		reqs[i].missing_tokens[4] = wxT("0");
+		reqs[i].missing_tokens[5] = wxT("0");
+		reqs[i].missing_tokens[6] = wxT("0");
+		reqs[i].missing_tokens[7] = wxT("5000");
+		reqs[i].missing_tokens[8] = wxT("5000");
+		reqs[i].missing_tokens[9] = wxT("0");
 		reqs[i].b_optional = true;
 
 		i++;
-		reqs[i].name = "_TOKEN_11";
-		reqs[i].label = "watermode";
+		reqs[i].name = wxT("_TOKEN_11");
+		reqs[i].label = wxT("watermode");
 		reqs[i].SetPropType( PROPTYPE_NUMBER );
 		reqs[i].nb_missing_tokens = 11;
 		reqs[i].missing_tokens = new wxString[reqs[i].nb_missing_tokens];
-		reqs[i].missing_tokens[0] = "data";
-		reqs[i].missing_tokens[1] = "0.5";
-		reqs[i].missing_tokens[2] = "0.5";
-		reqs[i].missing_tokens[3] = "0";
-		reqs[i].missing_tokens[4] = "0";
-		reqs[i].missing_tokens[5] = "0";
-		reqs[i].missing_tokens[6] = "0";
-		reqs[i].missing_tokens[7] = "5000";
-		reqs[i].missing_tokens[8] = "5000";
-		reqs[i].missing_tokens[9] = "0";
-		reqs[i].missing_tokens[10] = "0";
+		reqs[i].missing_tokens[0] = wxT("data");
+		reqs[i].missing_tokens[1] = wxT("0.5");
+		reqs[i].missing_tokens[2] = wxT("0.5");
+		reqs[i].missing_tokens[3] = wxT("0");
+		reqs[i].missing_tokens[4] = wxT("0");
+		reqs[i].missing_tokens[5] = wxT("0");
+		reqs[i].missing_tokens[6] = wxT("0");
+		reqs[i].missing_tokens[7] = wxT("5000");
+		reqs[i].missing_tokens[8] = wxT("5000");
+		reqs[i].missing_tokens[9] = wxT("0");
+		reqs[i].missing_tokens[10] = wxT("0");
 		reqs[i].b_optional = true;
 
 		i++;
-		reqs[i].name = "_TOKEN_12";
-		reqs[i].label = "amplitude";
+		reqs[i].name = wxT("_TOKEN_12");
+		reqs[i].label = wxT("amplitude");
 		reqs[i].SetPropType( PROPTYPE_NUMBER );
 		reqs[i].nb_missing_tokens = 12;
 		reqs[i].missing_tokens = new wxString[reqs[i].nb_missing_tokens];
-		reqs[i].missing_tokens[0] = "data";
-		reqs[i].missing_tokens[1] = "0.5";
-		reqs[i].missing_tokens[2] = "0.5";
-		reqs[i].missing_tokens[3] = "0";
-		reqs[i].missing_tokens[4] = "0";
-		reqs[i].missing_tokens[5] = "0";
-		reqs[i].missing_tokens[6] = "0";
-		reqs[i].missing_tokens[7] = "5000";
-		reqs[i].missing_tokens[8] = "5000";
-		reqs[i].missing_tokens[9] = "0";
-		reqs[i].missing_tokens[10] = "0";
-		reqs[i].missing_tokens[11] = "0";
+		reqs[i].missing_tokens[0] = wxT("data");
+		reqs[i].missing_tokens[1] = wxT("0.5");
+		reqs[i].missing_tokens[2] = wxT("0.5");
+		reqs[i].missing_tokens[3] = wxT("0");
+		reqs[i].missing_tokens[4] = wxT("0");
+		reqs[i].missing_tokens[5] = wxT("0");
+		reqs[i].missing_tokens[6] = wxT("0");
+		reqs[i].missing_tokens[7] = wxT("5000");
+		reqs[i].missing_tokens[8] = wxT("5000");
+		reqs[i].missing_tokens[9] = wxT("0");
+		reqs[i].missing_tokens[10] = wxT("0");
+		reqs[i].missing_tokens[11] = wxT("0");
 		reqs[i].b_optional = true;
 
 		i++;
-		reqs[i].name = "_TOKEN_13";
-		reqs[i].label = "wavelength";
+		reqs[i].name = wxT("_TOKEN_13");
+		reqs[i].label = wxT("wavelength");
 		reqs[i].SetPropType( PROPTYPE_NUMBER );
 		reqs[i].nb_missing_tokens = 13;
 		reqs[i].missing_tokens = new wxString[reqs[i].nb_missing_tokens];
-		reqs[i].missing_tokens[0] = "data";
-		reqs[i].missing_tokens[1] = "0.5";
-		reqs[i].missing_tokens[2] = "0.5";
-		reqs[i].missing_tokens[3] = "0";
-		reqs[i].missing_tokens[4] = "0";
-		reqs[i].missing_tokens[5] = "0";
-		reqs[i].missing_tokens[6] = "0";
-		reqs[i].missing_tokens[7] = "5000";
-		reqs[i].missing_tokens[8] = "5000";
-		reqs[i].missing_tokens[9] = "0";
-		reqs[i].missing_tokens[10] = "0";
-		reqs[i].missing_tokens[11] = "0";
-		reqs[i].missing_tokens[12] = "0";
+		reqs[i].missing_tokens[0] = wxT("data");
+		reqs[i].missing_tokens[1] = wxT("0.5");
+		reqs[i].missing_tokens[2] = wxT("0.5");
+		reqs[i].missing_tokens[3] = wxT("0");
+		reqs[i].missing_tokens[4] = wxT("0");
+		reqs[i].missing_tokens[5] = wxT("0");
+		reqs[i].missing_tokens[6] = wxT("0");
+		reqs[i].missing_tokens[7] = wxT("5000");
+		reqs[i].missing_tokens[8] = wxT("5000");
+		reqs[i].missing_tokens[9] = wxT("0");
+		reqs[i].missing_tokens[10] = wxT("0");
+		reqs[i].missing_tokens[11] = wxT("0");
+		reqs[i].missing_tokens[12] = wxT("0");
 		reqs[i].b_optional = true;
 
 		i++;
-		reqs[i].name = "_TOKEN_14";
-		reqs[i].label = "wavespeed";
+		reqs[i].name = wxT("_TOKEN_14");
+		reqs[i].label = wxT("wavespeed");
 		reqs[i].SetPropType( PROPTYPE_NUMBER );
 		reqs[i].nb_missing_tokens = 14;
 		reqs[i].missing_tokens = new wxString[reqs[i].nb_missing_tokens];
-		reqs[i].missing_tokens[0] = "data";
-		reqs[i].missing_tokens[1] = "0.5";
-		reqs[i].missing_tokens[2] = "0.5";
-		reqs[i].missing_tokens[3] = "0";
-		reqs[i].missing_tokens[4] = "0";
-		reqs[i].missing_tokens[5] = "0";
-		reqs[i].missing_tokens[6] = "0";
-		reqs[i].missing_tokens[7] = "5000";
-		reqs[i].missing_tokens[8] = "5000";
-		reqs[i].missing_tokens[9] = "0";
-		reqs[i].missing_tokens[10] = "0";
-		reqs[i].missing_tokens[11] = "0";
-		reqs[i].missing_tokens[12] = "0";
-		reqs[i].missing_tokens[13] = "0";
+		reqs[i].missing_tokens[0] = wxT("data");
+		reqs[i].missing_tokens[1] = wxT("0.5");
+		reqs[i].missing_tokens[2] = wxT("0.5");
+		reqs[i].missing_tokens[3] = wxT("0");
+		reqs[i].missing_tokens[4] = wxT("0");
+		reqs[i].missing_tokens[5] = wxT("0");
+		reqs[i].missing_tokens[6] = wxT("0");
+		reqs[i].missing_tokens[7] = wxT("5000");
+		reqs[i].missing_tokens[8] = wxT("5000");
+		reqs[i].missing_tokens[9] = wxT("0");
+		reqs[i].missing_tokens[10] = wxT("0");
+		reqs[i].missing_tokens[11] = wxT("0");
+		reqs[i].missing_tokens[12] = wxT("0");
+		reqs[i].missing_tokens[13] = wxT("0");
 		reqs[i].b_optional = true;
 		
 		i++;
-		reqs[i].name = "_TOKEN_14";
-		reqs[i].label = "bgspeedratio";
+		reqs[i].name = wxT("_TOKEN_14");
+		reqs[i].label = wxT("bgspeedratio");
 		reqs[i].SetPropType( PROPTYPE_NUMBER );
 		reqs[i].nb_missing_tokens = 15;
 		reqs[i].missing_tokens = new wxString[reqs[i].nb_missing_tokens];
-		reqs[i].missing_tokens[0] = "data";
-		reqs[i].missing_tokens[1] = "0.5";
-		reqs[i].missing_tokens[2] = "0.5";
-		reqs[i].missing_tokens[3] = "0";
-		reqs[i].missing_tokens[4] = "0";
-		reqs[i].missing_tokens[5] = "0";
-		reqs[i].missing_tokens[6] = "0";
-		reqs[i].missing_tokens[7] = "5000";
-		reqs[i].missing_tokens[8] = "5000";
-		reqs[i].missing_tokens[9] = "0";
-		reqs[i].missing_tokens[10] = "0";
-		reqs[i].missing_tokens[11] = "0";
-		reqs[i].missing_tokens[12] = "0";
-		reqs[i].missing_tokens[13] = "0";
-		reqs[i].missing_tokens[14] = "0";
+		reqs[i].missing_tokens[0] = wxT("data");
+		reqs[i].missing_tokens[1] = wxT("0.5");
+		reqs[i].missing_tokens[2] = wxT("0.5");
+		reqs[i].missing_tokens[3] = wxT("0");
+		reqs[i].missing_tokens[4] = wxT("0");
+		reqs[i].missing_tokens[5] = wxT("0");
+		reqs[i].missing_tokens[6] = wxT("0");
+		reqs[i].missing_tokens[7] = wxT("5000");
+		reqs[i].missing_tokens[8] = wxT("5000");
+		reqs[i].missing_tokens[9] = wxT("0");
+		reqs[i].missing_tokens[10] = wxT("0");
+		reqs[i].missing_tokens[11] = wxT("0");
+		reqs[i].missing_tokens[12] = wxT("0");
+		reqs[i].missing_tokens[13] = wxT("0");
+		reqs[i].missing_tokens[14] = wxT("0");
 		reqs[i].b_optional = true;
 	}
 
@@ -1398,7 +1409,7 @@ myWnd_SceneTest::myWnd_SceneTest(
 			, ob_StageDeclaration* _stage_declaration
 			, ob_StagesSet* _stage_set
 			)
-:wxDialog( _parent, wxID_ANY, "Scene Tests" , wxDefaultPosition, wxDefaultSize,
+			:wxDialog( _parent, wxID_ANY, wxT("Scene Tests") , wxDefaultPosition, wxDefaultSize,
 			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER )
 {
 	// Launch the Window with Ctrl_SceneView

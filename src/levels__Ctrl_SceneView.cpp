@@ -41,14 +41,14 @@ Panel_SceneView::Panel_SceneView(
 	t_sizer->AddStretchSpacer();
 	
 	wxButton* t_btn = new wxBitmapButton( this, wxID_ANY
-			,wxBitmap(GetRessourceFile_String("zoom-out.png")) );
+	,wxBitmap(GetRessourceFile_String(wxT("zoom-out.png"))) );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_SceneView::Evt_ZoomM)
 		, NULL, this);
 	t_sizer->Add( t_btn, 0, wxALL, 3 );
 	
 	t_btn = new wxBitmapButton( this, wxID_ANY
-			,wxBitmap(GetRessourceFile_String("zoom-in.png")) );
+	,wxBitmap(GetRessourceFile_String(wxT("zoom-in.png"))) );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_SceneView::Evt_ZoomP)
 		, NULL, this);
@@ -57,28 +57,28 @@ Panel_SceneView::Panel_SceneView(
 	t_sizer->AddSpacer( 30 );
 
 	t_btn = new KalachnikofButton( this, wxID_ANY
-		,wxBitmap(wxImage(GetRessourceFile_String("ArrowUp.png"))), KBUTS_TIMES );
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("ArrowUp.png")))), KBUTS_TIMES );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_SceneView::Evt_MoveUp)
 		, NULL, this);
 	t_sizer->Add( t_btn, 0, wxALL, 3 );
 
 	t_btn = new KalachnikofButton( this, wxID_ANY 
-		,wxBitmap(wxImage(GetRessourceFile_String("ArrowDown.png"))), KBUTS_TIMES );
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("ArrowDown.png")))), KBUTS_TIMES );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_SceneView::Evt_MoveDown)
 		, NULL, this);
 	t_sizer->Add( t_btn, 0, wxALL, 3 );
 
 	t_btn = new KalachnikofButton( this, wxID_ANY
-		,wxBitmap(wxImage(GetRessourceFile_String("ArrowLeft.png"))), KBUTS_TIMES );
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("ArrowLeft.png")))), KBUTS_TIMES );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_SceneView::Evt_MoveLeft)
 		, NULL, this);
 	t_sizer->Add( t_btn, 0, wxALL, 3 );
 
 	t_btn = new KalachnikofButton( this, wxID_ANY
-		,wxBitmap(wxImage(GetRessourceFile_String("ArrowRight.png"))), KBUTS_TIMES );
+	,wxBitmap(wxImage(GetRessourceFile_String(wxT("ArrowRight.png")))), KBUTS_TIMES );
 	t_btn->Connect( wxEVT_COMMAND_BUTTON_CLICKED
 		, wxCommandEventHandler(Panel_SceneView::Evt_MoveRight)
 		, NULL, this);
@@ -213,7 +213,7 @@ Ctrl_SceneView::Ctrl_SceneView( Panel_SceneView* _parent)
 	p_front_panels = NULL;
 
 	bool b_dummy;
-	zoom_factor = StrToFloat( ConfigEdit_Read("Ctrl_SceneView/zoom_factor", "1" ) , b_dummy);
+	zoom_factor = StrToFloat( ConfigEdit_Read(wxT("Ctrl_SceneView/zoom_factor"), wxT("1") ) , b_dummy);
 	x_decal = 0;
 	y_decal = 0;
 	level_start_x = 0;
@@ -342,7 +342,7 @@ Ctrl_SceneView::Update_View()
 wxImage*
 Ctrl_SceneView::Get_Img( const wxString& imgPath )
 {
-	map<string,wxImage*>::iterator it = h_imgs.find( imgPath.c_str() );
+	map<string,wxImage*>::iterator it = h_imgs.find( (char*)imgPath.c_str() );
 	if( it == h_imgs.end() )
 		return NULL;
 	return it->second;
@@ -364,7 +364,7 @@ Ctrl_SceneView::ResizeImg_with_ZoomFactor( wxImage*& theImg )
 bool
 Ctrl_SceneView::Check_ImgExists( const wxString& imgPath )
 {
-	map<string,wxImage*>::iterator it = h_imgs.find( string(imgPath.c_str()) );
+	map<string,wxImage*>::iterator it = h_imgs.find( string((char*)imgPath.c_str()) );
 	if( it != h_imgs.end() )
 		return false;
 	
@@ -381,8 +381,8 @@ Ctrl_SceneView::Check_ImgExists( const wxString& imgPath )
 	palette.GetRGB(0, p_rgbs+1,p_rgbs+2,p_rgbs+3);
 	
 	ResizeImg_with_ZoomFactor( img );
-	h_imgs[string(imgPath.c_str())] = img;
-	h_masques[imgPath.c_str()] = _rgbs;
+	h_imgs[string((char*)imgPath.c_str())] = img;
+	h_masques[(char*)imgPath.c_str()] = _rgbs;
 	return true;
 }
 
@@ -399,7 +399,7 @@ Ctrl_SceneView::Rescale_All_Images()
 			continue;
 		delete it->second;
 		
-		wxImage* img = new wxImage( it->first );
+		wxImage* img = new wxImage( wxString::FromAscii(it->first.c_str()) );
 		if( img->IsOk() == false )
 		{
 			delete img;
@@ -521,7 +521,7 @@ Ctrl_SceneView::Evt_Paint( wxPaintEvent& evt )
 	  )
 	{
 		// Nothing to show
-		wxString img_txt = "Nothing to show !";
+		wxString img_txt = wxT("Nothing to show !");
 		theDC.SetBrush( *wxWHITE_BRUSH );
 		theDC.SetPen( *wxBLACK_PEN );
 		theDC.Clear();
@@ -586,7 +586,7 @@ Ctrl_SceneView::Evt_Paint( wxPaintEvent& evt )
 			p++;
 			p++; // xrepeat
 			p++; // zrepeat
-			bool b_trans =  curr->GetToken(p) == "1";
+			bool b_trans =  curr->GetToken(p) == wxT("1");
 			p++;
 //			int  alpha   =  StrToInt( curr->GetToken(p));
 			p++;
@@ -598,7 +598,7 @@ Ctrl_SceneView::Evt_Paint( wxPaintEvent& evt )
 			p++;
 //			int  wSpeed  =  StrToInt( curr->GetToken(p));
 
-			if( curr->name.Upper() == "BACKGROUND" )
+			if( curr->name.Upper() == wxT("BACKGROUND") )
 				xratio = zratio = 0.5;
 
 			int img_w = theImg->GetWidth();
@@ -680,7 +680,7 @@ Ctrl_SceneView::Evt_Paint( wxPaintEvent& evt )
 					if(  t_bg_x > client_w )
 						break;
 					
-					pDrawImg(theDC, string(imgPath.c_str()), theImg, t_bg_x, bg_y, b_trans );
+					pDrawImg(theDC, string((char*)imgPath.c_str()), theImg, t_bg_x, bg_y, b_trans );
 					b_start_drawing = true;
 					
 					t_bg_x += bg_w;
@@ -727,7 +727,7 @@ Ctrl_SceneView::Evt_Paint( wxPaintEvent& evt )
 				y_offset < client_h && y_offset > -img_h
 				)
 			{
-				pDrawImg(theDC, string(imgPath.c_str()), theImg, x_offset, y_offset, true );
+				pDrawImg(theDC, string((char*)imgPath.c_str()), theImg, x_offset, y_offset, true );
 				b_draw_start = true;
 			}
 			// Everything have been drawn
@@ -793,7 +793,7 @@ Ctrl_SceneView::Evt_Paint( wxPaintEvent& evt )
 				if( x_offset > -img_w && x_offset < client_w )
 				{
 					b_something_drawn = true;
-					pDrawImg(theDC, string(imgPath.c_str()), theImg, x_offset, y_decal, true );
+					pDrawImg(theDC, string((char*)imgPath.c_str()), theImg, x_offset, y_decal, true );
 					draw_state = 1;
 				}
 					

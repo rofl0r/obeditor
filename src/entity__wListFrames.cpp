@@ -184,7 +184,7 @@ wListFrames::On_Ind_ActiveFrame_Change()
 {
 	if( entityFrame->May_Register_ControlsState() == true )
 	{
-		entityFrame->Register_ControlsState_inHistory("On_Ind_ActiveFrame_Change");
+		entityFrame->Register_ControlsState_inHistory(wxT("On_Ind_ActiveFrame_Change"));
 	}
 
 }
@@ -195,7 +195,7 @@ wListFrames::On_Selection_Bounds_Change()
 {
 	if( entityFrame->May_Register_ControlsState() == true )
 	{
-		entityFrame->Register_ControlsState_inHistory("On_Selection_Bounds_Change");
+		entityFrame->Register_ControlsState_inHistory(wxT("On_Selection_Bounds_Change"));
 	}
 }
 
@@ -254,7 +254,7 @@ void wListFrames::ReloadFrames(bool b_invalidate_images)
 			wxBitmap* _bmp = theFrameImgManager.BmpGet(ob_path);
 			if( _bmp == NULL )
 			{
-				wxMessageBox( "BUG !!!\nwListFrames::ReloadFrames()\n_bmp == NULL" );
+				wxMessageBox( wxT("BUG !!!\nwListFrames::ReloadFrames()\n_bmp == NULL") );
 				delete fd;
 				continue;
 			}
@@ -273,21 +273,21 @@ void wListFrames::ReloadFrames(bool b_invalidate_images)
 		}
 
 		// set the flipstates
-		wxString str_flipframe = curr_anim->GetSubObject_Token("flipframe");
-		if( str_flipframe != "" )
+		wxString str_flipframe = curr_anim->GetSubObject_Token(wxT("flipframe"));
+		if( str_flipframe != wxString() )
 			SetFlipFrame( StrToInt( str_flipframe ) );
 
 		// set the jumpstate
-		wxString str_temp = curr_anim->GetSubObject_Token("jumpframe");
-		if( str_temp != "" )
+		wxString str_temp = curr_anim->GetSubObject_Token(wxT("jumpframe"));
+		if( str_temp != wxString() )
 			SetJumpFrame( StrToInt( str_temp ) );
 
-		str_temp = curr_anim->GetSubObject_Token("dropframe");
-		if( str_temp != "" )
+		str_temp = curr_anim->GetSubObject_Token(wxT("dropframe"));
+		if( str_temp != wxString() )
 			SetDropFrame( StrToInt( str_temp ) );
 
-		str_temp = curr_anim->GetSubObject_Token("landframe");
-		if( str_temp != "" )
+		str_temp = curr_anim->GetSubObject_Token(wxT("landframe"));
+		if( str_temp != wxString() )
 			SetLandFrame( StrToInt( str_temp ) );
 
 	}
@@ -458,16 +458,16 @@ void wListFrames::SetJumpFrame( int _jumpframe )
 			if( v_frames_datas[i] != NULL )
 				v_frames_datas[i]->related_frame->jumpState = 1;
 
-		ob_object *_t = curr_anim->GetSubObject( "jumpframe" );
+		ob_object *_t = curr_anim->GetSubObject( wxT("jumpframe") );
 		if( _t == NULL )
 		{
-			curr_anim->SetProperty( "jumpframe", IntToStr(_jumpframe) );
-			_t = curr_anim->GetSubObject( "jumpframe" );
+			curr_anim->SetProperty( wxT("jumpframe"), IntToStr(_jumpframe) );
+			_t = curr_anim->GetSubObject( wxT("jumpframe") );
 			if( _t != NULL )
 			{
-				_t->SetToken( 1, "2" );
-				_t->SetToken( 2, "0" );
-				_t->SetToken( 3, "0" );
+				_t->SetToken( 1, wxT("2") );
+				_t->SetToken( 2, wxT("0") );
+				_t->SetToken( 3, wxT("0") );
 			}
 		}
 		else
@@ -483,7 +483,7 @@ void wListFrames::SetJumpFrame( int _jumpframe )
 				v_frames_datas[i]->related_frame->jumpState = 0;
 		}
 
-		ob_object* _t = curr_anim->GetSubObject( "jumpframe");
+		ob_object* _t = curr_anim->GetSubObject( wxT("jumpframe"));
 		if( _t != NULL )
 		{
 			_t->Rm();
@@ -535,7 +535,7 @@ void wListFrames::SetJumpFrame( int _jumpframe )
  */
 void wListFrames::SetFlipFrame( int _flipframe )
 {
-	ANN__SET_FRAMEPROP( _flipframe, flipState, "flipframe" );
+	ANN__SET_FRAMEPROP( _flipframe, flipState, wxT("flipframe") );
 }
 
 
@@ -544,7 +544,7 @@ void wListFrames::SetFlipFrame( int _flipframe )
  */
 void wListFrames::SetDropFrame( int _dropframe )
 {
-	ANN__SET_FRAMEPROP( _dropframe, dropState, "dropframe" );
+	ANN__SET_FRAMEPROP( _dropframe, dropState, wxT("dropframe") );
 }
 
 //*************************************************************************
@@ -552,7 +552,7 @@ void wListFrames::SetDropFrame( int _dropframe )
  */
 void wListFrames::SetLandFrame( int _landframe )
 {
-	ANN__SET_FRAMEPROP( _landframe, landState, "landframe" );
+	ANN__SET_FRAMEPROP( _landframe, landState, wxT("landframe") );
 }
 
 //*************************************************************************
@@ -1124,9 +1124,9 @@ wListFrames_Editable::wListFrames_Editable( wxWindow *parent )
 : wListFrames( parent )
 {
 	popMenu = new 	wxMenu();
-	popMenu->Append( CMD_NEW, "New Frame" );
-	popMenu->Append( CMD_DEL, "Delete Frame" );
-	popMenu->Append( CMD_COPY, "Copy Frame" );
+	popMenu->Append( CMD_NEW, wxT("New Frame") );
+	popMenu->Append( CMD_DEL, wxT("Delete Frame") );
+	popMenu->Append( CMD_COPY, wxT("Copy Frame") );
 }
 
 
@@ -1294,7 +1294,7 @@ void wListFrames_Editable::EvtNewFrame(wxCommandEvent& event )
 {
 	if( curr_anim == NULL )
 	{
-		wxMessageBox( "No anim selected", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No anim selected"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
@@ -1336,19 +1336,19 @@ void wListFrames_Editable::EvtCopyFrame(wxCommandEvent& event )
 {
 	if( curr_anim == NULL )
 	{
-		wxMessageBox( "No anim selected", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No anim selected"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
 	if( v_frames_datas.size() == 0 )
 	{
-		wxMessageBox( "No frame to copy", "Error", wxOK | wxICON_INFORMATION,this );
+		wxMessageBox( wxT("No frame to copy"), wxT("Error"), wxOK | wxICON_INFORMATION,this );
 		return;
 	}
 
 	if( ind_active_frame < 0 )
 	{
-		wxMessageBox( "No frame selected", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No frame selected"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
@@ -1373,24 +1373,24 @@ void wListFrames_Editable::EvtDeleteFrame(wxCommandEvent& event )
 {
 	if( curr_anim == NULL )
 	{
-		wxMessageBox( "No anim selected", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No anim selected"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
 	if( v_frames_datas.size() == 0 )
 	{
-		wxMessageBox( "No frame to copy", "Error", wxOK | wxICON_INFORMATION, this );
+		wxMessageBox( wxT("No frame to copy"), wxT("Error"), wxOK | wxICON_INFORMATION, this );
 		return;
 	}
 
 	if( ind_active_frame < 0 )
 	{
-		wxMessageBox( "No frame selected", "Error", wxOK | wxICON_INFORMATION,this );
+		wxMessageBox( wxT("No frame selected"), wxT("Error"), wxOK | wxICON_INFORMATION,this );
 		return;
 	}
 
 	// Make the guy to be sure
-	int res = wxMessageBox( "Delete selected frames ?", "Hey !", wxYES_NO | wxICON_INFORMATION, this );
+	int res = wxMessageBox( wxT("Delete selected frames ?"), wxT("Hey !"), wxYES_NO | wxICON_INFORMATION, this );
 
 	if( res == wxYES )
 	{
@@ -1459,13 +1459,13 @@ wListFrames_Editable::DoDragging(int ind_frame, int ind_left, int ind_right, wxM
 		// If Make a copy
 		if( event.m_controlDown )
 		{
-			theHistoryManager.GroupStart( "Copy a frame" );
+			theHistoryManager.GroupStart( wxT("Copy a frame") );
 			_frame=(ob_frame*) curr_frames[last_indframe_mouseDown]->Clone();
 			if( last_indframe_mouseDown < ind_left )
 				ind_active_frame++;
 		}
 		else
-			theHistoryManager.GroupStart( "Move a frame" );
+			theHistoryManager.GroupStart( wxT("Move a frame") );
 
 		// if insert after possible
 		if( ind_left >= 0 )
@@ -1500,11 +1500,11 @@ wListFrames_Editable::DoDragging(int ind_frame, int ind_left, int ind_right, wxM
 			return false;
 
 		// Make the guy to be sure
-		wxString str_action = "move";
+		wxString str_action = wxT("move");
 		if( event.m_controlDown )
-			str_action = "copy";
-		int res = wxMessageBox( "Are really sure that you want to "+str_action+" the selected anims ?",
-						"Hey !", wxYES_NO | wxICON_INFORMATION, this );
+			str_action = wxT("copy");
+		int res = wxMessageBox( wxT("Are really sure that you want to ")+str_action+wxT(" the selected anims ?"),
+					wxT("Hey !"), wxYES_NO | wxICON_INFORMATION, this );
 
 		if( res != wxYES )
 			return false;
@@ -1514,7 +1514,7 @@ wListFrames_Editable::DoDragging(int ind_frame, int ind_left, int ind_right, wxM
 		//***************************************
 		if( event.m_controlDown )
 		{
-			theHistoryManager.GroupStart( "Copy some frames" );
+			theHistoryManager.GroupStart( wxT("Copy some frames") );
 			// Heading insert
 			if( ind_left == -1 )
 			{
@@ -1560,7 +1560,7 @@ wListFrames_Editable::DoDragging(int ind_frame, int ind_left, int ind_right, wxM
 		//***************************************
 		else
 		{
-			theHistoryManager.GroupStart( "Move some frames" );
+			theHistoryManager.GroupStart( wxT("Move some frames") );
 			// make the move
 			if( ind_left == curr_frames_count -1 )
 			{
