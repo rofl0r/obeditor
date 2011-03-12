@@ -1,12 +1,14 @@
 *.o
 *~
-ressources/Makefile
-Makefile
+*.pyc
+.sconsign.dblite
 config.log
-config.status
+.sconf_temp/
+.sconf_temp/*
 src/.deps/
 src/.deps/*
-src/Makefile
 src/obeditor
+release
+release/*
 
 
