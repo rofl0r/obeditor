@@ -46,7 +46,7 @@ void UnInit__ObProps();
 
 /** Init of the App.
  *
- * @param s : no parma like this !
+ * @param s : no param like this !
  * @see StartFrame
  */
 bool MyApp::OnInit()
@@ -63,12 +63,12 @@ bool MyApp::OnInit()
 
 	wxString tt(wxT("bingo"));
 
-	// Load wxWiget image handlers
+	// Load wxWidgets image handlers
 	wxInitAllImageHandlers();
 
 	// VARIABLES INITIALISATION
 	dirRessources.Assign(wxString(argv[0]) );
-	dirRessources.AppendDir( wxT("ressources" ));
+	dirRessources.AppendDir( wxT("resources" ));
 	noImg = new wxImage( GetRessourceFile_String( wxT("noimage.jpg" )) );
 	if( ! noImg->IsOk() )
 	{
@@ -248,7 +248,7 @@ Init__ObProps()
 	//*************************************************************
 	//*************************************************************
 	//*************************************************************
-	// Blocade pos
+	// Blockade pos
 	ob_props[wxT("SP:blockade=0")] =
 	new ob_property(  wxT("SP:blockade"),0
 			, PROPTYPE_RELATIVENUMBER

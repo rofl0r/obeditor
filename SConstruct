@@ -53,6 +53,6 @@ SConscript('src/SConscript')
 os.system('rm -rf release')
 os.mkdir('release')
 env.Command('release/obeditor', 'src/obeditor', [Move('release/obeditor', 'src/obeditor')])
-env.Command('release/ressources', 'ressources', [Copy('release/ressources', 'ressources')])
+env.Command('release/resources', 'resources', [Copy('release/resources', 'resources')])
 
 
