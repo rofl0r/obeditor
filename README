@@ -2,3 +2,10 @@ Obeditor is an editor for OpenBOR mods, as published by gringo in the
 lavalit forum.
 
 let's continue his work here on github.
+
+dependencies (all of them including headers, i.e. devel package):
+libs: SDL 1.2, SDL-mixer, giflib, libpng, wxgtk > 2.89
+programs: scons (eventually older py2-based version)
+
+build:
+run `scons`
