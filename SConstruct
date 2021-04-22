@@ -12,6 +12,11 @@ def error(msg):
 env = Environment(ENV = os.environ)
 conf = Configure(env, custom_tests = {'CheckWXConfig': wxconfig.CheckWXConfig})
 
+# check for png
+if not conf.CheckLib('png'):
+	error('libpng not found')
+env['LIBS'] += ['png']
+
 # check for SDL
 if not conf.CheckLib('SDL'):
 	error('SDL not found')
