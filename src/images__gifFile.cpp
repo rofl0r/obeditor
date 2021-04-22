@@ -387,6 +387,10 @@ int wxIndexedGIF::ReadGIF( const wxString& _str_fn)
 }
 
 
+void MakeSavedImage(GifFileType *f, struct SavedImage *si) {
+	std::cerr << "warning: MakeSavedImage not implemented yet\n";
+}
+
 //*************************************************
 
 int wxIndexedGIF::WriteGIF( const wxString& str_dest )
