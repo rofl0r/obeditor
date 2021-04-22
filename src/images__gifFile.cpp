@@ -339,14 +339,14 @@ int wxIndexedGIF::ReadGIF( const wxString& _str_fn)
 
 
 	// Try to open source file
-	GifFileType *GifFileIn = DGifOpenFileName( (char*)_str_fn.c_str() );
+	int gif_err = 0;
+	GifFileType *GifFileIn = DGifOpenFileName( (char*)_str_fn.c_str(), &gif_err);
 
 	// Load the gif
 	bool b_err = true;
 	if( GifFileIn != NULL )
 	{
 		int res = DGifSlurp(GifFileIn);
-		int gif_err = GifLastError();
 		if( res == GIF_OK||gif_err == 0 /*|| gif_err == E_GIF_ERR_DATA_TOO_BIG */)
 			b_err = (GifFileIn->ImageCount <= 0 );
 	}
@@ -354,7 +354,7 @@ int wxIndexedGIF::ReadGIF( const wxString& _str_fn)
 	if( b_err )
 	{
 		if( GifFileIn != NULL )
-			DGifCloseFile(GifFileIn);
+			DGifCloseFile(GifFileIn, &gif_err);
 		GifFileIn = NULL;
 		return 1;
 	}
@@ -380,7 +380,7 @@ int wxIndexedGIF::ReadGIF( const wxString& _str_fn)
 
     RasterBits = SavedImage->RasterBits;
 
-	DGifCloseFile(GifFileIn);
+	DGifCloseFile(GifFileIn, &gif_err);
 	GifFileIn = NULL;
 
 	return 0;
@@ -400,7 +400,8 @@ int wxIndexedGIF::WriteGIF( const wxString& str_dest )
 		return 1;
 
 	// Try to open dest file
-	GifFileType *GifFileOut = EGifOpenFileName((char*) str_dest.c_str(), false );
+        int gif_err = 0;
+	GifFileType *GifFileOut = EGifOpenFileName((char*) str_dest.c_str(), false, &gif_err);
 	if( GifFileOut == NULL )
 		return 1;
 
@@ -418,6 +419,6 @@ int wxIndexedGIF::WriteGIF( const wxString& str_dest )
      if (EGifSpew(GifFileOut) == GIF_ERROR)
 		res = 1;
 
-	EGifCloseFile( GifFileOut );
+	EGifCloseFile( GifFileOut, &gif_err );
 	return res;
 }
