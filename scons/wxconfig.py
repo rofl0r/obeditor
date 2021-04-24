@@ -40,7 +40,7 @@ def CheckWXConfigVersion(context, version):
 def CheckWXConfigComponents(context, libraries):
     # set components, method depending on wxWidgets version
     if CheckWXConfigVersion(context, '2.6'):
-        context.env['wxconfig_postargs'] += ' '+string.join(libraries,',')
+        context.env['wxconfig_postargs'] += ' '+','.join(libraries)
         return SystemWXConfig(context.env, '--libs ')[0] == 0
     # version 2.4 or below, only gl is an optional component with special flag
     if 'gl' in libraries:
