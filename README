@@ -5,7 +5,16 @@ let's continue his work here on github.
 
 dependencies (all of them including headers, i.e. devel package):
 libs: SDL 1.2, SDL-mixer, giflib, libpng, wxgtk > 2.89
-programs: scons (eventually older py2-based version)
+programs: scons
 
-build:
-run `scons`
+dependency preparation on ubuntu 20.04:
+
+    # maybe more are required, this is just those that my testbuild was missing
+    apt install libgtk2.0-dev libsdl-mixer1.2-dev libgif-dev
+    wget https://github.com/wxWidgets/wxWidgets/releases/download/v2.8.12/wxGTK-2.8.12.tar.gz
+    tar xf wxGTK-2.8.12.tar.gz && cd wxGTK-2.8.12
+    CXX="g++ -std=gnu++03" ./configure --prefix=/usr
+    make -j4 && sudo make install
+
+obeditor build:
+run `scons` in toplevel directory.
